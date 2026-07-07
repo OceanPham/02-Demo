@@ -80,6 +80,41 @@
   .pcard h3{margin:0 0 6px; font-size:1.06rem; font-weight:700; color:var(--ink);}
   .pcard p{margin:0; color:var(--ink-2); font-size:.95rem;}
 
+  /* ---- Ambassador program ---- */
+  .amb-label{display:flex; align-items:center; gap:9px; font-family:"Baloo 2",cursive; font-weight:700;
+    font-size:1.1rem; color:var(--teal-deep); margin:22px 0 12px;}
+  .amb-label .pac{width:.8em; height:.8em;}
+  .benefits{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px;}
+  .benefit{display:flex; gap:11px; align-items:flex-start; background:var(--white); border:1.6px solid var(--line);
+    border-radius:14px; padding:14px 15px;}
+  .benefit .bi{font-size:1.3rem; line-height:1; flex:none;}
+  .benefit b{display:block; color:var(--ink); font-size:.97rem;}
+  .benefit span{color:var(--ink-2); font-size:.86rem;}
+  .tiers{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .tier{background:var(--white); border:1.6px solid var(--line); border-radius:18px; overflow:hidden;
+    box-shadow:var(--shadow); display:flex; flex-direction:column;}
+  .tier-top{padding:16px 18px 14px; background:var(--tint); position:relative;}
+  .tier.gold .tier-top{background:linear-gradient(180deg,#FFF1C6,#FFE7A6);}
+  .tier-name{font-family:"Baloo 2",cursive; font-weight:700; color:var(--teal-ink); font-size:1.02rem;}
+  .tier.gold .tier-name{color:#8a6400;}
+  .tier-price{font-family:"Baloo 2",cursive; font-weight:800; font-size:1.55rem; color:var(--ink); line-height:1.1;}
+  .tier-badge{position:absolute; top:14px; right:14px; background:var(--yellow); color:#6b4b00; font-weight:800;
+    font-size:.9rem; border-radius:999px; padding:4px 11px;}
+  .tier ul{list-style:none; margin:0; padding:14px 18px 18px;}
+  .tier li{position:relative; padding:6px 0 6px 22px; font-size:.93rem; color:var(--ink);}
+  .tier li::before{content:""; position:absolute; left:2px; top:13px; width:9px; height:9px; border-radius:50%;
+    background:conic-gradient(from -34deg,var(--teal) 0 292deg,transparent 292deg 360deg);}
+  .ctv{background:linear-gradient(180deg,#EAFAFA,#F6FFFF); border:1.6px solid #BFE6E4; border-radius:18px;
+    padding:18px 20px; display:flex; flex-wrap:wrap; gap:10px 26px; align-items:center; margin-top:16px;}
+  .ctv .head h4{font-family:"Baloo 2",cursive; margin:0; font-size:1.12rem; color:var(--teal-ink);}
+  .ctv .price{font-family:"Baloo 2",cursive; font-weight:800; color:var(--ink); font-size:1.35rem; line-height:1.1;}
+  .ctv ul{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 18px; flex:1 1 320px;}
+  .ctv li{position:relative; padding-left:16px; font-size:.9rem; color:var(--ink-2);}
+  .ctv li::before{content:"•"; position:absolute; left:3px; color:var(--teal); font-weight:800;}
+  .upgrade{display:flex; gap:10px; align-items:flex-start; background:var(--tint); border-radius:12px;
+    padding:12px 15px; margin-top:14px; font-size:.92rem; color:var(--teal-ink);}
+  .upgrade .pac{margin-top:3px;}
+
   /* ---- Roles ---- */
   .roles{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
   .role{background:var(--white); border:1.6px solid var(--line); border-radius:18px; overflow:hidden;
@@ -129,6 +164,16 @@
     padding:11px 14px; margin:2px 0 14px; font-size:.9rem; color:var(--teal-ink);}
   .tip .pac{margin-top:3px;}
 
+  /* ---- Time slots ---- */
+  .slots{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .slot{background:var(--white); border:1.6px solid var(--line); border-radius:16px; padding:16px 18px; text-align:center;}
+  .slot .k{font-size:.76rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--teal-deep);}
+  .slot .t{font-family:"Baloo 2",cursive; font-weight:800; font-size:1.4rem; color:var(--ink); margin-top:4px;}
+  .slot .d{font-size:.85rem; color:var(--ink-2); margin-top:2px;}
+  .slot-note{display:flex; gap:10px; align-items:flex-start; background:var(--yellow-2); border:1.5px solid #F4D67A;
+    border-radius:12px; padding:12px 15px; margin-top:14px; font-size:.92rem; color:#6b4b00;}
+  .slot-note .pac{margin-top:3px;}
+
   /* ---- Scope (chưa làm) ---- */
   .scope{background:var(--muted); border:1.6px solid var(--line); border-radius:18px; padding:20px 24px;}
   .scope ul{list-style:none; margin:8px 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:8px 22px;}
@@ -137,17 +182,12 @@
   .scope .later{font-size:.72rem; font-weight:700; color:var(--teal-deep); background:var(--tint);
     border-radius:999px; padding:2px 8px; margin-left:6px;}
 
-  /* ---- Confirm ---- */
-  .confirm{background:linear-gradient(180deg,#FFF7E0,#FFFBF0); border:1.6px solid #F3D888;
-    border-radius:18px; padding:22px 24px;}
-  .confirm h3{margin:0 0 4px; font-family:"Baloo 2",cursive; font-size:1.25rem; color:var(--ink);}
-  .confirm .sub{margin:0 0 14px;}
-  .confirm ul{list-style:none; margin:0; padding:0;}
-  .confirm li{display:flex; gap:13px; align-items:flex-start; padding:11px 0; border-top:1px dashed #EAD79B;}
-  .confirm li:first-child{border-top:0;}
-  .box{flex:none; width:22px; height:22px; border-radius:6px; border:2px solid var(--teal); background:var(--white); margin-top:2px;}
-  .confirm li b{color:var(--ink);}
-  .confirm li span{color:var(--ink-2);}
+  /* ---- Deal (chi phí & thời gian) ---- */
+  .deal{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .stat{background:linear-gradient(180deg,#FFF7E0,#FFFBF0); border:1.6px solid #F3D888; border-radius:18px; padding:22px 24px;}
+  .stat .k{font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--teal-deep);}
+  .stat .v{font-family:"Baloo 2",cursive; font-weight:800; font-size:2rem; color:var(--ink); line-height:1.1; margin-top:6px;}
+  .stat p{margin:6px 0 0; color:var(--ink-2); font-size:.9rem;}
 
   /* ---- Footer ---- */
   footer{margin-top:44px; border-top:1.5px solid var(--line); padding:26px 0 44px; color:var(--ink-2); font-size:.9rem;}
@@ -159,6 +199,9 @@
 
   @media (max-width:760px){
     .roles{grid-template-columns:1fr;}
+    .tiers{grid-template-columns:1fr;}
+    .slots{grid-template-columns:1fr;}
+    .deal{grid-template-columns:1fr;}
     .scope ul{grid-template-columns:1fr;}
     .badge{display:none;}
   }
@@ -168,7 +211,7 @@
     *{transition:none !important;}
   }
   @media print{
-    header{position:static;} .pcard,.role,.flow{box-shadow:none;} .hero::before{display:none;}
+    header{position:static;} .pcard,.role,.flow,.tier{box-shadow:none;} .hero::before{display:none;}
     body{background:#fff;}
   }
 </style>
@@ -189,12 +232,12 @@
     <p class="eyebrow"><span class="pac sm"></span> Dành cho Học viện Cardlish</p>
     <h1>Website Cardlish sẽ <span class="mark">hoạt động</span> như thế nào</h1>
     <p class="lead">Tài liệu này mô tả các trang của website, ai dùng được gì, và các bước từ lúc khách vào xem
-      cho đến khi đăng ký, thanh toán và vào học trên Zoom. Anh/chị đọc qua và đánh dấu những phần cần chỉnh
+      cho đến khi đăng ký, thanh toán và vào học trên Zoom. Anh/chị đọc qua và cho ý kiến những phần cần chỉnh
       để hai bên thống nhất trước khi làm.</p>
     <div class="chips">
       <span class="chip"><b>3</b> nhóm người dùng</span>
-      <span class="chip"><b>8</b> trang chính</span>
-      <span class="chip"><b>4</b> luồng hoạt động</span>
+      <span class="chip"><b>11</b> trang chính</span>
+      <span class="chip"><b>5</b> luồng hoạt động</span>
     </div>
   </section>
 
@@ -205,27 +248,75 @@
     <p class="sub">Đây là những trang mà bất kỳ ai vào website cũng xem được — dùng để giới thiệu và bán hàng.</p>
     <div class="pages">
       <div class="pcard"><div class="pnum">1</div><h3>Trang chủ</h3>
-        <p>Giới thiệu tổng quan, câu khẩu hiệu, và nút lớn “Học thử miễn phí” để mời khách trải nghiệm.</p></div>
-      <div class="pcard"><div class="pnum">2</div><h3>Phương pháp học</h3>
-        <p>Giải thích cách học âm – vần (44 âm, 212 vần), kèm video VTV2 và giải thưởng để khách tin tưởng.</p></div>
-      <div class="pcard"><div class="pnum">3</div><h3>Các khóa học</h3>
+        <p>Giới thiệu tổng quan, câu khẩu hiệu, và nút xem các buổi học thử miễn phí sắp diễn ra.</p></div>
+      <div class="pcard"><div class="pnum">2</div><h3>Về Cardlish &amp; Thầy Craig Trần</h3>
+        <p>Câu chuyện học viện, thầy Craig Trần (người Mỹ gốc Việt, tác giả bộ thẻ, giải ASEAN Award 2022) và 5 giá trị cốt lõi.</p></div>
+      <div class="pcard"><div class="pnum">3</div><h3>Phương pháp học</h3>
+        <p>Cách học âm – vần (44 âm, 212 vần), kèm video VTV2 và giải thưởng để khách tin tưởng.</p></div>
+      <div class="pcard"><div class="pnum">4</div><h3>Các khóa học</h3>
         <p>Khóa Nền tảng, lớp VIP và lộ trình 6 cấp độ. Ghi rõ học phí, thời lượng và lịch học.</p></div>
-      <div class="pcard"><div class="pnum">4</div><h3>Bộ thẻ âm vần</h3>
+      <div class="pcard"><div class="pnum">5</div><h3>Bộ thẻ âm vần</h3>
         <p>Giới thiệu bộ thẻ, giá bán, có thể mua riêng hoặc mua kèm khóa học.</p></div>
-      <div class="pcard"><div class="pnum">5</div><h3>Học phí &amp; combo</h3>
+      <div class="pcard"><div class="pnum">6</div><h3>Học phí &amp; combo</h3>
         <p>Bảng giá rõ ràng các gói: chỉ khóa học, chỉ bộ thẻ, hoặc combo trọn gói.</p></div>
-      <div class="pcard"><div class="pnum">6</div><h3>Cảm nhận &amp; báo chí</h3>
-        <p>Đánh giá của học viên, video và các chứng nhận để tăng uy tín.</p></div>
-      <div class="pcard"><div class="pnum">7</div><h3>Tin tức / chia sẻ</h3>
+      <div class="pcard"><div class="pnum">7</div><h3>Chương trình Đại sứ</h3>
+        <p>Quyền lợi, các gói tham gia và chính sách nâng cấp cho người muốn hợp tác kinh doanh.</p></div>
+      <div class="pcard"><div class="pnum">8</div><h3>Buổi học thử &amp; Lớp cộng đồng</h3>
+        <p>Lịch các buổi học miễn phí. Khách xem thông tin và tham gia trực tiếp, không cần đăng ký trước.</p></div>
+      <div class="pcard"><div class="pnum">9</div><h3>Cảm nhận &amp; báo chí</h3>
+        <p>Đánh giá của học viên, video các bé học và các chứng nhận để tăng uy tín.</p></div>
+      <div class="pcard"><div class="pnum">10</div><h3>Tin tức / chia sẻ</h3>
         <p>Bài viết về học tiếng Anh, giúp khách dễ tìm thấy website trên Google.</p></div>
-      <div class="pcard"><div class="pnum">8</div><h3>Liên hệ</h3>
+      <div class="pcard"><div class="pnum">11</div><h3>Liên hệ</h3>
         <p>Thông tin học viện, Zalo, và thông tin đại sứ hỗ trợ.</p></div>
     </div>
   </section>
 
-  <!-- ROLES -->
+  <!-- AMBASSADOR PROGRAM -->
   <section class="reveal">
     <p class="eyebrow"><span class="pac sm"></span> Phần 2</p>
+    <h2 class="h2">Trang “Chương trình Đại sứ” sẽ hiển thị gì</h2>
+    <p class="sub">Dành cho người muốn hợp tác kinh doanh cùng Cardlish. Trang này giới thiệu quyền lợi, các gói tham gia và cách nâng cấp.</p>
+
+    <div class="amb-label"><span class="pac"></span> Quyền lợi khi làm Đại sứ</div>
+    <div class="benefits">
+      <div class="benefit"><span class="bi">📈</span><div><b>Đào tạo kinh doanh</b><span>Hướng dẫn cách bán và tư vấn.</span></div></div>
+      <div class="benefit"><span class="bi">💰</span><div><b>Hoa hồng 20%</b><span>Khi giới thiệu học viên đăng ký.</span></div></div>
+      <div class="benefit"><span class="bi">🎓</span><div><b>Học miễn phí</b><span>Bản thân &amp; con học khóa Basic VIP miễn phí.</span></div></div>
+      <div class="benefit"><span class="bi">✈️</span><div><b>Du lịch – nghỉ dưỡng</b><span>Các chuyến đào tạo kết hợp nghỉ dưỡng.</span></div></div>
+      <div class="benefit"><span class="bi">🏷️</span><div><b>Ưu đãi học phí</b><span>Giảm học phí cho con khi học nâng cao.</span></div></div>
+    </div>
+
+    <div class="amb-label"><span class="pac"></span> Các gói tham gia</div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-top"><span class="tier-badge">30%</span><div class="tier-name">Gói 3</div><div class="tier-price">23 triệu</div></div>
+        <ul><li>40 bộ thẻ</li><li>Giảm học phí 30%</li><li>Chiết khấu 30%</li></ul>
+      </div>
+      <div class="tier">
+        <div class="tier-top"><span class="tier-badge">40%</span><div class="tier-name">Gói 2</div><div class="tier-price">57 triệu</div></div>
+        <ul><li>120 bộ thẻ</li><li>Giảm học phí 40%</li><li>Chiết khấu 40%</li></ul>
+      </div>
+      <div class="tier gold">
+        <div class="tier-top"><span class="tier-badge">50%</span><div class="tier-name">Gói 1</div><div class="tier-price">120 triệu</div></div>
+        <ul><li>300 bộ thẻ</li><li>Giảm học phí 50%</li><li>Chiết khấu 50%</li></ul>
+      </div>
+    </div>
+
+    <div class="ctv">
+      <div class="head"><h4>Gói Cộng tác viên</h4><div class="price">5,6 triệu</div></div>
+      <ul>
+        <li>8 bộ thẻ</li><li>Đào tạo kinh doanh</li><li>20% học phí khi giới thiệu</li>
+        <li>Nhập thêm thẻ chiết khấu 20%</li><li>Tối thiểu 5 bộ</li>
+      </ul>
+    </div>
+
+    <div class="upgrade"><span class="pac sm"></span><span><strong>Chính sách nâng cấp:</strong> số tiền đã tham gia được cộng dồn để nâng cấp gói (Gói 3 → Gói 2 → Gói 1) trong vòng 1 năm.</span></div>
+  </section>
+
+  <!-- ROLES -->
+  <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 3</p>
     <h2 class="h2">Ba nhóm người dùng &amp; họ làm được gì</h2>
     <p class="sub">Mỗi nhóm có phần riêng trên website. Khách chỉ thấy phần của mình, không lẫn với phần khác.</p>
     <div class="roles">
@@ -234,7 +325,7 @@
         <div class="role-head"><div class="r-ico">🎓</div>
           <div><h3>Học viên</h3><div class="who">(và phụ huynh đăng ký cho con)</div></div></div>
         <ul>
-          <li>Xem thông tin và đăng ký học thử miễn phí</li>
+          <li>Xem lịch &amp; tham gia buổi học thử / lớp cộng đồng miễn phí</li>
           <li>Đăng ký khóa học, chọn khung giờ mong muốn</li>
           <li>Mua bộ thẻ và điền địa chỉ nhận hàng</li>
           <li>Thanh toán bằng cách quét mã QR chuyển khoản</li>
@@ -244,12 +335,13 @@
       <div class="role r2">
         <div class="role-top"></div>
         <div class="role-head"><div class="r-ico">🤝</div>
-          <div><h3>Đại sứ</h3><div class="who">(cộng tác viên giới thiệu)</div></div></div>
+          <div><h3>Đại sứ</h3><div class="who">(cộng tác viên kinh doanh)</div></div></div>
         <ul>
-          <li>Có một đường link và mã giới thiệu riêng</li>
-          <li>Khách đăng ký qua link / mã đó sẽ được ghi nhận cho đại sứ</li>
-          <li>Có trang riêng theo dõi: số người đã giới thiệu và đơn thành công</li>
-          <li>Xem tiền hoa hồng: đang chờ, đã duyệt, đã được trả</li>
+          <li>Đăng ký làm đại sứ bằng cách chọn gói tham gia</li>
+          <li>Có link &amp; mã giới thiệu riêng; ai đăng ký qua đó được ghi nhận cho đại sứ</li>
+          <li>Trang riêng theo dõi: số người đã giới thiệu và đơn thành công</li>
+          <li>Xem hoa hồng: đang chờ, đã duyệt, đã được trả</li>
+          <li>Xem quyền lợi và nâng cấp gói</li>
         </ul>
       </div>
       <div class="role r3">
@@ -258,11 +350,11 @@
           <div><h3>Người quản lý</h3><div class="who">(nhân viên học viện)</div></div></div>
         <ul>
           <li>Thêm / sửa khóa học, lớp, khung giờ; dán link Zoom cho từng lớp</li>
+          <li>Đăng &amp; quản lý các buổi học thử / lớp cộng đồng miễn phí</li>
           <li>Xem và quản lý toàn bộ đơn đăng ký</li>
           <li>Theo dõi thanh toán và duyệt xác nhận đơn sau khi kiểm tra</li>
-          <li>Quản lý việc giao bộ thẻ: đã gửi / đã nhận</li>
-          <li>Cài mức hoa hồng theo từng loại đơn, duyệt và trả hoa hồng cho đại sứ</li>
-          <li>Cập nhật nội dung các trang và viết bài tin tức</li>
+          <li>Quản lý các gói đại sứ, duyệt đăng ký &amp; trả hoa hồng</li>
+          <li>Quản lý việc giao bộ thẻ và cập nhật nội dung các trang</li>
         </ul>
       </div>
     </div>
@@ -270,18 +362,18 @@
 
   <!-- FLOWS -->
   <section class="reveal">
-    <p class="eyebrow"><span class="pac sm"></span> Phần 3</p>
+    <p class="eyebrow"><span class="pac sm"></span> Phần 4</p>
     <h2 class="h2">Các bước hoạt động chính</h2>
     <p class="sub">Đây là hành trình của khách trên website. Mỗi bước được ghi theo thứ tự để anh/chị dễ hình dung.</p>
 
-    <!-- Flow 1 -->
+    <!-- Flow 1 - community sessions -->
     <div class="flow">
-      <div class="flow-tag"><span class="dot"></span> Luồng 1 — Đăng ký học thử miễn phí</div>
-      <p class="flow-note">Không cần thanh toán. Mục đích để khách trải nghiệm rồi mới quyết định.</p>
+      <div class="flow-tag"><span class="dot"></span> Luồng 1 — Tham gia buổi học thử / lớp cộng đồng miễn phí</div>
+      <p class="flow-note">Không cần đăng ký. Học viện đăng lịch, khách xem và vào học trực tiếp.</p>
       <div class="steps">
-        <div class="step"><div class="num">1</div><div class="step-body"><strong>Khách vào website và bấm “Học thử miễn phí”.</strong></div></div>
-        <div class="step"><div class="num">2</div><div class="step-body"><strong>Điền tên và số điện thoại / Zalo.</strong></div></div>
-        <div class="step"><div class="num">3</div><div class="step-body"><strong>Học viện nhận được thông tin và liên hệ xếp lịch học thử.</strong></div></div>
+        <div class="step"><div class="num">1</div><div class="step-body"><strong>Học viện đăng các buổi học thử / buổi cộng đồng miễn phí lên website.</strong><p>Kèm thời gian, chủ đề và link tham gia.</p></div></div>
+        <div class="step"><div class="num">2</div><div class="step-body"><strong>Khách vào website xem danh sách các buổi sắp diễn ra.</strong></div></div>
+        <div class="step"><div class="num">3</div><div class="step-body"><strong>Đến giờ, khách bấm link và vào học trực tiếp trên Zoom — không cần đăng ký trước.</strong></div></div>
       </div>
     </div>
 
@@ -290,7 +382,7 @@
       <div class="flow-tag"><span class="dot"></span> Luồng 2 — Đăng ký khóa học &amp; thanh toán</div>
       <p class="flow-note">Đây là luồng quan trọng nhất. Sau khi khách chuyển khoản, <strong>nhân viên kiểm tra và liên hệ lại</strong>.</p>
       <div class="steps">
-        <div class="step"><div class="num">1</div><div class="step-body"><strong>Khách chọn khóa học và chọn khung giờ</strong> (ví dụ 19h, 20h15 hoặc 21h30).</div></div>
+        <div class="step"><div class="num">1</div><div class="step-body"><strong>Khách chọn khóa học và chọn khung giờ</strong> (ví dụ 19h–20h, 20h15–21h15 hoặc 21h30–22h30).</div></div>
         <div class="step"><div class="num">2</div><div class="step-body"><strong>Bấm đăng ký và điền thông tin học viên.</strong></div></div>
         <div class="step"><div class="num">3</div><div class="step-body"><strong>Website hiện mã QR chuyển khoản</strong><p>Mã đã kèm sẵn nội dung, khách không cần tự gõ.</p></div></div>
         <div class="step"><div class="num">4</div><div class="step-body"><strong>Khách quét mã và chuyển khoản.</strong></div></div>
@@ -334,11 +426,36 @@
         <div class="step"><div class="num">5</div><div class="step-body"><strong>Học viện duyệt và trả hoa hồng.</strong></div></div>
       </div>
     </div>
+
+    <!-- Flow 5 - register as ambassador -->
+    <div class="flow">
+      <div class="flow-tag"><span class="dot"></span> Luồng 5 — Đăng ký làm Đại sứ</div>
+      <p class="flow-note">Dành cho người muốn hợp tác kinh doanh cùng học viện.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div class="step-body"><strong>Khách xem quyền lợi và các gói ở trang “Chương trình Đại sứ”.</strong></div></div>
+        <div class="step"><div class="num">2</div><div class="step-body"><strong>Chọn gói muốn tham gia và để lại thông tin đăng ký.</strong></div></div>
+        <div class="step"><div class="num">3</div><div class="step-body"><strong>Học viện liên hệ tư vấn và hướng dẫn thanh toán.</strong></div></div>
+        <div class="step"><div class="num">4</div><div class="step-body"><strong>Hoàn tất — tài khoản đại sứ được kích hoạt kèm link &amp; mã giới thiệu riêng.</strong></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIME SLOTS -->
+  <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 5</p>
+    <h2 class="h2">Khung giờ học</h2>
+    <p class="sub">Mỗi lớp học 3 buổi/tuần, mỗi buổi 1 tiếng. Khách chọn 1 trong 3 khung giờ buổi tối:</p>
+    <div class="slots">
+      <div class="slot"><div class="k">Khung 1</div><div class="t">19:00 – 20:00</div><div class="d">7 – 8 giờ tối</div></div>
+      <div class="slot"><div class="k">Khung 2</div><div class="t">20:15 – 21:15</div><div class="d">8h15 – 9h15 tối</div></div>
+      <div class="slot"><div class="k">Khung 3</div><div class="t">21:30 – 22:30</div><div class="d">9h30 – 10h30 tối</div></div>
+    </div>
+    <div class="slot-note"><span class="pac sm"></span><span>Lịch học các ngày <strong>Thứ 2 – 4 – 6</strong> hoặc <strong>Thứ 3 – 5 – 7</strong>. Học viện có thể tự điều chỉnh khung giờ và lịch sau này.</span></div>
   </section>
 
   <!-- SCOPE -->
   <section class="reveal">
-    <p class="eyebrow"><span class="pac sm"></span> Phần 4</p>
+    <p class="eyebrow"><span class="pac sm"></span> Phần 6</p>
     <h2 class="h2">Bản đầu tiên chưa bao gồm</h2>
     <p class="sub">Để website ra mắt nhanh và gọn, những phần dưới đây tạm chưa làm — có thể bổ sung ở giai đoạn sau nếu cần.</p>
     <div class="scope">
@@ -351,22 +468,16 @@
     </div>
   </section>
 
-  <!-- CONFIRM -->
-  <!-- <section class="reveal">
-    <p class="eyebrow"><span class="pac sm"></span> Phần 5</p>
-    <h2 class="h2">Những điểm cần anh/chị xác nhận</h2>
-    <div class="confirm">
-      <h3>Vui lòng đánh dấu và cho ý kiến các mục sau</h3>
-      <p class="sub">Xác nhận xong những điểm này là hai bên có thể bắt đầu làm.</p>
-      <ul>
-        <li><span class="box"></span><span><b>Số tài khoản ngân hàng chính thức để nhận tiền.</b> Hiện đang dùng tài khoản cá nhân của đại sứ — cần một tài khoản chính thức của học viện để nhân viên đối chiếu giao dịch dễ dàng hơn.</span></li>
-        <li><span class="box"></span><span><b>Có cần thu Căn cước công dân trên website không?</b> Đề xuất nên bỏ để bảo vệ thông tin cá nhân của khách.</span></li>
-        <li><span class="box"></span><span><b>Mức hoa hồng cụ thể cho từng loại đơn</b> (khóa học / bộ thẻ / lớp VIP / combo).</span></li>
-        <li><span class="box"></span><span><b>Danh sách khung giờ học chính thức</b> sẽ hiển thị cho khách chọn.</span></li>
-        <li><span class="box"></span><span><b>Khi khách vừa vào bằng link giới thiệu vừa nhập mã của đại sứ khác thì tính cho ai?</b> Đề xuất: ưu tiên mã mà khách chủ động nhập.</span></li>
-      </ul>
+  <!-- DEAL -->
+  <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 7</p>
+    <h2 class="h2">Chi phí &amp; thời gian thực hiện</h2>
+    <p class="sub">Thông tin để hai bên thống nhất trước khi bắt đầu.</p>
+    <div class="deal">
+      <div class="stat"><div class="k">Chi phí phát triển</div><div class="v">6.000.000đ</div><p>Trọn gói theo nội dung mô tả trong tài liệu này.</p></div>
+      <div class="stat"><div class="k">Thời gian</div><div class="v">7 ngày</div><p>Có bản demo để anh/chị xem và góp ý.</p></div>
     </div>
-  </section> -->
+  </section>
 
 </main>
 
