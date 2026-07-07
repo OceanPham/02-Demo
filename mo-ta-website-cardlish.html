@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Website Cardlish — Bản mô tả để xem & duyệt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFDF6; --ink:#123B3E; --ink-2:#4B696B;
+    --teal:#10ADB5; --teal-deep:#0A757C; --teal-ink:#0E5E63; --tint:#E6F7F6;
+    --yellow:#FFC93C; --yellow-2:#FFE7A6; --coral:#FF7A66; --coral-2:#FFE1DB;
+    --white:#FFFFFF; --line:#D6EBEA; --muted:#F0F5F4;
+    --shadow:0 10px 30px -18px rgba(14,94,99,.5);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Be Vietnam Pro",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    line-height:1.66; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px; margin:0 auto; padding:0 22px;}
+
+  /* ---- Pac-Man signature mark ---- */
+  .pac{
+    display:inline-block; width:.9em; height:.9em; border-radius:50%;
+    background:conic-gradient(from -34deg, var(--yellow) 0 292deg, transparent 292deg 360deg);
+    vertical-align:-.05em; flex:none;
+  }
+  .pac.sm{width:.66em; height:.66em;}
+
+  /* ---- Header ---- */
+  header{
+    position:sticky; top:0; z-index:20; background:rgba(255,253,246,.9);
+    backdrop-filter:blur(8px); border-bottom:1.5px solid var(--line);
+  }
+  .bar{display:flex; align-items:center; justify-content:space-between; padding:13px 0; gap:14px;}
+  .brand{display:flex; align-items:center; gap:9px; font-family:"Baloo 2",cursive; font-weight:800;
+    font-size:1.42rem; color:var(--teal-deep); letter-spacing:.2px;}
+  .brand .pac{width:.85em; height:.85em;}
+  .badge{font-size:.74rem; font-weight:600; color:var(--teal-ink); background:var(--tint);
+    border:1px solid var(--line); padding:5px 11px; border-radius:999px; white-space:nowrap;}
+
+  /* ---- Hero ---- */
+  .hero{padding:54px 0 30px; position:relative;}
+  .hero::before{content:""; position:absolute; inset:0 0 auto 0; height:340px; z-index:-1;
+    background:radial-gradient(900px 340px at 20% -30%, var(--tint), transparent 70%);}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; color:var(--teal-deep);
+    font-weight:700; font-size:.82rem; text-transform:uppercase; letter-spacing:.13em; margin:0 0 14px;}
+  h1{font-family:"Baloo 2",cursive; font-weight:800; font-size:clamp(2rem,5.2vw,3.05rem);
+    line-height:1.12; margin:0 0 18px; color:var(--ink); max-width:16ch;}
+  h1 .mark{position:relative; white-space:nowrap;}
+  h1 .mark::after{content:""; position:absolute; left:-2px; right:-2px; bottom:.07em; height:.34em;
+    background:var(--yellow); z-index:-1; border-radius:3px;}
+  .lead{font-size:1.12rem; color:var(--ink-2); max-width:60ch; margin:0 0 24px;}
+  .chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{display:inline-flex; align-items:center; gap:8px; background:var(--white);
+    border:1.5px solid var(--line); border-radius:999px; padding:8px 15px; font-weight:600;
+    font-size:.92rem; color:var(--teal-ink); box-shadow:var(--shadow);}
+  .chip b{color:var(--ink);}
+
+  /* ---- Sections ---- */
+  section{padding:40px 0 8px;}
+  .h2{font-family:"Baloo 2",cursive; font-weight:700; font-size:clamp(1.5rem,3.3vw,2rem);
+    margin:6px 0 6px; color:var(--ink);}
+  .sub{color:var(--ink-2); margin:0 0 24px; max-width:64ch;}
+  .divider{height:1.5px; background:var(--line); border:0; margin:6px 0 0;}
+
+  /* ---- Pages grid ---- */
+  .pages{display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:16px;}
+  .pcard{background:var(--white); border:1.6px solid var(--line); border-radius:16px; padding:18px 18px 16px;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
+  .pcard:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:#BFE6E4;}
+  .pnum{display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px;
+    border-radius:9px; background:var(--tint); color:var(--teal-deep); font-family:"Baloo 2",cursive;
+    font-weight:700; font-size:1rem; margin-bottom:10px;}
+  .pcard h3{margin:0 0 6px; font-size:1.06rem; font-weight:700; color:var(--ink);}
+  .pcard p{margin:0; color:var(--ink-2); font-size:.95rem;}
+
+  /* ---- Roles ---- */
+  .roles{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .role{background:var(--white); border:1.6px solid var(--line); border-radius:18px; overflow:hidden;
+    box-shadow:var(--shadow); display:flex; flex-direction:column;}
+  .role-top{height:7px;}
+  .r1 .role-top{background:var(--teal);}
+  .r2 .role-top{background:var(--yellow);}
+  .r3 .role-top{background:var(--coral);}
+  .role-head{padding:18px 20px 6px; display:flex; align-items:flex-start; gap:12px;}
+  .r-ico{width:42px; height:42px; border-radius:12px; flex:none; display:grid; place-items:center; font-size:1.35rem;}
+  .r1 .r-ico{background:var(--tint);}
+  .r2 .r-ico{background:var(--yellow-2);}
+  .r3 .r-ico{background:var(--coral-2);}
+  .role-head h3{margin:0; font-family:"Baloo 2",cursive; font-weight:700; font-size:1.22rem; color:var(--ink);}
+  .role-head .who{color:var(--ink-2); font-size:.86rem; font-weight:500;}
+  .role ul{list-style:none; margin:8px 0 4px; padding:0 20px 20px;}
+  .role li{position:relative; padding:7px 0 7px 26px; font-size:.95rem; color:var(--ink); border-top:1px solid #EEF6F5;}
+  .role li:first-child{border-top:0;}
+  .role li::before{content:""; position:absolute; left:2px; top:14px; width:11px; height:11px; border-radius:50%;
+    background:conic-gradient(from -34deg, var(--teal) 0 292deg, transparent 292deg 360deg);}
+  .r2 li::before{background:conic-gradient(from -34deg, var(--yellow) 0 292deg, transparent 292deg 360deg);}
+  .r3 li::before{background:conic-gradient(from -34deg, var(--coral) 0 292deg, transparent 292deg 360deg);}
+
+  /* ---- Flows ---- */
+  .flow{background:var(--white); border:1.6px solid var(--line); border-radius:18px; padding:22px 24px 12px;
+    margin-bottom:18px; box-shadow:var(--shadow);}
+  .flow-tag{display:inline-flex; align-items:center; gap:9px; font-family:"Baloo 2",cursive; font-weight:700;
+    font-size:1.18rem; color:var(--ink); margin-bottom:4px;}
+  .flow-tag .dot{width:12px; height:12px; border-radius:4px; background:var(--teal); flex:none;}
+  .flow.pay .flow-tag .dot{background:var(--yellow);}
+  .flow.card .flow-tag .dot{background:var(--coral);}
+  .flow-note{color:var(--ink-2); font-size:.92rem; margin:0 0 14px;}
+  .steps{position:relative; margin:6px 0 8px; padding:0;}
+  .step{position:relative; display:flex; gap:15px; padding:0 0 20px 0;}
+  .step:last-child{padding-bottom:6px;}
+  .num{flex:none; width:34px; height:34px; border-radius:50%; background:var(--tint); color:var(--teal-deep);
+    font-family:"Baloo 2",cursive; font-weight:700; display:grid; place-items:center; font-size:1rem; position:relative; z-index:1;}
+  .step:not(:last-child) .num::after{content:""; position:absolute; left:50%; top:34px; transform:translateX(-50%);
+    width:2px; height:calc(100% - 24px); background:var(--line);}
+  .step-body{padding-top:4px;}
+  .step-body strong{color:var(--ink);}
+  .step-body p{margin:2px 0 0; color:var(--ink-2); font-size:.93rem;}
+  .hot{background:var(--yellow-2); border:1.5px solid #F4D67A; border-radius:12px; padding:11px 14px; margin-top:6px;}
+  .hot .num{background:var(--yellow); color:#6b4b00;}
+  .hot strong{color:#6b4b00;}
+  .tip{display:flex; gap:10px; align-items:flex-start; background:var(--tint); border-radius:12px;
+    padding:11px 14px; margin:2px 0 14px; font-size:.9rem; color:var(--teal-ink);}
+  .tip .pac{margin-top:3px;}
+
+  /* ---- Scope (chưa làm) ---- */
+  .scope{background:var(--muted); border:1.6px solid var(--line); border-radius:18px; padding:20px 24px;}
+  .scope ul{list-style:none; margin:8px 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:8px 22px;}
+  .scope li{position:relative; padding:6px 0 6px 24px; color:var(--ink); font-size:.95rem;}
+  .scope li::before{content:"–"; position:absolute; left:6px; top:6px; color:var(--teal); font-weight:800;}
+  .scope .later{font-size:.72rem; font-weight:700; color:var(--teal-deep); background:var(--tint);
+    border-radius:999px; padding:2px 8px; margin-left:6px;}
+
+  /* ---- Confirm ---- */
+  .confirm{background:linear-gradient(180deg,#FFF7E0,#FFFBF0); border:1.6px solid #F3D888;
+    border-radius:18px; padding:22px 24px;}
+  .confirm h3{margin:0 0 4px; font-family:"Baloo 2",cursive; font-size:1.25rem; color:var(--ink);}
+  .confirm .sub{margin:0 0 14px;}
+  .confirm ul{list-style:none; margin:0; padding:0;}
+  .confirm li{display:flex; gap:13px; align-items:flex-start; padding:11px 0; border-top:1px dashed #EAD79B;}
+  .confirm li:first-child{border-top:0;}
+  .box{flex:none; width:22px; height:22px; border-radius:6px; border:2px solid var(--teal); background:var(--white); margin-top:2px;}
+  .confirm li b{color:var(--ink);}
+  .confirm li span{color:var(--ink-2);}
+
+  /* ---- Footer ---- */
+  footer{margin-top:44px; border-top:1.5px solid var(--line); padding:26px 0 44px; color:var(--ink-2); font-size:.9rem;}
+  footer b{color:var(--teal-deep);}
+
+  /* reveal (chỉ khi có JS) */
+  .js .reveal{opacity:0; transform:translateY(14px);}
+  .js .reveal.in{opacity:1; transform:none; transition:opacity .5s ease, transform .5s ease;}
+
+  @media (max-width:760px){
+    .roles{grid-template-columns:1fr;}
+    .scope ul{grid-template-columns:1fr;}
+    .badge{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .js .reveal{opacity:1; transform:none;}
+    *{transition:none !important;}
+  }
+  @media print{
+    header{position:static;} .pcard,.role,.flow{box-shadow:none;} .hero::before{display:none;}
+    body{background:#fff;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand"><span class="pac"></span>Cardlish</div>
+    <div class="badge">Bản mô tả website · Xem trước để duyệt</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="eyebrow"><span class="pac sm"></span> Dành cho Học viện Cardlish</p>
+    <h1>Website Cardlish sẽ <span class="mark">hoạt động</span> như thế nào</h1>
+    <p class="lead">Tài liệu này mô tả các trang của website, ai dùng được gì, và các bước từ lúc khách vào xem
+      cho đến khi đăng ký, thanh toán và vào học trên Zoom. Anh/chị đọc qua và đánh dấu những phần cần chỉnh
+      để hai bên thống nhất trước khi làm.</p>
+    <div class="chips">
+      <span class="chip"><b>3</b> nhóm người dùng</span>
+      <span class="chip"><b>8</b> trang chính</span>
+      <span class="chip"><b>4</b> luồng hoạt động</span>
+    </div>
+  </section>
+
+  <!-- PAGES -->
+  <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 1</p>
+    <h2 class="h2">Website có những trang nào</h2>
+    <p class="sub">Đây là những trang mà bất kỳ ai vào website cũng xem được — dùng để giới thiệu và bán hàng.</p>
+    <div class="pages">
+      <div class="pcard"><div class="pnum">1</div><h3>Trang chủ</h3>
+        <p>Giới thiệu tổng quan, câu khẩu hiệu, và nút lớn “Học thử miễn phí” để mời khách trải nghiệm.</p></div>
+      <div class="pcard"><div class="pnum">2</div><h3>Phương pháp học</h3>
+        <p>Giải thích cách học âm – vần (44 âm, 212 vần), kèm video VTV2 và giải thưởng để khách tin tưởng.</p></div>
+      <div class="pcard"><div class="pnum">3</div><h3>Các khóa học</h3>
+        <p>Khóa Nền tảng, lớp VIP và lộ trình 6 cấp độ. Ghi rõ học phí, thời lượng và lịch học.</p></div>
+      <div class="pcard"><div class="pnum">4</div><h3>Bộ thẻ âm vần</h3>
+        <p>Giới thiệu bộ thẻ, giá bán, có thể mua riêng hoặc mua kèm khóa học.</p></div>
+      <div class="pcard"><div class="pnum">5</div><h3>Học phí &amp; combo</h3>
+        <p>Bảng giá rõ ràng các gói: chỉ khóa học, chỉ bộ thẻ, hoặc combo trọn gói.</p></div>
+      <div class="pcard"><div class="pnum">6</div><h3>Cảm nhận &amp; báo chí</h3>
+        <p>Đánh giá của học viên, video và các chứng nhận để tăng uy tín.</p></div>
+      <div class="pcard"><div class="pnum">7</div><h3>Tin tức / chia sẻ</h3>
+        <p>Bài viết về học tiếng Anh, giúp khách dễ tìm thấy website trên Google.</p></div>
+      <div class="pcard"><div class="pnum">8</div><h3>Liên hệ</h3>
+        <p>Thông tin học viện, Zalo, và thông tin đại sứ hỗ trợ.</p></div>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 2</p>
+    <h2 class="h2">Ba nhóm người dùng &amp; họ làm được gì</h2>
+    <p class="sub">Mỗi nhóm có phần riêng trên website. Khách chỉ thấy phần của mình, không lẫn với phần khác.</p>
+    <div class="roles">
+      <div class="role r1">
+        <div class="role-top"></div>
+        <div class="role-head"><div class="r-ico">🎓</div>
+          <div><h3>Học viên</h3><div class="who">(và phụ huynh đăng ký cho con)</div></div></div>
+        <ul>
+          <li>Xem thông tin và đăng ký học thử miễn phí</li>
+          <li>Đăng ký khóa học, chọn khung giờ mong muốn</li>
+          <li>Mua bộ thẻ và điền địa chỉ nhận hàng</li>
+          <li>Thanh toán bằng cách quét mã QR chuyển khoản</li>
+          <li>Có tài khoản riêng để xem: đơn đã mua, tình trạng thanh toán, lịch học và link vào Zoom</li>
+        </ul>
+      </div>
+      <div class="role r2">
+        <div class="role-top"></div>
+        <div class="role-head"><div class="r-ico">🤝</div>
+          <div><h3>Đại sứ</h3><div class="who">(cộng tác viên giới thiệu)</div></div></div>
+        <ul>
+          <li>Có một đường link và mã giới thiệu riêng</li>
+          <li>Khách đăng ký qua link / mã đó sẽ được ghi nhận cho đại sứ</li>
+          <li>Có trang riêng theo dõi: số người đã giới thiệu và đơn thành công</li>
+          <li>Xem tiền hoa hồng: đang chờ, đã duyệt, đã được trả</li>
+        </ul>
+      </div>
+      <div class="role r3">
+        <div class="role-top"></div>
+        <div class="role-head"><div class="r-ico">🗂️</div>
+          <div><h3>Người quản lý</h3><div class="who">(nhân viên học viện)</div></div></div>
+        <ul>
+          <li>Thêm / sửa khóa học, lớp, khung giờ; dán link Zoom cho từng lớp</li>
+          <li>Xem và quản lý toàn bộ đơn đăng ký</li>
+          <li>Theo dõi thanh toán và duyệt xác nhận đơn sau khi kiểm tra</li>
+          <li>Quản lý việc giao bộ thẻ: đã gửi / đã nhận</li>
+          <li>Cài mức hoa hồng theo từng loại đơn, duyệt và trả hoa hồng cho đại sứ</li>
+          <li>Cập nhật nội dung các trang và viết bài tin tức</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOWS -->
+  <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 3</p>
+    <h2 class="h2">Các bước hoạt động chính</h2>
+    <p class="sub">Đây là hành trình của khách trên website. Mỗi bước được ghi theo thứ tự để anh/chị dễ hình dung.</p>
+
+    <!-- Flow 1 -->
+    <div class="flow">
+      <div class="flow-tag"><span class="dot"></span> Luồng 1 — Đăng ký học thử miễn phí</div>
+      <p class="flow-note">Không cần thanh toán. Mục đích để khách trải nghiệm rồi mới quyết định.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div class="step-body"><strong>Khách vào website và bấm “Học thử miễn phí”.</strong></div></div>
+        <div class="step"><div class="num">2</div><div class="step-body"><strong>Điền tên và số điện thoại / Zalo.</strong></div></div>
+        <div class="step"><div class="num">3</div><div class="step-body"><strong>Học viện nhận được thông tin và liên hệ xếp lịch học thử.</strong></div></div>
+      </div>
+    </div>
+
+    <!-- Flow 2 - payment -->
+    <div class="flow pay">
+      <div class="flow-tag"><span class="dot"></span> Luồng 2 — Đăng ký khóa học &amp; thanh toán</div>
+      <p class="flow-note">Đây là luồng quan trọng nhất. Sau khi khách chuyển khoản, <strong>nhân viên kiểm tra và liên hệ lại</strong>.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div class="step-body"><strong>Khách chọn khóa học và chọn khung giờ</strong> (ví dụ 19h, 20h15 hoặc 21h30).</div></div>
+        <div class="step"><div class="num">2</div><div class="step-body"><strong>Bấm đăng ký và điền thông tin học viên.</strong></div></div>
+        <div class="step"><div class="num">3</div><div class="step-body"><strong>Website hiện mã QR chuyển khoản</strong><p>Mã đã kèm sẵn nội dung, khách không cần tự gõ.</p></div></div>
+        <div class="step"><div class="num">4</div><div class="step-body"><strong>Khách quét mã và chuyển khoản.</strong></div></div>
+        <div class="step">
+          <div class="step-body" style="width:100%">
+            <div class="hot" style="display:flex; gap:15px; align-items:flex-start;">
+              <div class="num">5</div>
+              <div><strong>Nhân viên kiểm tra thông tin thanh toán thành công, liên hệ và gửi thông tin lại cho khách hàng.</strong>
+              <p style="color:#7a5600">Nhân viên kiểm tra giao dịch, cập nhật trạng thái đơn và liên hệ lại khách.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="step"><div class="num">6</div><div class="step-body"><strong>Sau khi nhân viên duyệt, đơn được kích hoạt và khách được xếp vào lớp.</strong></div></div>
+        <div class="step"><div class="num">7</div><div class="step-body"><strong>Khách vào tài khoản riêng xem lịch học và link Zoom.</strong></div></div>
+      </div>
+      <div class="tip"><span class="pac sm"></span><span>Nếu khung giờ đó chưa mở lớp, khách được ghi vào <strong>danh sách chờ</strong>. Khi có lớp, hệ thống báo cho khách.</span></div>
+    </div>
+
+    <!-- Flow 3 -->
+    <div class="flow card">
+      <div class="flow-tag"><span class="dot"></span> Luồng 3 — Mua bộ thẻ &amp; nhận hàng</div>
+      <p class="flow-note">Áp dụng cho khách mua bộ thẻ riêng hoặc combo khóa học + thẻ.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div class="step-body"><strong>Khách chọn mua bộ thẻ</strong> (hoặc combo khóa học + thẻ).</div></div>
+        <div class="step"><div class="num">2</div><div class="step-body"><strong>Điền địa chỉ nhận hàng</strong><p>Website tự cộng thêm phí ship vào tổng tiền.</p></div></div>
+        <div class="step"><div class="num">3</div><div class="step-body"><strong>Quét mã QR thanh toán → nhân viên kiểm tra và duyệt xác nhận.</strong></div></div>
+        <div class="step"><div class="num">4</div><div class="step-body"><strong>Học viện đóng gói, gửi hàng và cập nhật trạng thái “đã gửi”.</strong></div></div>
+        <div class="step"><div class="num">5</div><div class="step-body"><strong>Khách nhận thẻ, dùng điện thoại quét mã trên thẻ để luyện nghe.</strong></div></div>
+      </div>
+    </div>
+
+    <!-- Flow 4 -->
+    <div class="flow">
+      <div class="flow-tag"><span class="dot"></span> Luồng 4 — Đại sứ giới thiệu &amp; nhận hoa hồng</div>
+      <p class="flow-note">Ghi nhận và tính hoa hồng cho đại sứ sau khi nhân viên duyệt đơn thanh toán thành công.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div class="step-body"><strong>Đại sứ chia sẻ link / mã giới thiệu của mình.</strong></div></div>
+        <div class="step"><div class="num">2</div><div class="step-body"><strong>Khách đăng ký qua link hoặc nhập mã đó.</strong></div></div>
+        <div class="step"><div class="num">3</div><div class="step-body"><strong>Sau khi nhân viên duyệt thanh toán, hệ thống ghi hoa hồng cho đại sứ</strong><p>Theo mức phần trăm của từng loại đơn (khóa / thẻ / VIP / combo).</p></div></div>
+        <div class="step"><div class="num">4</div><div class="step-body"><strong>Đại sứ xem hoa hồng trong trang riêng.</strong></div></div>
+        <div class="step"><div class="num">5</div><div class="step-body"><strong>Học viện duyệt và trả hoa hồng.</strong></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCOPE -->
+  <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 4</p>
+    <h2 class="h2">Bản đầu tiên chưa bao gồm</h2>
+    <p class="sub">Để website ra mắt nhanh và gọn, những phần dưới đây tạm chưa làm — có thể bổ sung ở giai đoạn sau nếu cần.</p>
+    <div class="scope">
+      <ul>
+        <li>Học trực tiếp trên website <span class="later">vẫn học qua Zoom</span></li>
+        <li>Tự động tạo phòng Zoom <span class="later">link do học viện dán</span></li>
+        <li>Bài tập, điểm danh, chấm bài trên website <span class="later">để sau</span></li>
+        <li>Ứng dụng điện thoại riêng <span class="later">để sau</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONFIRM -->
+  <!-- <section class="reveal">
+    <p class="eyebrow"><span class="pac sm"></span> Phần 5</p>
+    <h2 class="h2">Những điểm cần anh/chị xác nhận</h2>
+    <div class="confirm">
+      <h3>Vui lòng đánh dấu và cho ý kiến các mục sau</h3>
+      <p class="sub">Xác nhận xong những điểm này là hai bên có thể bắt đầu làm.</p>
+      <ul>
+        <li><span class="box"></span><span><b>Số tài khoản ngân hàng chính thức để nhận tiền.</b> Hiện đang dùng tài khoản cá nhân của đại sứ — cần một tài khoản chính thức của học viện để nhân viên đối chiếu giao dịch dễ dàng hơn.</span></li>
+        <li><span class="box"></span><span><b>Có cần thu Căn cước công dân trên website không?</b> Đề xuất nên bỏ để bảo vệ thông tin cá nhân của khách.</span></li>
+        <li><span class="box"></span><span><b>Mức hoa hồng cụ thể cho từng loại đơn</b> (khóa học / bộ thẻ / lớp VIP / combo).</span></li>
+        <li><span class="box"></span><span><b>Danh sách khung giờ học chính thức</b> sẽ hiển thị cho khách chọn.</span></li>
+        <li><span class="box"></span><span><b>Khi khách vừa vào bằng link giới thiệu vừa nhập mã của đại sứ khác thì tính cho ai?</b> Đề xuất: ưu tiên mã mà khách chủ động nhập.</span></li>
+      </ul>
+    </div>
+  </section> -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Bản mô tả website Học viện Cardlish · Chuẩn bị bởi <b>Ocean Dev</b> · Ngày 07/07/2026<br>
+    Mọi góp ý xin ghi trực tiếp vào từng mục để hai bên cùng thống nhất trước khi triển khai.
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.add('js');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
