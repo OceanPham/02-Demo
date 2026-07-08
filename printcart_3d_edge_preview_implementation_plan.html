@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Printcart 3D Edge Preview API — Implementation Plan</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #d7dce5;
+      --brand: #0f766e;
+      --brand-2: #0ea5e9;
+      --warn: #b45309;
+      --danger: #b91c1c;
+      --ok: #047857;
+      --chip: #eef2ff;
+      --code: #111827;
+      --code-bg: #f3f4f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    /* ===== Sidebar điều hướng (pinned) ===== */
+    .side-nav {
+      position: fixed;
+      top: 50%;
+      left: 24px;
+      transform: translateY(-50%);
+      width: 250px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 14px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, .12);
+      z-index: 50;
+    }
+    .side-nav h3 {
+      margin: 0 0 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      padding-left: 10px;
+    }
+    .side-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .side-nav li { margin: 2px 0; }
+    .side-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 1.35;
+      border-left: 3px solid transparent;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .side-nav a:hover {
+      background: #f1f5f9;
+      color: var(--ink);
+    }
+    .side-nav a .num {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .side-nav a.active {
+      background: #ecfeff;
+      color: var(--brand);
+      border-left-color: var(--brand);
+      font-weight: 600;
+    }
+    .side-nav a.active .num {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    /* Nút mở/đóng sidebar trên mobile */
+    .side-nav-toggle {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 60;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, .16);
+      cursor: pointer;
+    }
+    .side-nav-toggle span,
+    .side-nav-toggle span::before,
+    .side-nav-toggle span::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+      position: relative;
+    }
+    .side-nav-toggle span::before { position: absolute; top: -6px; }
+    .side-nav-toggle span::after { position: absolute; top: 6px; }
+
+    /* Trên màn hình rộng: chừa chỗ cho sidebar để không đè nội dung */
+    @media (min-width: 1400px) {
+      .page { margin-left: max(0px, calc((100% - 1180px) / 2)); }
+    }
+    header {
+      background: linear-gradient(135deg, #0f766e 0%, #0e7490 52%, #1d4ed8 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 40px 42px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+    }
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 36px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+    header p { margin: 6px 0; color: rgba(255,255,255,.9); }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      font-size: 13px;
+    }
+    nav.toc {
+      margin: 26px 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px 26px;
+      box-shadow: 0 8px 24px rgba(15,23,42,.06);
+    }
+    nav.toc h2 { margin: 0 0 12px; font-size: 18px; }
+    nav.toc ol {
+      margin: 0;
+      padding-left: 22px;
+      columns: 2;
+      column-gap: 48px;
+    }
+    nav.toc li { break-inside: avoid; margin: 5px 0; }
+    nav.toc a { color: var(--brand); text-decoration: none; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: 0 8px 24px rgba(15,23,42,.05);
+    }
+    h2 {
+      margin: 0 0 18px;
+      font-size: 26px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+    h3 {
+      margin: 26px 0 12px;
+      font-size: 19px;
+      line-height: 1.3;
+    }
+    h4 {
+      margin: 20px 0 8px;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--muted);
+    }
+    p { margin: 10px 0; }
+    a { color: var(--brand); }
+    code {
+      color: var(--code);
+      background: var(--code-bg);
+      padding: 2px 5px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .92em;
+    }
+    pre {
+      overflow-x: auto;
+      background: #0b1220;
+      color: #e5edf8;
+      border-radius: 14px;
+      padding: 16px 18px;
+      font-size: 13px;
+      line-height: 1.55;
+      border: 1px solid #1f2937;
+    }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 13px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: #f8fafc;
+      color: #374151;
+      font-weight: 700;
+    }
+    tr:last-child td { border-bottom: none; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 5px 0; }
+    .callout {
+      border-left: 5px solid var(--brand);
+      background: #ecfeff;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+    .callout.warn {
+      border-left-color: var(--warn);
+      background: #fff7ed;
+    }
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: #fef2f2;
+    }
+    .callout.ok {
+      border-left-color: var(--ok);
+      background: #ecfdf5;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      margin: 20px 0;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    }
+    .step-title {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .badge {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #0f766e;
+      color: white;
+      font-weight: 800;
+    }
+    .step-title h3 { margin: 0; }
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .box {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+    .box h4 { margin-top: 0; }
+    .decision {
+      border: 1px solid #f5c26b;
+      background: #fffbeb;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-top: 14px;
+    }
+    .decision h4 { color: #92400e; }
+    .recommend {
+      color: var(--ok);
+      font-weight: 700;
+    }
+    .no-go {
+      color: var(--danger);
+      font-weight: 700;
+    }
+    .flow {
+      border: 1px dashed #94a3b8;
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      white-space: pre-wrap;
+      color: #0f172a;
+    }
+    .small { color: var(--muted); font-size: 13px; }
+    .page-break { page-break-before: always; }
+    @media print {
+      body { background: white; }
+      .page { max-width: none; padding: 0; margin: 0 auto; }
+      header, section, nav.toc { box-shadow: none; }
+      nav.toc a { color: inherit; }
+      pre { white-space: pre-wrap; }
+      .side-nav, .side-nav-toggle, .side-nav-backdrop { display: none !important; }
+    }
+
+    /* Dưới 1200px: sidebar thành drawer trượt, mặc định ẩn */
+    @media (max-width: 1200px) {
+      .side-nav-toggle { display: inline-flex; }
+      .side-nav {
+        top: 0;
+        left: 0;
+        transform: translateX(-110%);
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0 18px 18px 0;
+        padding-top: 74px;
+        transition: transform .25s ease;
+      }
+      .side-nav.open { transform: translateX(0); }
+      .side-nav-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, .35);
+        z-index: 45;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .2s ease, visibility .2s ease;
+      }
+      .side-nav-backdrop.open { opacity: 1; visibility: visible; }
+    }
+
+    @media (max-width: 760px) {
+      header { padding: 28px 24px; }
+      header h1 { font-size: 28px; }
+      nav.toc ol { columns: 1; }
+      .step-grid { grid-template-columns: 1fr; }
+      section { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <button class="side-nav-toggle" id="sideNavToggle" aria-label="Mở mục lục" aria-controls="sideNav" aria-expanded="false"><span></span></button>
+  <div class="side-nav-backdrop" id="sideNavBackdrop"></div>
+  <aside class="side-nav" id="sideNav" aria-label="Điều hướng nhanh">
+    <h3>Điều hướng nhanh</h3>
+    <ul>
+      <li><a href="#summary"><span class="num">1</span>Tóm tắt hướng triển khai</a></li>
+      <li><a href="#confirm"><span class="num">2</span>Decision checklist</a></li>
+      <li><a href="#architecture"><span class="num">3</span>Kiến trúc end-to-end</a></li>
+      <li><a href="#terms"><span class="num">4</span>Định nghĩa input/output</a></li>
+      <li><a href="#roadmap"><span class="num">5</span>Roadmap từng bước</a></li>
+      <li><a href="#contracts"><span class="num">6</span>API &amp; renderer contracts</a></li>
+      <li><a href="#qa"><span class="num">7</span>QA &amp; monitoring</a></li>
+      <li><a href="#nongoals"><span class="num">8</span>Không làm trong Phase 1</a></li>
+      <li><a href="#handoff"><span class="num">9</span>Checklist bàn giao</a></li>
+      <li><a href="#final"><span class="num">10</span>Final recommendation</a></li>
+    </ul>
+  </aside>
+
+  <main class="page">
+    <header>
+      <h1>Printcart 3D Edge Preview API<br/>Implementation Plan</h1>
+      <p>Kế hoạch triển khai từng bước cho <strong>Phase 1: 3D Edge Preview MVP</strong> theo hướng <strong>server-side static render</strong>.</p>
+      <p>Đối tượng đọc: backend, render service, dashboard, designer/plugin developers.</p>
+      <div class="meta">
+        <span>Source: Printcart_3D_Preview_API_Dev_Handoff.md</span>
+        <span>Spec version: 1.0</span>
+        <span>Spec date: 2026-07-07</span>
+        <span>Plan date: 2026-07-08</span>
+        <span>Product scope: Canvas / Wall-art</span>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <h2>Mục lục</h2>
+      <ol>
+        <li><a href="#summary">Tóm tắt hướng triển khai</a></li>
+        <li><a href="#confirm">Decision checklist cần team confirm</a></li>
+        <li><a href="#architecture">Kiến trúc end-to-end</a></li>
+        <li><a href="#terms">Định nghĩa input/output chính</a></li>
+        <li><a href="#roadmap">Roadmap từng bước</a></li>
+        <li><a href="#contracts">API & renderer contracts</a></li>
+        <li><a href="#qa">QA, acceptance criteria, monitoring</a></li>
+        <li><a href="#nongoals">Không làm trong Phase 1</a></li>
+        <li><a href="#handoff">Checklist bàn giao cho từng team</a></li>
+      </ol>
+    </nav>
+
+    <section id="summary">
+      <h2>1. Tóm tắt hướng triển khai</h2>
+      <div class="callout ok">
+        <strong>Hướng chính xác theo spec:</strong> xây <code>Printcart 3D Preview API</code> với feature đầu tiên là <code>3D Edge Preview</code> cho canvas/wall-art. MVP nhận artwork/design 2D + geometry từ Product/Side/Design, render thành ảnh preview <code>WebP/PNG</code>, cache lại và trả về <code>preview URL</code>.
+      </div>
+      <p>Đây không phải flow “upload ảnh bất kỳ → tạo object 3D”. Với canvas/wall-art, phần được 3D hóa là <strong>tấm canvas có độ dày cạnh</strong>. Ảnh artwork 2D được dùng làm texture cho mặt trước; 4 cạnh được sinh theo <code>edge_style</code>.</p>
+      <p>Trong Phase 1, merchant <strong>không cần upload GLB/GLTF</strong>. <code>GLB/GLTF</code>, <code>mesh_name</code>, <code>uv_rect</code> và model library thuộc Phase 2.</p>
+      <div class="chips">
+        <span class="chip">MVP: edge_preview</span>
+        <span class="chip">Output: preview.webp / preview.png</span>
+        <span class="chip">Backend: Laravel</span>
+        <span class="chip">Renderer: Node.js + Sharp + Three.js</span>
+        <span class="chip">Storage: S3/CDN</span>
+        <span class="chip">No GLB in Phase 1</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Vai trò</th><th>Output chính</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Dashboard</td><td>Quản lý cấu hình 3D cho product, test render</td><td>Saved <code>product_3d_profiles</code>, preview panel</td></tr>
+          <tr><td>Laravel <code>backend-rest-api</code></td><td>Source of truth: auth, product/side/design, config, cache, storage record</td><td>API response chứa <code>status</code>, <code>url</code>, <code>cache_hit</code></td></tr>
+          <tr><td>Node 3D Render Service</td><td>Xử lý ảnh, texture, 3D scene snapshot</td><td><code>storage_path</code>, metadata render</td></tr>
+          <tr><td>S3/CDN</td><td>Lưu ảnh preview đã render</td><td>Public/signed CDN URL</td></tr>
+          <tr><td>Designer / WP Plugin</td><td>Consumer/adapter, không làm source of truth</td><td>Hiển thị preview URL hoặc widget/modal</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="confirm">
+      <h2>2. Decision checklist cần team confirm trước khi code sâu</h2>
+      <p>Các mục dưới đây nên được chốt rõ trong team để tránh implement xong phải đổi contract.</p>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Mục cần confirm</th><th>Option</th><th>Khuyến nghị</th><th>Ảnh hưởng nếu chưa chốt</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D01</td>
+            <td>Artifact ưu tiên cho Phase 1</td>
+            <td><strong>A:</strong> client viewer r3f tương tác<br/><strong>B:</strong> server static render API</td>
+            <td><span class="recommend">B</span> nếu bám spec chính thức. A có thể làm demo/widget sau.</td>
+            <td>Ảnh hưởng toàn bộ architecture: output là <code>&lt;canvas&gt;</code> hay <code>preview URL</code>.</td>
+          </tr>
+          <tr>
+            <td>D02</td>
+            <td>Render sync hay async</td>
+            <td><strong>A:</strong> sync nếu render nhỏ<br/><strong>B:</strong> async queue cho tất cả<br/><strong>C:</strong> hybrid: sync nhỏ, queue lớn</td>
+            <td><span class="recommend">C</span>. MVP có thể sync với output 1200×900, queue cho high-res/batch.</td>
+            <td>Ảnh hưởng response contract: trả <code>ready</code> ngay hay <code>queued</code> + polling.</td>
+          </tr>
+          <tr>
+            <td>D03</td>
+            <td>Ai upload ảnh preview lên S3?</td>
+            <td><strong>A:</strong> Node upload trực tiếp<br/><strong>B:</strong> Node trả buffer/path, Laravel upload<br/><strong>C:</strong> Node upload vào bucket tạm, Laravel promote</td>
+            <td><span class="recommend">B hoặc C</span> nếu muốn Laravel kiểm soát Image record/permission chặt hơn.</td>
+            <td>Ảnh hưởng security, IAM, retry, ownership, Image model.</td>
+          </tr>
+          <tr>
+            <td>D04</td>
+            <td>Nguồn <code>artwork_url</code> hợp lệ</td>
+            <td><strong>A:</strong> chỉ Printcart-owned image/design id<br/><strong>B:</strong> signed fetch token<br/><strong>C:</strong> allowlist CDN domains<br/><strong>D:</strong> arbitrary URL</td>
+            <td><span class="recommend">A + B</span>. Tránh SSRF và path nội bộ.</td>
+            <td>Ảnh hưởng bảo mật renderer và khả năng dùng trong WP/plugin.</td>
+          </tr>
+          <tr>
+            <td>D05</td>
+            <td>Output default</td>
+            <td><code>webp</code> / <code>png</code>; size 800×600, 1200×900, 1600×1200</td>
+            <td><span class="recommend"><code>webp 1200×900</code></span> cho preview MVP, cho phép override có limit.</td>
+            <td>Ảnh hưởng cache key, storage cost, render time.</td>
+          </tr>
+          <tr>
+            <td>D06</td>
+            <td><code>edge_style</code> Phase 1</td>
+            <td><code>solid_color</code>, <code>wrap</code>, <code>mirror</code>, <code>blur</code>, <code>transparent/custom</code></td>
+            <td><span class="recommend">MVP 1:</span> <code>solid_color</code> + <code>wrap</code>. MVP 2: thêm <code>mirror</code>, <code>blur</code>.</td>
+            <td>Ảnh hưởng scope renderer và UI controls.</td>
+          </tr>
+          <tr>
+            <td>D07</td>
+            <td>DB scope Sprint đầu</td>
+            <td><strong>A:</strong> chỉ <code>product_3d_profiles</code> + <code>design_3d_previews</code><br/><strong>B:</strong> tạo cả 4 bảng ngay</td>
+            <td><span class="recommend">A</span> cho Phase 1 nhanh; thêm <code>three_d_models</code>/<code>side_3d_mappings</code> ở Phase 2.</td>
+            <td>Ảnh hưởng migration, controller, UI scope.</td>
+          </tr>
+          <tr>
+            <td>D08</td>
+            <td>Auth cho <code>POST /v1/3d/edge-preview</code></td>
+            <td><code>basic</code>, <code>unauth.token</code>, signed render token</td>
+            <td><span class="recommend"><code>basic</code> cho dashboard, <code>unauth.token</code> hoặc signed token cho storefront/plugin.</span></td>
+            <td>Ảnh hưởng public usage, rate limit, abuse control.</td>
+          </tr>
+          <tr>
+            <td>D09</td>
+            <td>Dùng <code>Design.original_side</code> hay live <code>Side</code> khi render saved design</td>
+            <td><strong>A:</strong> luôn original snapshot<br/><strong>B:</strong> live Side<br/><strong>C:</strong> original nếu có, fallback live</td>
+            <td><span class="recommend">C</span>, nhưng ưu tiên original để khớp geometry lúc design được tạo.</td>
+            <td>Ảnh hưởng độ khớp preview với file print/PDF.</td>
+          </tr>
+          <tr>
+            <td>D10</td>
+            <td>Renderer implementation</td>
+            <td><strong>A:</strong> Sharp-only 2.5D composition<br/><strong>B:</strong> Three.js + Playwright headless snapshot<br/><strong>C:</strong> hybrid</td>
+            <td><span class="recommend">C</span>. Sharp tạo texture deterministic; Three.js render snapshot thực tế.</td>
+            <td>Ảnh hưởng độ thật của ảnh preview và hạ tầng Chrome/headless.</td>
+          </tr>
+          <tr>
+            <td>D11</td>
+            <td>Storage path convention</td>
+            <td><code>3d-preview/{store_uuid}/{hash}.webp</code> hoặc theo Image model hiện tại</td>
+            <td><span class="recommend"><code>3d-preview/{store_uuid}/{input_hash}.webp</code></span>, map về Image record nếu cần.</td>
+            <td>Ảnh hưởng CDN, cache invalidation, cleanup.</td>
+          </tr>
+          <tr>
+            <td>D12</td>
+            <td>Dashboard placement</td>
+            <td>Product edit tab, Side edit section, Design detail preview panel</td>
+            <td><span class="recommend">Product tab <code>3D Preview</code> + test render; design detail hiển thị result.</span></td>
+            <td>Ảnh hưởng UX và phân quyền quản lý.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="architecture">
+      <h2>3. Kiến trúc end-to-end</h2>
+      <div class="flow">Dashboard / Designer / WordPress Plugin
+        ↓
+Laravel backend-rest-api
+  - auth / permission
+  - Product / Side / Design source of truth
+  - product_3d_profiles
+  - design_3d_previews cache
+  - render orchestration
+        ↓ internal auth
+Node 3D Render Service
+  - Sharp texture generation
+  - procedural canvas geometry
+  - Three.js scene snapshot
+  - Playwright/Chromium headless nếu cần
+        ↓
+S3 / CDN
+        ↓
+API response: preview image URL</div>
+      <h3>Luồng runtime chuẩn</h3>
+      <ol>
+        <li>Merchant bật <code>3D Preview</code> trong dashboard cho product.</li>
+        <li>Dashboard lưu <code>product_3d_profiles</code>.</li>
+        <li>Designer/WP/Dashboard có <code>design_id</code> hoặc <code>artwork_url</code>.</li>
+        <li>Client gọi <code>POST /v1/3d/edge-preview</code> hoặc <code>POST /v1/designs/{design}/generate/3d-preview</code>.</li>
+        <li>Laravel validate auth, store ownership, product/side/design relationship.</li>
+        <li>Laravel resolve geometry từ <code>Side</code> hoặc <code>Design.original_side</code>.</li>
+        <li>Laravel build <code>input_hash</code>/<code>config_hash</code>, check <code>design_3d_previews</code>.</li>
+        <li>Nếu cache hit, trả <code>result_url</code>.</li>
+        <li>Nếu cache miss, gọi Node render service bằng internal token.</li>
+        <li>Node tạo front/edge textures, render procedural canvas snapshot.</li>
+        <li>Laravel lưu kết quả vào S3/Image record và update <code>design_3d_previews</code>.</li>
+        <li>Client nhận URL và hiển thị ảnh preview.</li>
+      </ol>
+      <div class="callout warn">
+        <strong>Lưu ý:</strong> <code>react-three-fiber</code> chỉ hợp cho interactive browser viewer. Nếu chọn server-side static render thì Node render service dùng <code>three.js</code> trực tiếp + <code>Sharp</code> + <code>Playwright/Chromium</code>, không dùng r3f làm core render service.
+      </div>
+    </section>
+
+    <section id="terms">
+      <h2>4. Định nghĩa input/output chính</h2>
+      <table>
+        <thead><tr><th>Khái niệm</th><th>Nguồn</th><th>Dùng để làm gì</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td><code>artwork_url</code></td><td><code>Design.design_image</code>, <code>preview_image</code>, <code>preview.design</code>, current designer export</td><td>Ảnh 2D dán lên mặt trước canvas</td><td><code>https://cdn.../design.png</code></td></tr>
+          <tr><td><code>side_image_size</code></td><td><code>SideResource</code> hoặc <code>Design.original_side</code></td><td>Chiều rộng/cao của side/product</td><td><code>{ width: 40, height: 30 }</code></td></tr>
+          <tr><td><code>design_area</code></td><td><code>SideResource</code></td><td>Vùng thiết kế/print area trên side</td><td><code>{ width: 36, height: 26, top: 2, left: 2 }</code></td></tr>
+          <tr><td><code>cut_line_margin</code></td><td><code>SideResource</code></td><td>Bleed/cut-line reference để render khớp print geometry</td><td><code>{ x: 1, y: 1 }</code></td></tr>
+          <tr><td><code>safe_zone_margin</code></td><td><code>SideResource</code></td><td>Safe-zone/margin reference</td><td><code>{ x: 0.5, y: 0.5 }</code></td></tr>
+          <tr><td><code>edge_style</code></td><td>Request hoặc <code>product_3d_profiles.edge_style_default</code></td><td>Cách sinh 4 cạnh canvas</td><td><code>wrap</code>, <code>mirror</code>, <code>blur</code>, <code>solid_color</code></td></tr>
+          <tr><td><code>edge_depth</code></td><td><code>product_3d_profiles</code></td><td>Độ dày cạnh canvas</td><td><code>1.5 cm</code></td></tr>
+          <tr><td><code>input_hash</code></td><td>Laravel cache builder</td><td>Cache key theo artwork + product + side + profile + output + renderer version</td><td><code>sha256(...)</code></td></tr>
+          <tr><td><code>result_url</code></td><td>S3/CDN/Image record</td><td>Ảnh preview cuối trả về client</td><td><code>https://cdn.../3d-preview/hash.webp</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="roadmap">
+      <h2>5. Roadmap thực hiện từng bước</h2>
+
+      <article class="step" id="step-0">
+        <div class="step-title"><span class="badge">0</span><h3>Chốt scope và decision log</h3></div>
+        <p>Mục tiêu là chốt trước những điểm có thể làm lệch architecture: output là static URL, có dùng queue không, renderer upload S3 kiểu gì, và nguồn artwork có giới hạn gì.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>Printcart_3D_Preview_API_Dev_Handoff.md</code></li><li>Quyết định của product/backend/dashboard/render team</li><li>Yêu cầu sử dụng thực tế: dashboard test, storefront preview, order detail</li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Decision log D01–D12 đã có owner và lựa chọn cuối</li><li>Scope Phase 1 rõ: <code>edge_preview</code>, no GLB</li><li>Default output format/size</li></ul></div>
+        </div>
+        <h4>Việc cần làm</h4>
+        <ol><li>Review bảng Decision checklist.</li><li>Ghi lại option đã chọn vào ticket/spec nội bộ.</li><li>Đánh dấu các mục không làm trong Phase 1 để tránh scope creep.</li></ol>
+        <div class="decision"><h4>Cần team confirm</h4><p>Chốt D01–D06 trước khi backend/render service code. D07–D12 có thể chốt trong sprint planning nhưng không nên để trống quá Sprint 1.</p></div>
+      </article>
+
+      <article class="step" id="step-1">
+        <div class="step-title"><span class="badge">1</span><h3>Phase 0 — Side contract cleanup & geometry verification</h3></div>
+        <p>Đây là bước nền tảng. Nếu geometry sai, preview 3D sẽ lệch dù renderer đúng.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li>Dashboard aliases: <code>product_size</code>, <code>design_size</code>, <code>bleed_size</code>, <code>margin_size</code>, <code>show_bleed</code></li><li>Backend contract: <code>side_image_size</code>, <code>design_area</code>, <code>cut_line_margin</code>, <code>safe_zone_margin</code>, <code>show_cut_line</code></li><li><code>SideResource</code>, <code>Design.original_side</code>, <code>original_output_options</code></li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Dashboard save/update side đúng contract hoặc có adapter rõ ràng</li><li>API response trả đúng geometry sau khi save</li><li>Manual/test cases cho create/update side</li></ul></div>
+        </div>
+        <h4>Mapping bắt buộc</h4>
+        <table>
+          <thead><tr><th>Dashboard alias</th><th>Backend/API field</th></tr></thead>
+          <tbody>
+            <tr><td><code>product_size</code></td><td><code>side_image_size</code></td></tr>
+            <tr><td><code>design_size</code></td><td><code>design_area</code></td></tr>
+            <tr><td><code>bleed_size</code></td><td><code>cut_line_margin</code></td></tr>
+            <tr><td><code>margin_size</code></td><td><code>safe_zone_margin</code></td></tr>
+            <tr><td><code>show_bleed</code></td><td><code>show_cut_line</code></td></tr>
+          </tbody>
+        </table>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Tạo/sửa side từ dashboard xong, API trả đúng width/height/design area/bleed/safe-zone.</li><li>Saved design có snapshot <code>original_side</code> đủ geometry để render lại sau này.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Chọn <strong>fix trực tiếp dashboard payload</strong> hay <strong>giữ alias UI và thêm adapter layer</strong>. Khuyến nghị: adapter rõ ở API hook/form mapper để giảm ảnh hưởng UI hiện tại.</p></div>
+      </article>
+
+      <article class="step" id="step-2">
+        <div class="step-title"><span class="badge">2</span><h3>Tạo minimal data model cho Phase 1</h3></div>
+        <p>Phase 1 chỉ cần quản lý cấu hình edge preview và cache kết quả render. Model library đầy đủ có thể để Phase 2.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>store_id</code></li><li><code>product_id</code></li><li><code>side_id</code> optional</li><li><code>design_id</code> optional</li><li>edge settings: <code>edge_style_default</code>, <code>edge_depth</code>, <code>edge_depth_unit</code></li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Migration/model <code>Product3DProfile</code></li><li>Migration/model <code>Design3DPreview</code></li><li>Optional placeholder <code>side_3d_mappings</code> nếu team muốn Phase 2 sẵn schema</li></ul></div>
+        </div>
+        <h4>Minimal tables</h4>
+        <pre><code>product_3d_profiles
+- id, uuid, store_id, product_id
+- three_d_model_id nullable
+- mode: edge_preview | model_preview | hybrid
+- enabled boolean
+- edge_style_default: wrap | mirror | blur | solid_color
+- edge_depth
+- edge_depth_unit
+- camera json nullable
+- lighting json nullable
+- material json nullable
+- render_defaults json nullable
+- config_version integer default 1
+- timestamps, soft deletes
+
+design_3d_previews
+- id, uuid, store_id
+- design_id nullable
+- product_id
+- side_id nullable
+- render_type: edge_preview | model_snapshot | widget_config
+- status: queued | processing | ready | failed
+- input_hash
+- config_hash
+- result_image_id nullable
+- result_url nullable
+- error_message nullable
+- metadata json nullable
+- timestamps</code></pre>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Có thể tạo profile <code>mode=edge_preview</code> với <code>three_d_model_id=null</code>.</li><li>Có thể lưu cache record với status <code>ready</code>/<code>failed</code>.</li><li><code>config_version</code> tăng khi profile thay đổi để cache invalidation rõ ràng.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Chọn minimal 2 bảng hay tạo cả <code>three_d_models</code>/<code>side_3d_mappings</code> ngay. Khuyến nghị: minimal 2 bảng để ship Phase 1 nhanh.</p></div>
+      </article>
+
+      <article class="step" id="step-3">
+        <div class="step-title"><span class="badge">3</span><h3>Backend API: Product 3D Profile & Product 3D Config</h3></div>
+        <p>API này phục vụ dashboard cấu hình, renderer/widget lấy profile/geometry và storefront/plugin lấy safe config.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>product_id</code></li><li>Auth: <code>basic</code> cho dashboard/admin</li><li>Store context: <code>X-Printcart-Store-Sid</code></li><li>Profile payload từ dashboard</li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li><code>GET /v1/products/{product}/3d-config</code></li><li><code>POST /v1/products/{product}/3d-profiles</code></li><li><code>PUT /v1/products/{product}/3d-profiles/{profile}</code></li><li><code>Product3DProfileResource</code></li></ul></div>
+        </div>
+        <h4>Response cần có</h4>
+        <pre><code>{
+  "data": {
+    "product_id": "product_uuid",
+    "enabled": true,
+    "mode": "edge_preview",
+    "profile": {
+      "id": "profile_uuid",
+      "edge_style_default": "wrap",
+      "edge_depth": 1.5,
+      "edge_depth_unit": "cm",
+      "config_version": 3
+    },
+    "model": null,
+    "sides": [
+      {
+        "side_id": "side_uuid",
+        "name": "Front",
+        "side_image_size": { "width": 40, "height": 30 },
+        "design_area": { "width": 36, "height": 26, "top": 2, "left": 2 },
+        "cut_line_margin": { "x": 1, "y": 1 },
+        "safe_zone_margin": { "x": 0.5, "y": 0.5 },
+        "mapping": { "surface_type": "front", "mesh_name": null }
+      }
+    ]
+  }
+}</code></pre>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Dashboard có thể fetch config và update profile.</li><li>Response không expose secret/internal S3 path.</li><li>Product disabled thì render endpoint trả lỗi rõ hoặc status disabled.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p><code>GET /3d-config</code> dùng <code>basic</code> riêng cho dashboard hay support cả <code>unauth.token</code> cho widget từ đầu. Khuyến nghị: support cả hai nhưng public response phải sanitized.</p></div>
+      </article>
+
+      <article class="step" id="step-4">
+        <div class="step-title"><span class="badge">4</span><h3>Node 3D Render Service scaffold</h3></div>
+        <p>Tạo service độc lập để xử lý phần nặng: fetch artwork, Sharp texture generation, Three.js snapshot, output file.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li>Repo/location deploy cho Node service</li><li>Internal token từ Laravel</li><li>Renderer contract JSON</li><li>Default output limits</li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li><code>GET /health</code></li><li><code>POST /render/edge-preview</code></li><li>Internal auth middleware</li><li>Structured logs + duration metrics</li></ul></div>
+        </div>
+        <h4>Dependencies đề xuất</h4>
+        <pre><code>runtime:
+- node.js
+- fastify hoặc express
+- sharp
+- three
+- playwright/chromium nếu dùng headless WebGL snapshot
+
+phase 2 only:
+- @gltf-transform/core
+- @gltf-transform/functions
+- gltf-validator</code></pre>
+        <h4>Acceptance criteria</h4>
+        <ul><li><code>GET /health</code> trả <code>200 OK</code> với version.</li><li><code>POST /render/edge-preview</code> reject nếu thiếu internal token.</li><li>Payload sai trả validation error rõ.</li><li>Service có timeout và giới hạn image/output size.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Deploy renderer dưới dạng service container thường xuyên chạy hay job/lambda-like. Khuyến nghị: service container trước để dễ debug Playwright/Chromium.</p></div>
+      </article>
+
+      <article class="step" id="step-5">
+        <div class="step-title"><span class="badge">5</span><h3>Laravel Render Endpoint: <code>POST /v1/3d/edge-preview</code></h3></div>
+        <p>Endpoint public/internal-facing để render một artwork/design thành static 3D edge preview.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>product_id</code></li><li><code>side_id</code></li><li><code>design_id</code> optional</li><li><code>artwork_url</code> optional nếu không dùng design id</li><li><code>edge_style</code>, <code>edge_color</code> optional override</li><li><code>output.format</code>, <code>output.width</code>, <code>output.height</code></li><li><code>reset</code> để bỏ cache</li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Cache hit: <code>status=ready</code>, <code>url</code>, <code>cache_hit=true</code></li><li>Render success: <code>status=ready</code>, <code>url</code>, <code>cache_hit=false</code></li><li>Async: <code>status=queued</code>, <code>preview_id</code></li><li>Error: validation/permission/render error rõ</li></ul></div>
+        </div>
+        <h4>Laravel orchestration</h4>
+        <ol><li>Validate auth: <code>basic</code> hoặc <code>unauth.token</code>.</li><li>Validate product/side/design thuộc đúng store.</li><li>Resolve <code>Product3DProfile</code>; nếu disabled thì reject.</li><li>Resolve artwork: ưu tiên <code>design</code> record hoặc Printcart-owned image/signed token.</li><li>Resolve geometry: <code>Side</code> hoặc <code>Design.original_side</code> nếu design đã lưu.</li><li>Resolve <code>edge_style</code>: request override → profile default → fallback.</li><li>Build normalized renderer payload.</li><li>Build <code>input_hash</code>/<code>config_hash</code>.</li><li>Check <code>design_3d_previews</code> cache nếu <code>reset=false</code>.</li><li>Gọi Node render service nếu cache miss.</li><li>Lưu result vào S3/Image/cache.</li><li>Return response cho caller.</li></ol>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Render từ <code>product_id + side_id + artwork_url</code> chạy được.</li><li>Render từ <code>design_id</code> chạy được nếu design có artwork.</li><li>Cache hit không gọi Node render service lại.</li><li>Không accept arbitrary internal S3 path.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Endpoint này nên support <code>artwork_url</code> raw không? Khuyến nghị: chỉ cho URL từ Printcart CDN hoặc signed fetch token.</p></div>
+      </article>
+
+      <article class="step" id="step-6">
+        <div class="step-title"><span class="badge">6</span><h3>Renderer Step 1: fetch artwork & generate front/edge textures</h3></div>
+        <p>Renderer cần deterministic texture generation trước khi dựng 3D scene.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>artwork.url</code></li><li><code>side.side_image_size</code></li><li><code>side.design_area</code></li><li><code>side.cut_line_margin</code></li><li><code>side.safe_zone_margin</code></li><li><code>profile.edge_style</code>, <code>edge_color</code></li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li><code>frontTexture</code></li><li><code>leftEdgeTexture</code></li><li><code>rightEdgeTexture</code></li><li><code>topEdgeTexture</code></li><li><code>bottomEdgeTexture</code></li><li>Texture metadata: width, height, crop area</li></ul></div>
+        </div>
+        <h4>Edge style behavior</h4>
+        <table>
+          <thead><tr><th><code>edge_style</code></th><th>Cách sinh texture cạnh</th><th>Mức độ ưu tiên</th></tr></thead>
+          <tbody>
+            <tr><td><code>solid_color</code></td><td>Fill 4 cạnh bằng <code>edge_color</code></td><td>Must-have MVP</td></tr>
+            <tr><td><code>wrap</code></td><td>Lấy strip pixel sát mép artwork và kéo qua cạnh</td><td>Must-have MVP nếu làm canvas thật</td></tr>
+            <tr><td><code>mirror</code></td><td>Lấy strip pixel mép và flip/mirror</td><td>Nice-to-have MVP</td></tr>
+            <tr><td><code>blur</code></td><td>Stretch strip pixel mép và blur</td><td>Nice-to-have MVP</td></tr>
+            <tr><td><code>transparent/custom</code></td><td>Cần định nghĩa riêng</td><td>Team confirm</td></tr>
+          </tbody>
+        </table>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Texture output không méo tỷ lệ mặt trước.</li><li><code>solid_color</code> hoạt động ổn với hex color.</li><li><code>wrap</code> không bị đảo hướng top/bottom/left/right.</li><li>Renderer reject ảnh quá lớn hoặc unsupported format.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p><code>wrap</code> có lấy vùng từ full artwork hay từ <code>design_area</code> sau khi compose? Khuyến nghị: render theo output artwork đã compose đúng side/design geometry, sau đó lấy strip từ artwork output cuối.</p></div>
+      </article>
+
+      <article class="step" id="step-7">
+        <div class="step-title"><span class="badge">7</span><h3>Renderer Step 2: procedural 3D canvas geometry & snapshot</h3></div>
+        <p>Dựng một khối canvas procedural, apply textures vào từng mặt và snapshot ra WebP/PNG.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li>Textures từ Step 6</li><li><code>width</code>, <code>height</code> từ <code>side_image_size</code></li><li><code>edge_depth</code>, <code>edge_depth_unit</code></li><li><code>output.width</code>, <code>output.height</code>, <code>format</code></li><li>Camera/light default</li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Rendered image buffer/file</li><li><code>metadata.duration_ms</code></li><li><code>renderer_version</code></li><li>Optional: camera/render metadata JSON</li></ul></div>
+        </div>
+        <h4>Geometry rule</h4>
+        <pre><code>canvasGeometry:
+- scene_width  = normalized(side_image_size.width)
+- scene_height = normalized(side_image_size.height)
+- scene_depth  = normalized(edge_depth converted to same unit)
+
+materials:
+- front  = artwork/front texture
+- left   = left edge texture
+- right  = right edge texture
+- top    = top edge texture
+- bottom = bottom edge texture
+- back   = neutral material</code></pre>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Ảnh preview nhìn rõ mặt trước và cạnh.</li><li>Đổi <code>edge_depth</code> làm độ dày preview thay đổi.</li><li>Đổi <code>width/height</code> làm ratio preview thay đổi đúng.</li><li>Output đúng format/size.</li><li>Render p95 mục tiêu 3–5 giây cho first render ở size MVP.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Góc camera default. Option A: front 3/4 view thấy cạnh phải + dưới. Option B: front chính diện ít depth hơn. Khuyến nghị: 3/4 view cho preview marketing.</p></div>
+      </article>
+
+      <article class="step" id="step-8">
+        <div class="step-title"><span class="badge">8</span><h3>Storage, Image record, cache update</h3></div>
+        <p>Sau khi renderer trả kết quả, Laravel cần lưu file, tạo/ghi Image record và update <code>design_3d_previews</code>.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li>Renderer response: <code>storage_path</code> hoặc image buffer</li><li><code>input_hash</code>, <code>config_hash</code></li><li><code>design_id</code>/<code>product_id</code>/<code>side_id</code></li><li>Render metadata</li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>S3 object: <code>3d-preview/{store_uuid}/{hash}.webp</code></li><li><code>Image</code> record nếu dùng</li><li><code>design_3d_previews.status=ready</code></li><li><code>result_url</code> CDN</li></ul></div>
+        </div>
+        <h4>Cache key nên gồm</h4>
+        <ul><li>Design image URL/hash</li><li>Product ID</li><li>Side ID</li><li><code>product_3d_profiles.config_version</code></li><li>Side mapping version nếu có</li><li><code>edge_style</code>, <code>edge_color</code></li><li>Output size/format</li><li><code>renderer_version</code></li></ul>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Cùng input render lần 2 trả cache hit.</li><li><code>reset=true</code> bỏ cache và render lại.</li><li>Profile change làm cache miss do <code>config_version</code> thay đổi.</li><li>Result URL dùng được trong dashboard/plugin.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Có cần cleanup old preview files khi design/profile thay đổi không. Khuyến nghị: không xóa ngay; dùng lifecycle policy theo prefix <code>3d-preview/</code>.</p></div>
+      </article>
+
+      <article class="step" id="step-9">
+        <div class="step-title"><span class="badge">9</span><h3>Saved Design endpoint: <code>POST /v1/designs/{design}/generate/3d-preview</code></h3></div>
+        <p>Endpoint tiện lợi cho design đã lưu/order flow. Khác biệt chính là phải ưu tiên snapshot data của design.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>design_id</code> trong route</li><li>Auth <code>basic</code></li><li>Optional override: <code>edge_style</code>, <code>edge_color</code>, <code>output</code>, <code>reset</code></li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Giống <code>/v1/3d/edge-preview</code></li><li><code>design_3d_previews</code> record gắn với <code>design_id</code></li><li>Preview URL dùng cho design/order detail</li></ul></div>
+        </div>
+        <h4>Resolve priority</h4>
+        <ol><li><code>Design.original_side</code> nếu có.</li><li><code>Design.original_output_options</code> nếu cần output/dpi/unit.</li><li><code>Design.design_image</code> hoặc <code>preview_image</code>.</li><li>Fallback live <code>Side</code> chỉ khi snapshot thiếu.</li></ol>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Render saved design không bị đổi ratio nếu live Side đã bị chỉnh sau khi design được tạo.</li><li>Order/detail có thể show preview URL ổn định.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Khi <code>original_side</code> thiếu field, fallback live Side hay fail để tránh preview sai. Khuyến nghị: fallback live Side nhưng response metadata phải ghi <code>geometry_source="live_side_fallback"</code>.</p></div>
+      </article>
+
+      <article class="step" id="step-10">
+        <div class="step-title"><span class="badge">10</span><h3>Dashboard implementation</h3></div>
+        <p>Dashboard là management UI, không tự render 3D. Tất cả API calls nằm trong <code>usePrintcartApi.js</code>.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>product_id</code></li><li>Profile form values</li><li>Existing side/design data</li><li>Auth Bearer + <code>X-Printcart-Store-Sid</code></li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Product tab/section <code>3D Preview</code></li><li>Enable toggle, edge style, edge depth inputs</li><li>Test render button</li><li>Preview image panel</li><li>Loading/error states</li></ul></div>
+        </div>
+        <h4>Hooks cần thêm</h4>
+        <pre><code>useFetchProduct3DConfig(productId)
+useUpdateProduct3DProfile()
+useGenerateDesign3DPreview()
+
+// later phase
+useFetch3DModels(params)
+useCreate3DModel()
+useValidate3DModel()
+useUpdateSide3DMapping()</code></pre>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Merchant bật/tắt 3D preview được.</li><li>Merchant chọn <code>edge_style_default</code> và nhập <code>edge_depth</code>.</li><li>Click test render gọi API, hiển thị loading, sau đó hiển thị preview URL.</li><li>Lỗi renderer/API hiện message rõ.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Test render dùng sample artwork mặc định hay bắt buộc chọn một saved design. Khuyến nghị: hỗ trợ cả hai; sample artwork để test product config nhanh, saved design để verify end-to-end.</p></div>
+      </article>
+
+      <article class="step" id="step-11">
+        <div class="step-title"><span class="badge">11</span><h3>Designer / WordPress Plugin integration</h3></div>
+        <p>Plugin/designer là consumer, không giữ config 3D authoritative. Legacy 3D plugin meta chỉ dùng migration/compat tạm thời.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li>Current design preview/artwork</li><li><code>product_id</code>, <code>side_id</code></li><li>Printcart API credentials/token</li><li><code>GET /v1/products/{product}/3d-config</code></li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Preview modal/panel hiển thị returned URL</li><li>Optional render token/preview URL lưu vào cart/order metadata</li><li>No local GLTF folder dependency for new flow</li></ul></div>
+        </div>
+        <h4>Integration rules</h4>
+        <ul><li>Không để WordPress plugin tự quyết cache key.</li><li>Không để plugin validate GLB/GLTF trong Phase 1.</li><li>Không expose internal storage path cho plugin.</li><li>Lazy-load widget/preview UI nếu sau này có interactive viewer.</li></ul>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Storefront/customizer gọi được API config/render bằng token hợp lệ.</li><li>Không có CORS issue với artwork/preview URL do dùng Printcart storage/CDN.</li><li>Legacy setting vẫn không phá flow cũ trong giai đoạn transition.</li></ul>
+        <div class="decision"><h4>Cần team confirm</h4><p>Thời điểm migrate legacy <code>_nbes_settings[td_preview]</code>. Khuyến nghị: không migrate trong Phase 1 edge preview; chỉ thêm fallback notice và migration plan cho Phase 2 GLB.</p></div>
+      </article>
+
+      <article class="step" id="step-12">
+        <div class="step-title"><span class="badge">12</span><h3>Observability, rate limit, error handling</h3></div>
+        <p>Render là tác vụ tốn tài nguyên nên cần log, metrics, timeout và limit ngay từ đầu.</p>
+        <div class="step-grid">
+          <div class="box"><h4>Input</h4><ul><li><code>request_id</code></li><li><code>store_id</code>/<code>store_uuid</code></li><li><code>product_id</code>/<code>design_id</code></li><li>Renderer timing/error details</li></ul></div>
+          <div class="box"><h4>Output</h4><ul><li>Structured logs liên kết Laravel ↔ Node</li><li><code>metadata.duration_ms</code></li><li>Rate limit counters</li><li>Actionable error messages</li></ul></div>
+        </div>
+        <h4>Error categories nên chuẩn hóa</h4>
+        <table>
+          <thead><tr><th>Code</th><th>Khi nào xảy ra</th><th>Client message</th></tr></thead>
+          <tbody>
+            <tr><td><code>3D_PROFILE_DISABLED</code></td><td>Product chưa bật 3D preview</td><td>3D preview is not enabled for this product.</td></tr>
+            <tr><td><code>INVALID_GEOMETRY</code></td><td>Missing/zero width/height/design area</td><td>Product side geometry is invalid.</td></tr>
+            <tr><td><code>ARTWORK_NOT_ACCESSIBLE</code></td><td>Renderer không fetch được artwork</td><td>Artwork image cannot be accessed.</td></tr>
+            <tr><td><code>RENDER_TIMEOUT</code></td><td>Renderer quá timeout</td><td>3D preview render timed out. Please retry.</td></tr>
+            <tr><td><code>UNSUPPORTED_EDGE_STYLE</code></td><td>edge_style chưa support</td><td>Selected edge style is not supported.</td></tr>
+          </tbody>
+        </table>
+        <h4>Acceptance criteria</h4>
+        <ul><li>Có thể trace một render request từ Laravel tới Node bằng <code>request_id</code>.</li><li>Renderer timeout không làm request treo vô hạn.</li><li>Rate limit hoạt động theo store/token.</li><li>Error không leak internal URL/path/token.</li></ul>
+      </article>
+    </section>
+
+    <section id="contracts" class="page-break">
+      <h2>6. API & renderer contracts</h2>
+      <h3>6.1 <code>POST /v1/3d/edge-preview</code></h3>
+      <h4>Request</h4>
+      <pre><code>{
+  "product_id": "product_uuid",
+  "side_id": "side_uuid",
+  "design_id": "design_uuid",
+  "artwork_url": "https://...",
+  "edge_style": "wrap",
+  "edge_color": "#ffffff",
+  "output": {
+    "format": "webp",
+    "width": 1200,
+    "height": 900
+  },
+  "reset": false
+}</code></pre>
+      <h4>Response — ready/cache hit</h4>
+      <pre><code>{
+  "data": {
+    "status": "ready",
+    "name": "preview.webp",
+    "url": "https://cdn.printcart.com/3d-preview/...",
+    "cache_hit": true,
+    "input_hash": "..."
+  }
+}</code></pre>
+      <h4>Response — queued nếu async</h4>
+      <pre><code>{
+  "data": {
+    "status": "queued",
+    "preview_id": "design_3d_preview_uuid",
+    "input_hash": "..."
+  }
+}</code></pre>
+
+      <h3>6.2 Laravel → Node Renderer Request</h3>
+      <pre><code>{
+  "request_id": "uuid",
+  "store_uuid": "uuid",
+  "render_type": "edge_preview",
+  "artwork": {
+    "url": "https://...",
+    "name": "design.png"
+  },
+  "product": {
+    "id": "product_uuid",
+    "dpi": 96,
+    "dimension_unit": "cm"
+  },
+  "side": {
+    "id": "side_uuid",
+    "side_image_size": { "width": 40, "height": 30 },
+    "design_area": { "width": 36, "height": 26, "top": 2, "left": 2 },
+    "cut_line_margin": { "x": 1, "y": 1 },
+    "safe_zone_margin": { "x": 0.5, "y": 0.5 }
+  },
+  "profile": {
+    "edge_style": "wrap",
+    "edge_depth": 1.5,
+    "edge_depth_unit": "cm"
+  },
+  "output": {
+    "format": "webp",
+    "width": 1200,
+    "height": 900
+  }
+}</code></pre>
+
+      <h3>6.3 Node Renderer → Laravel Response</h3>
+      <pre><code>{
+  "status": "ready",
+  "storage_path": "3d-preview/store/hash.webp",
+  "width": 1200,
+  "height": 900,
+  "renderer_version": "1.0.0",
+  "metadata": {
+    "duration_ms": 1400
+  }
+}</code></pre>
+
+      <h3>6.4 <code>design_3d_previews.metadata</code> đề xuất</h3>
+      <pre><code>{
+  "renderer_version": "1.0.0",
+  "duration_ms": 1400,
+  "output": { "format": "webp", "width": 1200, "height": 900 },
+  "edge_style": "wrap",
+  "edge_depth": 1.5,
+  "edge_depth_unit": "cm",
+  "geometry_source": "design_original_side",
+  "cache_key_parts": {
+    "product_id": "product_uuid",
+    "side_id": "side_uuid",
+    "profile_config_version": 3
+  }
+}</code></pre>
+    </section>
+
+    <section id="qa">
+      <h2>7. QA, acceptance criteria, monitoring</h2>
+      <h3>7.1 End-to-end acceptance criteria</h3>
+      <ul>
+        <li>Merchant bật được <code>3D Edge Preview</code> cho một product.</li>
+        <li>Merchant chọn được <code>edge_style</code> và <code>edge_depth</code>.</li>
+        <li>Design/artwork 2D render được thành ảnh 3D edge preview.</li>
+        <li>Output là <code>preview.webp</code> hoặc <code>preview.png</code> có URL dùng được.</li>
+        <li>Cùng input render lần 2 trả <code>cache_hit=true</code>.</li>
+        <li>Không cần upload GLB/GLTF trong Phase 1.</li>
+        <li>Dashboard hiển thị preview, loading, error rõ ràng.</li>
+        <li>Renderer reject input không an toàn hoặc quá giới hạn.</li>
+      </ul>
+
+      <h3>7.2 Test matrix</h3>
+      <table>
+        <thead><tr><th>Case</th><th>Input</th><th>Expected output</th></tr></thead>
+        <tbody>
+          <tr><td>Basic solid edge</td><td>Product 40×30 cm, <code>edge_style=solid_color</code>, <code>edge_color=#222222</code></td><td>Ảnh 3D có front artwork, cạnh màu đen/xám, URL ready.</td></tr>
+          <tr><td>Wrap edge</td><td>Artwork nhiều màu, <code>edge_style=wrap</code></td><td>Cạnh lấy màu/pixel từ mép artwork, không bị đảo hướng rõ.</td></tr>
+          <tr><td>Cache hit</td><td>Render cùng payload 2 lần</td><td>Lần 2 trả <code>cache_hit=true</code>, không gọi Node.</td></tr>
+          <tr><td>Reset render</td><td>Cùng payload + <code>reset=true</code></td><td>Render lại, update preview record.</td></tr>
+          <tr><td>Profile changed</td><td>Đổi <code>edge_depth</code>/<code>edge_style_default</code></td><td><code>config_version</code> tăng, cache miss, render ảnh mới.</td></tr>
+          <tr><td>Invalid geometry</td><td><code>side_image_size.width=0</code></td><td>API reject với <code>INVALID_GEOMETRY</code>.</td></tr>
+          <tr><td>Artwork inaccessible</td><td>Expired/sai URL</td><td>Renderer trả <code>ARTWORK_NOT_ACCESSIBLE</code>, cache status failed.</td></tr>
+          <tr><td>Saved design snapshot</td><td>Design có <code>original_side</code>, live Side đã đổi</td><td>Render dùng original geometry, metadata ghi source.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>7.3 Metrics nên log</h3>
+      <ul><li><code>render.duration_ms</code></li><li><code>render.cache_hit</code></li><li><code>render.status</code></li><li><code>render.error_code</code></li><li><code>artwork.fetch_duration_ms</code></li><li><code>texture_generation.duration_ms</code></li><li><code>snapshot.duration_ms</code></li><li><code>output.file_size_bytes</code></li></ul>
+    </section>
+
+    <section id="nongoals">
+      <h2>8. Không làm trong Phase 1</h2>
+      <div class="callout danger">
+        <strong>Tránh đi nhầm hướng:</strong> Phase 1 là canvas/wall-art edge preview procedural, không phải generic 3D configurator.
+      </div>
+      <ul>
+        <li><span class="no-go">Không</span> upload/custom GLB/GLTF cho merchant trong MVP.</li>
+        <li><span class="no-go">Không</span> biến ảnh áo/ly/giày thành object 3D.</li>
+        <li><span class="no-go">Không</span> copy source từ plugin GPL <code>3d-product-customizer</code>.</li>
+        <li><span class="no-go">Không</span> để WordPress plugin làm source of truth.</li>
+        <li><span class="no-go">Không</span> expose internal S3 path hoặc arbitrary file path.</li>
+        <li><span class="no-go">Không</span> tính pricing/business rule phía widget/browser.</li>
+        <li><span class="no-go">Không</span> làm AR/USDZ, video turntable, mobile SDK, external API monetization trong sprint đầu.</li>
+      </ul>
+    </section>
+
+    <section id="handoff">
+      <h2>9. Checklist bàn giao cho từng team</h2>
+      <h3>Backend team</h3>
+      <ul>
+        <li>Verify/fix side geometry contract.</li>
+        <li>Add migrations/models/resources/controllers cho <code>Product3DProfile</code>, <code>Design3DPreview</code>.</li>
+        <li>Add <code>GET /v1/products/{product}/3d-config</code>.</li>
+        <li>Add <code>POST /v1/products/{product}/3d-profiles</code>, <code>PUT /v1/products/{product}/3d-profiles/{profile}</code>.</li>
+        <li>Add <code>POST /v1/3d/edge-preview</code>.</li>
+        <li>Add render service client + internal auth env vars.</li>
+        <li>Add cache key builder + storage path convention.</li>
+        <li>Add validation, ownership checks, rate limit.</li>
+      </ul>
+
+      <h3>Render service team</h3>
+      <ul>
+        <li>Scaffold Node service, <code>/health</code>, <code>/render/edge-preview</code>.</li>
+        <li>Implement internal token auth.</li>
+        <li>Implement Sharp artwork normalization and texture generation.</li>
+        <li>Implement procedural canvas geometry and snapshot render.</li>
+        <li>Implement output <code>webp/png</code> + response contract.</li>
+        <li>Add limits, timeout, logs, metrics.</li>
+      </ul>
+
+      <h3>Dashboard team</h3>
+      <ul>
+        <li>Fix side payload mapping or add adapter layer.</li>
+        <li>Add hooks in <code>usePrintcartApi.js</code>.</li>
+        <li>Add product <code>3D Preview</code> section/tab.</li>
+        <li>Add enable toggle, edge style selector, edge depth input.</li>
+        <li>Add test render button and preview image panel.</li>
+        <li>Add loading/error states.</li>
+      </ul>
+
+      <h3>Designer / WordPress plugin team</h3>
+      <ul>
+        <li>Fetch product 3D config from Printcart API.</li>
+        <li>Pass current design preview/artwork to render API.</li>
+        <li>Show returned preview URL in modal/panel.</li>
+        <li>Store returned preview URL/token in cart/order metadata if needed.</li>
+        <li>Keep legacy local 3D preview only as fallback during transition.</li>
+      </ul>
+
+      <h3>Sprint proposal</h3>
+      <table>
+        <thead><tr><th>Sprint</th><th>Scope</th><th>Deliverable</th></tr></thead>
+        <tbody>
+          <tr><td>Sprint 1</td><td>Contract cleanup, minimal DB, render service scaffold</td><td>Side geometry verified, <code>product_3d_profiles</code>, <code>/health</code></td></tr>
+          <tr><td>Sprint 2</td><td>Edge render API + renderer output + dashboard test render</td><td><code>POST /v1/3d/edge-preview</code> returns preview URL</td></tr>
+          <tr><td>Sprint 3</td><td>Saved design endpoint + cache/storage tracking + dashboard result panels</td><td><code>POST /v1/designs/{design}/generate/3d-preview</code>, cache reuse</td></tr>
+          <tr><td>Sprint 4</td><td>Phase 2 foundation if needed</td><td>Model library schema/endpoints, GLB validation planning</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="final">
+      <h2>10. Final recommendation</h2>
+      <div class="callout ok">
+        <strong>Build as:</strong> <code>Printcart 3D Preview API</code><br/>
+        <strong>First commercial feature:</strong> <code>3D Edge Preview for print products</code><br/>
+        <strong>Do not start with:</strong> generic 3D configurator or arbitrary product-photo-to-3D.
+      </div>
+      <p>Điểm mạnh của Printcart là đã có print-specific data trong <code>Side</code>, <code>Design</code>, <code>Project</code> và preview/PDF pipeline. Vì vậy, path thực tế nhất là biến data đó thành preview 3D đáng tin cậy trước, sau đó mới mở rộng sang <code>GLB/GLTF model library</code> và external/commercial API.</p>
+      <p class="small">Document này không chỉnh sửa file handoff gốc. Đây là plan triển khai bổ sung để team đọc, confirm option và chia task.</p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var sideNav = document.getElementById('sideNav');
+      var toggle = document.getElementById('sideNavToggle');
+      var backdrop = document.getElementById('sideNavBackdrop');
+      var links = Array.prototype.slice.call(sideNav.querySelectorAll('a[href^="#"]'));
+      var sections = links
+        .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+        .filter(Boolean);
+
+      function openNav() {
+        sideNav.classList.add('open');
+        backdrop.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+      function closeNav() {
+        sideNav.classList.remove('open');
+        backdrop.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      toggle.addEventListener('click', function () {
+        if (sideNav.classList.contains('open')) { closeNav(); } else { openNav(); }
+      });
+      backdrop.addEventListener('click', closeNav);
+
+      links.forEach(function (a) {
+        a.addEventListener('click', function () {
+          if (window.matchMedia('(max-width: 1200px)').matches) { closeNav(); }
+        });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { closeNav(); }
+      });
+
+      // Scroll-spy: highlight section đang xem
+      function setActive(id) {
+        links.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var visible = {};
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            visible[entry.target.id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+          });
+          var current = null, best = 0;
+          sections.forEach(function (s) {
+            var r = visible[s.id] || 0;
+            if (r > best) { best = r; current = s.id; }
+          });
+          if (current) { setActive(current); }
+        }, { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.25, 0.5, 1] });
+        sections.forEach(function (s) { observer.observe(s); });
+      } else {
+        window.addEventListener('scroll', function () {
+          var pos = window.scrollY + window.innerHeight * 0.3;
+          var current = sections[0] && sections[0].id;
+          sections.forEach(function (s) {
+            if (s.offsetTop <= pos) { current = s.id; }
+          });
+          if (current) { setActive(current); }
+        }, { passive: true });
+      }
+    })();
+  </script>
+</body>
+</html>
