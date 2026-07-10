@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo giá — Website bán thiết bị y tế | Ocean Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1E2E;
+  --ink-2:#3A4C5C;
+  --steel:#64798A;
+  --surface:#F7F9FA;
+  --surface-2:#FFFFFF;
+  --surface-3:#EDF2F4;
+  --line:#DCE3E7;
+  --signal:#0D8B7C;
+  --signal-soft:#E3F2EF;
+  --alert:#B63E2A;
+  --alert-soft:#FBEAE6;
+  --shadow:0 1px 2px rgba(15,30,46,.04), 0 8px 24px -12px rgba(15,30,46,.14);
+  --radius:10px;
+  --maxw:1080px;
+}
+[data-theme="dark"]{
+  --ink:#E8EEF2;
+  --ink-2:#AEBECC;
+  --steel:#7C90A0;
+  --surface:#0C151E;
+  --surface-2:#131F2B;
+  --surface-3:#1B2937;
+  --line:#26374A;
+  --signal:#3FBFAC;
+  --signal-soft:#12302C;
+  --alert:#E9705A;
+  --alert-soft:#331914;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--surface);
+  color:var(--ink);
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;
+  font-weight:400;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s ease,color .25s ease;
+}
+h1,h2,h3,.display{font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.12;letter-spacing:-.02em}
+.mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{padding:76px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--signal);font-weight:600;margin-bottom:18px;
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::after{content:"";height:1px;flex:1;background:var(--line)}
+
+h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;margin-bottom:14px}
+.lede{color:var(--ink-2);max-width:64ch;font-size:17px;font-weight:300}
+
+/* ---------- topbar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--surface) 86%,transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:13px;padding-bottom:13px;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--signal);flex:none;box-shadow:0 0 0 4px var(--signal-soft)}
+.bar-actions{display:flex;gap:8px}
+button.ghost{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;
+  background:transparent;border:1px solid var(--line);color:var(--ink-2);
+  padding:8px 13px;border-radius:6px;cursor:pointer;transition:.18s;
+}
+button.ghost:hover{border-color:var(--signal);color:var(--signal)}
+button.ghost:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 60px}
+.hero h1{font-size:clamp(34px,5.6vw,60px);font-weight:800;max-width:17ch;margin-bottom:22px}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero p{color:var(--ink-2);max-width:60ch;font-size:18px;font-weight:300}
+.meta-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);
+  margin-top:44px;overflow:hidden;
+}
+.meta-cell{background:var(--surface-2);padding:22px}
+.meta-cell .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-bottom:8px}
+.meta-cell .v{font-family:'Bricolage Grotesque',sans-serif;font-size:23px;font-weight:600;letter-spacing:-.02em}
+.meta-cell .v span{font-size:14px;color:var(--steel);font-weight:400}
+
+/* ---------- notice ---------- */
+.notice{
+  border-left:3px solid var(--signal);background:var(--signal-soft);
+  padding:18px 22px;border-radius:0 var(--radius) var(--radius) 0;
+  color:var(--ink);font-size:15px;margin-top:26px;
+}
+.notice.warn{border-left-color:var(--alert);background:var(--alert-soft)}
+.notice strong{font-weight:600}
+
+/* ---------- feature grid ---------- */
+.grid{display:grid;gap:18px;margin-top:38px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{
+  background:var(--surface-2);border:1px solid var(--line);
+  border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);
+}
+.card h3{font-size:18px;font-weight:600;margin-bottom:4px}
+.card .sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-bottom:18px}
+.card ul{list-style:none}
+.card li{
+  padding:7px 0 7px 22px;position:relative;font-size:14.5px;color:var(--ink-2);
+  border-bottom:1px dashed var(--line);
+}
+.card li:last-child{border-bottom:none}
+.card li::before{
+  content:"";position:absolute;left:2px;top:16px;
+  width:6px;height:6px;border-radius:1px;background:var(--signal);opacity:.55;
+}
+
+/* ---------- signature: dossier ---------- */
+.dossier{margin-top:40px;display:flex;flex-direction:column;gap:26px}
+.doc{
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--surface-2);overflow:hidden;box-shadow:var(--shadow);
+}
+.doc-head{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:20px 24px;background:var(--surface-3);border-bottom:1px solid var(--line);
+}
+.doc-code{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.1em;color:var(--surface-2);background:var(--ink);
+  padding:4px 9px;border-radius:4px;flex:none;
+}
+[data-theme="dark"] .doc-code{background:var(--signal);color:#08131A}
+.doc-title{font-family:'Bricolage Grotesque',sans-serif;font-size:19px;font-weight:600;letter-spacing:-.02em}
+.doc-owner{
+  margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--steel);
+}
+.doc-note{padding:18px 24px 4px;font-size:14.5px;color:var(--ink-2)}
+.doc-list{list-style:none;padding:12px 24px 22px}
+.doc-list li{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:12px 0;border-bottom:1px dashed var(--line);
+}
+.doc-list li:last-child{border-bottom:none}
+.tick{
+  flex:none;width:17px;height:17px;margin-top:3px;
+  border:1.5px solid var(--steel);border-radius:3px;opacity:.6;
+}
+.doc-list .who{
+  margin-left:auto;flex:none;align-self:center;
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 8px;border-radius:20px;white-space:nowrap;
+}
+.who.client{background:var(--alert-soft);color:var(--alert)}
+.who.dev{background:var(--signal-soft);color:var(--signal)}
+.doc-list .txt{font-size:14.5px;color:var(--ink-2)}
+.doc-list .txt b{color:var(--ink);font-weight:500}
+
+/* ---------- table ---------- */
+.tbl-scroll{overflow-x:auto;margin-top:34px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2)}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:left;padding:14px 20px;border-bottom:1px solid var(--line);font-size:14.5px}
+th{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--steel);font-weight:600;background:var(--surface-3);
+}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:'JetBrains Mono',monospace;white-space:nowrap;color:var(--ink)}
+td .muted{color:var(--steel);font-size:13px;display:block;margin-top:2px}
+
+/* ---------- price ---------- */
+.price-box{
+  margin-top:38px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--surface-2);box-shadow:var(--shadow);overflow:hidden;
+}
+.price-top{padding:34px;border-bottom:1px solid var(--line);text-align:center;background:var(--surface-3)}
+.price-top .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);margin-bottom:14px}
+.price-top .figure{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(38px,6.5vw,58px);font-weight:800;letter-spacing:-.035em;color:var(--signal);line-height:1}
+.price-top .cond{margin-top:14px;font-size:14px;color:var(--ink-2)}
+.incl{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+.incl div{background:var(--surface-2);padding:20px 24px}
+.incl .t{font-size:14.5px;font-weight:500;margin-bottom:3px}
+.incl .d{font-size:13px;color:var(--steel)}
+
+/* ---------- timeline ---------- */
+.tl{margin-top:38px;position:relative;padding-left:6px}
+.tl::before{content:"";position:absolute;left:20px;top:12px;bottom:12px;width:1px;background:var(--line)}
+.tl-item{display:flex;gap:24px;padding:0 0 32px}
+.tl-item:last-child{padding-bottom:0}
+.tl-num{
+  flex:none;width:30px;height:30px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--line);
+  display:grid;place-items:center;z-index:1;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--signal);
+}
+.tl-body h4{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:600;margin-bottom:5px;letter-spacing:-.01em}
+.tl-body p{font-size:14.5px;color:var(--ink-2)}
+
+/* ---------- terms ---------- */
+.terms{margin-top:34px;display:grid;gap:16px}
+.term{display:flex;gap:18px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2)}
+.term .tag{
+  flex:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--steel);padding-top:3px;width:88px;
+}
+.term p{font-size:14.5px;color:var(--ink-2)}
+.term p b{color:var(--ink);font-weight:500}
+
+.excl{margin-top:30px;padding:24px;border:1px dashed var(--line);border-radius:var(--radius)}
+.excl h3{font-size:16px;font-weight:600;margin-bottom:12px}
+.excl ul{list-style:none;columns:2;column-gap:32px}
+.excl li{font-size:14px;color:var(--steel);padding:5px 0 5px 18px;position:relative;break-inside:avoid}
+.excl li::before{content:"—";position:absolute;left:0;color:var(--steel)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:52px 0 64px;background:var(--surface-2)}
+.foot{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
+.foot h3{font-size:22px;font-weight:600;margin-bottom:10px}
+.foot p{color:var(--ink-2);font-size:14.5px;max-width:44ch}
+.contacts{display:flex;flex-direction:column;gap:9px}
+.contacts a,.contacts span{
+  font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink);
+  text-decoration:none;border-bottom:1px solid transparent;transition:.18s;width:max-content;
+}
+.contacts a:hover{border-bottom-color:var(--signal);color:var(--signal)}
+.fineprint{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--steel)}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:820px){
+  .g2{grid-template-columns:1fr}
+  .meta-row{grid-template-columns:1fr}
+  .incl{grid-template-columns:1fr}
+  .excl ul{columns:1}
+  section{padding:56px 0}
+  .doc-owner{margin-left:0;width:100%}
+  .term{flex-direction:column;gap:8px}
+  .term .tag{width:auto}
+  .doc-list li{flex-wrap:wrap}
+  .doc-list .who{margin-left:31px}
+}
+@media (max-width:520px){
+  .wrap{padding:0 18px}
+  body{font-size:15.5px}
+  .brand span.full{display:none}
+}
+
+/* ---------- print ---------- */
+@media print{
+  .topbar,.bar-actions{display:none}
+  body{background:#fff;color:#000;font-size:11pt}
+  section{padding:22px 0;break-inside:avoid}
+  .card,.doc,.price-box{box-shadow:none;break-inside:avoid}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> Ocean Dev <span class="full">· Huy Phạm</span></div>
+    <div class="bar-actions">
+      <button class="ghost" id="theme" aria-label="Đổi giao diện sáng tối">SÁNG / TỐI</button>
+      <button class="ghost" onclick="window.print()">IN / PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap hero">
+  <div class="eyebrow">Đề xuất kỹ thuật &amp; báo giá</div>
+  <h1>Website bán <em>thiết bị y tế</em> — thanh toán trực tuyến, hóa đơn điện tử, tự động hóa nội dung</h1>
+  <p>Tài liệu này mô tả phạm vi công việc, các giấy tờ cần chuẩn bị cho phần thanh toán và hóa đơn, chi phí, và tiến độ dự kiến. Mục tiêu là để hai bên thống nhất rõ ràng trước khi ký hợp đồng.</p>
+
+  <div class="meta-row">
+    <div class="meta-cell"><div class="k">Thời gian phát triển</div><div class="v">4 tuần <span>/ kể từ ngày chốt scope</span></div></div>
+    <div class="meta-cell"><div class="k">Chi phí phát triển</div><div class="v">10 – 15 triệu <span>đ</span></div></div>
+    <div class="meta-cell"><div class="k">Bảo hành</div><div class="v">12 tháng <span>+ 2 tính năng miễn phí</span></div></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Bối cảnh</div>
+    <h2>Hiểu về dự án</h2>
+    <p class="lede">Website bán thiết bị y tế trực tuyến, có giỏ hàng và thanh toán qua VNPay (thẻ nội địa) và thẻ quốc tế Visa/Mastercard, xuất hóa đơn điện tử tự động sau khi thanh toán thành công, và hoàn tất thông báo website thương mại điện tử với Bộ Công Thương.</p>
+
+    <div class="notice">
+      <strong>Về giao diện tham chiếu (meta.vn).</strong> Trang này được dùng làm ví dụ về <em>bố cục và cảm giác giao diện</em>, không phải về quy mô hệ thống. META.vn vận hành hàng chục nghìn mã sản phẩm với đội ngũ nội bộ. Website của quý khách được xây dựng theo hướng gọn, nhanh, dễ quản trị, tập trung vào chuyển đổi đơn hàng và uy tín thương hiệu.
+    </div>
+
+    <div class="notice warn">
+      <strong>Lưu ý quan trọng về ngành.</strong> Thiết bị y tế là ngành kinh doanh có điều kiện. Cổng thanh toán và đơn vị hóa đơn điện tử sẽ yêu cầu giấy phép ngành nghề khi xét duyệt hồ sơ. Vui lòng xem mục <a href="#hoso" style="color:inherit">Hồ sơ cần chuẩn bị</a> — đây là yếu tố quyết định ngày website có thể nhận tiền thật.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Phạm vi công việc</div>
+    <h2>Danh sách tính năng</h2>
+    <p class="lede">Danh sách dưới đây là phạm vi cơ sở. Mức giá cuối cùng trong khoảng 10–15 triệu được chốt sau buổi trao đổi xác nhận scope.</p>
+
+    <div class="grid g2">
+      <div class="card rv">
+        <h3>Trang bán hàng</h3>
+        <div class="sub">Dành cho khách mua hàng</div>
+        <ul>
+          <li>Trang chủ: banner, danh mục nổi bật, sản phẩm bán chạy, khuyến mãi</li>
+          <li>Danh mục sản phẩm, bộ lọc theo giá / thương hiệu / phân loại</li>
+          <li>Tìm kiếm sản phẩm theo tên và mã</li>
+          <li>Trang chi tiết sản phẩm: nhiều hình ảnh, thông số kỹ thuật, số lưu hành / mã đăng ký lưu hành</li>
+          <li>Giỏ hàng, thanh toán, chọn phương thức vận chuyển</li>
+          <li>Trang tin tức / kiến thức, phục vụ SEO</li>
+          <li>Trang chính sách bắt buộc theo quy định TMĐT</li>
+          <li>Giao diện sáng / tối (light &amp; dark mode)</li>
+          <li>Song ngữ Tiếng Việt / English</li>
+        </ul>
+      </div>
+
+      <div class="card rv">
+        <h3>Tài khoản khách hàng</h3>
+        <div class="sub">Đăng ký &amp; theo dõi đơn</div>
+        <ul>
+          <li>Đăng ký, đăng nhập, quên mật khẩu qua email</li>
+          <li>Xác thực email khi đăng ký</li>
+          <li>Lịch sử đơn hàng, trạng thái xử lý</li>
+          <li>Sổ địa chỉ giao hàng</li>
+          <li>Trường thông tin xuất hóa đơn: tên công ty, mã số thuế, địa chỉ, email nhận hóa đơn</li>
+          <li>Tra cứu đơn hàng không cần đăng nhập</li>
+          <li>Danh sách sản phẩm yêu thích</li>
+        </ul>
+      </div>
+
+      <div class="card rv">
+        <h3>Trang quản trị</h3>
+        <div class="sub">Dành cho chủ shop</div>
+        <ul>
+          <li>Quản lý sản phẩm, danh mục, thương hiệu</li>
+          <li>Quản lý tồn kho cơ bản (một kho)</li>
+          <li>Quản lý đơn hàng: xác nhận, đang giao, hoàn tất, hủy</li>
+          <li>Quản lý khách hàng</li>
+          <li>Quản lý mã giảm giá</li>
+          <li>Quản lý banner, bài viết, trang tĩnh</li>
+          <li>Đối soát giao dịch thanh toán</li>
+          <li>Xem lại hóa đơn điện tử đã phát hành theo đơn</li>
+          <li>Thống kê doanh thu, sản phẩm bán chạy</li>
+          <li>Phân quyền: quản trị viên và nhân viên</li>
+        </ul>
+      </div>
+
+      <div class="card rv">
+        <h3>Nền tảng kỹ thuật</h3>
+        <div class="sub">Chạy nền, không hiển thị</div>
+        <ul>
+          <li>Tối ưu tốc độ tải, ảnh nén tự động</li>
+          <li>Chuẩn SEO kỹ thuật, sitemap, dữ liệu có cấu trúc</li>
+          <li>Chứng chỉ bảo mật SSL</li>
+          <li>Thông báo qua email khi có đơn mới, đơn đổi trạng thái</li>
+          <li>Thông báo qua Telegram tới nhóm nội bộ khi có đơn hàng</li>
+          <li>Sao lưu dữ liệu tự động hằng ngày</li>
+          <li>Thân thiện với điện thoại và máy tính bảng</li>
+          <li>Triển khai lên máy chủ, cấu hình tên miền</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Giá trị cộng thêm</div>
+    <h2>Tự động hóa nội dung &amp; mạng xã hội</h2>
+    <p class="lede">Ngoài phát triển website, chúng tôi xây dựng các luồng tự động (automation workflow) giúp giảm công việc thủ công hằng ngày. Đây là phần thường phải thuê riêng một nhân sự vận hành.</p>
+
+    <div class="grid g2">
+      <div class="card rv">
+        <h3>Đăng bài tự động</h3>
+        <div class="sub">Facebook Page</div>
+        <ul>
+          <li>Lên lịch bài đăng từ một bảng tính Google Sheets</li>
+          <li>Tự động đăng lên Facebook Page theo khung giờ đã đặt</li>
+          <li>Tự động bình luận đầu tiên kèm liên kết sản phẩm</li>
+          <li>Đồng bộ sản phẩm mới trên web thành bài đăng</li>
+        </ul>
+      </div>
+      <div class="card rv">
+        <h3>Vận hành &amp; nội dung</h3>
+        <div class="sub">Chạy nền theo lịch</div>
+        <ul>
+          <li>Thông báo đơn hàng mới về Telegram theo thời gian thực</li>
+          <li>Báo cáo doanh thu cuối ngày gửi Telegram hoặc email</li>
+          <li>Cảnh báo khi sản phẩm sắp hết hàng</li>
+          <li>Hỗ trợ soạn nội dung bài viết cho mục tin tức của web</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="notice">
+      <strong>Phạm vi trong gói này:</strong> thiết lập luồng đăng bài Facebook Page và thông báo Telegram. Các luồng phức tạp hơn (chatbot trả lời tự động, quản lý nhiều kênh, sinh nội dung bằng AI) được báo giá riêng và có chi phí vận hành hằng tháng.
+    </div>
+  </div>
+</section>
+
+<section id="hoso">
+  <div class="wrap">
+    <div class="eyebrow">Phần quan trọng nhất</div>
+    <h2>Hồ sơ cần chuẩn bị</h2>
+    <p class="lede">Ba hạng mục dưới đây <b>không phải là công việc lập trình</b>. Chúng là thủ tục pháp lý mà bên bán hàng phải đứng tên. Chúng tôi hỗ trợ hướng dẫn và tích hợp kỹ thuật, nhưng hồ sơ phải do quý khách cung cấp. Thời gian duyệt hồ sơ nằm ngoài 4 tuần phát triển.</p>
+
+    <div class="dossier">
+
+      <div class="doc rv">
+        <div class="doc-head">
+          <span class="doc-code">VNP</span>
+          <span class="doc-title">Cổng thanh toán VNPay</span>
+          <span class="doc-owner">Thẻ nội địa · Visa · Mastercard</span>
+        </div>
+        <p class="doc-note">VNPay xử lý cả thẻ ATM nội địa, ví điện tử, mã QR và thẻ quốc tế trong cùng một cổng. Website sẽ chuyển hướng khách sang trang thanh toán của VNPay — chúng tôi không lưu và không nhìn thấy số thẻ của khách hàng.</p>
+        <ul class="doc-list">
+          <li><span class="tick"></span><span class="txt"><b>Giấy chứng nhận đăng ký kinh doanh</b> (bản scan), có ngành nghề kinh doanh thiết bị y tế</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Giấy phép kinh doanh thiết bị y tế</b> — phiếu tiếp nhận công bố (loại A, B) hoặc số lưu hành (loại C, D)</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Mã số thuế</b> của doanh nghiệp</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Tài khoản ngân hàng doanh nghiệp</b> để nhận tiền về</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>CCCD của người đại diện pháp luật</b> (hai mặt)</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Ký hợp đồng với VNPay</b> và nhận về mã đơn vị, khóa bí mật (Hash Secret)</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt">Chạy thử trên môi trường thử nghiệm, xử lý xác nhận thanh toán, chống trùng đơn, đối soát</span><span class="who dev">Ocean Dev</span></li>
+          <li><span class="tick"></span><span class="txt">Đăng ký địa chỉ máy chủ với VNPay và chuyển sang môi trường thật</span><span class="who dev">Ocean Dev</span></li>
+        </ul>
+      </div>
+
+      <div class="doc rv">
+        <div class="doc-head">
+          <span class="doc-code">HĐĐT</span>
+          <span class="doc-title">Hóa đơn điện tử</span>
+          <span class="doc-owner">Phát hành tự động sau thanh toán</span>
+        </div>
+        <p class="doc-note">Website không tự phát hành hóa đơn. Website gọi tới hệ thống của một đơn vị cung cấp hóa đơn điện tử được cơ quan thuế chấp thuận. Theo quy định hiện hành, với bán hàng trực tuyến, hóa đơn phải được lập tại thời điểm thu tiền — nghĩa là ngay khi VNPay báo thanh toán thành công, không phải khi giao hàng.</p>
+        <ul class="doc-list">
+          <li><span class="tick"></span><span class="txt"><b>Hợp đồng với một nhà cung cấp hóa đơn điện tử</b> — Viettel, MISA meInvoice, VNPT, BKAV hoặc tương đương</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Chữ ký số</b>. Nếu muốn phát hành tự động 24/7 thì cần loại đặt trên máy chủ (HSM). Loại USB cắm vào máy tính sẽ không tự động hóa được</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Thông tin kết nối kỹ thuật</b> do nhà cung cấp cấp: tài khoản, mật khẩu, tài liệu hướng dẫn kết nối</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Mẫu hóa đơn và ký hiệu</b> đã đăng ký với cơ quan thuế</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt">Bổ sung trường thông tin xuất hóa đơn vào bước thanh toán trên web</span><span class="who dev">Ocean Dev</span></li>
+          <li><span class="tick"></span><span class="txt">Kết nối và gọi hệ thống hóa đơn khi có xác nhận thanh toán, gửi hóa đơn về email khách</span><span class="who dev">Ocean Dev</span></li>
+          <li><span class="tick"></span><span class="txt">Ghi nhận và tra cứu lại hóa đơn từ trang quản trị</span><span class="who dev">Ocean Dev</span></li>
+        </ul>
+      </div>
+
+      <div class="doc rv">
+        <div class="doc-head">
+          <span class="doc-code">BCT</span>
+          <span class="doc-title">Thông báo với Bộ Công Thương</span>
+          <span class="doc-owner">online.gov.vn</span>
+        </div>
+        <p class="doc-note">Website bán sản phẩm của chính doanh nghiệp thì thuộc diện <b>thông báo</b>, không phải <b>đăng ký</b> (đăng ký chỉ áp dụng cho sàn giao dịch có nhiều người bán). Website phải hoàn thiện và có đầy đủ các trang chính sách trước khi nộp hồ sơ.</p>
+        <ul class="doc-list">
+          <li><span class="tick"></span><span class="txt"><b>Tài khoản trên online.gov.vn</b> đứng tên doanh nghiệp</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Bản scan giấy chứng nhận đăng ký kinh doanh</b></span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt"><b>Nội dung các chính sách</b>: bảo mật thông tin, đổi trả và hoàn tiền, vận chuyển và giao nhận, phương thức thanh toán, giải quyết khiếu nại</span><span class="who client">Khách cung cấp</span></li>
+          <li><span class="tick"></span><span class="txt">Dựng các trang chính sách theo đúng cấu trúc Bộ Công Thương yêu cầu</span><span class="who dev">Ocean Dev</span></li>
+          <li><span class="tick"></span><span class="txt">Hiển thị thông tin chủ sở hữu website ở chân trang</span><span class="who dev">Ocean Dev</span></li>
+          <li><span class="tick"></span><span class="txt">Gắn logo xác nhận đã thông báo sau khi hồ sơ được duyệt</span><span class="who dev">Ocean Dev</span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="notice warn">
+      <strong>Về tiến độ.</strong> Hồ sơ VNPay thường mất từ vài ngày đến hai tuần để duyệt. Hồ sơ Bộ Công Thương có thể lâu hơn. Chúng tôi hoàn thành phần lập trình trong 4 tuần và bàn giao website chạy được với môi trường thanh toán thử nghiệm. Việc chuyển sang nhận tiền thật phụ thuộc vào thời điểm hồ sơ được duyệt, nằm ngoài phạm vi kiểm soát của bên phát triển.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Minh bạch chi phí</div>
+    <h2>Chi phí bên thứ ba</h2>
+    <p class="lede">Các khoản dưới đây do quý khách trực tiếp trả cho nhà cung cấp dịch vụ, <b>không nằm trong chi phí phát triển website</b>. Chúng tôi liệt kê để quý khách chủ động dự trù. Con số là ước tính tham khảo, vui lòng xác nhận trực tiếp với từng nhà cung cấp.</p>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th>Khoản mục</th><th>Ước tính</th><th>Chu kỳ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Phí giao dịch VNPay — thẻ nội địa, QR<span class="muted">Trừ trực tiếp trên mỗi giao dịch</span></td><td class="num">~1,1 – 1,5 %</td><td>Theo giao dịch</td></tr>
+          <tr><td>Phí giao dịch — thẻ quốc tế Visa, Mastercard</td><td class="num">~2,5 – 3,3 %</td><td>Theo giao dịch</td></tr>
+          <tr><td>Hóa đơn điện tử — khởi tạo và gói số lượng hóa đơn</td><td class="num">~2 – 5 triệu đ</td><td>Hằng năm</td></tr>
+          <tr><td>Chữ ký số đặt trên máy chủ (HSM)<span class="muted">Bắt buộc nếu muốn phát hành hóa đơn tự động</span></td><td class="num">~3 – 6 triệu đ</td><td>Hằng năm</td></tr>
+          <tr><td>Máy chủ VPS<span class="muted">Miễn phí 6 tháng đầu, xem mục báo giá</span></td><td class="num">~2 – 4 triệu đ</td><td>Hằng năm</td></tr>
+          <tr><td>Tên miền<span class="muted">Miễn phí năm đầu, xem mục báo giá</span></td><td class="num">~0,3 – 0,8 triệu đ</td><td>Hằng năm</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Báo giá</div>
+    <h2>Chi phí phát triển</h2>
+
+    <div class="price-box rv">
+      <div class="price-top">
+        <div class="k">Trọn gói phát triển website</div>
+        <div class="figure mono">10.000.000 – 15.000.000 đ</div>
+        <div class="cond">Mức cụ thể được chốt sau buổi trao đổi xác nhận phạm vi tính năng.<br>Đã bao gồm toàn bộ hạng mục trong phần Danh sách tính năng.</div>
+      </div>
+      <div class="incl">
+        <div><div class="t">Máy chủ VPS miễn phí 6 tháng</div><div class="d">Sau 6 tháng, quý khách tự chi trả hoặc tiếp tục thuê qua chúng tôi</div></div>
+        <div><div class="t">Tên miền miễn phí năm đầu</div><div class="d">Một tên miền, đứng tên quý khách. Từ năm thứ hai quý khách gia hạn</div></div>
+        <div><div class="t">Sao lưu dữ liệu tự động</div><div class="d">Thiết lập lịch sao lưu hằng ngày và hướng dẫn khôi phục</div></div>
+        <div><div class="t">Bảo hành 12 tháng</div><div class="d">Sửa mọi lỗi phát sinh do lập trình, không tính phí</div></div>
+        <div><div class="t">Hai tính năng phát triển thêm miễn phí</div><div class="d">Quy mô nhỏ đến trung bình, sau khi bàn giao</div></div>
+        <div><div class="t">Bàn giao mã nguồn</div><div class="d">Toàn bộ mã nguồn và tài liệu hướng dẫn quản trị thuộc về quý khách</div></div>
+      </div>
+    </div>
+
+    <div class="terms">
+      <div class="term"><div class="tag">Thanh toán</div><p><b>Hai đợt.</b> 50% khi hoàn thiện các tính năng chính · 50% còn lại khi bàn giao.</p></div>
+      <div class="term"><div class="tag">Bảo hành</div><p><b>12 tháng kể từ ngày nghiệm thu</b>, áp dụng cho lỗi phát sinh từ mã nguồn do Ocean Dev viết. Không bao gồm: thay đổi yêu cầu so với phạm vi đã chốt, sự cố từ phía VNPay, nhà cung cấp hóa đơn hoặc nhà cung cấp máy chủ, lỗi do bên thứ ba can thiệp vào mã nguồn, và thiệt hại do mất tài khoản quản trị.</p></div>
+      <div class="term"><div class="tag">Tính năng thêm</div><p><b>Hai tính năng miễn phí</b> sau bàn giao, mỗi tính năng tương đương tối đa hai ngày công. Ví dụ: thêm một phương thức vận chuyển, thêm một loại báo cáo, thêm một mẫu email. Các yêu cầu lớn hơn (đa kho, đồng bộ phần mềm kế toán, ứng dụng di động) được báo giá riêng.</p></div>
+      <div class="term"><div class="tag">Tiến độ</div><p><b>4 tuần</b> tính từ ngày chốt phạm vi và nhận đủ nội dung từ quý khách (hình ảnh sản phẩm, thông tin sản phẩm, nội dung chính sách, bộ nhận diện thương hiệu). Thời gian chờ duyệt hồ sơ VNPay, hóa đơn điện tử và Bộ Công Thương không tính vào 4 tuần này.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Tiến độ</div>
+    <h2>Bốn tuần triển khai</h2>
+
+    <div class="tl">
+      <div class="tl-item rv"><div class="tl-num mono">01</div><div class="tl-body">
+        <h4>Tuần 1 — Chốt phạm vi &amp; thiết kế giao diện</h4>
+        <p>Xác nhận danh sách tính năng và số lượng sản phẩm. Thiết kế giao diện trang chủ, trang danh mục, trang chi tiết sản phẩm. Quý khách duyệt giao diện. Song song: quý khách bắt đầu nộp hồ sơ VNPay và hóa đơn điện tử.</p>
+      </div></div>
+      <div class="tl-item rv"><div class="tl-num mono">02</div><div class="tl-body">
+        <h4>Tuần 2 — Trang bán hàng &amp; tài khoản khách</h4>
+        <p>Dựng toàn bộ trang phía khách mua hàng. Giỏ hàng, đăng ký, đăng nhập, tìm kiếm, bộ lọc. Chế độ sáng tối và song ngữ. Quý khách bắt đầu gửi nội dung sản phẩm.</p>
+      </div></div>
+      <div class="tl-item rv"><div class="tl-num mono">03</div><div class="tl-body">
+        <h4>Tuần 3 — Trang quản trị, thanh toán, hóa đơn</h4>
+        <p>Hoàn thiện trang quản trị. Tích hợp VNPay trên môi trường thử nghiệm. Kết nối hệ thống hóa đơn điện tử. Thiết lập thông báo email và Telegram. Bàn giao bản chạy thử để quý khách kiểm tra.</p>
+      </div></div>
+      <div class="tl-item rv"><div class="tl-num mono">04</div><div class="tl-body">
+        <h4>Tuần 4 — Tự động hóa, kiểm thử, bàn giao</h4>
+        <p>Thiết lập luồng đăng bài Facebook Page. Nhập dữ liệu sản phẩm. Kiểm thử toàn bộ, tối ưu tốc độ, kiểm tra trên điện thoại. Triển khai lên máy chủ thật, cấu hình tên miền và sao lưu. Đào tạo sử dụng trang quản trị và bàn giao tài liệu.</p>
+      </div></div>
+    </div>
+
+    <div class="excl">
+      <h3>Ngoài phạm vi gói này</h3>
+      <ul>
+        <li>Ứng dụng di động iOS / Android</li>
+        <li>Quản lý nhiều kho, nhiều chi nhánh</li>
+        <li>Đồng bộ với phần mềm kế toán hoặc ERP</li>
+        <li>Chatbot trả lời khách hàng tự động</li>
+        <li>Chức năng báo giá và công nợ cho khách doanh nghiệp</li>
+        <li>Chụp ảnh sản phẩm, viết nội dung mô tả sản phẩm</li>
+        <li>Thiết kế bộ nhận diện thương hiệu, logo</li>
+        <li>Chạy quảng cáo, dịch vụ SEO theo tháng</li>
+        <li>Nhập liệu sản phẩm vượt quá số lượng đã thống nhất</li>
+        <li>Thay mặt quý khách nộp hồ sơ pháp lý</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Bước tiếp theo</div>
+    <h2>Ba câu hỏi để chốt giá chính xác</h2>
+    <p class="lede">Mức 10–15 triệu phụ thuộc vào ba yếu tố sau. Quý khách trả lời giúp, chúng tôi gửi lại con số cụ thể và hợp đồng trong vòng 24 giờ.</p>
+
+    <div class="grid g2" style="margin-top:32px">
+      <div class="card rv">
+        <h3>1. Số lượng sản phẩm</h3>
+        <div class="sub">Ảnh hưởng tới thời gian nhập liệu</div>
+        <p style="font-size:14.5px;color:var(--ink-2)">Dự kiến bán bao nhiêu mã sản phẩm khi khai trương? Quý khách tự nhập liệu hay muốn chúng tôi nhập giúp?</p>
+      </div>
+      <div class="card rv">
+        <h3>2. Giấy phép thiết bị y tế</h3>
+        <div class="sub">Ảnh hưởng tới ngày nhận tiền thật</div>
+        <p style="font-size:14.5px;color:var(--ink-2)">Doanh nghiệp đã có giấy phép kinh doanh và giấy tờ về thiết bị y tế chưa? Sản phẩm thuộc phân loại A, B, C hay D?</p>
+      </div>
+      <div class="card rv">
+        <h3>3. Hóa đơn điện tử</h3>
+        <div class="sub">Ảnh hưởng tới khối lượng tích hợp</div>
+        <p style="font-size:14.5px;color:var(--ink-2)">Doanh nghiệp đã dùng phần mềm hóa đơn điện tử nào chưa? Nếu có, là đơn vị nào và đang dùng loại chữ ký số nào?</p>
+      </div>
+      <div class="card rv">
+        <h3>4. Bộ nhận diện</h3>
+        <div class="sub">Ảnh hưởng tới thời gian thiết kế</div>
+        <p style="font-size:14.5px;color:var(--ink-2)">Đã có logo và màu sắc thương hiệu chưa? Có website cũ cần chuyển dữ liệu sang không?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <h3>Trao đổi trực tiếp</h3>
+        <p>Chúng tôi sẵn sàng gọi điện 20 phút để đi qua từng mục trong tài liệu này và trả lời mọi câu hỏi trước khi quý khách quyết định.</p>
+      </div>
+      <div class="contacts">
+        <span>Ocean Dev — Phạm Ngọc Huy</span>
+        <a href="tel:0876557737">Zalo / WhatsApp · 0876 557 737</a>
+        <a href="https://www.facebook.com/baobinh.01.02.2003/" target="_blank" rel="noopener">Facebook: Ngọc Huy</a>
+        <a href="https://portfolio-ocean.vercel.app/public/portfolio/eagle/ocean" target="_blank" rel="noopener">portfolio-ocean.vercel.app</a>
+      </div>
+    </div>
+    <div class="fineprint">
+      Báo giá có hiệu lực 30 ngày kể từ ngày gửi. Các con số về phí giao dịch, phí hóa đơn điện tử và chữ ký số là ước tính tham khảo tại thời điểm soạn tài liệu; vui lòng xác nhận trực tiếp với nhà cung cấp dịch vụ. Tài liệu này chưa phải hợp đồng.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme=prefersDark?'dark':'light';
+  root.setAttribute('data-theme',theme);
+  document.getElementById('theme').addEventListener('click',function(){
+    theme=theme==='dark'?'light':'dark';
+    root.setAttribute('data-theme',theme);
+  });
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=document.querySelectorAll('.rv');
+  if(reduce||!('IntersectionObserver'in window)){
+    items.forEach(function(el){el.classList.add('in')});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+    })
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  items.forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>
