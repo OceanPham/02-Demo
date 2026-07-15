@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +17,9 @@
       --shadow: 0 8px 24px -12px rgba(26, 35, 50, 0.18);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -126,16 +129,27 @@
     }
 
     @media (max-width: 480px) {
-      .wrap { padding: 32px 16px 48px; }
-      .demo-card { padding: 16px; }
+      .wrap {
+        padding: 32px 16px 48px;
+      }
+
+      .demo-card {
+        padding: 16px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .demo-card { transition: none; }
-      .demo-card:hover { transform: none; }
+      .demo-card {
+        transition: none;
+      }
+
+      .demo-card:hover {
+        transform: none;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <header>
@@ -165,6 +179,13 @@
           <p class="demo-path">printcart_3d_edge_preview_implementation_plan.html</p>
         </a>
       </li>
+
+      <li>
+        <a class="demo-card" href="plan-website-driklux.html">
+          <p class="demo-title">Kế hoạch — Website Driklux</p>
+          <p class="demo-path">plan-website-driklux.html</p>
+        </a>
+      </li>
     </ul>
 
     <footer>
@@ -172,4 +193,5 @@
     </footer>
   </div>
 </body>
+
 </html>

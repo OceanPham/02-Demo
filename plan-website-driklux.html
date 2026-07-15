@@ -1,0 +1,2136 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đề xuất thiết kế website — DRIKLUX · Ocean Dev</title>
+  <meta name="description"
+    content="Bản đề xuất thiết kế & phát triển website thương hiệu watch winder DRIKLUX, trình bày bởi Ocean Dev." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FAFBFC;
+      --surface: #FFFFFF;
+      --surface-2: #F1F3F5;
+      --border: rgba(15, 23, 42, .08);
+      --border-strong: rgba(15, 23, 42, .16);
+      --accent: #7A6240;
+      --accent-dim: #5E4A30;
+      --ink: #0F172A;
+      --ink-dim: #334155;
+      --ink-mute: #64748B;
+      --sage: #3F6B4A;
+      --burgundy: #8B4A4A;
+      --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px rgba(15, 23, 42, .05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 72px
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse 800px 420px at 50% -8%, rgba(122, 98, 64, .04), transparent 55%),
+        linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 50%, #F4F6F8 100%);
+      color: var(--ink);
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    /* ---------- Typography ---------- */
+    .display {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 400;
+      letter-spacing: .005em;
+      color: var(--ink);
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 400;
+      letter-spacing: .02em;
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s
+    }
+
+    a:hover {
+      border-bottom-color: var(--accent)
+    }
+
+    /* ---------- Cover ---------- */
+    .cover {
+      padding: 40px 0 48px;
+      position: relative;
+    }
+
+    .cover>.container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      flex-wrap: wrap
+    }
+
+    .brand {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 20px;
+      letter-spacing: .14em;
+      font-weight: 500;
+      color: var(--ink);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(122, 98, 64, .2);
+      animation: tick 1.4s ease-in-out infinite;
+    }
+
+    @keyframes tick {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .4;
+        transform: scale(.85)
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .brand-dot {
+        animation: none
+      }
+    }
+
+    .doc-ref {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: .08em;
+      text-align: right;
+      line-height: 1.85;
+    }
+
+    .cover-center {
+      padding: 8px 0 0
+    }
+
+    .cover-eyebrow {
+      margin-bottom: 28px
+    }
+
+    .cover-title {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 1.08;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    .cover-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+
+    .cover-sub {
+      font-size: 17px;
+      color: var(--ink-dim);
+      max-width: 540px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .cover-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 24px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cover-meta-item .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 8px;
+    }
+
+    .cover-meta-item .value {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 19px;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    /* ---------- Section ---------- */
+    .section {
+      padding: 88px 0;
+      position: relative
+    }
+
+    .section-head {
+      margin-bottom: 48px;
+      max-width: 640px
+    }
+
+    .section-ref {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    .section-title {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(28px, 4.5vw, 40px);
+      line-height: 1.15;
+      letter-spacing: -.015em;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    .section-lead {
+      color: var(--ink-dim);
+      font-size: 16px;
+      line-height: 1.75
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-mark {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      opacity: .7;
+    }
+
+    /* ---------- REF.01 Context ---------- */
+    .context-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    @media (min-width:720px) {
+      .context-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .context-cell {
+      background: var(--surface);
+      padding: 32px 28px;
+    }
+
+    .context-cell h4 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .context-cell p {
+      color: var(--ink-dim);
+      font-size: 14.5px;
+      line-height: 1.7
+    }
+
+    /* ---------- REF.02 Sitemap ---------- */
+    .sitemap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    @media (min-width:720px) {
+      .sitemap {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    .page-card {
+      background: var(--surface);
+      padding: 28px 26px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: background .25s;
+    }
+
+    .page-card:hover {
+      background: var(--surface-2)
+    }
+
+    .page-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      padding-top: 2px;
+      min-width: 32px;
+    }
+
+    .page-body h4 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    .page-body ul {
+      list-style: none;
+      margin-top: 8px
+    }
+
+    .page-body li {
+      color: var(--ink-dim);
+      font-size: 13.5px;
+      line-height: 1.7;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .page-body li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 5px;
+      height: 1px;
+      background: var(--accent-dim);
+    }
+
+    /* ---------- REF.03 Features ---------- */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width:820px) {
+      .features-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px
+      }
+    }
+
+    .feature-col {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-col-title {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: 24px;
+      color: var(--ink);
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .feature-col-title span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .feature-list {
+      list-style: none
+    }
+
+    .feature-list li {
+      padding: 10px 0 10px 26px;
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.55;
+      border-bottom: 1px solid rgba(27, 28, 30, .06);
+      position: relative;
+    }
+
+    .feature-list li:last-child {
+      border-bottom: none
+    }
+
+    .feature-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 12px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .feature-list li small {
+      display: block;
+      color: var(--ink-mute);
+      font-size: 12.5px;
+      margin-top: 2px;
+      line-height: 1.5;
+    }
+
+    /* ---------- REF.04 Stack ---------- */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .stack-cell {
+      background: var(--surface);
+      padding: 22px 20px;
+    }
+
+    .stack-cell .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-mute);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .stack-cell .value {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 19px;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    /* ---------- REF.05 SEO ---------- */
+    .seo-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (min-width:720px) {
+      .seo-list {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .seo-item {
+      padding: 18px 4px 18px 32px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      font-size: 14.5px;
+      color: var(--ink);
+    }
+
+    .seo-item::before {
+      content: '✓';
+      position: absolute;
+      left: 4px;
+      top: 16px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .seo-item small {
+      display: block;
+      color: var(--ink-dim);
+      font-size: 13px;
+      margin-top: 3px;
+      line-height: 1.55
+    }
+
+    .seo-target {
+      margin-top: 32px;
+      padding: 24px 26px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 40px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .seo-target-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .seo-target-values {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap
+    }
+
+    .seo-target-values div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px
+    }
+
+    .seo-target-values .n {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 32px;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .seo-target-values .u {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mute);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- REF.06 Timeline ---------- */
+    .timeline {
+      border-top: 1px solid var(--border)
+    }
+
+    .day-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 20px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    @media (min-width:640px) {
+      .day-row {
+        grid-template-columns: 120px 1fr;
+        gap: 32px
+      }
+    }
+
+    .day-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: .06em;
+      padding-top: 4px;
+      font-weight: 500;
+    }
+
+    .day-content h5 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: 19px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .day-content p {
+      color: var(--ink-dim);
+      font-size: 14px;
+      line-height: 1.65
+    }
+
+    .day-row.phase-2 {
+      background: linear-gradient(90deg, rgba(122, 98, 64, .05), transparent)
+    }
+
+    .day-row.phase-2 .day-label {
+      color: var(--sage)
+    }
+
+    /* ---------- REF.07 Cost ---------- */
+    .cost-block {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .cost-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 20px 26px;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cost-header h4 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: 22px;
+      color: var(--ink);
+    }
+
+    .cost-header .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .cost-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 14px 26px;
+      border-bottom: 1px solid rgba(27, 28, 30, .06);
+      align-items: center;
+    }
+
+    .cost-row:last-child {
+      border-bottom: none
+    }
+
+    .cost-row .desc {
+      color: var(--ink);
+      font-size: 14.5px;
+      line-height: 1.5
+    }
+
+    .cost-row .desc small {
+      display: block;
+      color: var(--ink-mute);
+      font-size: 12.5px;
+      margin-top: 2px
+    }
+
+    .cost-row .amt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .cost-row.free .amt {
+      color: var(--sage)
+    }
+
+    .cost-total {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 20px 26px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--border-strong);
+    }
+
+    .cost-total .desc {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 20px;
+      color: var(--ink);
+    }
+
+    .cost-total .amt {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 28px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .cost-note {
+      color: var(--ink-mute);
+      font-size: 13px;
+      line-height: 1.65;
+      margin-top: 16px;
+      padding-left: 14px;
+      border-left: 1px solid var(--border);
+    }
+
+    /* ---------- REF.08 Warranty ---------- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px
+    }
+
+    @media(min-width:720px) {
+      .two-col {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .warranty-card {
+      padding: 28px 26px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .warranty-card h4 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .warranty-card .sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .warranty-card ul {
+      list-style: none
+    }
+
+    .warranty-card li {
+      padding: 8px 0 8px 22px;
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.55;
+      position: relative;
+    }
+
+    .warranty-card.include li::before {
+      content: '+';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+    }
+
+    .warranty-card.exclude li {
+      color: var(--ink-dim)
+    }
+
+    .warranty-card.exclude li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      color: var(--ink-mute);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+    }
+
+    /* ---------- REF.09 Payment ---------- */
+    .payment-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .payment-row:first-child {
+      border-top: 1px solid var(--border)
+    }
+
+    .payment-num {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 28px;
+      color: var(--accent);
+      font-weight: 400;
+      line-height: 1;
+      min-width: 36px;
+    }
+
+    .payment-desc {
+      font-size: 14.5px;
+      color: var(--ink);
+    }
+
+    .payment-desc small {
+      display: block;
+      color: var(--ink-dim);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .payment-amt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      color: var(--accent);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ---------- Closing ---------- */
+    .closing {
+      padding: 96px 0 72px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .closing-title {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(30px, 4.5vw, 48px);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    .closing-title em {
+      color: var(--accent);
+      font-style: italic
+    }
+
+    .closing-sub {
+      color: var(--ink-dim);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      font-size: 15.5px;
+      line-height: 1.7;
+    }
+
+    .closing-contact {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 28px 40px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      text-align: left;
+      min-width: 260px;
+    }
+
+    .closing-contact .row {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 16px;
+      font-size: 14.5px;
+      align-items: baseline;
+    }
+
+    .closing-contact .row .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+    }
+
+    .closing-contact .row .v {
+      color: var(--ink)
+    }
+
+    .closing-contact .row .v a {
+      color: var(--accent)
+    }
+
+    .foot {
+      padding: 32px 0 48px;
+      text-align: center;
+      color: var(--ink-mute);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .foot span {
+      color: var(--accent-dim)
+    }
+
+    /* ---------- Table of contents ---------- */
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(250, 251, 252, .92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 52px;
+    }
+
+    .toc-label {
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      padding-right: 4px;
+    }
+
+    .toc-toggle {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      padding: 14px 4px;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .toc-toggle-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .toc-toggle-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .toc-toggle-icon {
+      width: 18px;
+      height: 18px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .toc-toggle-icon::before,
+    .toc-toggle-icon::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform .2s, top .2s, opacity .2s;
+    }
+
+    .toc-toggle-icon::before {
+      top: 6px
+    }
+
+    .toc-toggle-icon::after {
+      top: 11px
+    }
+
+    .toc.is-open .toc-toggle-icon::before {
+      top: 8.5px;
+      transform: rotate(45deg);
+    }
+
+    .toc.is-open .toc-toggle-icon::after {
+      top: 8.5px;
+      transform: rotate(-45deg);
+    }
+
+    .toc-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 16px), transparent);
+      padding: 8px 0;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .toc-links::-webkit-scrollbar {
+      display: none
+    }
+
+    .toc-links a {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      border-bottom: none;
+      color: var(--ink-dim);
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition: background .2s, color .2s;
+    }
+
+    .toc-links a:hover {
+      background: var(--surface-2);
+      color: var(--ink);
+      border-bottom-color: transparent;
+    }
+
+    .toc-links a.is-active {
+      background: rgba(122, 98, 64, .1);
+      color: var(--accent-dim);
+    }
+
+    .toc-links a .n {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .06em;
+      color: var(--accent);
+      opacity: .85;
+    }
+
+    .toc-panel {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      max-height: min(70vh, 520px);
+      overflow-y: auto;
+    }
+
+    .toc-panel a {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--border);
+      border-bottom-color: var(--border);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .toc-panel a:last-child {
+      border-bottom: none
+    }
+
+    .toc-panel a:hover,
+    .toc-panel a.is-active {
+      background: var(--surface-2);
+      border-bottom-color: var(--border);
+    }
+
+    .toc-panel a .n {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      min-width: 28px;
+      flex-shrink: 0;
+    }
+
+    .toc-panel a .t {
+      color: var(--ink)
+    }
+
+    .toc-panel a small {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--ink-mute);
+      line-height: 1.4;
+    }
+
+    @media (max-width:820px) {
+      html {
+        scroll-padding-top: 56px
+      }
+
+      .toc-label {
+        display: none
+      }
+
+      .toc-links {
+        display: none
+      }
+
+      .toc-toggle {
+        display: flex
+      }
+
+      .toc.is-open .toc-panel {
+        display: block
+      }
+
+      .toc-inner {
+        padding: 0 16px;
+        min-height: 0
+      }
+    }
+
+    @media (min-width:821px) {
+      .toc-panel {
+        display: none !important
+      }
+    }
+
+    .toc-overview {
+      margin: 0 auto;
+      max-width: 960px;
+      padding: 28px 24px 8px;
+    }
+
+    .toc-overview-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .toc-overview-head .eyebrow {
+      margin: 0
+    }
+
+    .toc-overview-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    @media (min-width:560px) {
+      .toc-overview-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media (min-width:860px) {
+      .toc-overview-grid {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    .toc-overview-grid a {
+      display: block;
+      background: var(--surface);
+      padding: 18px 18px 16px;
+      border-bottom: none;
+      color: var(--ink);
+      transition: background .2s;
+    }
+
+    .toc-overview-grid a:hover {
+      background: var(--surface-2);
+      border-bottom-color: transparent;
+    }
+
+    .toc-overview-grid a .n {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .toc-overview-grid a .t {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+
+    .section[id],
+    .closing[id],
+    .cover[id] {
+      scroll-margin-top: 72px;
+    }
+
+    @media (max-width:820px) {
+
+      .section[id],
+      .closing[id],
+      .cover[id] {
+        scroll-margin-top: 56px;
+      }
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: #fff;
+        color: #111
+      }
+
+      .cover {
+        min-height: auto;
+        page-break-after: always
+      }
+
+      .section {
+        page-break-inside: avoid
+      }
+
+      .toc,
+      .toc-overview {
+        display: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= TOC (sticky) ================= -->
+  <nav class="toc" id="toc" aria-label="Mục lục">
+    <div class="toc-inner">
+      <span class="toc-label">Mục lục</span>
+      <button type="button" class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="toc-panel">
+        <span>Mục lục</span>
+        <span class="toc-toggle-right">
+          <span class="toc-toggle-meta" id="toc-current">REF. 01</span>
+          <span class="toc-toggle-icon" aria-hidden="true"></span>
+        </span>
+      </button>
+      <div class="toc-links" id="toc-links">
+        <a href="#ref-01"><span class="n">01</span>Bối cảnh</a>
+        <a href="#ref-02"><span class="n">02</span>Kiến trúc</a>
+        <a href="#ref-03"><span class="n">03</span>Tính năng</a>
+        <a href="#ref-04"><span class="n">04</span>Kỹ thuật</a>
+        <a href="#ref-05"><span class="n">05</span>SEO</a>
+        <a href="#ref-06"><span class="n">06</span>Tiến độ</a>
+        <a href="#ref-07"><span class="n">07</span>Chi phí</a>
+        <a href="#ref-08"><span class="n">08</span>Bảo hành</a>
+        <a href="#ref-09"><span class="n">09</span>Thanh toán</a>
+        <a href="#ref-10"><span class="n">10</span>Tiếp theo</a>
+      </div>
+    </div>
+    <div class="toc-panel" id="toc-panel">
+      <a href="#ref-01"><span class="n">01</span><span class="t">Bối cảnh &amp; mục tiêu<small>Phân khúc, hành trình mua
+            hàng</small></span></a>
+      <a href="#ref-02"><span class="n">02</span><span class="t">Kiến trúc website<small>7 trang chính +
+            admin</small></span></a>
+      <a href="#ref-03"><span class="n">03</span><span class="t">Danh sách tính năng<small>Đủ vận hành, không
+            thừa</small></span></a>
+      <a href="#ref-04"><span class="n">04</span><span class="t">Nền tảng kỹ thuật<small>Stack &amp; hạ
+            tầng</small></span></a>
+      <a href="#ref-05"><span class="n">05</span><span class="t">Tối ưu SEO<small>Technical &amp;
+            on-page</small></span></a>
+      <a href="#ref-06"><span class="n">06</span><span class="t">Tiến độ thực hiện<small>7 ngày làm việc đến
+            demo</small></span></a>
+      <a href="#ref-07"><span class="n">07</span><span class="t">Chi phí<small>Trọn gói phát triển</small></span></a>
+      <a href="#ref-08"><span class="n">08</span><span class="t">Bảo hành &amp; phạm vi<small>Trong gói / ngoài
+            gói</small></span></a>
+      <a href="#ref-09"><span class="n">09</span><span class="t">Lịch thanh toán<small>Một lần sau bàn
+            giao</small></span></a>
+      <a href="#ref-10"><span class="n">10</span><span class="t">Bước tiếp theo<small>Khởi động dự án</small></span></a>
+    </div>
+  </nav>
+
+  <!-- ================= COVER ================= -->
+  <section class="cover" id="top">
+    <div class="container">
+      <div class="cover-top">
+        <div class="brand"><span class="brand-dot"></span>Ocean&nbsp;Dev</div>
+        <div class="doc-ref">
+          DOC · DRIKLUX-WEB-2026<br>
+          REV · 01<br>
+          PREPARED · 15.07.2026
+        </div>
+      </div>
+
+      <div class="cover-center">
+        <div class="eyebrow cover-eyebrow">Đề xuất thiết kế &amp; phát triển</div>
+        <h1 class="cover-title">Website thương hiệu <em>DRIKLUX</em> — Watch&nbsp;Winder trưng bày trực tuyến.</h1>
+        <p class="cover-sub">Trang thương mại tối giản, chuẩn SEO, tối ưu cho hành trình từ tham khảo sản phẩm đến chốt
+          đơn qua Zalo. Gồm trang quản trị nội dung, thời gian bàn giao demo trong 7 ngày làm việc.</p>
+      </div>
+
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <div class="label">Khách hàng</div>
+          <div class="value">Maison Watch Winders</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="label">Thương hiệu</div>
+          <div class="value">DRIKLUX</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="label">Đơn vị thực hiện</div>
+          <div class="value">Ocean Dev</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="label">Ngân sách</div>
+          <div class="value">3.000.000 ₫</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-mark"></div>
+  </div>
+
+  <!-- ================= TOC OVERVIEW ================= -->
+  <div class="toc-overview" aria-label="Danh sách mục">
+    <div class="toc-overview-head">
+      <span class="eyebrow">Nội dung đề xuất</span>
+    </div>
+    <div class="toc-overview-grid">
+      <a href="#ref-01">
+        <div class="n">REF. 01</div>
+        <div class="t">Bối cảnh &amp; mục tiêu</div>
+      </a>
+      <a href="#ref-02">
+        <div class="n">REF. 02</div>
+        <div class="t">Kiến trúc website</div>
+      </a>
+      <a href="#ref-03">
+        <div class="n">REF. 03</div>
+        <div class="t">Danh sách tính năng</div>
+      </a>
+      <a href="#ref-04">
+        <div class="n">REF. 04</div>
+        <div class="t">Nền tảng kỹ thuật</div>
+      </a>
+      <a href="#ref-05">
+        <div class="n">REF. 05</div>
+        <div class="t">Tối ưu SEO</div>
+      </a>
+      <a href="#ref-06">
+        <div class="n">REF. 06</div>
+        <div class="t">Tiến độ thực hiện</div>
+      </a>
+      <a href="#ref-07">
+        <div class="n">REF. 07</div>
+        <div class="t">Chi phí</div>
+      </a>
+      <a href="#ref-08">
+        <div class="n">REF. 08</div>
+        <div class="t">Bảo hành &amp; phạm vi</div>
+      </a>
+      <a href="#ref-09">
+        <div class="n">REF. 09</div>
+        <div class="t">Lịch thanh toán</div>
+      </a>
+      <a href="#ref-10">
+        <div class="n">REF. 10</div>
+        <div class="t">Bước tiếp theo</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider" style="margin-top:24px">
+    <div class="divider-mark"></div>
+  </div>
+
+  <!-- ================= REF.01 CONTEXT ================= -->
+  <section class="section" id="ref-01">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 01 &nbsp;·&nbsp; BỐI CẢNH &amp; MỤC TIÊU</span>
+        <h2 class="section-title">Một cửa hàng trưng bày trực tuyến cho dòng watch winder cao cấp.</h2>
+        <p class="section-lead">DRIKLUX là dòng hộp xoay đồng hồ định vị ở phân khúc quà tặng và sưu tầm. Website cần
+          thể hiện được chất "trưng bày trong tủ kính" của sản phẩm, đồng thời giữ đường chốt đơn ngắn — khách để lại
+          thông tin, hệ thống lưu đơn và chuyển hội thoại sang Zalo để tư vấn 1:1.</p>
+      </div>
+
+      <div class="context-grid">
+        <div class="context-cell">
+          <h4>Đối tượng khách hàng</h4>
+          <p>Người mua đồng hồ cơ (automatic) tại Việt Nam, giá trị đồng hồ từ trung đến cao cấp; khách sưu tầm cần bảo
+            quản đồng thời nhiều mẫu; khách mua làm quà tặng.</p>
+        </div>
+        <div class="context-cell">
+          <h4>Hành trình mua hàng</h4>
+          <p>Xem sản phẩm → so sánh theo số gối xoay và dòng sản phẩm (S/T/D/F) → thêm vào giỏ để đối chiếu → điền thông
+            tin → chuyển Zalo để tư vấn và chốt đơn. Không thanh toán trực tuyến.</p>
+        </div>
+        <div class="context-cell">
+          <h4>Vai trò của website</h4>
+          <p>Catalog trưng bày có thể tìm kiếm và lọc, kết hợp phễu thu thập thông tin khách trước khi chuyển sang Zalo.
+            Nội dung có blog để chia sẻ kiến thức về bảo quản đồng hồ, phục vụ tối ưu SEO dài hạn.</p>
+        </div>
+        <div class="context-cell">
+          <h4>Yếu tố kỹ thuật cốt lõi</h4>
+          <p>SSR chuẩn SEO, responsive từ mobile, ảnh tối ưu qua Cloudinary, admin panel một tài khoản để chỉnh nội dung
+            và theo dõi đơn. Video sản phẩm đề xuất nhúng từ YouTube để đảm bảo băng thông.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REF.02 SITEMAP ================= -->
+  <section class="section" id="ref-02">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 02 &nbsp;·&nbsp; KIẾN TRÚC WEBSITE</span>
+        <h2 class="section-title">Bảy trang chính, một khu vực quản trị.</h2>
+        <p class="section-lead">Sitemap phẳng, mỗi trang giữ một nhiệm vụ rõ ràng. Không tạo phễu điều hướng phức tạp —
+          khách phải đến được trang chi tiết sản phẩm chỉ trong 1–2 lượt bấm từ trang chủ.</p>
+      </div>
+
+      <div class="sitemap">
+        <div class="page-card">
+          <div class="page-num">01</div>
+          <div class="page-body">
+            <h4>Trang chủ</h4>
+            <ul>
+              <li>Hero banner giới thiệu thương hiệu</li>
+              <li>Grid 4 dòng sản phẩm: S · T · D · F</li>
+              <li>Khu vực sản phẩm nổi bật</li>
+              <li>Bài viết mới nhất</li>
+              <li>CTA Zalo &amp; Hotline nổi cố định</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <div class="page-num">02</div>
+          <div class="page-body">
+            <h4>Trang sản phẩm</h4>
+            <ul>
+              <li>Danh sách toàn bộ sản phẩm, phân trang</li>
+              <li>Bộ lọc theo số gối xoay: 1–2 · 3–6 · 8–15 · trên 15</li>
+              <li>Bộ lọc theo dòng sản phẩm (S/T/D/F)</li>
+              <li>Sắp xếp theo giá, mới nhất</li>
+              <li>Ô tìm kiếm nhanh</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <div class="page-num">03</div>
+          <div class="page-body">
+            <h4>Chi tiết sản phẩm</h4>
+            <ul>
+              <li>Gallery ảnh chất lượng cao (zoom)</li>
+              <li>Giá bán và giá khuyến mãi</li>
+              <li>Mô tả ngắn, tính năng nổi bật</li>
+              <li>Bảng thông số kỹ thuật</li>
+              <li>Nút "Thêm vào giỏ" và "Tư vấn qua Zalo"</li>
+              <li>Sản phẩm liên quan cùng dòng</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <div class="page-num">04</div>
+          <div class="page-body">
+            <h4>Giỏ hàng &amp; đặt hàng</h4>
+            <ul>
+              <li>Danh sách sản phẩm đã thêm, chỉnh số lượng</li>
+              <li>Form thông tin khách: họ tên, SĐT, địa chỉ, ghi chú</li>
+              <li>Lưu đơn vào database với trạng thái "chờ xử lý"</li>
+              <li>Chuyển sang Zalo kèm mã đơn để tiếp tục tư vấn</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <div class="page-num">05</div>
+          <div class="page-body">
+            <h4>Tin tức</h4>
+            <ul>
+              <li>Danh sách bài viết, phân trang</li>
+              <li>Danh mục: kiến thức đồng hồ, hộp xoay, bảo quản</li>
+              <li>Trang chi tiết bài viết, tối ưu SEO</li>
+              <li>Chia sẻ mạng xã hội, bài viết liên quan</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <div class="page-num">06</div>
+          <div class="page-body">
+            <h4>Giới thiệu</h4>
+            <ul>
+              <li>Câu chuyện thương hiệu DRIKLUX</li>
+              <li>Cam kết chất lượng</li>
+              <li>Chính sách bảo hành</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <div class="page-num">07</div>
+          <div class="page-body">
+            <h4>Liên hệ</h4>
+            <ul>
+              <li>Thông tin showroom, giờ mở cửa</li>
+              <li>Bản đồ Google Maps nhúng</li>
+              <li>Hotline, Zalo, email</li>
+              <li>Form liên hệ tuỳ chọn</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="page-card">
+          <div class="page-num">08</div>
+          <div class="page-body">
+            <h4>Trang quản trị <span
+                style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;">/ADMIN</span>
+            </h4>
+            <ul>
+              <li>Đăng nhập bảo mật, một tài khoản admin</li>
+              <li>Dashboard: đếm đơn, sản phẩm, bài viết</li>
+              <li>Quản lý sản phẩm, đơn hàng, tin tức, banner, cấu hình chung</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REF.03 FEATURES ================= -->
+  <section class="section" id="ref-03">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 03 &nbsp;·&nbsp; DANH SÁCH TÍNH NĂNG</span>
+        <h2 class="section-title">Đủ để vận hành, không thừa để bảo trì.</h2>
+        <p class="section-lead">Danh sách tính năng được cắt gọt theo đúng mô hình bán hàng chuyển tiếp Zalo. Mọi tính
+          năng không phục vụ mục tiêu này đều nằm ngoài phạm vi (xem REF. 08).</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-col">
+          <div class="feature-col-title">Giao diện khách hàng <span>Front</span></div>
+          <ul class="feature-list">
+            <li>Tìm kiếm sản phẩm theo tên, dòng, số gối xoay</li>
+            <li>Bộ lọc và sắp xếp nhiều tiêu chí</li>
+            <li>Giỏ hàng lưu tạm trên trình duyệt, có thể chỉnh sửa</li>
+            <li>Đặt hàng trực tuyến, lưu đơn vào DB<small>Chuyển tiếp Zalo kèm mã đơn để CSKH tra cứu.</small></li>
+            <li>Chat Zalo nổi ở góc màn hình</li>
+            <li>Nút gọi điện nhanh trên mobile (tap-to-call)</li>
+            <li>Responsive từ điện thoại đến máy tính</li>
+            <li>Ảnh tải nhanh qua Cloudinary <span class="mono" style="color:var(--ink-mute);font-size:11px">f_auto ·
+                q_auto</span></li>
+            <li>Video sản phẩm nhúng YouTube (khuyến nghị)</li>
+            <li>Chia sẻ sản phẩm và bài viết lên Facebook, Zalo</li>
+            <li>Trang lỗi 404 và trạng thái trống được xử lý gợi ý</li>
+          </ul>
+        </div>
+
+        <div class="feature-col">
+          <div class="feature-col-title">Trang quản trị <span>Admin</span></div>
+          <ul class="feature-list">
+            <li>Đăng nhập an toàn (JWT + refresh token)</li>
+            <li>Quản lý sản phẩm — thêm, sửa, xoá, ẩn/hiện<small>Tải ảnh nhiều tấm, sắp xếp, gán dòng và số gối
+                xoay.</small></li>
+            <li>Quản lý đơn hàng — trạng thái, ghi chú CSKH<small>Mới · Đã liên hệ · Hoàn tất · Huỷ. Xuất CSV.</small>
+            </li>
+            <li>Quản lý bài viết tin tức — trình soạn thảo có định dạng</li>
+            <li>Quản lý banner &amp; sản phẩm nổi bật trên trang chủ</li>
+            <li>Cấu hình chung — hotline, Zalo, địa chỉ, Google Maps</li>
+            <li>Cấu hình SEO cho từng trang — title, description, OG image</li>
+            <li>Cấu hình tone màu thương hiệu<small>Đổi màu chính và màu nhấn từ admin mà không cần deploy lại.</small>
+            </li>
+            <li>Nhật ký hoạt động cơ bản</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REF.04 STACK ================= -->
+  <section class="section" id="ref-04">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 04 &nbsp;·&nbsp; NỀN TẢNG KỸ THUẬT</span>
+        <h2 class="section-title">Stack hiện đại, tối ưu SEO, chi phí vận hành thấp.</h2>
+        <p class="section-lead">Frontend render phía máy chủ (SSR) để Google index tốt, backend REST API tách biệt để dễ
+          mở rộng. Toàn bộ chạy trên một VPS Ubuntu duy nhất trong giai đoạn khởi tạo.</p>
+      </div>
+
+      <div class="stack-grid">
+        <div class="stack-cell">
+          <div class="label">Frontend</div>
+          <div class="value">Next.js 14<br>Tailwind CSS</div>
+        </div>
+        <div class="stack-cell">
+          <div class="label">Backend</div>
+          <div class="value">Node.js · Express<br>Sequelize ORM</div>
+        </div>
+        <div class="stack-cell">
+          <div class="label">Cơ sở dữ liệu</div>
+          <div class="value">MySQL 8</div>
+        </div>
+        <div class="stack-cell">
+          <div class="label">Lưu trữ ảnh</div>
+          <div class="value">Cloudinary<br><span class="mono" style="font-size:11px;color:var(--ink-mute)">gói
+              free</span></div>
+        </div>
+        <div class="stack-cell">
+          <div class="label">Hạ tầng</div>
+          <div class="value">Ubuntu VPS<br>Nginx · PM2</div>
+        </div>
+        <div class="stack-cell">
+          <div class="label">Domain</div>
+          <div class="value">Đăng ký .com<br>hoặc .vn</div>
+        </div>
+        <div class="stack-cell">
+          <div class="label">Chứng chỉ SSL</div>
+          <div class="value">Let's Encrypt<br>tự gia hạn</div>
+        </div>
+        <div class="stack-cell">
+          <div class="label">Video sản phẩm</div>
+          <div class="value">Nhúng YouTube<br>tiết kiệm băng thông</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REF.05 SEO ================= -->
+  <section class="section" id="ref-05">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 05 &nbsp;·&nbsp; TỐI ƯU SEO</span>
+        <h2 class="section-title">SEO kỹ thuật &amp; on-page được thực hiện ngay khi phát triển.</h2>
+        <p class="section-lead">Phạm vi SEO đi kèm là on-page và technical SEO — nền tảng để website có thể xếp hạng tốt
+          về mặt kỹ thuật. Các hoạt động off-page (backlink, content dài hạn, chạy quảng cáo Google) không nằm trong gói
+          này.</p>
+      </div>
+
+      <div class="seo-list">
+        <div class="seo-item">Semantic HTML5, cấu trúc heading hợp lý<small>H1 duy nhất mỗi trang, phân cấp H2–H6 theo
+            nội dung.</small></div>
+        <div class="seo-item">Meta title &amp; description tuỳ biến từng trang<small>Chỉnh trực tiếp trong admin, không
+            cần dev.</small></div>
+        <div class="seo-item">Open Graph &amp; Twitter Card<small>Preview đẹp khi chia sẻ Facebook, Zalo,
+            Messenger.</small></div>
+        <div class="seo-item">Schema.org markup — Product, Article, Organization<small>Hiển thị giá và đánh giá trên kết
+            quả Google.</small></div>
+        <div class="seo-item">sitemap.xml &amp; robots.txt tự sinh<small>Tự cập nhật khi có sản phẩm hoặc bài viết
+            mới.</small></div>
+        <div class="seo-item">URL thân thiện, có dấu và không dấu<small>Ví dụ: /san-pham/driklux-t6-luxe.</small></div>
+        <div class="seo-item">Alt text bắt buộc cho toàn bộ ảnh<small>Trường alt gắn liền trong form admin, không thể
+            quên.</small></div>
+        <div class="seo-item">Ảnh WebP/AVIF, lazy load, kích thước responsive<small>Cloudinary tự chọn định dạng và chất
+            lượng theo trình duyệt.</small></div>
+        <div class="seo-item">Canonical URL, tránh trùng lặp nội dung</div>
+        <div class="seo-item">Breadcrumb có schema BreadcrumbList</div>
+        <div class="seo-item">SSR toàn bộ trang public, không dựa vào JS để render nội dung</div>
+        <div class="seo-item">Cài đặt Google Search Console &amp; Analytics 4<small>Bàn giao quyền truy cập cho
+            khách.</small></div>
+      </div>
+
+      <div class="seo-target">
+        <div class="seo-target-label">Mục tiêu Lighthouse<br>khi bàn giao</div>
+        <div class="seo-target-values">
+          <div><span class="n">90+</span><span class="u">Performance</span></div>
+          <div><span class="n">95+</span><span class="u">SEO</span></div>
+          <div><span class="n">95+</span><span class="u">Best Practices</span></div>
+          <div><span class="n">90+</span><span class="u">Accessibility</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REF.06 TIMELINE ================= -->
+  <section class="section" id="ref-06">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 06 &nbsp;·&nbsp; TIẾN ĐỘ THỰC HIỆN</span>
+        <h2 class="section-title">Bảy ngày làm việc đến bản demo trên staging.</h2>
+        <p class="section-lead">Ngày làm việc không tính cuối tuần và lễ. Sau ngày thứ 7 là giai đoạn hai bên cùng kiểm
+          thử — chỉnh sửa theo phản hồi cho đến khi đạt yêu cầu thì bàn giao chính thức.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="day-row">
+          <div class="day-label">DAY · 01</div>
+          <div class="day-content">
+            <h5>Khởi tạo hạ tầng &amp; hệ thống thiết kế</h5>
+            <p>Cài đặt VPS, domain tạm, khởi tạo repo, thiết lập CI/CD cơ bản. Chốt tone màu, typography, spacing scale,
+              component cơ bản.</p>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">DAY · 02</div>
+          <div class="day-content">
+            <h5>Trang chủ &amp; layout tổng thể</h5>
+            <p>Header, footer, hero, grid dòng sản phẩm, khu vực sản phẩm nổi bật, floating Zalo &amp; hotline.
+              Responsive breakpoint mobile / tablet / desktop.</p>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">DAY · 03</div>
+          <div class="day-content">
+            <h5>Trang sản phẩm &amp; chi tiết sản phẩm</h5>
+            <p>Danh sách, bộ lọc theo dòng và số gối xoay, phân trang, sắp xếp. Trang chi tiết với gallery, thông số, mô
+              tả, sản phẩm liên quan.</p>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">DAY · 04</div>
+          <div class="day-content">
+            <h5>Giỏ hàng &amp; luồng đặt hàng</h5>
+            <p>Thêm/xoá/sửa số lượng, form nhập thông tin, lưu đơn vào DB, sinh mã đơn, chuyển hướng Zalo với message có
+              sẵn kèm mã đơn.</p>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">DAY · 05</div>
+          <div class="day-content">
+            <h5>Tin tức, Giới thiệu, Liên hệ</h5>
+            <p>Trang danh sách bài viết, trang chi tiết bài, trang giới thiệu và liên hệ. Nhúng Google Maps, form liên
+              hệ, kết nối email.</p>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">DAY · 06</div>
+          <div class="day-content">
+            <h5>Trang quản trị</h5>
+            <p>Đăng nhập admin, các module quản lý sản phẩm, đơn hàng, bài viết, banner, cấu hình chung, cấu hình SEO,
+              cấu hình tone màu.</p>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-label">DAY · 07</div>
+          <div class="day-content">
+            <h5>SEO, kiểm thử, deploy staging → <b style="color:var(--accent)">BÀN GIAO DEMO</b></h5>
+            <p>Hoàn thiện meta tags, sitemap, schema markup, cấu hình Search Console. Kiểm thử toàn bộ luồng. Deploy lên
+              staging và gửi link demo cho khách.</p>
+          </div>
+        </div>
+
+        <div class="day-row phase-2">
+          <div class="day-label">PHASE · 02</div>
+          <div class="day-content">
+            <h5>Kiểm thử &amp; điều chỉnh (song song)</h5>
+            <p>Khách kiểm thử trên staging, phản hồi qua Zalo hoặc Google Sheet. Ocean Dev điều chỉnh theo phản hồi. Khi
+              hai bên xác nhận đạt yêu cầu thì chuyển sang bàn giao chính thức.</p>
+          </div>
+        </div>
+        <div class="day-row phase-2">
+          <div class="day-label">RELEASE</div>
+          <div class="day-content">
+            <h5>Bàn giao &amp; đưa vào vận hành</h5>
+            <p>Trỏ domain chính, cấu hình SSL, seed dữ liệu sản phẩm, submit sitemap lên Google, bàn giao tài khoản
+              admin và tài liệu hướng dẫn sử dụng.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REF.07 COST ================= -->
+  <section class="section" id="ref-07">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 07 &nbsp;·&nbsp; CHI PHÍ</span>
+        <h2 class="section-title">Trọn gói phát triển, sáu tháng hạ tầng miễn phí.</h2>
+        <p class="section-lead">Toàn bộ chi phí phát triển được gộp thành một khoản duy nhất. Hạ tầng vận hành trong 6
+          tháng đầu do Ocean Dev tài trợ. Bảo hành mọi lỗi phát sinh từ mã nguồn trong 12 tháng.</p>
+      </div>
+
+      <!-- Dev cost -->
+      <div class="cost-block">
+        <div class="cost-header">
+          <h4>Chi phí phát triển</h4>
+          <span class="tag">Thanh toán một lần</span>
+        </div>
+        <div class="cost-row">
+          <div class="desc">Thiết kế giao diện tuỳ chỉnh cho DRIKLUX<small>Bộ màu, typography, component riêng — không
+              dùng template.</small></div>
+          <div class="amt">Bao trọn</div>
+        </div>
+        <div class="cost-row">
+          <div class="desc">Phát triển 7 trang public + trang quản trị</div>
+          <div class="amt">Bao trọn</div>
+        </div>
+        <div class="cost-row">
+          <div class="desc">Tối ưu SEO on-page &amp; technical<small>Cài đặt Search Console, Analytics 4.</small></div>
+          <div class="amt">Bao trọn</div>
+        </div>
+        <div class="cost-row">
+          <div class="desc">Kiểm thử, deploy staging, deploy production</div>
+          <div class="amt">Bao trọn</div>
+        </div>
+        <div class="cost-row">
+          <div class="desc">Tài liệu hướng dẫn quản trị</div>
+          <div class="amt">Bao trọn</div>
+        </div>
+        <div class="cost-total">
+          <div class="desc">Tổng chi phí phát triển</div>
+          <div class="amt">3.000.000&nbsp;₫</div>
+        </div>
+      </div>
+
+      <!-- Year 1 -->
+      <div class="cost-block">
+        <div class="cost-header">
+          <h4>Hạ tầng vận hành</h4>
+          <span class="tag">Ocean Dev tài trợ</span>
+        </div>
+        <div class="cost-row free">
+          <div class="desc">Tên miền — 6 tháng đầu<small>Áp dụng nếu khách chưa có domain. Đã có domain thì bỏ mục
+              này.</small></div>
+          <div class="amt">Miễn phí</div>
+        </div>
+        <div class="cost-row free">
+          <div class="desc">VPS Ubuntu — 6 tháng đầu<small>Chạy chung hạ tầng của Ocean Dev, đủ tài nguyên cho traffic
+              khởi tạo.</small></div>
+          <div class="amt">Miễn phí</div>
+        </div>
+        <div class="cost-row free">
+          <div class="desc">Cloudinary — gói free<small>25 GB dung lượng · 25 GB băng thông/tháng. Đủ cho catalog vài
+              trăm sản phẩm.</small></div>
+          <div class="amt">Miễn phí</div>
+        </div>
+        <div class="cost-row free">
+          <div class="desc">SSL Let's Encrypt · tự động gia hạn</div>
+          <div class="amt">Miễn phí</div>
+        </div>
+        <div class="cost-row free">
+          <div class="desc">Bảo hành mọi lỗi phát sinh từ mã nguồn — 12 tháng<small>Không tính các thay đổi phát sinh
+              sau khi bàn giao.</small></div>
+          <div class="amt">Miễn phí</div>
+        </div>
+        <div class="cost-total">
+          <div class="desc">Chi phí vận hành 6 tháng đầu</div>
+          <div class="amt">0&nbsp;₫</div>
+        </div>
+      </div>
+
+      <!-- Year 2+ -->
+      <div class="cost-block">
+        <div class="cost-header">
+          <h4>Sau 6 tháng đầu</h4>
+          <span class="tag">Trao đổi sau</span>
+        </div>
+        <div class="cost-row">
+          <div class="desc">Tên miền<small>Khách gia hạn trực tiếp với nhà cung cấp, hoặc chuyển giao quản lý.</small>
+          </div>
+          <div class="amt">Theo nhà cung cấp</div>
+        </div>
+        <div class="cost-row">
+          <div class="desc">VPS<small>Nếu tiếp tục dùng hạ tầng Ocean Dev, hai bên trao đổi gói phù hợp khi đến thời
+              hạn.</small></div>
+          <div class="amt">Trao đổi sau</div>
+        </div>
+        <div class="cost-row">
+          <div class="desc">Bảo hành mã nguồn — sau tháng thứ 12<small>Kết thúc giai đoạn bảo hành. Các yêu cầu sửa đổi
+              được báo giá theo giờ.</small></div>
+          <div class="amt">Trao đổi sau</div>
+        </div>
+      </div>
+
+      <p class="cost-note">Toàn bộ đơn giá đã bao gồm công thiết kế và phát triển. Không có phí ẩn phát sinh trong 6
+        tháng đầu. Từ tháng thứ 7, hai bên sẽ trao đổi để chọn phương án hạ tầng phù hợp — khách có thể tiếp tục thuê
+        VPS của Ocean Dev, hoặc chuyển sang VPS riêng và Ocean Dev sẽ hỗ trợ setup.</p>
+    </div>
+  </section>
+
+  <!-- ================= REF.08 WARRANTY & OUT OF SCOPE ================= -->
+  <section class="section" id="ref-08">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 08 &nbsp;·&nbsp; BẢO HÀNH &amp; PHẠM VI</span>
+        <h2 class="section-title">Rõ ràng cái được, rõ ràng cái không.</h2>
+        <p class="section-lead">Danh sách dưới đây định nghĩa cái nằm trong gói 3 triệu và cái không. Yêu cầu ngoài phạm
+          vi vẫn có thể thực hiện, nhưng sẽ được báo giá riêng.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="warranty-card include">
+          <h4>Trong gói</h4>
+          <span class="sub">Bao gồm</span>
+          <ul>
+            <li>Bảo hành mọi lỗi do mã nguồn Ocean Dev viết — 12 tháng</li>
+            <li>Sửa lỗi hiển thị responsive trên các trình duyệt phổ biến</li>
+            <li>Sửa lỗi liên quan tới luồng đặt hàng, giỏ hàng, chuyển Zalo</li>
+            <li>Sửa lỗi liên quan tới admin panel</li>
+            <li>Hỗ trợ qua Zalo trong giờ hành chính (T2–T7)</li>
+            <li>Cập nhật bảo mật cấp bách khi phát hiện lỗ hổng nghiêm trọng</li>
+          </ul>
+        </div>
+
+        <div class="warranty-card exclude">
+          <h4>Ngoài phạm vi</h4>
+          <span class="sub">Không bao gồm</span>
+          <ul>
+            <li>Chụp ảnh sản phẩm, thiết kế banner marketing</li>
+            <li>Chạy Google Ads, Facebook Ads, các chiến dịch quảng cáo</li>
+            <li>SEO off-page — xây dựng backlink, đăng bài PR</li>
+            <li>Thêm cổng thanh toán trực tuyến sau khi bàn giao</li>
+            <li>Tính năng đa ngôn ngữ (chỉ tiếng Việt)</li>
+            <li>Redesign giao diện sau khi đã chốt và bàn giao</li>
+            <li>Tích hợp hệ thống bên thứ ba không có trong đề xuất</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REF.09 PAYMENT ================= -->
+  <section class="section" id="ref-09">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-ref">REF. 09 &nbsp;·&nbsp; LỊCH THANH TOÁN</span>
+        <h2 class="section-title">Một lần, sau khi website đạt yêu cầu và bàn giao.</h2>
+        <p class="section-lead">Toàn bộ khoản phí phát triển được thanh toán một lần duy nhất khi hai bên xác nhận
+          website đã đạt yêu cầu và bàn giao chính thức trên domain vận hành.</p>
+      </div>
+
+      <div>
+        <div class="payment-row">
+          <div class="payment-num">01</div>
+          <div class="payment-desc">Khi bàn giao chính thức<small>Sau khi hai bên xác nhận demo đã đạt yêu cầu và
+              website đi vào vận hành trên domain chính thức.</small></div>
+          <div class="payment-amt">3.000.000&nbsp;₫<br><span style="color:var(--ink-mute);font-size:11px">100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSING ================= -->
+  <section class="closing" id="ref-10">
+    <div class="container">
+      <span class="eyebrow">REF. 10 &nbsp;·&nbsp; BƯỚC TIẾP THEO</span>
+      <h2 class="closing-title" style="margin-top:24px">Sẵn sàng khởi động bất cứ khi nào <em>Quý khách</em> đồng ý.
+      </h2>
+      <p class="closing-sub">Nếu bản đề xuất phù hợp, hai bên trao đổi để chốt các chi tiết cuối cùng — brand assets,
+        hosting hiện có, danh sách sản phẩm khởi tạo — và ký kết hợp đồng. Ocean Dev bắt đầu ngày làm việc đầu tiên
+        trong vòng 24 giờ sau khi ký kết. Thanh toán một lần duy nhất khi website đạt yêu cầu và bàn giao chính thức.
+      </p>
+
+      <div class="closing-contact">
+        <div class="row"><span class="k">Đơn vị</span><span class="v">Ocean Dev</span></div>
+        <div class="row"><span class="k">Phụ trách</span><span class="v">Phạm Ngọc Huy</span></div>
+        <div class="row"><span class="k">Website</span><span class="v"><a href="http://portfolio-ocean.vercel.app/ocean"
+              target="_blank" rel="noopener">portfolio-ocean.vercel.app/ocean</a></span></div>
+        <div class="row"><span class="k">Zalo</span><span class="v">Liên hệ qua kênh chat hiện tại</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <div class="container">
+      Ocean Dev &nbsp;·&nbsp; <span>DRIKLUX-WEB-2026</span> &nbsp;·&nbsp; Rev 01 &nbsp;·&nbsp; 15.07.2026
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var toc = document.getElementById('toc');
+      var toggle = document.getElementById('toc-toggle');
+      var current = document.getElementById('toc-current');
+      var tocLinksRail = document.getElementById('toc-links');
+      var navLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-links a, .toc-panel a, .toc-overview-grid a'));
+      var sectionIds = ['ref-01', 'ref-02', 'ref-03', 'ref-04', 'ref-05', 'ref-06', 'ref-07', 'ref-08', 'ref-09', 'ref-10'];
+      var labels = {
+        'ref-01': 'REF. 01', 'ref-02': 'REF. 02', 'ref-03': 'REF. 03', 'ref-04': 'REF. 04', 'ref-05': 'REF. 05',
+        'ref-06': 'REF. 06', 'ref-07': 'REF. 07', 'ref-08': 'REF. 08', 'ref-09': 'REF. 09', 'ref-10': 'REF. 10'
+      };
+      var lockUntil = 0;
+
+      function setOpen(open) {
+        toc.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      function getOffset() {
+        return window.matchMedia('(max-width: 820px)').matches ? 56 : 72;
+      }
+
+      function scrollToId(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        lockUntil = Date.now() + 900;
+        setActive(id);
+        setOpen(false);
+        var top = el.getBoundingClientRect().top + window.pageYOffset - getOffset();
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        if (history.replaceState) {
+          history.replaceState(null, '', '#' + id);
+        } else {
+          location.hash = id;
+        }
+      }
+
+      toggle.addEventListener('click', function () {
+        setOpen(!toc.classList.contains('is-open'));
+      });
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href') || '';
+          if (href.charAt(0) !== '#') return;
+          var id = href.slice(1);
+          if (!document.getElementById(id)) return;
+          e.preventDefault();
+          scrollToId(id);
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setOpen(false);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!toc.contains(e.target)) setOpen(false);
+      });
+
+      function setActive(id) {
+        navLinks.forEach(function (link) {
+          var on = link.getAttribute('href') === '#' + id;
+          link.classList.toggle('is-active', on);
+        });
+        if (current && labels[id]) current.textContent = labels[id];
+
+        // Chỉ kéo ngang thanh mục lục — tránh scrollIntoView làm nhảy cả trang
+        if (tocLinksRail) {
+          var active = tocLinksRail.querySelector('a.is-active');
+          if (active) {
+            var railRect = tocLinksRail.getBoundingClientRect();
+            var linkRect = active.getBoundingClientRect();
+            var delta = (linkRect.left + linkRect.right) / 2 - (railRect.left + railRect.right) / 2;
+            tocLinksRail.scrollLeft += delta;
+          }
+        }
+      }
+
+      var sections = sectionIds
+        .map(function (id) { return document.getElementById(id); })
+        .filter(Boolean);
+
+      if ('IntersectionObserver' in window && sections.length) {
+        var visible = {};
+        var observer = new IntersectionObserver(function (entries) {
+          if (Date.now() < lockUntil) return;
+          entries.forEach(function (entry) {
+            visible[entry.target.id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+          });
+          var best = null;
+          var bestRatio = 0;
+          sectionIds.forEach(function (id) {
+            if ((visible[id] || 0) > bestRatio) {
+              bestRatio = visible[id];
+              best = id;
+            }
+          });
+          if (best) setActive(best);
+        }, {
+          rootMargin: '-20% 0px -55% 0px',
+          threshold: [0, 0.1, 0.25, 0.5, 0.75, 1]
+        });
+        sections.forEach(function (section) { observer.observe(section); });
+      }
+
+      // Mở trang với hash sẵn (nếu có)
+      if (location.hash) {
+        var initial = location.hash.slice(1);
+        if (document.getElementById(initial)) {
+          setTimeout(function () { scrollToId(initial); }, 0);
+        }
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
