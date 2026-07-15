@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hướng dẫn quản trị nội dung website Cocopot</title>
+    <style>
+        :root {
+            --green: #57652e;
+            --green-dark: #2f3818;
+            --cream: #f8f5ec;
+            --paper: #fffdf7;
+            --ink: #25251f;
+            --muted: #6e6d62;
+            --line: #ded8c7;
+            --soft: #eeeadf;
+            --blue: #285f85;
+            --red: #9f332a;
+            --gold: #9a6b18;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--cream);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.65;
+            font-size: 16px;
+        }
+
+        a {
+            color: var(--green-dark);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(87, 101, 46, 0.35);
+        }
+
+        a:hover {
+            border-bottom-color: var(--green-dark);
+        }
+
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 32px 20px 64px;
+        }
+
+        .cover {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 38px;
+            box-shadow: 0 18px 48px rgba(47, 56, 24, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 20px;
+        }
+
+        .brand-name {
+            margin: 0;
+            color: var(--green-dark);
+            font-size: 18px;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .doc-meta {
+            color: var(--muted);
+            font-size: 14px;
+            text-align: right;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            color: var(--green-dark);
+            font-size: 40px;
+            line-height: 1.15;
+            letter-spacing: 0;
+        }
+
+        .lead {
+            max-width: 780px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 18px;
+        }
+
+        .quick-boxes {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .quick-box {
+            background: #f3efe4;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .quick-box strong {
+            display: block;
+            color: var(--green-dark);
+            margin-bottom: 4px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 270px minmax(0, 1fr);
+            gap: 28px;
+            margin-top: 28px;
+            align-items: start;
+        }
+
+        .toc {
+            position: sticky;
+            top: 18px;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .toc h2 {
+            margin: 0 0 10px;
+            font-size: 15px;
+            color: var(--green-dark);
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin: 7px 0;
+            font-size: 14px;
+            line-height: 1.35;
+        }
+
+        main {
+            min-width: 0;
+        }
+
+        section {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            margin: 0 0 14px;
+            color: var(--green-dark);
+            font-size: 26px;
+            line-height: 1.25;
+            letter-spacing: 0;
+        }
+
+        h3 {
+            margin: 24px 0 8px;
+            color: var(--green-dark);
+            font-size: 19px;
+            line-height: 1.35;
+            letter-spacing: 0;
+        }
+
+        h4 {
+            margin: 18px 0 6px;
+            color: var(--ink);
+            font-size: 16px;
+            letter-spacing: 0;
+        }
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        ul,
+        ol {
+            margin-top: 8px;
+            margin-bottom: 14px;
+            padding-left: 24px;
+        }
+
+        li {
+            margin: 6px 0;
+        }
+
+        code {
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: #eee8d8;
+            color: var(--green-dark);
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.92em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0 18px;
+            background: #fff;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--line);
+            padding: 10px 12px;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        th {
+            background: #eee8d8;
+            color: var(--green-dark);
+        }
+
+        .note,
+        .warning,
+        .tip {
+            margin: 14px 0;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid;
+        }
+
+        .note {
+            background: #edf4ec;
+            border-color: #c5d6bd;
+        }
+
+        .warning {
+            background: #fff2e1;
+            border-color: #e6c27c;
+        }
+
+        .tip {
+            background: #edf3f8;
+            border-color: #bfd3e3;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: var(--soft);
+            color: var(--green-dark);
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.6;
+            white-space: nowrap;
+        }
+
+        .checklist li {
+            list-style: none;
+            position: relative;
+            margin-left: 2px;
+        }
+
+        .checklist li::before {
+            content: "□";
+            position: absolute;
+            left: -22px;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .steps {
+            counter-reset: step;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .steps>li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 42px;
+            margin: 12px 0;
+        }
+
+        .steps>li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #fff;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .mini-card {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            padding: 14px;
+        }
+
+        .mini-card h4 {
+            margin-top: 0;
+            color: var(--green-dark);
+        }
+
+        .status-new {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .status-ok {
+            color: var(--green-dark);
+            font-weight: 700;
+        }
+
+        .status-warn {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .status-bad {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .footer {
+            color: var(--muted);
+            text-align: center;
+            font-size: 13px;
+            margin-top: 26px;
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .toc {
+                position: static;
+            }
+
+            .quick-boxes,
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .cover,
+            section {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .brand {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .doc-meta {
+                text-align: left;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                font-size: 12px;
+            }
+
+            .page {
+                max-width: none;
+                padding: 0;
+            }
+
+            .cover,
+            section,
+            .toc {
+                border-color: #cfcfcf;
+                box-shadow: none;
+                break-inside: avoid;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .toc {
+                position: static;
+                margin: 18px 0;
+            }
+
+            a {
+                color: inherit;
+                border-bottom: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="cover">
+            <div class="brand">
+                <p class="brand-name">Cocopot</p>
+                <p class="doc-meta">Tài liệu bàn giao quản trị nội dung<br>Phiên bản: 15/07/2026</p>
+            </div>
+            <h1>Hướng dẫn sử dụng website và quản lý content</h1>
+            <p class="lead">Tài liệu này dành cho quản lý/nhân viên Cocopot khi cần cập nhật nội dung website: thực đơn,
+                cơ sở, tin tức, trang giới thiệu, thông tin liên hệ, nhận thông báo đặt bàn và xử lý booking.</p>
+            <div class="quick-boxes">
+                <div class="quick-box">
+                    <strong>Trang công khai</strong>
+                    Website khách hàng nhìn thấy, có các trang Trang chủ, Về Cocopot, Thực đơn, Cơ sở, Tin tức, Đặt bàn,
+                    Chính sách và Điều khoản.
+                </div>
+                <div class="quick-box">
+                    <strong>Khu quản trị</strong>
+                    Truy cập bằng đường dẫn <code>/admin</code>. Cần email và mật khẩu admin để đăng nhập.
+                </div>
+                <div class="quick-box">
+                    <strong>Ngôn ngữ</strong>
+                    Nội dung hỗ trợ Tiếng Việt, English và 中文. Tiếng Việt là bản chính, các ngôn ngữ còn thiếu sẽ tự lấy
+                    nội dung Tiếng Việt.
+                </div>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="toc" aria-label="Mục lục">
+                <h2>Mục lục</h2>
+                <ol>
+                    <li><a href="#tong-quan">Tổng quan</a></li>
+                    <li><a href="#dang-nhap">Đăng nhập & bảo mật</a></li>
+                    <li><a href="#nguyen-tac">Nguyên tắc nhập nội dung</a></li>
+                    <li><a href="#anh">Quản lý hình ảnh</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#booking">Đặt bàn</a></li>
+                    <li><a href="#menu">Thực đơn</a></li>
+                    <li><a href="#locations">Cơ sở</a></li>
+                    <li><a href="#posts">Tin tức & Ưu đãi</a></li>
+                    <li><a href="#pages">Trang nội dung</a></li>
+                    <li><a href="#settings">Cấu hình chung</a></li>
+                    <li><a href="#telegram">Telegram</a></li>
+                    <li><a href="#kiem-tra">Checklist trước khi bàn giao</a></li>
+                    <li><a href="#faq">Câu hỏi thường gặp</a></li>
+                </ol>
+            </aside>
+
+            <main>
+                <section id="tong-quan">
+                    <h2>1. Tổng quan website</h2>
+                    <p>Website Cocopot dùng để giới thiệu thương hiệu, hiển thị thực đơn, giới thiệu các cơ sở, đăng tin
+                        tức/ưu đãi và nhận yêu cầu đặt bàn. Đây không phải website bán hàng online, nên không có giỏ
+                        hàng, thanh toán online hoặc đặt món giao hàng.</p>
+                    <h3>Các trang công khai chính</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Trang</th>
+                                <th>Đường dẫn thường gặp</th>
+                                <th>Nội dung lấy từ đâu trong admin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Trang chủ</td>
+                                <td><code>/vi</code></td>
+                                <td>Mục <strong>Trang &gt; Trang chủ</strong>, cộng thêm dữ liệu từ Thực đơn, Cơ sở và
+                                    Tin tức.</td>
+                            </tr>
+                            <tr>
+                                <td>Về Cocopot</td>
+                                <td><code>/vi/ve-cocopot</code></td>
+                                <td>Mục <strong>Trang &gt; Về Cocopot</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td>Thực đơn</td>
+                                <td><code>/vi/thuc-don</code></td>
+                                <td>Mục <strong>Thực đơn</strong> và một phần nội dung từ <strong>Trang &gt; Thực
+                                        đơn</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td>Cơ sở</td>
+                                <td><code>/vi/co-so</code></td>
+                                <td>Mục <strong>Cơ sở</strong> và một phần nội dung từ <strong>Trang &gt; Cơ
+                                        sở</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td>Tin tức</td>
+                                <td><code>/vi/tin-tuc</code></td>
+                                <td>Mục <strong>Tin tức & Ưu đãi</strong> và một phần nội dung từ <strong>Trang &gt; Tin
+                                        tức</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td>Đặt bàn</td>
+                                <td><code>/vi/dat-ban</code></td>
+                                <td>Mục <strong>Trang &gt; Đặt bàn</strong>; dữ liệu đặt bàn mới nằm ở <strong>Đặt
+                                        bàn</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td>Chính sách / Điều khoản</td>
+                                <td><code>/vi/chinh-sach</code>, <code>/vi/dieu-khoan</code></td>
+                                <td>Mục <strong>Trang &gt; Chính sách</strong> và <strong>Trang &gt; Điều
+                                        khoản</strong>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="note">
+                        <strong>Quy tắc quan trọng:</strong> Nội dung động như món ăn, combo, cơ sở, bài viết không sửa
+                        trong mục Trang. Hãy sửa đúng module riêng của nó để dữ liệu hiển thị đồng bộ trên toàn website.
+                    </div>
+                </section>
+
+                <section id="dang-nhap">
+                    <h2>2. Đăng nhập & bảo mật</h2>
+                    <ol class="steps">
+                        <li>Mở trình duyệt và truy cập đường dẫn quản trị: <code>https://ten-mien-website/admin</code>.
+                            Nếu dùng bản chạy thử, thay bằng domain/staging được bàn giao.</li>
+                        <li>Nhập <strong>Email</strong> và <strong>Mật khẩu</strong> tài khoản admin.</li>
+                        <li>Bấm <strong>Đăng nhập</strong>. Sau khi đăng nhập thành công, hệ thống chuyển vào Dashboard.
+                        </li>
+                        <li>Khi làm xong, bấm nút <strong>Đăng xuất</strong> ở góc trên bên phải.</li>
+                    </ol>
+                    <div class="warning">
+                        <strong>Không gửi mật khẩu qua nhóm chat công khai.</strong> Nếu cần bàn giao tài khoản, nên gửi
+                        email và mật khẩu bằng hai kênh khác nhau. Sau khi nhận website, khách nên đổi mật khẩu admin
+                        mặc định nếu đội kỹ thuật đã tạo sẵn tài khoản ban đầu.
+                    </div>
+                    <h3>Khi không đăng nhập được</h3>
+                    <ul>
+                        <li>Kiểm tra email có nhập đúng không, đặc biệt khoảng trắng ở đầu/cuối.</li>
+                        <li>Kiểm tra phím Caps Lock khi nhập mật khẩu.</li>
+                        <li>Nếu hệ thống báo phiên đăng nhập hết hạn, quay lại trang login và đăng nhập lại.</li>
+                        <li>Nếu quên mật khẩu, liên hệ người quản trị kỹ thuật để đặt lại mật khẩu.</li>
+                    </ul>
+                </section>
+
+                <section id="nguyen-tac">
+                    <h2>3. Nguyên tắc nhập nội dung</h2>
+                    <h3>Nhập đủ Tiếng Việt trước</h3>
+                    <p>Các form nội dung thường có 3 nhóm trường: <strong>Tiếng Việt</strong>, <strong>English</strong>
+                        và <strong>中文</strong>. Tiếng Việt là bắt buộc và là nội dung gốc. Nếu chưa có bản dịch tiếng
+                        Anh hoặc tiếng Trung, có thể để trống, website sẽ dùng bản Tiếng Việt để hiển thị thay thế.</p>
+                    <h3>Thứ tự hiển thị</h3>
+                    <p>Các module như nhóm món, món, combo, cơ sở, bài viết thường có trường <strong>Thứ tự</strong>
+                        hoặc <code>sortOrder</code>. Số nhỏ hơn thường hiển thị trước. Nên dùng khoảng cách 10, 20, 30
+                        để sau này dễ chèn thêm nội dung vào giữa.</p>
+                    <h3>Bật/tắt hiển thị</h3>
+                    <p>Các nút như <strong>Hiển thị</strong>, <strong>Hiển thị công khai</strong>, <strong>Đăng công
+                            khai</strong>, <strong>Nhận thông báo</strong> là công tắc bật/tắt. Tắt đi thì nội dung
+                        thường không hiện trên website nhưng vẫn còn trong admin để sửa lại.</p>
+                    <h3>Slug bài viết</h3>
+                    <p>Slug là phần cuối của đường dẫn bài viết, ví dụ <code>uu-dai-khai-truong</code>. Khi thêm bài
+                        viết, có thể để trống để hệ thống tự sinh từ tiêu đề Tiếng Việt. Chỉ nên tự sửa slug nếu cần
+                        đường dẫn đẹp hoặc theo chiến dịch.</p>
+                    <div class="tip">
+                        <strong>Gợi ý vận hành:</strong> Sau khi sửa nội dung quan trọng, mở website ở tab mới để kiểm
+                        tra lại giao diện public trên cả máy tính và điện thoại.
+                    </div>
+                </section>
+
+                <section id="anh">
+                    <h2>4. Quản lý hình ảnh</h2>
+                    <p>Các khu vực có ảnh gồm món ăn, combo, ảnh cơ sở, ảnh cover bài viết, banner trang, logo, favicon
+                        và ảnh chia sẻ mạng xã hội. Website hỗ trợ 3 cách đưa ảnh vào:</p>
+                    <ul>
+                        <li><strong>Chọn file:</strong> bấm vùng upload hoặc nút Đổi ảnh rồi chọn ảnh trong máy.</li>
+                        <li><strong>Kéo-thả:</strong> kéo file ảnh từ máy tính vào vùng upload.</li>
+                        <li><strong>Dán ảnh:</strong> copy ảnh vào clipboard rồi bấm vào vùng upload và nhấn
+                            <code>Ctrl+V</code>.
+                        </li>
+                    </ul>
+                    <h3>Lưu ý quan trọng khi upload</h3>
+                    <ul>
+                        <li>Ảnh mới chỉ được xem trước trên màn hình. Hệ thống chỉ upload thật khi bấm
+                            <strong>Lưu</strong>.
+                        </li>
+                        <li>Dung lượng ảnh tối đa là <strong>5MB mỗi ảnh</strong>.</li>
+                        <li>Nên dùng ảnh ngang cho banner/cover bài viết, ảnh vuông hoặc gần vuông cho món ăn và combo.
+                        </li>
+                        <li>Nếu upload lỗi, bản ghi sẽ không lưu với ảnh hỏng. Hãy thử ảnh nhẹ hơn hoặc đổi tên file
+                            không dấu.</li>
+                    </ul>
+                    <h3>Ảnh nhiều tấm</h3>
+                    <p>Ở mục <strong>Cơ sở</strong>, mỗi cơ sở có thể có nhiều ảnh. Có thể thêm nhiều ảnh, xóa từng ảnh,
+                        bấm mũi tên trái/phải để sắp xếp thứ tự. Ảnh đầu danh sách thường là ảnh được ưu tiên hiển thị
+                        trước.</p>
+                </section>
+
+                <section id="dashboard">
+                    <h2>5. Dashboard</h2>
+                    <p>Dashboard là màn hình tổng quan sau khi đăng nhập. Tại đây có thể xem nhanh:</p>
+                    <ul>
+                        <li>Số lượng đặt bàn hôm nay.</li>
+                        <li>Số đặt bàn theo trạng thái: Mới, Đã xác nhận, Hoàn tất.</li>
+                        <li>Tổng số món, combo, cơ sở và bài viết.</li>
+                        <li>Danh sách đặt bàn mới nhất.</li>
+                    </ul>
+                    <p>Khi có khách đặt bàn mới, admin đang mở trang có thể nhận thông báo realtime. Nếu đang ở
+                        Dashboard, số liệu và danh sách đặt bàn sẽ được cập nhật.</p>
+                </section>
+
+                <section id="booking">
+                    <h2>6. Quản lý đặt bàn</h2>
+                    <p>Vào menu <strong>Đặt bàn</strong> để xem và xử lý yêu cầu đặt bàn từ khách.</p>
+                    <h3>Bộ lọc đặt bàn</h3>
+                    <ul>
+                        <li><strong>Trạng thái:</strong> lọc theo Mới, Đã xác nhận, Hoàn tất, Đã hủy hoặc Không đến.
+                        </li>
+                        <li><strong>Cơ sở:</strong> lọc booking theo chi nhánh.</li>
+                        <li><strong>Khoảng ngày:</strong> lọc theo ngày đặt bàn.</li>
+                        <li><strong>Tìm tên / SĐT:</strong> nhập tên khách hoặc số điện thoại rồi tìm.</li>
+                    </ul>
+                    <h3>Ý nghĩa trạng thái</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <th>Khi nào dùng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="status-new">Mới</span></td>
+                                <td>Khách vừa gửi yêu cầu, nhân viên chưa xử lý.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-ok">Đã xác nhận</span></td>
+                                <td>Nhân viên đã gọi/nhắn khách và xác nhận giữ bàn.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-ok">Hoàn tất</span></td>
+                                <td>Khách đã đến và booking đã được phục vụ xong.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-bad">Đã hủy</span></td>
+                                <td>Khách hủy hoặc nhà hàng không thể nhận booking.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-warn">Không đến</span></td>
+                                <td>Khách đã đặt nhưng không đến theo lịch.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>Xử lý một booking</h3>
+                    <ol class="steps">
+                        <li>Tại bảng Đặt bàn, tìm dòng booking cần xử lý.</li>
+                        <li>Bấm nút xem chi tiết ở cuối dòng.</li>
+                        <li>Kiểm tra tên khách, số điện thoại, email, cơ sở, ngày giờ, số người và ghi chú.</li>
+                        <li>Liên hệ khách nếu cần xác nhận thêm thông tin.</li>
+                        <li>Đổi trạng thái trong ô <strong>Đổi trạng thái</strong>. Hệ thống tự lưu trạng thái mới.</li>
+                    </ol>
+                    <div class="note">
+                        <strong>Quy trình đề xuất:</strong> Booking mới nên được xử lý theo luồng <strong>Mới → Đã xác
+                            nhận → Hoàn tất</strong>. Chỉ dùng <strong>Đã hủy</strong> hoặc <strong>Không đến</strong>
+                        khi đúng tình huống thực tế.
+                    </div>
+                </section>
+
+                <section id="menu">
+                    <h2>7. Quản lý thực đơn</h2>
+                    <p>Vào menu <strong>Thực đơn</strong>. Màn hình có 3 tab: <strong>Nhóm món</strong>,
+                        <strong>Món</strong> và <strong>Combo</strong>.
+                    </p>
+
+                    <h3>7.1. Nhóm món</h3>
+                    <p>Nhóm món dùng để phân loại món, ví dụ món khai vị, lẩu, đồ uống, món thêm.</p>
+                    <ol class="steps">
+                        <li>Bấm tab <strong>Nhóm món</strong>.</li>
+                        <li>Bấm <strong>+ Thêm nhóm món</strong> hoặc bấm nút sửa ở dòng có sẵn.</li>
+                        <li>Nhập tên nhóm bằng Tiếng Việt; English và 中文 có thể nhập nếu có bản dịch.</li>
+                        <li>Nhập <strong>Thứ tự hiển thị</strong>.</li>
+                        <li>Bật <strong>Hiển thị công khai</strong> nếu muốn nhóm này xuất hiện trên website.</li>
+                        <li>Bấm <strong>Lưu</strong>.</li>
+                    </ol>
+                    <div class="warning">
+                        Không nên xóa nhóm món đang có nhiều món bên trong nếu chỉ muốn tạm ẩn. Hãy tắt hiển thị để giữ
+                        dữ liệu.
+                    </div>
+
+                    <h3>7.2. Món</h3>
+                    <ol class="steps">
+                        <li>Bấm tab <strong>Món</strong>.</li>
+                        <li>Có thể dùng ô <strong>Lọc theo nhóm</strong> để tìm món nhanh hơn.</li>
+                        <li>Bấm <strong>+ Thêm món</strong> hoặc bấm sửa ở dòng món cần chỉnh.</li>
+                        <li>Chọn <strong>Nhóm món</strong>.</li>
+                        <li>Nhập <strong>Tên món</strong>, <strong>Mô tả</strong> và <strong>Giá (VND)</strong>.</li>
+                        <li>Thêm hoặc đổi <strong>Ảnh món</strong>.</li>
+                        <li>Bật/tắt các cờ <strong>Món mới</strong>, <strong>HOT</strong>, <strong>Hiển thị</strong>.
+                        </li>
+                        <li>Nhập <strong>Thứ tự</strong> nếu muốn kiểm soát vị trí hiển thị.</li>
+                        <li>Bấm <strong>Lưu</strong>.</li>
+                    </ol>
+                    <h4>Ý nghĩa các cờ của món</h4>
+                    <ul>
+                        <li><strong>Món mới:</strong> gắn nhãn mới để khách dễ nhận biết món vừa cập nhật.</li>
+                        <li><strong>HOT:</strong> gắn nhãn nổi bật cho món bán chạy hoặc cần đẩy truyền thông.</li>
+                        <li><strong>Hiển thị:</strong> tắt đi nếu món tạm hết hàng hoặc chưa muốn công khai.</li>
+                    </ul>
+
+                    <h3>7.3. Combo</h3>
+                    <ol class="steps">
+                        <li>Bấm tab <strong>Combo</strong>.</li>
+                        <li>Bấm <strong>+ Thêm combo</strong> hoặc sửa combo đang có.</li>
+                        <li>Nhập tên combo, mô tả và ảnh combo.</li>
+                        <li>Nhập <strong>Giá gốc</strong>. Nếu có khuyến mãi, nhập thêm <strong>Giá giảm</strong> hoặc
+                            <strong>% giảm</strong>.
+                        </li>
+                        <li>Bật/tắt <strong>Mới</strong>, <strong>HOT</strong>, <strong>Hiển thị</strong> và nhập
+                            <strong>Thứ tự</strong>.
+                        </li>
+                        <li>Ở phần <strong>Thành phần combo</strong>, nhập từng thành phần: Tên VI, EN, ZH, số lượng và
+                            có thể liên kết với món có sẵn.</li>
+                        <li>Dùng nút mũi tên lên/xuống để sắp xếp thứ tự thành phần. Bấm dấu x để xóa thành phần.</li>
+                        <li>Bấm <strong>+ Thêm thành phần</strong> nếu combo có nhiều món đi kèm.</li>
+                        <li>Bấm <strong>Lưu</strong>.</li>
+                    </ol>
+                    <div class="note">
+                        Combo cần ít nhất một thành phần có tên Tiếng Việt. Nếu chưa có bản dịch, cứ nhập Tiếng Việt
+                        trước để website không bị thiếu nội dung.
+                    </div>
+                </section>
+
+                <section id="locations">
+                    <h2>8. Quản lý cơ sở</h2>
+                    <p>Vào menu <strong>Cơ sở</strong> để thêm/sửa chi nhánh, địa chỉ, bản đồ, hotline, giờ mở cửa và
+                        ảnh không gian.</p>
+                    <h3>Thêm hoặc sửa cơ sở</h3>
+                    <ol class="steps">
+                        <li>Bấm <strong>+ Thêm cơ sở</strong> hoặc bấm nút sửa ở dòng cơ sở.</li>
+                        <li>Nhập <strong>Tên cơ sở</strong> bằng Tiếng Việt; thêm English và 中文 nếu có.</li>
+                        <li>Nhập <strong>Địa chỉ</strong>. Nên viết địa chỉ rõ ràng, đầy đủ số nhà, đường, phường/xã,
+                            quận/huyện, tỉnh/thành.</li>
+                        <li>Dán <strong>Link Google Maps</strong>, sau đó bấm <strong>Lấy tọa độ</strong>. Nếu không
+                            tách được tọa độ, nhập tay vĩ độ và kinh độ.</li>
+                        <li>Nhập <strong>Hotline</strong> của cơ sở.</li>
+                        <li>Chọn <strong>Trạng thái</strong>: Đang hoạt động, Sắp khai trương hoặc Đóng cửa.</li>
+                        <li>Nhập <strong>Thứ tự</strong> để sắp xếp danh sách cơ sở.</li>
+                        <li>Nhập <strong>Giờ mở cửa</strong> bằng các ngôn ngữ cần dùng.</li>
+                        <li>Thêm nhiều ảnh cơ sở, sắp xếp ảnh theo thứ tự mong muốn.</li>
+                        <li>Bấm <strong>Lưu</strong>.</li>
+                    </ol>
+                    <h3>Ý nghĩa trạng thái cơ sở</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <th>Cách dùng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Đang hoạt động</td>
+                                <td>Cơ sở đang mở và có thể hiển thị trên website, đồng thời xuất hiện trong form đặt
+                                    bàn.</td>
+                            </tr>
+                            <tr>
+                                <td>Sắp khai trương</td>
+                                <td>Dùng cho chi nhánh sắp mở. Có thể hiển thị để truyền thông trước.</td>
+                            </tr>
+                            <tr>
+                                <td>Đóng cửa</td>
+                                <td>Dùng khi cơ sở ngưng hoạt động. Cơ sở đóng cửa sẽ được ẩn khỏi website public và
+                                    dropdown đặt bàn.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="posts">
+                    <h2>9. Quản lý Tin tức & Ưu đãi</h2>
+                    <p>Vào menu <strong>Tin tức & Ưu đãi</strong> để tạo bài viết tin tức, chương trình khuyến mãi hoặc
+                        thông báo thương hiệu.</p>
+                    <h3>Thêm bài viết mới</h3>
+                    <ol class="steps">
+                        <li>Bấm <strong>+ Thêm bài viết</strong>.</li>
+                        <li>Chọn <strong>Loại</strong>: Tin tức hoặc Ưu đãi.</li>
+                        <li>Để trống <strong>Slug</strong> nếu muốn hệ thống tự sinh đường dẫn từ tiêu đề. Nếu tự nhập,
+                            dùng chữ thường không dấu và dấu gạch ngang, ví dụ <code>uu-dai-thang-7</code>.</li>
+                        <li>Nhập <strong>Tiêu đề</strong>, <strong>Tóm tắt</strong> và <strong>Nội dung bài
+                                viết</strong>.</li>
+                        <li>Thêm <strong>Ảnh cover</strong>. Ảnh này dùng ở danh sách bài viết và đầu trang chi tiết.
+                        </li>
+                        <li>Bật <strong>Đăng công khai</strong> nếu muốn bài xuất hiện trên website.</li>
+                        <li>Chọn <strong>Ngày đăng</strong>. Nếu bài đang là nháp, có thể để trống.</li>
+                        <li>Nhập <strong>Thứ tự</strong> nếu muốn ưu tiên sắp xếp.</li>
+                        <li>Bấm <strong>Lưu</strong>.</li>
+                    </ol>
+                    <h3>Khi nào dùng Tin tức, khi nào dùng Ưu đãi?</h3>
+                    <ul>
+                        <li><strong>Tin tức:</strong> khai trương cơ sở, câu chuyện thương hiệu, cập nhật hoạt động, sự
+                            kiện.</li>
+                        <li><strong>Ưu đãi:</strong> khuyến mãi, voucher, combo giảm giá, chương trình theo mùa.</li>
+                    </ul>
+                    <div class="tip">
+                        Nên chuẩn bị ảnh cover đồng nhất phong cách. Tiêu đề nên ngắn, rõ lợi ích. Tóm tắt nên dài 1-2
+                        câu để hiển thị đẹp ở danh sách tin.
+                    </div>
+                </section>
+
+                <section id="pages">
+                    <h2>10. Quản lý nội dung các Trang</h2>
+                    <p>Menu <strong>Trang</strong> dùng để sửa các phần nội dung tĩnh của từng trang public. Các trang
+                        có trong admin gồm: Trang chủ, Về Cocopot, Thực đơn, Cơ sở, Đặt bàn, Tin tức, Chính sách và Điều
+                        khoản.</p>
+                    <h3>Những gì có thể sửa trong từng trang</h3>
+                    <ul>
+                        <li><strong>Ảnh banner:</strong> ảnh đầu trang hoặc ảnh chính của trang.</li>
+                        <li><strong>OG Image:</strong> ảnh hiển thị khi chia sẻ link trang lên mạng xã hội.</li>
+                        <li><strong>Tiêu đề SEO:</strong> tiêu đề dùng cho Google và tab trình duyệt.</li>
+                        <li><strong>Mô tả SEO:</strong> mô tả ngắn giúp Google và mạng xã hội hiểu nội dung trang.</li>
+                        <li><strong>Các section nội dung:</strong> tiêu đề, phụ đề, nội dung, ảnh minh họa, card,
+                            gallery hoặc số liệu tùy trang.</li>
+                    </ul>
+                    <h3>Cách sửa SEO & ảnh trang</h3>
+                    <ol class="steps">
+                        <li>Trong sidebar, mở <strong>Trang</strong> rồi chọn trang cần sửa.</li>
+                        <li>Mở khối <strong>SEO & ảnh trang</strong>.</li>
+                        <li>Thay ảnh banner hoặc OG Image nếu cần.</li>
+                        <li>Nhập tiêu đề SEO và mô tả SEO bằng Tiếng Việt; thêm English và 中文 nếu có.</li>
+                        <li>Bấm <strong>Lưu SEO & ảnh</strong>.</li>
+                    </ol>
+                    <h3>Cách sửa section nội dung</h3>
+                    <ol class="steps">
+                        <li>Bên dưới phần SEO, mở section cần chỉnh. Có thể bấm <strong>Mở tất cả</strong> để xem toàn
+                            bộ.</li>
+                        <li>Sửa tiêu đề, phụ đề, nội dung hoặc ảnh theo form của section đó.</li>
+                        <li>Với section dạng card, nhập từng thẻ nội dung theo các ô được hiển thị.</li>
+                        <li>Với section gallery, thêm/xóa/sắp xếp ảnh theo thứ tự mong muốn.</li>
+                        <li>Với section số liệu, nhập con số và nhãn tương ứng.</li>
+                        <li>Bấm <strong>Lưu section</strong>. Mỗi section lưu riêng, không tự lưu toàn bộ trang.</li>
+                    </ol>
+                    <h3>Các section thường gặp</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Section</th>
+                                <th>Nội dung nên nhập</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Banner chính</td>
+                                <td>Thông điệp đầu trang, phụ đề ngắn, nội dung tạo ấn tượng đầu tiên.</td>
+                            </tr>
+                            <tr>
+                                <td>Giới thiệu ngắn / Câu chuyện thương hiệu</td>
+                                <td>Đoạn mô tả thương hiệu Cocopot, lẩu gà nước dừa tươi, điểm khác biệt.</td>
+                            </tr>
+                            <tr>
+                                <td>Vì sao chọn Cocopot / Giá trị cốt lõi</td>
+                                <td>Các thẻ lợi ích, cam kết chất lượng, không gian, phục vụ.</td>
+                            </tr>
+                            <tr>
+                                <td>Thư viện ảnh</td>
+                                <td>Ảnh không gian, món ăn, trải nghiệm khách hàng.</td>
+                            </tr>
+                            <tr>
+                                <td>Nội dung chính</td>
+                                <td>Dùng cho Chính sách và Điều khoản, có trình soạn thảo nội dung dài.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="warning">
+                        Không dùng mục Trang để nhập món ăn, combo, cơ sở hoặc bài viết mới. Các dữ liệu đó có module
+                        riêng và sẽ tự đổ vào các khu vực tương ứng của website.
+                    </div>
+                </section>
+
+                <section id="settings">
+                    <h2>11. Cấu hình chung</h2>
+                    <p>Vào menu <strong>Cấu hình chung</strong> để chỉnh các thông tin dùng trên toàn website.</p>
+                    <div class="two-col">
+                        <div class="mini-card">
+                            <h4>Thương hiệu</h4>
+                            <ul>
+                                <li>Màu chủ đạo của website.</li>
+                                <li>Logo.</li>
+                                <li>Favicon.</li>
+                                <li>OG Image mặc định.</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card">
+                            <h4>Liên hệ</h4>
+                            <ul>
+                                <li>Hotline mặc định.</li>
+                                <li>Giờ mở cửa mặc định bằng 3 ngôn ngữ.</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card">
+                            <h4>Mạng xã hội</h4>
+                            <ul>
+                                <li>Facebook.</li>
+                                <li>Instagram.</li>
+                                <li>TikTok.</li>
+                                <li>Zalo.</li>
+                                <li>Messenger.</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card">
+                            <h4>EmailJS</h4>
+                            <ul>
+                                <li>Service ID.</li>
+                                <li>Template ID.</li>
+                                <li>Public Key.</li>
+                                <li>Có thể để trống nếu hệ thống đã cấu hình bằng biến môi trường.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3>Cách lưu cấu hình</h3>
+                    <ol class="steps">
+                        <li>Mở từng nhóm thông tin cần sửa.</li>
+                        <li>Thay đổi nội dung, ảnh hoặc đường link.</li>
+                        <li>Bấm <strong>Lưu cấu hình</strong> ở cuối trang.</li>
+                        <li>Nếu vừa đổi màu chủ đạo, tải lại trang admin để màu mới áp dụng đầy đủ cho giao diện quản
+                            trị.</li>
+                    </ol>
+                    <div class="note">
+                        Logo và favicon ảnh hưởng trực tiếp đến nhận diện thương hiệu. Nên kiểm tra lại website sau khi
+                        thay để chắc chắn ảnh không bị méo, mờ hoặc sai nền.
+                    </div>
+                </section>
+
+                <section id="telegram">
+                    <h2>12. Người nhận Telegram</h2>
+                    <p>Mục <strong>Người nhận Telegram</strong> dùng để quản lý danh sách chat nhận thông báo khi có đặt
+                        bàn mới.</p>
+                    <h3>Thêm người nhận</h3>
+                    <ol class="steps">
+                        <li>Bấm <strong>+ Thêm người nhận</strong>.</li>
+                        <li>Nhập <strong>Nhãn gợi nhớ</strong>, ví dụ: Quản lý cơ sở 1, Hotline, Chủ nhà hàng.</li>
+                        <li>Nhập <strong>Chat ID</strong> Telegram.</li>
+                        <li>Bật <strong>Nhận thông báo</strong> nếu người này cần nhận booking mới.</li>
+                        <li>Bấm <strong>Lưu</strong>.</li>
+                        <li>Sau khi lưu, bấm nút <strong>Gửi test</strong> ở dòng tương ứng để kiểm tra chat ID có hoạt
+                            động không.</li>
+                    </ol>
+                    <h3>Khi nào tắt người nhận?</h3>
+                    <ul>
+                        <li>Nhân sự nghỉ việc hoặc không còn phụ trách đặt bàn.</li>
+                        <li>Chat ID nhập sai và đang chờ cập nhật lại.</li>
+                        <li>Muốn tạm dừng thông báo cho một cơ sở/người phụ trách.</li>
+                    </ul>
+                    <div class="warning">
+                        Nếu tất cả người nhận đều bị tắt, hệ thống có thể vẫn lưu booking trên admin nhưng không gửi
+                        thông báo Telegram cho ai. Nên luôn giữ ít nhất một người nhận đang bật.
+                    </div>
+                </section>
+
+                <section id="kiem-tra">
+                    <h2>13. Checklist trước khi bàn giao hoặc sau khi cập nhật lớn</h2>
+                    <ul class="checklist">
+                        <li>Đăng nhập admin thành công bằng tài khoản được bàn giao.</li>
+                        <li>Kiểm tra logo, favicon, hotline và link mạng xã hội trong Cấu hình chung.</li>
+                        <li>Kiểm tra ít nhất một cơ sở đang ở trạng thái Đang hoạt động.</li>
+                        <li>Kiểm tra form đặt bàn có cơ sở để chọn.</li>
+                        <li>Kiểm tra danh sách người nhận Telegram có ít nhất một người đang bật và gửi test thành công.
+                        </li>
+                        <li>Kiểm tra nhóm món, món và combo quan trọng đang bật Hiển thị.</li>
+                        <li>Kiểm tra bài viết/ưu đãi cần công khai đã bật Đăng công khai.</li>
+                        <li>Kiểm tra các trang Trang chủ, Về Cocopot, Thực đơn, Cơ sở, Tin tức, Đặt bàn, Chính sách và
+                            Điều khoản không bị thiếu nội dung Tiếng Việt.</li>
+                        <li>Mở website public trên máy tính và điện thoại để kiểm tra ảnh, chữ, nút đặt bàn và liên kết.
+                        </li>
+                        <li>Gửi thử một booking từ website public và xác nhận booking xuất hiện trong admin.</li>
+                    </ul>
+                </section>
+
+                <section id="faq">
+                    <h2>14. Câu hỏi thường gặp</h2>
+                    <h3>Tôi sửa nội dung nhưng website chưa đổi ngay?</h3>
+                    <p>Hãy tải lại trang public bằng <code>Ctrl+F5</code> hoặc mở cửa sổ ẩn danh để kiểm tra. Nếu
+                        website có cache ở server/CDN, có thể cần chờ thêm hoặc nhờ kỹ thuật xóa cache.</p>
+                    <h3>Có cần nhập đủ 3 ngôn ngữ không?</h3>
+                    <p>Không bắt buộc. Tuy nhiên Tiếng Việt nên luôn được nhập đầy đủ vì đây là bản chính và là nội dung
+                        fallback cho ngôn ngữ còn thiếu.</p>
+                    <h3>Tôi muốn tạm ẩn món/bài viết/cơ sở thì nên xóa hay tắt?</h3>
+                    <p>Nên tắt hiển thị hoặc chuyển trạng thái phù hợp. Chỉ xóa khi chắc chắn không cần dùng lại dữ liệu
+                        đó.</p>
+                    <h3>Ảnh upload bị lỗi thì làm gì?</h3>
+                    <p>Kiểm tra ảnh có đúng định dạng ảnh không, dung lượng dưới 5MB không, sau đó thử đổi tên file
+                        không dấu và upload lại. Nếu vẫn lỗi, gửi ảnh cho kỹ thuật kiểm tra cấu hình Cloudinary.</p>
+                    <h3>Đặt bàn mới có báo ở đâu?</h3>
+                    <p>Booking mới xuất hiện trong admin mục Đặt bàn/Dashboard và được gửi tới các người nhận Telegram
+                        đang bật. Admin đang mở trang có thể nhận thông báo realtime.</p>
+                    <h3>Có thể tự đổi bố cục website trong admin không?</h3>
+                    <p>Không. Admin dùng để thay nội dung, ảnh, món, cơ sở, bài viết và cấu hình chung. Bố cục giao diện
+                        là phần cố định của website, nếu muốn đổi cần yêu cầu đội kỹ thuật chỉnh code.</p>
+                </section>
+            </main>
+        </div>
+
+        <p class="footer">Tài liệu hướng dẫn quản trị nội dung website Cocopot. Có thể mở trực tiếp file HTML này bằng
+            trình duyệt hoặc in ra PDF để bàn giao nội bộ.</p>
+    </div>
+</body>
+
+</html>
