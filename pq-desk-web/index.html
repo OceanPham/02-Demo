@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PQ Desk · Booking & Điều hành</title>
+    <meta name="description"
+        content="Bản thiết kế tương tác quản lý booking, điều hành dịch vụ và công nợ dựa trên workbook mẫu PQ QUAY 01/T08.">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230c766a'/%3E%3Cpath d='M8 23V9h8a5 5 0 010 10h-5v4zm3-7h5a2 2 0 000-4h-5z' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <a class="skip" href="#content">Đến nội dung chính</a>
+    <aside class="sidebar" aria-label="Điều hướng chính">
+        <a class="brand" href="#bookings"><span class="brandmark">P</span><span>PQ <b>Desk</b><small>TRAVEL
+                    OPERATIONS</small></span></a>
+        <div class="workspace"><span class="avatar teal">PQ</span>
+            <div><strong>Phú Quốc · Quầy tour</strong><small>Không gian làm việc mẫu</small></div>
+        </div>
+        <div class="navlabel">KHÔNG GIAN QUẢN LÝ</div>
+        <nav id="nav"></nav>
+        <div class="sidefoot"><span class="avatar">AD</span>
+            <div><strong>Quản lý</strong><small>Bản thiết kế tương tác</small></div>
+        </div>
+    </aside>
+    <div class="shell">
+        <header class="topbar">
+            <div class="crumb"><span>Không gian làm việc</span><span>/</span><strong id="crumbTitle">Booking</strong>
+            </div>
+            <div class="topright"><span class="samplelabel">DỮ LIỆU MINH HỌA</span><button class="textbtn"
+                    id="helpButton">Thông tin bản demo</button><span class="avatar">AD</span></div>
+        </header>
+        <main id="content" tabindex="-1">
+            <div class="pagehead">
+                <div>
+                    <div class="eyebrow">QUẢN LÝ QUẦY TOUR</div>
+                    <h1 id="pageTitle">Booking</h1>
+                    <p id="pageSubtitle">Một nơi cho mọi đơn, mọi kênh bán.</p>
+                </div>
+                <div class="headbuttons"><button class="button" id="exportButton">Xuất CSV</button><button
+                        class="button primary" id="newBooking">+ Tạo booking</button></div>
+            </div>
+            <section id="view" aria-label="Nội dung quản lý"></section>
+            <footer class="demofoot">Bản thiết kế tương tác · Dữ liệu minh họa · Thay đổi chỉ trong phiên xem, tải lại
+                sẽ đặt lại dữ liệu.</footer>
+        </main>
+    </div>
+    <dialog id="bookingDialog" class="wide">
+        <form id="bookingForm">
+            <div class="dialoghead">
+                <div><small id="formKicker">BOOKING MỚI</small>
+                    <h2 id="formTitle">Tạo booking</h2>
+                </div><button type="button" class="close" data-close="bookingDialog" aria-label="Đóng">×</button>
+            </div>
+            <div class="dialogbody">
+                <div class="formgrid"><label>Tên khách <span class="required">*</span><input name="customer" required
+                            maxlength="120" autocomplete="name" placeholder="Tên khách hoặc tên đoàn"></label><label>Số
+                        điện thoại<input name="phone" type="tel" maxlength="30"
+                            placeholder="Có thể nhập mã quốc gia"></label><label>Kênh bán / Đối tác<select
+                            name="partner" id="formPartner"></select></label><label>Nhân viên phụ trách<select
+                            name="staff">
+                            <option>Linh</option>
+                            <option>Minh</option>
+                            <option>An</option>
+                        </select></label><label>Ngày bán<input name="sold" type="date" required></label><label>Trạng
+                        thái đơn<select name="status">
+                            <option>Mới tạo</option>
+                            <option>Đã xác nhận</option>
+                            <option>Hoàn tất</option>
+                        </select></label></div>
+                <div class="sectiontitle">
+                    <h3>Dịch vụ trong đơn</h3><button type="button" class="button small" id="addLine">+ Thêm dịch
+                        vụ</button>
+                </div>
+                <div id="lineEditor"></div><label>Ghi chú chung<textarea name="note" rows="2"
+                        placeholder="Yêu cầu của khách, ghi chú nội bộ…" maxlength="1000"></textarea></label>
+                <div class="formtotal"><span>Tổng giá trị booking</span><strong id="formTotal">0 ₫</strong></div>
+                <p class="formhint">Đơn giá được chốt theo từng dịch vụ. Các lần thu tiền được ghi nhận riêng sau khi
+                    tạo đơn.</p>
+                <p id="formError" class="error" role="alert"></p>
+            </div>
+            <div class="dialogfoot"><button type="button" class="button" data-close="bookingDialog">Hủy</button><button
+                    type="submit" class="button primary">Lưu booking mẫu</button></div>
+        </form>
+    </dialog>
+    <dialog id="detailDialog" class="detail">
+        <div id="detailBody"></div>
+    </dialog>
+    <dialog id="paymentDialog">
+        <form id="paymentForm">
+            <div class="dialoghead">
+                <div><small>THU TIỀN</small>
+                    <h2>Ghi nhận thanh toán</h2>
+                </div><button type="button" class="close" data-close="paymentDialog" aria-label="Đóng">×</button>
+            </div>
+            <div class="dialogbody">
+                <p id="paymentSummary"></p><label>Số tiền (VND)<input name="amount" type="number" min="1" step="1"
+                        required></label><label>Phương thức<select name="method">
+                        <option>Chuyển khoản</option>
+                        <option>Tiền mặt</option>
+                        <option>9PAY</option>
+                        <option>MPOS</option>
+                    </select></label><label>Ngày thu<input name="date" type="date" required></label><label>Mã tham chiếu
+                    / Ghi chú<input name="ref" maxlength="100" placeholder="Số giao dịch hoặc nội dung thu"></label>
+                <p id="paymentError" class="error" role="alert"></p>
+                <p class="formhint">Ghi nhận mẫu chỉ cập nhật phiên xem hiện tại.</p>
+            </div>
+            <div class="dialogfoot"><button type="button" class="button" data-close="paymentDialog">Hủy</button><button
+                    class="button primary" type="submit">Ghi nhận thu tiền</button></div>
+        </form>
+    </dialog>
+    <dialog id="infoDialog">
+        <div class="dialoghead">
+            <h2>Phạm vi bản thiết kế</h2><button class="close" data-close="infoDialog" aria-label="Đóng">×</button>
+        </div>
+        <div class="dialogbody prose">
+            <p>Giao diện được thiết kế từ cấu trúc <strong>20 tab</strong> trong workbook “mẫu PQ QUAY 01/T08”. Tên
+                khách, đối tác và số tiền đang hiển thị là <strong>dữ liệu minh họa</strong>.</p>
+            <p>Bạn có thể tạo và sửa đơn nhiều dịch vụ, ghi nhận thu tiền, đổi trạng thái điều hành, lọc và xuất CSV để
+                thử quy trình.</p>
+            <p>Chưa có lưu trữ dùng chung, đăng nhập/phân quyền nghiệp vụ, nhập workbook thật, gửi email hoặc đặt dịch
+                vụ tới nhà cung cấp. Các thao tác trong demo không gửi dữ liệu đi.</p>
+            <p>Giá và sức chứa đều là cấu hình minh họa. Trước khi chuyển dữ liệu thật cần thống nhất cách ghép mã đơn,
+                diễn giải cột công nợ và chuẩn hóa ngày thiếu năm.</p>
+        </div>
+        <div class="dialogfoot"><button class="button primary" data-close="infoDialog">Đã hiểu</button></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+
+</html>
