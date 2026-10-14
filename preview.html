@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ECO2GO | Chọn hướng logo</title>
+<style>
+    :root {
+        font-family: Arial, sans-serif;
+        color: #17251d;
+        background: #fafcf9
+    }
+
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        margin: 0
+    }
+
+    main {
+        max-width: 1240px;
+        padding: 38px 36px;
+        margin: auto
+    }
+
+    h1 {
+        font-size: clamp(30px, 5vw, 56px);
+        line-height: 1.08;
+        letter-spacing: -1.6px;
+        margin: 26px 0 16px
+    }
+
+    p {
+        line-height: 1.6
+    }
+
+    .eyebrow {
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #173e2a
+    }
+
+    .intro {
+        max-width: 800px;
+        color: #5c6b61
+    }
+
+    .assessment {
+        border-left: 4px solid #488f3e;
+        background: #f7f3ea;
+        padding: 20px 24px;
+        margin: 28px 0
+    }
+
+    .assessment p {
+        margin: 6px 0
+    }
+
+    .choices {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin: 32px 0 20px
+    }
+
+    .choice {
+        text-align: left;
+        padding: 18px 16px;
+        background: white;
+        border: 1px solid #d8e1d5;
+        font: inherit;
+        cursor: pointer;
+        color: #173e2a
+    }
+
+    .choice[aria-pressed=true] {
+        border: 2px solid #488f3e;
+        background: #eef4eb;
+        padding: 17px 15px
+    }
+
+    .choice strong {
+        display: block;
+        font-size: 16px
+    }
+
+    .choice small {
+        display: block;
+        margin-top: 8px;
+        font-size: 11px;
+        color: #5c6b61
+    }
+
+    .choice svg {
+        width: 100%;
+        height: 62px;
+        margin: 18px 0 4px
+    }
+
+    .feature {
+        background: white;
+        border: 1px solid #e2e8e0;
+        padding: 32px;
+        margin: 20px 0
+    }
+
+    .hero {
+        min-height: 210px;
+        display: grid;
+        place-items: center
+    }
+
+    .hero svg {
+        width: min(740px, 100%);
+        height: auto
+    }
+
+    .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px
+    }
+
+    .section-head h2 {
+        font-size: 28px;
+        letter-spacing: -.5px;
+        margin: 0
+    }
+
+    .status {
+        font-size: 12px;
+        background: #eef4eb;
+        padding: 8px 12px;
+        white-space: nowrap;
+        color: #173e2a
+    }
+
+    .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px
+    }
+
+    .two .dark,
+    .two .kraft {
+        min-height: 150px;
+        display: grid;
+        place-items: center;
+        padding: 28px
+    }
+
+    .dark {
+        background: #173e2a;
+        color: white
+    }
+
+    .kraft {
+        background: #f7f3ea
+    }
+
+    .two svg {
+        width: 100%;
+        height: auto
+    }
+
+    .notes {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 42px
+    }
+
+    .notes h3 {
+        font-size: 14px
+    }
+
+    .notes p {
+        font-size: 14px;
+        color: #5c6b61
+    }
+
+    .swatches {
+        display: flex;
+        gap: 18px;
+        margin: 22px 0;
+        font-size: 12px
+    }
+
+    .swatch {
+        display: flex;
+        align-items: center;
+        gap: 8px
+    }
+
+    .dot {
+        width: 24px;
+        height: 24px;
+        border: 1px solid #ccc
+    }
+
+    .controls {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 14px;
+        margin: 22px 0
+    }
+
+    input {
+        accent-color: #488f3e
+    }
+
+    .size-box {
+        min-height: 110px;
+        background: #f7f3ea;
+        display: grid;
+        place-items: center;
+        overflow: auto
+    }
+
+    .size-box svg {
+        height: auto
+    }
+
+    .web {
+        border: 1px solid #e2e8e0;
+        background: #fff;
+        margin: 20px 0
+    }
+
+    .web header {
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px
+    }
+
+    .header-logo svg {
+        width: 180px;
+        height: auto;
+        display: block
+    }
+
+    .web nav {
+        display: flex;
+        gap: 24px;
+        font-size: 12px
+    }
+
+    .cta {
+        border-radius: 24px;
+        background: #488f3e;
+        padding: 11px 19px;
+        color: white;
+        font-size: 12px;
+        white-space: nowrap
+    }
+
+    .body {
+        padding: 38px 24px;
+        background: #fbf8f1;
+        min-height: 210px
+    }
+
+    .body h3 {
+        font-size: 32px;
+        line-height: 1.1;
+        margin: 16px 0
+    }
+
+    .body p {
+        max-width: 480px;
+        color: #5c6b61;
+        font-size: 14px
+    }
+
+    .web footer {
+        background: #173e2a;
+        color: white;
+        padding: 32px 24px;
+        display: flex;
+        justify-content: space-between;
+        gap: 28px
+    }
+
+    .footer-logo svg {
+        width: 200px;
+        height: auto
+    }
+
+    .web footer p {
+        max-width: 460px;
+        font-size: 13px
+    }
+
+    .footer-side {
+        font-size: 13px;
+        line-height: 2.2;
+        align-self: center
+    }
+
+    .files {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 22px
+    }
+
+    .files a {
+        font-size: 13px;
+        color: #173e2a
+    }
+
+    .compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 20px
+    }
+
+    .compare article {
+        background: #fff;
+        border: 1px solid #e2e8e0;
+        padding: 22px
+    }
+
+    .compare svg {
+        width: 100%;
+        height: 110px
+    }
+
+    .compare h3 {
+        font-size: 16px
+    }
+
+    .compare p {
+        font-size: 13px;
+        color: #5c6b61
+    }
+
+    .fineprint {
+        font-size: 12px;
+        color: #5c6b61;
+        border-top: 1px solid #e2e8e0;
+        margin-top: 40px;
+        padding: 22px 0
+    }
+
+    .icons {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        margin: 18px 0
+    }
+
+    .icons>div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11px;
+        color: #5c6b61
+    }
+
+    .icons svg {
+        height: auto
+    }
+
+    .break {
+        overflow-wrap: anywhere
+    }
+
+    @media(max-width:800px) {
+        main {
+            padding: 24px 18px
+        }
+
+        .choices {
+            grid-template-columns: 1fr 1fr
+        }
+
+        .two,
+        .notes,
+        .compare {
+            grid-template-columns: 1fr
+        }
+
+        .feature {
+            padding: 20px
+        }
+
+        .web nav {
+            display: none
+        }
+
+        .web header {
+            padding: 18px 14px;
+            gap: 12px
+        }
+
+        .header-logo svg {
+            width: 180px
+        }
+
+        .cta {
+            font-size: 10px;
+            padding: 10px 12px
+        }
+
+        .web footer {
+            display: block
+        }
+
+        .section-head {
+            align-items: start
+        }
+
+        .status {
+            white-space: normal;
+            max-width: 125px
+        }
+
+        .hero {
+            min-height: 165px
+        }
+
+        .swatches {
+            flex-wrap: wrap
+        }
+
+        .controls input {
+            max-width: 140px
+        }
+
+        .body h3 {
+            font-size: 28px
+        }
+    }
+
+    @media(max-width:460px) {
+        .web header .cta {
+            display: none
+        }
+    }
+</style>
+<main>
+    <div class="eyebrow">ECO2GO / 14.10.2026 / LỰA CHỌN THIẾT KẾ</div>
+    <h1>Ba hướng mới.<br>Cùng một thương hiệu.</h1>
+    <p class="intro">Giữ tên ECO2GO, làm rõ cách đọc và thử những hình hiệu khác nhau. Các phương án mới bám bảng màu
+        website bạn cung cấp.</p>
+    <section class="assessment"><strong>Bộ hiện tại đã tốt nhất chưa? Chưa có cơ sở kết luận.</strong>
+        <p>Ảnh web vẫn dùng logo eco + lá. Bản E2 đã sửa một số điểm theo báo cáo, nhưng còn cứng và chưa được kiểm
+            chứng bằng khảo sát hay tra cứu mẫu mới.</p>
+    </section>
+    <div class="choices" id="choices"></div>
+    <section class="feature">
+        <div class="section-head">
+            <h2 id="name"></h2><span class="status">Đề xuất để khách lựa chọn</span>
+        </div>
+        <div class="hero" id="hero"></div>
+        <div class="two">
+            <div class="dark" id="white"></div>
+            <div class="kraft" id="black"></div>
+        </div>
+        <div class="swatches" id="swatches"></div>
+        <div class="notes">
+            <div>
+                <h3>Câu chuyện thiết kế</h3>
+                <p id="story"></p>
+                <h3>Phù hợp khi</h3>
+                <p id="fit"></p>
+            </div>
+            <div>
+                <h3>Điểm cần cân nhắc</h3>
+                <p id="tradeoff"></p>
+                <p>Mỗi mẫu đều cần tra cứu chữ và hình; bỏ lá hay đổi màu không tự chứng minh được khả năng đăng ký.</p>
+            </div>
+        </div>
+        <div class="files"><a id="download-svg" download>SVG vector</a><a id="download-png" download>PNG trong
+                suốt</a><a id="download-black" download>Bản đen</a><a id="download-white" download>Bản trắng</a><a
+                id="download-icon" download>Biểu tượng</a></div>
+    </section>
+    <h2>Thử ở kích thước thật</h2>
+    <div class="controls"><label for="width">Chiều rộng</label><input id="width" type="range" min="144" max="480"
+            value="180"><output id="width-label">180 px</output><label><input id="mono" type="checkbox"> Xem một
+            màu</label></div>
+    <div class="size-box" id="sized"></div>
+    <div class="icons" id="icons"></div>
+    <h2>Áp vào bảng màu web hiện tại</h2>
+    <p class="intro">Mô phỏng header và footer, không chỉnh sửa website đang chạy.</p>
+    <section class="web">
+        <header>
+            <div class="header-logo" id="header-logo"></div>
+            <nav><span>Home</span><span>Our Products</span><span>About Us</span><span>Contact Us</span></nav><span
+                class="cta">Request a Quote</span>
+        </header>
+        <div class="body">
+            <div class="eyebrow">SUSTAINABLE BY NATURE</div>
+            <h3>Natural materials.<br>Responsible future.</h3>
+            <p>Eco2go Vietnam · Coconut, coir and bamboo products for global B2B buyers.</p>
+        </div>
+        <footer>
+            <div>
+                <div class="footer-logo" id="footer-logo"></div>
+                <p>Eco2go Vietnam supplies sustainable coconut, coir, bamboo and natural products for global B2B
+                    markets.</p>
+            </div>
+            <div class="footer-side">Our Products<br>Coconut · Coir · Bamboo<br>Contact Us</div>
+        </footer>
+    </section>
+    <h2>So sánh nhanh cả bốn hướng</h2>
+    <div class="compare" id="compare"></div>
+    <div class="assessment"><strong>Ưu tiên đánh giá B / Đan Mộc trước</strong>
+        <p>B cân bằng giữa bảng màu đang dùng, hình hiệu độc lập và kiểu chữ rõ. C phù hợp hướng thủ công cao cấp; D gọn
+            cho web; A giữ cảm giác mạnh, công nghiệp. Đây là nhận định thiết kế, chưa phải kết quả khảo sát.</p>
+    </div>
+    <!-- <div class="fineprint">
+        <p>Tài liệu: hai báo cáo Finch Law và các ảnh khách cung cấp. Các thiết kế mới chưa được tra cứu nhãn hiệu; chưa
+            có kết luận bảo hộ.</p>
+        <p>Typography: B dùng Manrope, C dùng Lora, theo SIL OFL 1.1; đã chuyển thành vector. Hình hiệu B/C và chữ D
+            được dựng riêng.</p>
+        <p><a href="../../pdf/Eco2go-Logo-Options-Comparison.pdf">Mở bản PDF trình bày khách hàng</a></p>
+    </div>
+     -->
+</main>
+<script>
+    const concepts = { "A": { "name": "E2 nguyên bản", "slug": "a-e2-original", "story": "Phương án đã tạo trước đó; giữ nguyên để so sánh.", "fit": "Ưu tiên sự chắc chắn và cảm giác sản xuất.", "tradeoff": "Khá cứng; màu nâu bổ sung chưa có trong bảng màu web; ký hiệu E2 vẫn cần tra cứu.", "palette": ["#173F35", "#A96538", "#F6F3EA"], "primary": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"112\" viewBox=\"0 0 512 112\" role=\"img\" aria-label=\"ECO2GO\">\n<title>ECO2GO<\/title>\n<path fill=\"#173F35\" fill-rule=\"evenodd\" transform=\"translate(8 8) scale(1)\" d=\"M8 8 L62 8 L46 24 L24 24 L24 40 L46 40 L34 52 L24 52 L24 72 L46 72 L46 88 L8 88 Z\"/>\n<path fill=\"#A96538\" fill-rule=\"evenodd\" transform=\"translate(8 8) scale(1)\" d=\"M80 8 L88 8 L104 24 L104 40 L72 72 L104 72 L104 88 L54 88 L54 72 L88 38 L88 24 L64 24 Z\"/>\n<path fill=\"#173F35\" fill-rule=\"evenodd\" transform=\"translate(142 22) scale(1)\" d=\"M0 0 L42 0 L42 12 L14 12 L14 28 L38 28 L38 40 L14 40 L14 56 L42 56 L42 68 L0 68 Z\"/>\n<path fill=\"#173F35\" fill-rule=\"evenodd\" transform=\"translate(195 22) scale(1)\" d=\"M50 18 L37 22 C36 15 32 12 25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C32 56 36 53 37 46 L50 50 C47 63 39 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 C39 0 47 5 50 18 Z\"/>\n<path fill=\"#173F35\" fill-rule=\"evenodd\" transform=\"translate(256 22) scale(1)\" d=\"M25 0 C42 0 50 8 50 24 L50 44 C50 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 Z M25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 36 52 36 44 L36 24 C36 16 33 12 25 12 Z\"/>\n<path fill=\"#A96538\" fill-rule=\"evenodd\" transform=\"translate(317 22) scale(1)\" d=\"M1 20 C2 7 10 0 25 0 C40 0 48 7 48 20 C48 29 44 35 36 42 L18 56 L48 56 L48 68 L0 68 L0 56 L27 33 C32 29 35 26 35 21 C35 15 32 12 25 12 C18 12 15 16 14 23 Z\"/>\n<path fill=\"#173F35\" fill-rule=\"evenodd\" transform=\"translate(376 22) scale(1)\" d=\"M50 18 L37 22 C36 15 32 12 25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 38 53 38 46 L38 42 L25 42 L25 30 L52 30 L52 46 C52 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 C39 0 47 5 50 18 Z\"/>\n<path fill=\"#173F35\" fill-rule=\"evenodd\" transform=\"translate(439 22) scale(1)\" d=\"M25 0 C42 0 50 8 50 24 L50 44 C50 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 Z M25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 36 52 36 44 L36 24 C36 16 33 12 25 12 Z\"/>\n<\/svg>", "black": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"112\" viewBox=\"0 0 512 112\" role=\"img\" aria-label=\"ECO2GO\">\n<title>ECO2GO<\/title>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(8 8) scale(1)\" d=\"M8 8 L62 8 L46 24 L24 24 L24 40 L46 40 L34 52 L24 52 L24 72 L46 72 L46 88 L8 88 Z\"/>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(8 8) scale(1)\" d=\"M80 8 L88 8 L104 24 L104 40 L72 72 L104 72 L104 88 L54 88 L54 72 L88 38 L88 24 L64 24 Z\"/>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(142 22) scale(1)\" d=\"M0 0 L42 0 L42 12 L14 12 L14 28 L38 28 L38 40 L14 40 L14 56 L42 56 L42 68 L0 68 Z\"/>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(195 22) scale(1)\" d=\"M50 18 L37 22 C36 15 32 12 25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C32 56 36 53 37 46 L50 50 C47 63 39 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 C39 0 47 5 50 18 Z\"/>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(256 22) scale(1)\" d=\"M25 0 C42 0 50 8 50 24 L50 44 C50 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 Z M25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 36 52 36 44 L36 24 C36 16 33 12 25 12 Z\"/>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(317 22) scale(1)\" d=\"M1 20 C2 7 10 0 25 0 C40 0 48 7 48 20 C48 29 44 35 36 42 L18 56 L48 56 L48 68 L0 68 L0 56 L27 33 C32 29 35 26 35 21 C35 15 32 12 25 12 C18 12 15 16 14 23 Z\"/>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(376 22) scale(1)\" d=\"M50 18 L37 22 C36 15 32 12 25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 38 53 38 46 L38 42 L25 42 L25 30 L52 30 L52 46 C52 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 C39 0 47 5 50 18 Z\"/>\n<path fill=\"#000000\" fill-rule=\"evenodd\" transform=\"translate(439 22) scale(1)\" d=\"M25 0 C42 0 50 8 50 24 L50 44 C50 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 Z M25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 36 52 36 44 L36 24 C36 16 33 12 25 12 Z\"/>\n<\/svg>", "white": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"112\" viewBox=\"0 0 512 112\" role=\"img\" aria-label=\"ECO2GO\">\n<title>ECO2GO<\/title>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(8 8) scale(1)\" d=\"M8 8 L62 8 L46 24 L24 24 L24 40 L46 40 L34 52 L24 52 L24 72 L46 72 L46 88 L8 88 Z\"/>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(8 8) scale(1)\" d=\"M80 8 L88 8 L104 24 L104 40 L72 72 L104 72 L104 88 L54 88 L54 72 L88 38 L88 24 L64 24 Z\"/>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(142 22) scale(1)\" d=\"M0 0 L42 0 L42 12 L14 12 L14 28 L38 28 L38 40 L14 40 L14 56 L42 56 L42 68 L0 68 Z\"/>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(195 22) scale(1)\" d=\"M50 18 L37 22 C36 15 32 12 25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C32 56 36 53 37 46 L50 50 C47 63 39 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 C39 0 47 5 50 18 Z\"/>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(256 22) scale(1)\" d=\"M25 0 C42 0 50 8 50 24 L50 44 C50 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 Z M25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 36 52 36 44 L36 24 C36 16 33 12 25 12 Z\"/>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(317 22) scale(1)\" d=\"M1 20 C2 7 10 0 25 0 C40 0 48 7 48 20 C48 29 44 35 36 42 L18 56 L48 56 L48 68 L0 68 L0 56 L27 33 C32 29 35 26 35 21 C35 15 32 12 25 12 C18 12 15 16 14 23 Z\"/>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(376 22) scale(1)\" d=\"M50 18 L37 22 C36 15 32 12 25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 38 53 38 46 L38 42 L25 42 L25 30 L52 30 L52 46 C52 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 C39 0 47 5 50 18 Z\"/>\n<path fill=\"#FFFFFF\" fill-rule=\"evenodd\" transform=\"translate(439 22) scale(1)\" d=\"M25 0 C42 0 50 8 50 24 L50 44 C50 60 42 68 25 68 C8 68 0 60 0 44 L0 24 C0 8 8 0 25 0 Z M25 12 C17 12 14 16 14 24 L14 44 C14 52 17 56 25 56 C33 56 36 52 36 44 L36 24 C36 16 33 12 25 12 Z\"/>\n<\/svg>", "mark": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"112\" viewBox=\"0 0 120 112\" role=\"img\" aria-label=\"ECO2GO\">\n<title>ECO2GO<\/title>\n<path fill=\"#173F35\" fill-rule=\"evenodd\" transform=\"translate(4 8) scale(1)\" d=\"M8 8 L62 8 L46 24 L24 24 L24 40 L46 40 L34 52 L24 52 L24 72 L46 72 L46 88 L8 88 Z\"/>\n<path fill=\"#A96538\" fill-rule=\"evenodd\" transform=\"translate(4 8) scale(1)\" d=\"M80 8 L88 8 L104 24 L104 40 L72 72 L104 72 L104 88 L54 88 L54 72 L88 38 L88 24 L64 24 Z\"/>\n<\/svg>" }, "B": { "name": "Đan Mộc", "slug": "b-dan-moc", "story": "Hai cặp dải đan tạo một hình thoi thoáng, gợi tre, xơ dừa và kỹ thuật đan. Chữ hoa vừa phải giúp tên rõ mà nhẹ hơn E2.", "fit": "Phù hợp nhất nếu giữ website xanh hiện tại và cần một nhận diện chung cho nhiều nhóm sản phẩm.", "tradeoff": "Các khe đan cần đủ rộng khi thu nhỏ; hình đan phải được tra cứu riêng, chưa có bằng chứng là độc quyền.", "palette": ["#173E2A", "#488F3E", "#F7F3EA"], "primary": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"515.000\" height=\"124\" viewBox=\"0 0 515.000 124\" role=\"img\" aria-label=\"ECO2GO - Đan Mộc\"><title>ECO2GO - Đan Mộc<\/title>\n<path d=\"M66.182 15.182 L76.365 25.365 L48.363 53.366 L38.181 43.184 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M22.907 58.458 L33.090 68.640 L25.453 76.277 L15.270 66.094 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M86.547 35.547 L96.730 45.730 L89.093 53.366 L78.910 43.184 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M63.637 58.458 L73.819 68.640 L45.818 96.642 L35.635 86.459 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M45.818 15.182 L53.454 22.819 L43.272 33.002 L35.635 25.365 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M68.728 38.093 L96.730 66.094 L86.547 76.277 L58.546 48.275 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M25.453 35.547 L53.454 63.549 L43.272 73.731 L15.270 45.730 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M68.728 78.822 L76.365 86.459 L66.182 96.642 L58.546 89.005 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M6.222 64.000 L6.222 0.000 L47.333 0.000 L47.333 9.400 L16.222 9.400 L16.222 26.267 L42.000 26.267 L42.000 35.667 L16.222 35.667 L16.222 54.600 L47.333 54.600 L47.333 64.000 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M85.778 65.333 C79.385 65.333 73.919 63.933 69.378 61.133 C64.837 58.333 61.361 54.430 58.950 49.422 C56.539 44.415 55.333 38.607 55.333 32.000 C55.333 25.393 56.539 19.585 58.950 14.578 C61.361 9.570 64.837 5.667 69.378 2.867 C73.919 0.067 79.385 -1.333 85.778 -1.333 C93.156 -1.333 99.287 0.520 104.172 4.228 C109.057 7.935 112.467 12.933 114.400 19.222 L104.289 21.978 C103.044 17.652 100.880 14.263 97.794 11.811 C94.709 9.359 90.704 8.133 85.778 8.133 C76.948 8.133 71.074 12.298 68.111 19.461 C66.630 23.043 65.881 27.222 65.867 32.000 C65.837 41.556 68.811 48.906 74.722 52.883 C77.678 54.872 81.363 55.867 85.778 55.867 C90.704 55.867 94.709 54.633 97.794 52.167 C100.880 49.700 103.044 46.319 104.289 42.022 L114.400 44.778 C112.467 51.067 109.057 56.065 104.172 59.772 C99.287 63.480 93.156 65.333 85.778 65.333 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M151.956 65.333 C145.563 65.333 140.096 63.933 135.556 61.133 C131.015 58.333 127.539 54.430 125.128 49.422 C122.717 44.415 121.511 38.607 121.511 32.000 C121.511 25.393 122.717 19.585 125.128 14.578 C127.539 9.570 131.015 5.667 135.556 2.867 C140.096 0.067 145.563 -1.333 151.956 -1.333 C158.348 -1.333 163.815 0.067 168.356 2.867 C172.896 5.667 176.372 9.570 178.783 14.578 C181.194 19.585 182.400 25.393 182.400 32.000 C182.400 38.607 181.194 44.415 178.783 49.422 C176.372 54.430 172.896 58.333 168.356 61.133 C163.815 63.933 158.348 65.333 151.956 65.333 Z M151.956 55.867 C156.370 55.911 160.046 54.939 162.983 52.950 C165.920 50.961 168.124 48.167 169.594 44.567 C171.065 40.967 171.800 36.778 171.800 32.000 C171.800 22.444 168.857 15.148 162.983 11.178 C160.046 9.193 156.370 8.178 151.956 8.133 C147.541 8.089 143.869 9.059 140.939 11.044 C138.009 13.030 135.809 15.824 134.339 19.428 C132.869 23.031 132.126 27.222 132.111 32.000 C132.081 41.556 135.028 48.839 140.917 52.817 C143.861 54.806 147.541 55.822 151.956 55.867 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M190.400 63.933 L190.422 55.133 L218.044 30.444 C220.237 28.496 221.744 26.650 222.567 24.906 C223.389 23.161 223.800 21.444 223.800 19.756 C223.800 15.341 221.759 11.698 218.367 9.661 C216.670 8.643 214.719 8.133 212.511 8.133 C210.215 8.133 208.180 8.669 206.406 9.739 C204.631 10.809 203.246 12.222 202.250 13.978 C201.254 15.733 200.778 17.637 200.822 19.689 L190.556 19.689 C190.556 15.489 191.502 11.813 193.394 8.661 C195.287 5.509 197.896 3.056 201.222 1.300 C204.548 -0.456 208.378 -1.333 212.711 -1.333 C216.778 -1.333 220.424 -0.422 223.650 1.400 C226.876 3.222 229.419 5.731 231.278 8.928 C233.137 12.124 234.067 15.778 234.067 19.889 C234.067 22.874 233.669 25.398 232.872 27.461 C232.076 29.524 230.880 31.431 229.283 33.183 C227.687 34.935 225.704 36.852 223.333 38.933 L202.867 57.133 L201.867 54.467 L234.067 54.467 L234.067 63.933 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M271.933 65.333 C263.504 65.333 256.072 62.304 250.672 56.600 C245.272 50.896 242.089 42.578 242.089 32.000 C242.089 25.059 243.372 19.104 245.939 14.133 C248.506 9.163 252.037 5.346 256.533 2.683 C261.030 0.020 266.163 -1.311 271.933 -1.311 C279.637 -1.311 285.763 0.480 290.311 4.061 C294.859 7.643 297.948 12.622 299.578 19.000 L289.400 20.711 C288.148 16.911 286.106 13.874 283.272 11.600 C280.439 9.326 276.859 8.178 272.533 8.156 C268.119 8.111 264.446 9.080 261.517 11.061 C258.587 13.043 256.387 15.833 254.917 19.433 C253.446 23.033 252.704 27.222 252.689 32.000 C252.659 41.556 255.606 48.839 261.494 52.817 C264.439 54.806 268.119 55.822 272.533 55.867 C282.844 56.000 289.156 49.978 290.622 38.533 L278.756 38.533 L278.756 30.600 L301.244 30.600 C301.311 31.096 301.357 31.793 301.383 32.689 C301.409 33.585 301.422 34.141 301.422 34.356 C301.422 40.348 300.256 45.680 297.922 50.350 C295.589 55.020 292.224 58.685 287.828 61.344 C283.431 64.004 278.133 65.333 271.933 65.333 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M338.089 65.333 C331.696 65.333 326.230 63.933 321.689 61.133 C317.148 58.333 313.672 54.430 311.261 49.422 C308.850 44.415 307.644 38.607 307.644 32.000 C307.644 25.393 308.850 19.585 311.261 14.578 C313.672 9.570 317.148 5.667 321.689 2.867 C326.230 0.067 331.696 -1.333 338.089 -1.333 C344.481 -1.333 349.948 0.067 354.489 2.867 C359.030 5.667 362.506 9.570 364.917 14.578 C367.328 19.585 368.533 25.393 368.533 32.000 C368.533 38.607 367.328 44.415 364.917 49.422 C362.506 54.430 359.030 58.333 354.489 61.133 C349.948 63.933 344.481 65.333 338.089 65.333 Z M338.089 55.867 C342.504 55.911 346.180 54.939 349.117 52.950 C352.054 50.961 354.257 48.167 355.728 44.567 C357.198 40.967 357.933 36.778 357.933 32.000 C357.933 22.444 354.991 15.148 349.117 11.178 C346.180 9.193 342.504 8.178 338.089 8.133 C333.674 8.089 330.002 9.059 327.072 11.044 C324.143 13.030 321.943 15.824 320.472 19.428 C319.002 23.031 318.259 27.222 318.244 32.000 C318.215 41.556 321.161 48.839 327.050 52.817 C329.994 54.806 333.674 55.822 338.089 55.867 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<\/svg>", "black": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"515.000\" height=\"124\" viewBox=\"0 0 515.000 124\" role=\"img\" aria-label=\"ECO2GO - Đan Mộc\"><title>ECO2GO - Đan Mộc<\/title>\n<path d=\"M66.182 15.182 L76.365 25.365 L48.363 53.366 L38.181 43.184 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M22.907 58.458 L33.090 68.640 L25.453 76.277 L15.270 66.094 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M86.547 35.547 L96.730 45.730 L89.093 53.366 L78.910 43.184 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M63.637 58.458 L73.819 68.640 L45.818 96.642 L35.635 86.459 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M45.818 15.182 L53.454 22.819 L43.272 33.002 L35.635 25.365 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M68.728 38.093 L96.730 66.094 L86.547 76.277 L58.546 48.275 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M25.453 35.547 L53.454 63.549 L43.272 73.731 L15.270 45.730 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M68.728 78.822 L76.365 86.459 L66.182 96.642 L58.546 89.005 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M6.222 64.000 L6.222 0.000 L47.333 0.000 L47.333 9.400 L16.222 9.400 L16.222 26.267 L42.000 26.267 L42.000 35.667 L16.222 35.667 L16.222 54.600 L47.333 54.600 L47.333 64.000 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M85.778 65.333 C79.385 65.333 73.919 63.933 69.378 61.133 C64.837 58.333 61.361 54.430 58.950 49.422 C56.539 44.415 55.333 38.607 55.333 32.000 C55.333 25.393 56.539 19.585 58.950 14.578 C61.361 9.570 64.837 5.667 69.378 2.867 C73.919 0.067 79.385 -1.333 85.778 -1.333 C93.156 -1.333 99.287 0.520 104.172 4.228 C109.057 7.935 112.467 12.933 114.400 19.222 L104.289 21.978 C103.044 17.652 100.880 14.263 97.794 11.811 C94.709 9.359 90.704 8.133 85.778 8.133 C76.948 8.133 71.074 12.298 68.111 19.461 C66.630 23.043 65.881 27.222 65.867 32.000 C65.837 41.556 68.811 48.906 74.722 52.883 C77.678 54.872 81.363 55.867 85.778 55.867 C90.704 55.867 94.709 54.633 97.794 52.167 C100.880 49.700 103.044 46.319 104.289 42.022 L114.400 44.778 C112.467 51.067 109.057 56.065 104.172 59.772 C99.287 63.480 93.156 65.333 85.778 65.333 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M151.956 65.333 C145.563 65.333 140.096 63.933 135.556 61.133 C131.015 58.333 127.539 54.430 125.128 49.422 C122.717 44.415 121.511 38.607 121.511 32.000 C121.511 25.393 122.717 19.585 125.128 14.578 C127.539 9.570 131.015 5.667 135.556 2.867 C140.096 0.067 145.563 -1.333 151.956 -1.333 C158.348 -1.333 163.815 0.067 168.356 2.867 C172.896 5.667 176.372 9.570 178.783 14.578 C181.194 19.585 182.400 25.393 182.400 32.000 C182.400 38.607 181.194 44.415 178.783 49.422 C176.372 54.430 172.896 58.333 168.356 61.133 C163.815 63.933 158.348 65.333 151.956 65.333 Z M151.956 55.867 C156.370 55.911 160.046 54.939 162.983 52.950 C165.920 50.961 168.124 48.167 169.594 44.567 C171.065 40.967 171.800 36.778 171.800 32.000 C171.800 22.444 168.857 15.148 162.983 11.178 C160.046 9.193 156.370 8.178 151.956 8.133 C147.541 8.089 143.869 9.059 140.939 11.044 C138.009 13.030 135.809 15.824 134.339 19.428 C132.869 23.031 132.126 27.222 132.111 32.000 C132.081 41.556 135.028 48.839 140.917 52.817 C143.861 54.806 147.541 55.822 151.956 55.867 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M190.400 63.933 L190.422 55.133 L218.044 30.444 C220.237 28.496 221.744 26.650 222.567 24.906 C223.389 23.161 223.800 21.444 223.800 19.756 C223.800 15.341 221.759 11.698 218.367 9.661 C216.670 8.643 214.719 8.133 212.511 8.133 C210.215 8.133 208.180 8.669 206.406 9.739 C204.631 10.809 203.246 12.222 202.250 13.978 C201.254 15.733 200.778 17.637 200.822 19.689 L190.556 19.689 C190.556 15.489 191.502 11.813 193.394 8.661 C195.287 5.509 197.896 3.056 201.222 1.300 C204.548 -0.456 208.378 -1.333 212.711 -1.333 C216.778 -1.333 220.424 -0.422 223.650 1.400 C226.876 3.222 229.419 5.731 231.278 8.928 C233.137 12.124 234.067 15.778 234.067 19.889 C234.067 22.874 233.669 25.398 232.872 27.461 C232.076 29.524 230.880 31.431 229.283 33.183 C227.687 34.935 225.704 36.852 223.333 38.933 L202.867 57.133 L201.867 54.467 L234.067 54.467 L234.067 63.933 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M271.933 65.333 C263.504 65.333 256.072 62.304 250.672 56.600 C245.272 50.896 242.089 42.578 242.089 32.000 C242.089 25.059 243.372 19.104 245.939 14.133 C248.506 9.163 252.037 5.346 256.533 2.683 C261.030 0.020 266.163 -1.311 271.933 -1.311 C279.637 -1.311 285.763 0.480 290.311 4.061 C294.859 7.643 297.948 12.622 299.578 19.000 L289.400 20.711 C288.148 16.911 286.106 13.874 283.272 11.600 C280.439 9.326 276.859 8.178 272.533 8.156 C268.119 8.111 264.446 9.080 261.517 11.061 C258.587 13.043 256.387 15.833 254.917 19.433 C253.446 23.033 252.704 27.222 252.689 32.000 C252.659 41.556 255.606 48.839 261.494 52.817 C264.439 54.806 268.119 55.822 272.533 55.867 C282.844 56.000 289.156 49.978 290.622 38.533 L278.756 38.533 L278.756 30.600 L301.244 30.600 C301.311 31.096 301.357 31.793 301.383 32.689 C301.409 33.585 301.422 34.141 301.422 34.356 C301.422 40.348 300.256 45.680 297.922 50.350 C295.589 55.020 292.224 58.685 287.828 61.344 C283.431 64.004 278.133 65.333 271.933 65.333 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M338.089 65.333 C331.696 65.333 326.230 63.933 321.689 61.133 C317.148 58.333 313.672 54.430 311.261 49.422 C308.850 44.415 307.644 38.607 307.644 32.000 C307.644 25.393 308.850 19.585 311.261 14.578 C313.672 9.570 317.148 5.667 321.689 2.867 C326.230 0.067 331.696 -1.333 338.089 -1.333 C344.481 -1.333 349.948 0.067 354.489 2.867 C359.030 5.667 362.506 9.570 364.917 14.578 C367.328 19.585 368.533 25.393 368.533 32.000 C368.533 38.607 367.328 44.415 364.917 49.422 C362.506 54.430 359.030 58.333 354.489 61.133 C349.948 63.933 344.481 65.333 338.089 65.333 Z M338.089 55.867 C342.504 55.911 346.180 54.939 349.117 52.950 C352.054 50.961 354.257 48.167 355.728 44.567 C357.198 40.967 357.933 36.778 357.933 32.000 C357.933 22.444 354.991 15.148 349.117 11.178 C346.180 9.193 342.504 8.178 338.089 8.133 C333.674 8.089 330.002 9.059 327.072 11.044 C324.143 13.030 321.943 15.824 320.472 19.428 C319.002 23.031 318.259 27.222 318.244 32.000 C318.215 41.556 321.161 48.839 327.050 52.817 C329.994 54.806 333.674 55.822 338.089 55.867 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<\/svg>", "white": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"515.000\" height=\"124\" viewBox=\"0 0 515.000 124\" role=\"img\" aria-label=\"ECO2GO - Đan Mộc\"><title>ECO2GO - Đan Mộc<\/title>\n<path d=\"M66.182 15.182 L76.365 25.365 L48.363 53.366 L38.181 43.184 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M22.907 58.458 L33.090 68.640 L25.453 76.277 L15.270 66.094 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M86.547 35.547 L96.730 45.730 L89.093 53.366 L78.910 43.184 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M63.637 58.458 L73.819 68.640 L45.818 96.642 L35.635 86.459 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M45.818 15.182 L53.454 22.819 L43.272 33.002 L35.635 25.365 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M68.728 38.093 L96.730 66.094 L86.547 76.277 L58.546 48.275 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M25.453 35.547 L53.454 63.549 L43.272 73.731 L15.270 45.730 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M68.728 78.822 L76.365 86.459 L66.182 96.642 L58.546 89.005 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M6.222 64.000 L6.222 0.000 L47.333 0.000 L47.333 9.400 L16.222 9.400 L16.222 26.267 L42.000 26.267 L42.000 35.667 L16.222 35.667 L16.222 54.600 L47.333 54.600 L47.333 64.000 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M85.778 65.333 C79.385 65.333 73.919 63.933 69.378 61.133 C64.837 58.333 61.361 54.430 58.950 49.422 C56.539 44.415 55.333 38.607 55.333 32.000 C55.333 25.393 56.539 19.585 58.950 14.578 C61.361 9.570 64.837 5.667 69.378 2.867 C73.919 0.067 79.385 -1.333 85.778 -1.333 C93.156 -1.333 99.287 0.520 104.172 4.228 C109.057 7.935 112.467 12.933 114.400 19.222 L104.289 21.978 C103.044 17.652 100.880 14.263 97.794 11.811 C94.709 9.359 90.704 8.133 85.778 8.133 C76.948 8.133 71.074 12.298 68.111 19.461 C66.630 23.043 65.881 27.222 65.867 32.000 C65.837 41.556 68.811 48.906 74.722 52.883 C77.678 54.872 81.363 55.867 85.778 55.867 C90.704 55.867 94.709 54.633 97.794 52.167 C100.880 49.700 103.044 46.319 104.289 42.022 L114.400 44.778 C112.467 51.067 109.057 56.065 104.172 59.772 C99.287 63.480 93.156 65.333 85.778 65.333 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M151.956 65.333 C145.563 65.333 140.096 63.933 135.556 61.133 C131.015 58.333 127.539 54.430 125.128 49.422 C122.717 44.415 121.511 38.607 121.511 32.000 C121.511 25.393 122.717 19.585 125.128 14.578 C127.539 9.570 131.015 5.667 135.556 2.867 C140.096 0.067 145.563 -1.333 151.956 -1.333 C158.348 -1.333 163.815 0.067 168.356 2.867 C172.896 5.667 176.372 9.570 178.783 14.578 C181.194 19.585 182.400 25.393 182.400 32.000 C182.400 38.607 181.194 44.415 178.783 49.422 C176.372 54.430 172.896 58.333 168.356 61.133 C163.815 63.933 158.348 65.333 151.956 65.333 Z M151.956 55.867 C156.370 55.911 160.046 54.939 162.983 52.950 C165.920 50.961 168.124 48.167 169.594 44.567 C171.065 40.967 171.800 36.778 171.800 32.000 C171.800 22.444 168.857 15.148 162.983 11.178 C160.046 9.193 156.370 8.178 151.956 8.133 C147.541 8.089 143.869 9.059 140.939 11.044 C138.009 13.030 135.809 15.824 134.339 19.428 C132.869 23.031 132.126 27.222 132.111 32.000 C132.081 41.556 135.028 48.839 140.917 52.817 C143.861 54.806 147.541 55.822 151.956 55.867 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M190.400 63.933 L190.422 55.133 L218.044 30.444 C220.237 28.496 221.744 26.650 222.567 24.906 C223.389 23.161 223.800 21.444 223.800 19.756 C223.800 15.341 221.759 11.698 218.367 9.661 C216.670 8.643 214.719 8.133 212.511 8.133 C210.215 8.133 208.180 8.669 206.406 9.739 C204.631 10.809 203.246 12.222 202.250 13.978 C201.254 15.733 200.778 17.637 200.822 19.689 L190.556 19.689 C190.556 15.489 191.502 11.813 193.394 8.661 C195.287 5.509 197.896 3.056 201.222 1.300 C204.548 -0.456 208.378 -1.333 212.711 -1.333 C216.778 -1.333 220.424 -0.422 223.650 1.400 C226.876 3.222 229.419 5.731 231.278 8.928 C233.137 12.124 234.067 15.778 234.067 19.889 C234.067 22.874 233.669 25.398 232.872 27.461 C232.076 29.524 230.880 31.431 229.283 33.183 C227.687 34.935 225.704 36.852 223.333 38.933 L202.867 57.133 L201.867 54.467 L234.067 54.467 L234.067 63.933 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M271.933 65.333 C263.504 65.333 256.072 62.304 250.672 56.600 C245.272 50.896 242.089 42.578 242.089 32.000 C242.089 25.059 243.372 19.104 245.939 14.133 C248.506 9.163 252.037 5.346 256.533 2.683 C261.030 0.020 266.163 -1.311 271.933 -1.311 C279.637 -1.311 285.763 0.480 290.311 4.061 C294.859 7.643 297.948 12.622 299.578 19.000 L289.400 20.711 C288.148 16.911 286.106 13.874 283.272 11.600 C280.439 9.326 276.859 8.178 272.533 8.156 C268.119 8.111 264.446 9.080 261.517 11.061 C258.587 13.043 256.387 15.833 254.917 19.433 C253.446 23.033 252.704 27.222 252.689 32.000 C252.659 41.556 255.606 48.839 261.494 52.817 C264.439 54.806 268.119 55.822 272.533 55.867 C282.844 56.000 289.156 49.978 290.622 38.533 L278.756 38.533 L278.756 30.600 L301.244 30.600 C301.311 31.096 301.357 31.793 301.383 32.689 C301.409 33.585 301.422 34.141 301.422 34.356 C301.422 40.348 300.256 45.680 297.922 50.350 C295.589 55.020 292.224 58.685 287.828 61.344 C283.431 64.004 278.133 65.333 271.933 65.333 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<path d=\"M338.089 65.333 C331.696 65.333 326.230 63.933 321.689 61.133 C317.148 58.333 313.672 54.430 311.261 49.422 C308.850 44.415 307.644 38.607 307.644 32.000 C307.644 25.393 308.850 19.585 311.261 14.578 C313.672 9.570 317.148 5.667 321.689 2.867 C326.230 0.067 331.696 -1.333 338.089 -1.333 C344.481 -1.333 349.948 0.067 354.489 2.867 C359.030 5.667 362.506 9.570 364.917 14.578 C367.328 19.585 368.533 25.393 368.533 32.000 C368.533 38.607 367.328 44.415 364.917 49.422 C362.506 54.430 359.030 58.333 354.489 61.133 C349.948 63.933 344.481 65.333 338.089 65.333 Z M338.089 55.867 C342.504 55.911 346.180 54.939 349.117 52.950 C352.054 50.961 354.257 48.167 355.728 44.567 C357.198 40.967 357.933 36.778 357.933 32.000 C357.933 22.444 354.991 15.148 349.117 11.178 C346.180 9.193 342.504 8.178 338.089 8.133 C333.674 8.089 330.002 9.059 327.072 11.044 C324.143 13.030 321.943 15.824 320.472 19.428 C319.002 23.031 318.259 27.222 318.244 32.000 C318.215 41.556 321.161 48.839 327.050 52.817 C329.994 54.806 333.674 55.822 338.089 55.867 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 32.0) scale(0.9374999999999999 0.9374999999999999)\"/>\n<\/svg>", "mark": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"112.000\" height=\"112\" viewBox=\"0 0 112.000 112\" role=\"img\" aria-label=\"ECO2GO - Đan Mộc\"><title>ECO2GO - Đan Mộc<\/title>\n<path d=\"M66.182 15.182 L76.365 25.365 L48.363 53.366 L38.181 43.184 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M22.907 58.458 L33.090 68.640 L25.453 76.277 L15.270 66.094 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M86.547 35.547 L96.730 45.730 L89.093 53.366 L78.910 43.184 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M63.637 58.458 L73.819 68.640 L45.818 96.642 L35.635 86.459 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M45.818 15.182 L53.454 22.819 L43.272 33.002 L35.635 25.365 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M68.728 38.093 L96.730 66.094 L86.547 76.277 L58.546 48.275 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M25.453 35.547 L53.454 63.549 L43.272 73.731 L15.270 45.730 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M68.728 78.822 L76.365 86.459 L66.182 96.642 L58.546 89.005 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<\/svg>" }, "C": { "name": "Nếp Mở", "slug": "c-nep-mo", "story": "Hai nếp vật liệu mở ra thành hình hiệu bất đối xứng; phối với chữ có chân để gợi sản phẩm được chăm chút và cảm giác thủ công.", "fit": "Phù hợp dòng đồ gia dụng, quà tặng, sản phẩm trang trí và bao bì có định vị cao hơn.", "tradeoff": "Nét chữ có chân cần cỡ lớn hơn trên header; biểu tượng cũng có thể gợi trang sách hoặc bao bì mở.", "palette": ["#173E2A", "#3A7A2C", "#F7F3EA"], "primary": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"492.907\" height=\"124\" viewBox=\"0 0 492.907 124\" role=\"img\" aria-label=\"ECO2GO - Nếp Mở\"><title>ECO2GO - Nếp Mở<\/title>\n<path d=\"M12 24 C12 15 18 10 27 13 L49 22 L49 98 L27 89 C17 85 12 78 12 68 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M57 22 L80 11 C92 5 100 11 100 22 L100 68 C100 80 93 88 82 91 L57 99 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M37.743 43.359 C37.743 37.914 36.074 35.776 33.053 35.223 C31.543 34.946 29.757 34.851 27.693 34.936 L23.705 35.095 L23.705 52.866 C23.705 56.312 23.610 59.311 23.354 60.970 L37.999 60.874 C42.423 60.832 46.358 59.290 48.655 55.163 C49.803 53.100 50.378 50.292 50.378 46.740 L55.610 46.740 L55.100 67.000 L4.945 67.000 L4.945 61.736 C8.519 61.565 10.300 60.656 11.087 57.955 C11.480 56.604 11.677 54.706 11.677 52.260 L11.677 14.038 C11.677 10.890 11.900 7.742 12.028 5.998 C10.965 6.062 9.731 6.115 8.327 6.158 C6.923 6.200 5.796 6.253 4.945 6.317 L4.945 0.000 L52.196 0.000 L52.739 17.962 L47.474 17.962 C47.474 10.773 44.821 7.365 41.141 6.110 C39.301 5.482 37.403 5.201 35.446 5.264 L30.405 5.392 C25.364 5.456 23.705 7.147 23.705 14.740 L23.705 29.416 L37.169 29.448 L36.690 21.153 L43.008 21.153 L43.008 43.359 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M86.972 68.531 C78.422 68.531 70.876 64.581 66.601 57.285 C64.464 53.637 63.395 49.229 63.395 44.060 C63.395 36.999 65.931 30.485 70.334 25.572 C74.737 20.658 80.910 17.611 88.312 17.611 C96.140 17.611 101.553 20.217 104.360 24.088 C105.764 26.024 106.466 28.087 106.466 30.278 C106.466 33.681 104.392 36.669 100.691 36.754 C98.543 36.818 97.038 36.196 96.177 34.888 C95.315 33.580 94.885 32.341 94.885 31.171 C94.885 29.980 95.236 28.321 96.129 27.087 C95.193 24.790 92.901 23.828 90.753 23.466 C89.679 23.285 88.802 23.216 88.121 23.259 C84.633 23.386 81.735 24.987 79.427 28.060 C77.119 31.134 75.965 35.584 75.965 41.412 C75.965 48.516 77.901 54.701 82.027 58.338 C84.090 60.156 86.706 61.108 89.876 61.193 C92.662 61.236 95.363 60.545 97.979 59.119 C100.596 57.694 102.755 55.833 104.456 53.536 L108.221 57.046 C106.137 60.066 103.877 62.406 101.441 64.065 C96.570 67.383 91.567 68.531 86.972 68.531 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M138.211 68.531 C133.660 68.531 129.544 67.526 125.864 65.516 C118.505 61.496 113.932 53.940 113.932 44.156 C113.932 38.945 115.017 34.340 117.186 30.341 C119.356 26.343 122.270 23.221 125.928 20.977 C129.586 18.733 133.617 17.611 138.020 17.611 C147.123 17.611 154.696 21.876 158.950 29.193 C161.076 32.851 162.140 37.158 162.140 42.114 C162.140 47.325 161.103 51.925 159.029 55.913 C154.882 63.889 147.443 68.531 138.211 68.531 Z M138.722 62.725 C144.380 62.640 147.246 58.683 148.501 53.153 C149.128 50.388 149.442 47.549 149.442 44.635 C149.442 34.510 146.400 23.120 137.892 23.291 C132.362 23.376 129.135 27.342 127.667 32.830 C126.092 38.721 126.258 45.526 127.811 51.638 C128.640 54.903 129.948 57.577 131.735 59.662 C133.521 61.746 135.850 62.767 138.722 62.725 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M169.829 67.000 C169.829 53.643 177.986 46.868 186.068 39.211 C190.556 35.000 193.758 31.160 195.672 27.693 C197.586 24.226 198.543 20.823 198.543 17.484 C198.543 13.145 197.586 8.795 194.651 6.158 C193.183 4.839 191.131 4.201 188.493 4.243 C184.452 4.243 181.028 6.466 179.624 9.189 C180.985 10.550 181.474 12.507 181.474 13.910 C181.474 15.229 180.719 17.261 179.018 18.537 C178.167 19.175 177.018 19.494 175.572 19.494 C171.999 19.281 170.020 16.484 170.020 13.081 C170.020 10.231 171.759 6.695 175.269 3.653 C178.778 0.612 183.878 -1.531 190.599 -1.531 C198.256 -1.531 206.185 1.101 209.790 7.896 C210.992 10.162 211.592 12.964 211.592 16.303 C211.592 19.494 210.534 23.009 207.493 27.199 C204.451 31.389 199.384 36.435 191.301 43.071 C183.729 49.282 179.709 54.812 178.986 58.003 L197.140 58.481 C203.201 58.673 207.253 58.194 207.253 52.132 L212.294 52.132 L211.592 67.000 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M242.891 92.939 C231.746 92.939 225.354 90.269 222.504 86.398 C220.049 83.064 219.755 79.174 221.403 75.854 C222.786 73.067 225.450 70.552 229.363 69.106 C224.514 67.702 222.440 64.671 222.440 60.970 C222.440 59.120 223.184 57.179 224.673 55.147 C226.162 53.116 228.544 51.664 231.820 50.792 C226.290 48.410 222.514 43.561 222.344 37.010 C222.259 33.181 223.227 29.804 225.248 26.880 C227.268 23.955 229.900 21.679 233.144 20.052 C236.388 18.425 239.775 17.611 243.306 17.611 C246.922 17.611 251.633 18.558 254.951 20.770 C256.993 15.027 261.300 9.954 266.915 9.954 C270.914 9.954 273.009 12.188 273.009 15.633 C273.009 16.952 272.440 18.824 270.887 19.972 C270.111 20.547 269.042 20.834 267.681 20.834 C265.682 20.834 263.661 19.228 263.278 17.229 C262.193 17.484 261.226 18.287 260.375 19.637 C259.524 20.988 259.003 22.270 258.811 23.482 C262.300 26.545 264.267 30.788 264.267 35.510 C264.267 39.168 263.262 42.412 261.252 45.241 C257.232 50.899 250.452 54.302 243.050 54.302 C241.136 54.302 239.211 53.951 237.084 53.951 C233.639 53.951 231.044 55.557 231.341 57.811 C231.682 60.449 235.691 60.981 244.582 61.449 C254.409 61.916 261.805 63.698 265.783 67.845 C267.771 69.919 268.766 72.764 268.766 76.380 C268.766 81.740 265.464 85.856 260.423 88.663 C255.382 91.471 249.017 92.939 242.891 92.939 Z M244.710 87.291 C249.559 87.291 253.271 86.398 255.844 84.611 C258.418 82.825 259.705 80.879 259.705 78.773 C259.705 77.093 259.099 75.758 257.886 74.769 C255.461 72.791 250.942 71.839 244.390 71.626 C241.370 71.414 237.488 71.371 234.596 70.861 C232.171 72.647 230.820 75.487 230.735 78.167 C230.650 80.910 231.879 83.117 234.420 84.787 C236.962 86.457 240.392 87.291 244.710 87.291 Z M243.401 48.878 C249.208 48.878 252.239 43.231 252.239 37.297 C252.239 32.447 250.926 27.768 248.267 25.045 C246.938 23.684 245.241 23.003 243.178 23.003 C240.328 23.003 238.121 24.200 236.558 26.593 C234.995 28.986 234.213 31.798 234.213 35.031 C234.213 40.051 235.696 44.523 238.440 47.012 C239.812 48.256 241.466 48.878 243.401 48.878 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M298.724 68.531 C294.173 68.531 290.057 67.526 286.377 65.516 C279.018 61.496 274.445 53.940 274.445 44.156 C274.445 38.945 275.530 34.340 277.699 30.341 C279.869 26.343 282.783 23.221 286.441 20.977 C290.099 18.733 294.130 17.611 298.533 17.611 C307.636 17.611 315.208 21.876 319.462 29.193 C321.589 32.851 322.653 37.158 322.653 42.114 C322.653 47.325 321.616 51.925 319.542 55.913 C315.395 63.889 307.955 68.531 298.724 68.531 Z M299.235 62.725 C304.892 62.640 307.759 58.683 309.013 53.153 C309.641 50.388 309.955 47.549 309.955 44.635 C309.955 34.510 306.913 23.120 298.405 23.291 C292.875 23.376 289.647 27.342 288.180 32.830 C286.604 38.721 286.771 45.526 288.323 51.638 C289.153 54.903 290.461 57.577 292.248 59.662 C294.034 61.746 296.363 62.767 299.235 62.725 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<\/svg>", "black": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"492.907\" height=\"124\" viewBox=\"0 0 492.907 124\" role=\"img\" aria-label=\"ECO2GO - Nếp Mở\"><title>ECO2GO - Nếp Mở<\/title>\n<path d=\"M12 24 C12 15 18 10 27 13 L49 22 L49 98 L27 89 C17 85 12 78 12 68 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M57 22 L80 11 C92 5 100 11 100 22 L100 68 C100 80 93 88 82 91 L57 99 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M37.743 43.359 C37.743 37.914 36.074 35.776 33.053 35.223 C31.543 34.946 29.757 34.851 27.693 34.936 L23.705 35.095 L23.705 52.866 C23.705 56.312 23.610 59.311 23.354 60.970 L37.999 60.874 C42.423 60.832 46.358 59.290 48.655 55.163 C49.803 53.100 50.378 50.292 50.378 46.740 L55.610 46.740 L55.100 67.000 L4.945 67.000 L4.945 61.736 C8.519 61.565 10.300 60.656 11.087 57.955 C11.480 56.604 11.677 54.706 11.677 52.260 L11.677 14.038 C11.677 10.890 11.900 7.742 12.028 5.998 C10.965 6.062 9.731 6.115 8.327 6.158 C6.923 6.200 5.796 6.253 4.945 6.317 L4.945 0.000 L52.196 0.000 L52.739 17.962 L47.474 17.962 C47.474 10.773 44.821 7.365 41.141 6.110 C39.301 5.482 37.403 5.201 35.446 5.264 L30.405 5.392 C25.364 5.456 23.705 7.147 23.705 14.740 L23.705 29.416 L37.169 29.448 L36.690 21.153 L43.008 21.153 L43.008 43.359 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M86.972 68.531 C78.422 68.531 70.876 64.581 66.601 57.285 C64.464 53.637 63.395 49.229 63.395 44.060 C63.395 36.999 65.931 30.485 70.334 25.572 C74.737 20.658 80.910 17.611 88.312 17.611 C96.140 17.611 101.553 20.217 104.360 24.088 C105.764 26.024 106.466 28.087 106.466 30.278 C106.466 33.681 104.392 36.669 100.691 36.754 C98.543 36.818 97.038 36.196 96.177 34.888 C95.315 33.580 94.885 32.341 94.885 31.171 C94.885 29.980 95.236 28.321 96.129 27.087 C95.193 24.790 92.901 23.828 90.753 23.466 C89.679 23.285 88.802 23.216 88.121 23.259 C84.633 23.386 81.735 24.987 79.427 28.060 C77.119 31.134 75.965 35.584 75.965 41.412 C75.965 48.516 77.901 54.701 82.027 58.338 C84.090 60.156 86.706 61.108 89.876 61.193 C92.662 61.236 95.363 60.545 97.979 59.119 C100.596 57.694 102.755 55.833 104.456 53.536 L108.221 57.046 C106.137 60.066 103.877 62.406 101.441 64.065 C96.570 67.383 91.567 68.531 86.972 68.531 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M138.211 68.531 C133.660 68.531 129.544 67.526 125.864 65.516 C118.505 61.496 113.932 53.940 113.932 44.156 C113.932 38.945 115.017 34.340 117.186 30.341 C119.356 26.343 122.270 23.221 125.928 20.977 C129.586 18.733 133.617 17.611 138.020 17.611 C147.123 17.611 154.696 21.876 158.950 29.193 C161.076 32.851 162.140 37.158 162.140 42.114 C162.140 47.325 161.103 51.925 159.029 55.913 C154.882 63.889 147.443 68.531 138.211 68.531 Z M138.722 62.725 C144.380 62.640 147.246 58.683 148.501 53.153 C149.128 50.388 149.442 47.549 149.442 44.635 C149.442 34.510 146.400 23.120 137.892 23.291 C132.362 23.376 129.135 27.342 127.667 32.830 C126.092 38.721 126.258 45.526 127.811 51.638 C128.640 54.903 129.948 57.577 131.735 59.662 C133.521 61.746 135.850 62.767 138.722 62.725 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M169.829 67.000 C169.829 53.643 177.986 46.868 186.068 39.211 C190.556 35.000 193.758 31.160 195.672 27.693 C197.586 24.226 198.543 20.823 198.543 17.484 C198.543 13.145 197.586 8.795 194.651 6.158 C193.183 4.839 191.131 4.201 188.493 4.243 C184.452 4.243 181.028 6.466 179.624 9.189 C180.985 10.550 181.474 12.507 181.474 13.910 C181.474 15.229 180.719 17.261 179.018 18.537 C178.167 19.175 177.018 19.494 175.572 19.494 C171.999 19.281 170.020 16.484 170.020 13.081 C170.020 10.231 171.759 6.695 175.269 3.653 C178.778 0.612 183.878 -1.531 190.599 -1.531 C198.256 -1.531 206.185 1.101 209.790 7.896 C210.992 10.162 211.592 12.964 211.592 16.303 C211.592 19.494 210.534 23.009 207.493 27.199 C204.451 31.389 199.384 36.435 191.301 43.071 C183.729 49.282 179.709 54.812 178.986 58.003 L197.140 58.481 C203.201 58.673 207.253 58.194 207.253 52.132 L212.294 52.132 L211.592 67.000 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M242.891 92.939 C231.746 92.939 225.354 90.269 222.504 86.398 C220.049 83.064 219.755 79.174 221.403 75.854 C222.786 73.067 225.450 70.552 229.363 69.106 C224.514 67.702 222.440 64.671 222.440 60.970 C222.440 59.120 223.184 57.179 224.673 55.147 C226.162 53.116 228.544 51.664 231.820 50.792 C226.290 48.410 222.514 43.561 222.344 37.010 C222.259 33.181 223.227 29.804 225.248 26.880 C227.268 23.955 229.900 21.679 233.144 20.052 C236.388 18.425 239.775 17.611 243.306 17.611 C246.922 17.611 251.633 18.558 254.951 20.770 C256.993 15.027 261.300 9.954 266.915 9.954 C270.914 9.954 273.009 12.188 273.009 15.633 C273.009 16.952 272.440 18.824 270.887 19.972 C270.111 20.547 269.042 20.834 267.681 20.834 C265.682 20.834 263.661 19.228 263.278 17.229 C262.193 17.484 261.226 18.287 260.375 19.637 C259.524 20.988 259.003 22.270 258.811 23.482 C262.300 26.545 264.267 30.788 264.267 35.510 C264.267 39.168 263.262 42.412 261.252 45.241 C257.232 50.899 250.452 54.302 243.050 54.302 C241.136 54.302 239.211 53.951 237.084 53.951 C233.639 53.951 231.044 55.557 231.341 57.811 C231.682 60.449 235.691 60.981 244.582 61.449 C254.409 61.916 261.805 63.698 265.783 67.845 C267.771 69.919 268.766 72.764 268.766 76.380 C268.766 81.740 265.464 85.856 260.423 88.663 C255.382 91.471 249.017 92.939 242.891 92.939 Z M244.710 87.291 C249.559 87.291 253.271 86.398 255.844 84.611 C258.418 82.825 259.705 80.879 259.705 78.773 C259.705 77.093 259.099 75.758 257.886 74.769 C255.461 72.791 250.942 71.839 244.390 71.626 C241.370 71.414 237.488 71.371 234.596 70.861 C232.171 72.647 230.820 75.487 230.735 78.167 C230.650 80.910 231.879 83.117 234.420 84.787 C236.962 86.457 240.392 87.291 244.710 87.291 Z M243.401 48.878 C249.208 48.878 252.239 43.231 252.239 37.297 C252.239 32.447 250.926 27.768 248.267 25.045 C246.938 23.684 245.241 23.003 243.178 23.003 C240.328 23.003 238.121 24.200 236.558 26.593 C234.995 28.986 234.213 31.798 234.213 35.031 C234.213 40.051 235.696 44.523 238.440 47.012 C239.812 48.256 241.466 48.878 243.401 48.878 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M298.724 68.531 C294.173 68.531 290.057 67.526 286.377 65.516 C279.018 61.496 274.445 53.940 274.445 44.156 C274.445 38.945 275.530 34.340 277.699 30.341 C279.869 26.343 282.783 23.221 286.441 20.977 C290.099 18.733 294.130 17.611 298.533 17.611 C307.636 17.611 315.208 21.876 319.462 29.193 C321.589 32.851 322.653 37.158 322.653 42.114 C322.653 47.325 321.616 51.925 319.542 55.913 C315.395 63.889 307.955 68.531 298.724 68.531 Z M299.235 62.725 C304.892 62.640 307.759 58.683 309.013 53.153 C309.641 50.388 309.955 47.549 309.955 44.635 C309.955 34.510 306.913 23.120 298.405 23.291 C292.875 23.376 289.647 27.342 288.180 32.830 C286.604 38.721 286.771 45.526 288.323 51.638 C289.153 54.903 290.461 57.577 292.248 59.662 C294.034 61.746 296.363 62.767 299.235 62.725 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<\/svg>", "white": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"492.907\" height=\"124\" viewBox=\"0 0 492.907 124\" role=\"img\" aria-label=\"ECO2GO - Nếp Mở\"><title>ECO2GO - Nếp Mở<\/title>\n<path d=\"M12 24 C12 15 18 10 27 13 L49 22 L49 98 L27 89 C17 85 12 78 12 68 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M57 22 L80 11 C92 5 100 11 100 22 L100 68 C100 80 93 88 82 91 L57 99 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(6 6) scale(1 1)\"/>\n<path d=\"M37.743 43.359 C37.743 37.914 36.074 35.776 33.053 35.223 C31.543 34.946 29.757 34.851 27.693 34.936 L23.705 35.095 L23.705 52.866 C23.705 56.312 23.610 59.311 23.354 60.970 L37.999 60.874 C42.423 60.832 46.358 59.290 48.655 55.163 C49.803 53.100 50.378 50.292 50.378 46.740 L55.610 46.740 L55.100 67.000 L4.945 67.000 L4.945 61.736 C8.519 61.565 10.300 60.656 11.087 57.955 C11.480 56.604 11.677 54.706 11.677 52.260 L11.677 14.038 C11.677 10.890 11.900 7.742 12.028 5.998 C10.965 6.062 9.731 6.115 8.327 6.158 C6.923 6.200 5.796 6.253 4.945 6.317 L4.945 0.000 L52.196 0.000 L52.739 17.962 L47.474 17.962 C47.474 10.773 44.821 7.365 41.141 6.110 C39.301 5.482 37.403 5.201 35.446 5.264 L30.405 5.392 C25.364 5.456 23.705 7.147 23.705 14.740 L23.705 29.416 L37.169 29.448 L36.690 21.153 L43.008 21.153 L43.008 43.359 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M86.972 68.531 C78.422 68.531 70.876 64.581 66.601 57.285 C64.464 53.637 63.395 49.229 63.395 44.060 C63.395 36.999 65.931 30.485 70.334 25.572 C74.737 20.658 80.910 17.611 88.312 17.611 C96.140 17.611 101.553 20.217 104.360 24.088 C105.764 26.024 106.466 28.087 106.466 30.278 C106.466 33.681 104.392 36.669 100.691 36.754 C98.543 36.818 97.038 36.196 96.177 34.888 C95.315 33.580 94.885 32.341 94.885 31.171 C94.885 29.980 95.236 28.321 96.129 27.087 C95.193 24.790 92.901 23.828 90.753 23.466 C89.679 23.285 88.802 23.216 88.121 23.259 C84.633 23.386 81.735 24.987 79.427 28.060 C77.119 31.134 75.965 35.584 75.965 41.412 C75.965 48.516 77.901 54.701 82.027 58.338 C84.090 60.156 86.706 61.108 89.876 61.193 C92.662 61.236 95.363 60.545 97.979 59.119 C100.596 57.694 102.755 55.833 104.456 53.536 L108.221 57.046 C106.137 60.066 103.877 62.406 101.441 64.065 C96.570 67.383 91.567 68.531 86.972 68.531 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M138.211 68.531 C133.660 68.531 129.544 67.526 125.864 65.516 C118.505 61.496 113.932 53.940 113.932 44.156 C113.932 38.945 115.017 34.340 117.186 30.341 C119.356 26.343 122.270 23.221 125.928 20.977 C129.586 18.733 133.617 17.611 138.020 17.611 C147.123 17.611 154.696 21.876 158.950 29.193 C161.076 32.851 162.140 37.158 162.140 42.114 C162.140 47.325 161.103 51.925 159.029 55.913 C154.882 63.889 147.443 68.531 138.211 68.531 Z M138.722 62.725 C144.380 62.640 147.246 58.683 148.501 53.153 C149.128 50.388 149.442 47.549 149.442 44.635 C149.442 34.510 146.400 23.120 137.892 23.291 C132.362 23.376 129.135 27.342 127.667 32.830 C126.092 38.721 126.258 45.526 127.811 51.638 C128.640 54.903 129.948 57.577 131.735 59.662 C133.521 61.746 135.850 62.767 138.722 62.725 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M169.829 67.000 C169.829 53.643 177.986 46.868 186.068 39.211 C190.556 35.000 193.758 31.160 195.672 27.693 C197.586 24.226 198.543 20.823 198.543 17.484 C198.543 13.145 197.586 8.795 194.651 6.158 C193.183 4.839 191.131 4.201 188.493 4.243 C184.452 4.243 181.028 6.466 179.624 9.189 C180.985 10.550 181.474 12.507 181.474 13.910 C181.474 15.229 180.719 17.261 179.018 18.537 C178.167 19.175 177.018 19.494 175.572 19.494 C171.999 19.281 170.020 16.484 170.020 13.081 C170.020 10.231 171.759 6.695 175.269 3.653 C178.778 0.612 183.878 -1.531 190.599 -1.531 C198.256 -1.531 206.185 1.101 209.790 7.896 C210.992 10.162 211.592 12.964 211.592 16.303 C211.592 19.494 210.534 23.009 207.493 27.199 C204.451 31.389 199.384 36.435 191.301 43.071 C183.729 49.282 179.709 54.812 178.986 58.003 L197.140 58.481 C203.201 58.673 207.253 58.194 207.253 52.132 L212.294 52.132 L211.592 67.000 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M242.891 92.939 C231.746 92.939 225.354 90.269 222.504 86.398 C220.049 83.064 219.755 79.174 221.403 75.854 C222.786 73.067 225.450 70.552 229.363 69.106 C224.514 67.702 222.440 64.671 222.440 60.970 C222.440 59.120 223.184 57.179 224.673 55.147 C226.162 53.116 228.544 51.664 231.820 50.792 C226.290 48.410 222.514 43.561 222.344 37.010 C222.259 33.181 223.227 29.804 225.248 26.880 C227.268 23.955 229.900 21.679 233.144 20.052 C236.388 18.425 239.775 17.611 243.306 17.611 C246.922 17.611 251.633 18.558 254.951 20.770 C256.993 15.027 261.300 9.954 266.915 9.954 C270.914 9.954 273.009 12.188 273.009 15.633 C273.009 16.952 272.440 18.824 270.887 19.972 C270.111 20.547 269.042 20.834 267.681 20.834 C265.682 20.834 263.661 19.228 263.278 17.229 C262.193 17.484 261.226 18.287 260.375 19.637 C259.524 20.988 259.003 22.270 258.811 23.482 C262.300 26.545 264.267 30.788 264.267 35.510 C264.267 39.168 263.262 42.412 261.252 45.241 C257.232 50.899 250.452 54.302 243.050 54.302 C241.136 54.302 239.211 53.951 237.084 53.951 C233.639 53.951 231.044 55.557 231.341 57.811 C231.682 60.449 235.691 60.981 244.582 61.449 C254.409 61.916 261.805 63.698 265.783 67.845 C267.771 69.919 268.766 72.764 268.766 76.380 C268.766 81.740 265.464 85.856 260.423 88.663 C255.382 91.471 249.017 92.939 242.891 92.939 Z M244.710 87.291 C249.559 87.291 253.271 86.398 255.844 84.611 C258.418 82.825 259.705 80.879 259.705 78.773 C259.705 77.093 259.099 75.758 257.886 74.769 C255.461 72.791 250.942 71.839 244.390 71.626 C241.370 71.414 237.488 71.371 234.596 70.861 C232.171 72.647 230.820 75.487 230.735 78.167 C230.650 80.910 231.879 83.117 234.420 84.787 C236.962 86.457 240.392 87.291 244.710 87.291 Z M243.401 48.878 C249.208 48.878 252.239 43.231 252.239 37.297 C252.239 32.447 250.926 27.768 248.267 25.045 C246.938 23.684 245.241 23.003 243.178 23.003 C240.328 23.003 238.121 24.200 236.558 26.593 C234.995 28.986 234.213 31.798 234.213 35.031 C234.213 40.051 235.696 44.523 238.440 47.012 C239.812 48.256 241.466 48.878 243.401 48.878 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<path d=\"M298.724 68.531 C294.173 68.531 290.057 67.526 286.377 65.516 C279.018 61.496 274.445 53.940 274.445 44.156 C274.445 38.945 275.530 34.340 277.699 30.341 C279.869 26.343 282.783 23.221 286.441 20.977 C290.099 18.733 294.130 17.611 298.533 17.611 C307.636 17.611 315.208 21.876 319.462 29.193 C321.589 32.851 322.653 37.158 322.653 42.114 C322.653 47.325 321.616 51.925 319.542 55.913 C315.395 63.889 307.955 68.531 298.724 68.531 Z M299.235 62.725 C304.892 62.640 307.759 58.683 309.013 53.153 C309.641 50.388 309.955 47.549 309.955 44.635 C309.955 34.510 306.913 23.120 298.405 23.291 C292.875 23.376 289.647 27.342 288.180 32.830 C286.604 38.721 286.771 45.526 288.323 51.638 C289.153 54.903 290.461 57.577 292.248 59.662 C294.034 61.746 296.363 62.767 299.235 62.725 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(145 19.5) scale(1 1)\"/>\n<\/svg>", "mark": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"112.000\" height=\"112\" viewBox=\"0 0 112.000 112\" role=\"img\" aria-label=\"ECO2GO - Nếp Mở\"><title>ECO2GO - Nếp Mở<\/title>\n<path d=\"M12 24 C12 15 18 10 27 13 L49 22 L49 98 L27 89 C17 85 12 78 12 68 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<path d=\"M57 22 L80 11 C92 5 100 11 100 22 L100 68 C100 80 93 88 82 91 L57 99 Z\" fill=\"#173E2A\" fill-rule=\"nonzero\" transform=\"translate(0 0) scale(1 1)\"/>\n<\/svg>" }, "D": { "name": "Bước Chuyển", "slug": "d-buoc-chuyen", "story": "Tên thương hiệu là điểm chính. Số 2 có đầu nét cong và chân cắt hướng tiến, tạo một điểm nhớ trong một dòng chữ gọn.", "fit": "Phù hợp khi ưu tiên đọc nhanh, header thấp, tem nhỏ và muốn giảm số lượng thành phần trong logo.", "tradeoff": "Ít phần hình độc lập hơn B/C; số 2 đứng riêng khá đơn giản, nên cần đánh giá kỹ khả năng phân biệt tổng thể.", "palette": ["#0E452F", "#488F3E", "#F7F3EA"], "primary": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"429.000\" height=\"124\" viewBox=\"0 0 429.000 124\" role=\"img\" aria-label=\"ECO2GO - Bước Chuyển\"><title>ECO2GO - Bước Chuyển<\/title>\n<path d=\"M0 0 L42 0 L42 10 L11 10 L11 29 L38 29 L38 39 L11 39 L11 58 L42 58 L42 68 L0 68 Z\" fill=\"#0E452F\" fill-rule=\"nonzero\" transform=\"translate(16 29) scale(1.08 1.08)\"/>\n<path d=\"M49 17 L39 21 C37 13 32 10 25 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 25 58 C32 58 37 55 39 47 L49 51 C45 63 37 68 25 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 25 0 C37 0 45 5 49 17 Z\" fill=\"#0E452F\" fill-rule=\"nonzero\" transform=\"translate(73.36 29) scale(1.08 1.08)\"/>\n<path d=\"M26 0 C43 0 52 9 52 25 L52 43 C52 59 43 68 26 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 26 0 Z M26 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 26 58 C36 58 41 53 41 43 L41 25 C41 15 36 10 26 10 Z\" fill=\"#0E452F\" fill-rule=\"nonzero\" transform=\"translate(141.51999999999998 29) scale(1.08 1.08)\"/>\n<path d=\"M3 23 C4 8 14 0 31 0 C49 0 58 8 58 22 C58 32 53 39 43 47 L25 62 L62 62 L52 74 L1 74 L1 62 L34 35 C41 29 44 26 44 22 C44 16 39 12 31 12 C23 12 18 17 17 25 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(209.67999999999998 23) scale(1.08 1.08)\"/>\n<path d=\"M50 17 L40 21 C38 13 33 10 25 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 25 58 C35 58 41 53 41 44 L41 41 L27 41 L27 31 L52 31 L52 44 C52 59 42 68 25 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 25 0 C38 0 46 5 50 17 Z\" fill=\"#0E452F\" fill-rule=\"nonzero\" transform=\"translate(288.67999999999995 29) scale(1.08 1.08)\"/>\n<path d=\"M26 0 C43 0 52 9 52 25 L52 43 C52 59 43 68 26 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 26 0 Z M26 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 26 58 C36 58 41 53 41 43 L41 25 C41 15 36 10 26 10 Z\" fill=\"#0E452F\" fill-rule=\"nonzero\" transform=\"translate(356.8399999999999 29) scale(1.08 1.08)\"/>\n<\/svg>", "black": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"429.000\" height=\"124\" viewBox=\"0 0 429.000 124\" role=\"img\" aria-label=\"ECO2GO - Bước Chuyển\"><title>ECO2GO - Bước Chuyển<\/title>\n<path d=\"M0 0 L42 0 L42 10 L11 10 L11 29 L38 29 L38 39 L11 39 L11 58 L42 58 L42 68 L0 68 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(16 29) scale(1.08 1.08)\"/>\n<path d=\"M49 17 L39 21 C37 13 32 10 25 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 25 58 C32 58 37 55 39 47 L49 51 C45 63 37 68 25 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 25 0 C37 0 45 5 49 17 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(73.36 29) scale(1.08 1.08)\"/>\n<path d=\"M26 0 C43 0 52 9 52 25 L52 43 C52 59 43 68 26 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 26 0 Z M26 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 26 58 C36 58 41 53 41 43 L41 25 C41 15 36 10 26 10 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(141.51999999999998 29) scale(1.08 1.08)\"/>\n<path d=\"M3 23 C4 8 14 0 31 0 C49 0 58 8 58 22 C58 32 53 39 43 47 L25 62 L62 62 L52 74 L1 74 L1 62 L34 35 C41 29 44 26 44 22 C44 16 39 12 31 12 C23 12 18 17 17 25 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(209.67999999999998 23) scale(1.08 1.08)\"/>\n<path d=\"M50 17 L40 21 C38 13 33 10 25 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 25 58 C35 58 41 53 41 44 L41 41 L27 41 L27 31 L52 31 L52 44 C52 59 42 68 25 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 25 0 C38 0 46 5 50 17 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(288.67999999999995 29) scale(1.08 1.08)\"/>\n<path d=\"M26 0 C43 0 52 9 52 25 L52 43 C52 59 43 68 26 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 26 0 Z M26 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 26 58 C36 58 41 53 41 43 L41 25 C41 15 36 10 26 10 Z\" fill=\"#000000\" fill-rule=\"nonzero\" transform=\"translate(356.8399999999999 29) scale(1.08 1.08)\"/>\n<\/svg>", "white": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"429.000\" height=\"124\" viewBox=\"0 0 429.000 124\" role=\"img\" aria-label=\"ECO2GO - Bước Chuyển\"><title>ECO2GO - Bước Chuyển<\/title>\n<path d=\"M0 0 L42 0 L42 10 L11 10 L11 29 L38 29 L38 39 L11 39 L11 58 L42 58 L42 68 L0 68 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(16 29) scale(1.08 1.08)\"/>\n<path d=\"M49 17 L39 21 C37 13 32 10 25 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 25 58 C32 58 37 55 39 47 L49 51 C45 63 37 68 25 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 25 0 C37 0 45 5 49 17 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(73.36 29) scale(1.08 1.08)\"/>\n<path d=\"M26 0 C43 0 52 9 52 25 L52 43 C52 59 43 68 26 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 26 0 Z M26 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 26 58 C36 58 41 53 41 43 L41 25 C41 15 36 10 26 10 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(141.51999999999998 29) scale(1.08 1.08)\"/>\n<path d=\"M3 23 C4 8 14 0 31 0 C49 0 58 8 58 22 C58 32 53 39 43 47 L25 62 L62 62 L52 74 L1 74 L1 62 L34 35 C41 29 44 26 44 22 C44 16 39 12 31 12 C23 12 18 17 17 25 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(209.67999999999998 23) scale(1.08 1.08)\"/>\n<path d=\"M50 17 L40 21 C38 13 33 10 25 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 25 58 C35 58 41 53 41 44 L41 41 L27 41 L27 31 L52 31 L52 44 C52 59 42 68 25 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 25 0 C38 0 46 5 50 17 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(288.67999999999995 29) scale(1.08 1.08)\"/>\n<path d=\"M26 0 C43 0 52 9 52 25 L52 43 C52 59 43 68 26 68 C9 68 0 59 0 43 L0 25 C0 9 9 0 26 0 Z M26 10 C16 10 11 15 11 25 L11 43 C11 53 16 58 26 58 C36 58 41 53 41 43 L41 25 C41 15 36 10 26 10 Z\" fill=\"#FFFFFF\" fill-rule=\"nonzero\" transform=\"translate(356.8399999999999 29) scale(1.08 1.08)\"/>\n<\/svg>", "mark": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"112.000\" height=\"112\" viewBox=\"0 0 112.000 112\" role=\"img\" aria-label=\"ECO2GO - Bước Chuyển\"><title>ECO2GO - Bước Chuyển<\/title>\n<path d=\"M3 23 C4 8 14 0 31 0 C49 0 58 8 58 22 C58 32 53 39 43 47 L25 62 L62 62 L52 74 L1 74 L1 62 L34 35 C41 29 44 26 44 22 C44 16 39 12 31 12 C23 12 18 17 17 25 Z\" fill=\"#488F3E\" fill-rule=\"nonzero\" transform=\"translate(17 10) scale(1.32 1.32)\"/>\n<\/svg>" } }; let active = 'B'; const byId = id => document.getElementById(id); function resize() { const w = byId('width').value; byId('sized').innerHTML = concepts[active][byId('mono').checked ? 'black' : 'primary']; byId('sized').querySelector('svg').style.width = w + 'px'; byId('width-label').textContent = w + ' px' } function select(k) { active = k; const d = concepts[k]; byId('name').textContent = k + ' / ' + d.name; for (const field of ['hero', 'white', 'black']) byId(field).innerHTML = d[field === 'hero' ? 'primary' : field]; for (const field of ['story', 'fit', 'tradeoff']) byId(field).textContent = d[field]; byId('swatches').innerHTML = d.palette.map(c => '<span class="swatch"><span class="dot" style="background:' + c + '"></span>' + c + '</span>').join(''); byId('header-logo').innerHTML = d.primary; byId('footer-logo').innerHTML = d.white; byId('icons').innerHTML = [32, 24, 16].map(s => '<div><span style="width:' + s + 'px;display:block">' + d.mark + '</span>' + s + ' px</div>').join(''); for (const s of byId('icons').querySelectorAll('svg')) s.style.width = '100%'; for (const [id, file] of [['download-svg', 'primary.svg'], ['download-png', 'primary.png'], ['download-black', 'black.svg'], ['download-white', 'white.svg'], ['download-icon', 'mark.svg']]) byId(id).href = d.slug + '/' + file; for (const b of document.querySelectorAll('.choice')) b.setAttribute('aria-pressed', String(b.dataset.key === k)); resize() } for (const [k, d] of Object.entries(concepts)) { const b = document.createElement('button'); b.className = 'choice'; b.dataset.key = k; b.innerHTML = '<strong>' + k + ' / ' + d.name + '</strong>' + d.primary + '<small>' + (k === 'A' ? 'Bản trước, giữ nguyên' : 'Phương án mới') + '</small>'; b.onclick = () => select(k); byId('choices').append(b); const article = document.createElement('article'); article.innerHTML = '<h3>' + k + ' / ' + d.name + '</h3>' + d.primary + '<p>' + d.fit + '</p>'; byId('compare').append(article) } byId('width').oninput = resize; byId('mono').onchange = resize; select('B');
+</script>
+
+</html>
