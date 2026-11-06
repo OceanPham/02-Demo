@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +14,16 @@
   body{margin:0;background:var(--bg);color:var(--ink);
     font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
   .wrap{max-width:920px;margin:0 auto;padding:32px 16px 64px}
+
+  /* language switch */
+  html[data-lang="en"] .nl{display:none !important}
+  html[data-lang="nl"] .en{display:none !important}
+  .langbar{display:flex;justify-content:flex-end;margin-bottom:12px}
+  .switch{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .switch button{border:0;background:transparent;font:inherit;font-size:14px;font-weight:700;color:var(--muted);
+    padding:6px 14px;border-radius:999px;cursor:pointer}
+  .switch button[aria-pressed="true"]{background:var(--brand);color:#fff}
+
   header{background:linear-gradient(135deg,#1d4ed8,#0f2a7a);color:#fff;border-radius:16px;padding:28px 28px 24px;margin-bottom:24px}
   header h1{margin:0 0 6px;font-size:28px;line-height:1.25}
   header p{margin:0;opacity:.9}
@@ -60,6 +70,7 @@
   }
   @media print{
     body{background:#fff}
+    .langbar{display:none}
     header{background:#1d4ed8 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     section{break-inside:avoid}
   }
@@ -68,13 +79,22 @@
 <body>
 <div class="wrap">
 
+<div class="langbar">
+  <div class="switch" role="group" aria-label="Language">
+    <button type="button" data-set="en" aria-pressed="true">English</button>
+    <button type="button" data-set="nl" aria-pressed="false">Nederlands</button>
+  </div>
+</div>
+
+<!-- ===================== ENGLISH ===================== -->
+<div class="en" lang="en">
+
 <header>
   <h1>CADINVO Website &amp; Hosting Plan</h1>
   <p>Own server for CADINVO, fewer domains, lower costs, new website online by the end of November.</p>
   <div class="meta">Prepared by Ocean &middot; 5 November 2026</div>
 </header>
 
-<!-- 1. Summary -->
 <section>
   <h2><span class="n">1</span>Summary</h2>
   <p>CADINVO gets its own server. All CADINVO websites run on it.</p>
@@ -95,7 +115,6 @@
   </div>
 </section>
 
-<!-- 2. Why Hostinger -->
 <section>
   <h2><span class="n">2</span>Recommended server: Hostinger KVM 2</h2>
   <ul>
@@ -111,7 +130,6 @@
   </div>
 </section>
 
-<!-- 3. Alternatives -->
 <section>
   <h2><span class="n">3</span>Cheaper alternatives (for comparison)</h2>
   <p>You asked if we can host cheaper, so I compared similar 8 GB servers in Europe.</p>
@@ -156,7 +174,6 @@
   </div>
 </section>
 
-<!-- 4. Domains -->
 <section>
   <h2><span class="n">4</span>Domains: what to keep</h2>
   <p>Today all 12 domains redirect to cadinvo.com. Most of them bring no visitors but cost money every year. My proposal is below. <b>You make the final choice.</b></p>
@@ -185,7 +202,6 @@
   </ul>
 </section>
 
-<!-- 5. Hostnet -->
 <section>
   <h2><span class="n">5</span>What we do in Hostnet</h2>
   <ol>
@@ -200,7 +216,6 @@
   <div class="note"><b>Email safety:</b> Nothing about email changes in this plan. We only copy the email records 1:1. If email is hosted at Hostnet, it stays there.</div>
 </section>
 
-<!-- 6. Setup -->
 <section>
   <h2><span class="n">6</span>Server setup and security</h2>
   <ul>
@@ -219,7 +234,6 @@
   </ul>
 </section>
 
-<!-- 7. Costs -->
 <section>
   <h2><span class="n">7</span>Running costs (estimate)</h2>
   <p class="muted">This assumes we keep cadinvo.com, cadinvo.nl, cadinvo.be and one scheduling domain. Prices exclude VAT.</p>
@@ -244,7 +258,6 @@
   <p class="muted">The exact savings depend on your current Systeme.io and Hostnet invoices. We check them together in week 1.</p>
 </section>
 
-<!-- 8. Timeline -->
 <section>
   <h2><span class="n">8</span>Game plan and timeline</h2>
   <div class="week">
@@ -287,7 +300,6 @@
   <p class="muted">We keep the old Systeme.io site running until the new site is live, so there is no downtime.</p>
 </section>
 
-<!-- 9. Decisions -->
 <section>
   <h2><span class="n">9</span>What I need from you</h2>
   <ul class="check">
@@ -310,5 +322,280 @@
 </footer>
 
 </div>
+
+<!-- ===================== NEDERLANDS ===================== -->
+<div class="nl" lang="nl">
+
+<header>
+  <h1>CADINVO Website- &amp; Hostingplan</h1>
+  <p>Eigen server voor CADINVO, minder domeinen, lagere kosten, nieuwe website online eind november.</p>
+  <div class="meta">Opgesteld door Ocean &middot; 5 november 2026</div>
+</header>
+
+<section>
+  <h2><span class="n">1</span>Samenvatting</h2>
+  <p>CADINVO krijgt een eigen server. Alle CADINVO-websites draaien hierop.</p>
+  <div class="grid">
+    <div class="box"><b>Server</b><span>Hostinger KVM 2</span><div class="muted">2 vCPU &middot; 8 GB RAM &middot; 100 GB NVMe</div></div>
+    <div class="box"><b>Beveiliging &amp; DNS</b><span>Cloudflare</span><div class="muted">Gratis abonnement</div></div>
+    <div class="box"><b>Domeinen</b><span>12 &rarr; 3&ndash;4</span><div class="muted">Jij kiest de definitieve lijst</div></div>
+    <div class="box"><b>Live</b><span>Eind nov 2026</span><div class="muted">Ongeveer 3&ndash;4 weken</div></div>
+  </div>
+  <h3>Wat verhuist naar de nieuwe server</h3>
+  <ul>
+    <li><b>cadinvo.com</b>: wordt opnieuw gebouwd als een nieuwe, snellere website. Deze vervangt de huidige Systeme.io-site.</li>
+    <li><b>scheduling.hai-heroes.com</b>: verhuist van de server van Joost naar de CADINVO-server.</li>
+    <li><b>Smart scheduling-website</b>: op een eigen domein (zie sectie 4).</li>
+  </ul>
+  <div class="flow">
+    <div>Bezoeker</div><i>&rarr;</i><div>Cloudflare<br><span class="muted">beveiliging + snelheid</span></div><i>&rarr;</i><div>CADINVO-server<br><span class="muted">Hostinger, Nederland</span></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">2</span>Aanbevolen server: Hostinger KVM 2</h2>
+  <ul>
+    <li>Groot, betrouwbaar bedrijf met een datacenter in <b>Nederland</b>. Je data blijft in de EU (AVG).</li>
+    <li><b>Gratis wekelijkse back-ups</b> en een gratis snapshot vóór grote wijzigingen.</li>
+    <li>8 GB RAM is genoeg voor cadinvo.com, de planningsapp en nog een paar sites.</li>
+    <li>Je kunt later upgraden naar een groter pakket zonder dataverlies.</li>
+    <li>Domeinen kunnen in hetzelfde account. Eén plek en één factuur.</li>
+    <li>30 dagen geld-terug-garantie.</li>
+  </ul>
+  <div class="note">
+    <b>Belangrijk over de prijs.</b> $8,79/maand is de actieprijs bij <b>24 maanden vooruitbetalen</b>. Je betaalt <b>eenmalig $210,96</b>. Na 24 maanden wordt het verlengd voor <b>$14,99/maand</b>. Prijzen zijn exclusief btw. De definitieve prijs in EUR zie je bij het afrekenen. De huidige actie loopt tot ongeveer 14 december.
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">3</span>Goedkopere alternatieven (ter vergelijking)</h2>
+  <p>Je vroeg of hosting goedkoper kan, dus ik heb vergelijkbare servers met 8 GB in Europa vergeleken.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Aanbieder / pakket</th><th>Specs</th><th>Prijs</th><th>Goed</th><th>Minder goed</th></tr></thead>
+    <tbody>
+      <tr class="pick">
+        <td><b>Hostinger KVM 2</b><br><span class="tag rec">Aanbevolen</span></td>
+        <td>2 vCPU, 8 GB, 100 GB NVMe</td>
+        <td>$8,79/mnd (24 mnd vooruit), daarna $14,99/mnd</td>
+        <td>NL-datacenter, gratis wekelijkse back-up, eenvoudig paneel, domeinen op één plek</td>
+        <td>Prijs stijgt bij verlenging</td>
+      </tr>
+      <tr>
+        <td><b>Contabo Cloud VPS 10</b></td>
+        <td>4 vCPU, 8 GB, 75 GB NVMe</td>
+        <td>ca. &euro;4,40&ndash;5,50/mnd, per maand</td>
+        <td>Goedkoopste optie, geen grote prijsstijging bij verlenging</td>
+        <td>Snelheid minder stabiel, tragere netwerkpoort, back-ups kosten extra</td>
+      </tr>
+      <tr>
+        <td><b>Netcup VPS 1000 G12</b></td>
+        <td>4 vCPU, 8 GB, 256 GB NVMe</td>
+        <td>ca. &euro;10&ndash;14/mnd, afhankelijk van contract</td>
+        <td>Sterke specs voor de prijs, locatie Amsterdam, stabiele prijs</td>
+        <td>Paneel is technischer, beste prijs vraagt een langer contract</td>
+      </tr>
+      <tr>
+        <td><b>Hetzner CX33</b></td>
+        <td>4 vCPU, 8 GB, 80 GB</td>
+        <td>ca. &euro;8,49/mnd + &euro;0,50 IPv4</td>
+        <td>Zeer goed netwerk en goede support</td>
+        <td>Prijzen stegen in 2026 en dit pakket is <b>momenteel niet te bestellen</b></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="muted">Serverkosten over 3 jaar: Hostinger ca. $391. Contabo ca. &euro;160&ndash;200. Netcup ca. &euro;370&ndash;500.</p>
+  <div class="tip">
+    <b>Mijn advies:</b> Hostinger KVM 2 biedt de beste balans tussen prijs, veiligheid en gemak. Als de laagste prijs het belangrijkst is, is Contabo de budgetkeuze. De inrichting en het werk van mijn kant zijn voor elke optie hetzelfde.
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">4</span>Domeinen: wat houden we</h2>
+  <p>Nu sturen alle 12 domeinen door naar cadinvo.com. De meeste brengen geen bezoekers, maar kosten elk jaar geld. Hieronder mijn voorstel. <b>Jij maakt de definitieve keuze.</b></p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Domein</th><th>Voorstel</th><th>Reden</th></tr></thead>
+    <tbody>
+      <tr><td>cadinvo.com</td><td><span class="tag keep">Houden</span></td><td>Hoofdwebsite</td></tr>
+      <tr><td>cadinvo.nl</td><td><span class="tag keep">Houden</span></td><td>Thuismarkt, beschermt het merk</td></tr>
+      <tr><td>cadinvo.be</td><td><span class="tag keep">Houden</span></td><td>Belgische markt</td></tr>
+      <tr><td>cadinfo.nl</td><td><span class="tag ask">Jouw keuze</span></td><td>Alleen houden als oude links of klanten het nog gebruiken</td></tr>
+      <tr><td>cadinvo.shop / .store / .online / .info</td><td><span class="tag drop">Opheffen</span></td><td>Geen echt gebruik; laten verlopen</td></tr>
+      <tr><td>cadinfo.shop / .store / .online / .info</td><td><span class="tag drop">Opheffen</span></td><td>Geen echt gebruik; laten verlopen</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Smart scheduling-domeinen</h3>
+  <p>Je noemde meetwithcadinvo.com, afspraakmetcadinvo.nl, afspraakmetcadinvo.com en afspraakmetdaniel.nl. Mijn advies: kies <b>één hoofddomein</b> en gebruik de andere alleen als je ze echt nodig hebt. Een gratis optie is een subdomein zoals <b>meet.cadinvo.com</b> of <b>afspraak.cadinvo.nl</b>. Dat kost niets extra.</p>
+
+  <h3>Domeinen naar Hostinger verhuizen? (optioneel)</h3>
+  <ul>
+    <li><b>Voordelen:</b> Alles in één account met één factuur. Verlengen is goedkoper dan bij de meeste Nederlandse registrars: ca. $9,99/jaar voor .nl en .be, en $19,99/jaar voor .com.</li>
+    <li><b>Nadelen:</b> Elke verhuizing vraagt een verhuiscode (auth code) van Hostnet. Een .com-verhuizing kan tot 5&ndash;7 dagen duren.</li>
+    <li>Websites en e-mail blijven werken tijdens de verhuizing. DNS blijft de hele tijd bij Cloudflare.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="n">5</span>Wat we doen in Hostnet</h2>
+  <ol>
+    <li><b>Eerst alles controleren:</b> alle producten, verlengdata en jaarkosten.</li>
+    <li><b>E-mail controleren:</b> waar de @cadinvo.com-mail nu draait. E-mail mag niet stoppen.</li>
+    <li><b>Alle DNS-records exporteren:</b> website, e-mail (MX, SPF, DKIM) en verificaties. Dit is onze back-up.</li>
+    <li><b>DNS naar Cloudflare verhuizen:</b> elk record kopiëren en daarna de nameservers omzetten.</li>
+    <li><b>Doorverwijzingen instellen in Cloudflare</b> voor de domeinen die we houden. Dit is gratis en vraagt geen hosting.</li>
+    <li><b>De domeinen die we houden verhuizen</b> naar Hostinger, als je akkoord bent.</li>
+    <li><b>Automatische verlenging uitzetten</b> voor de opgeheven domeinen, en hostingpakketten opzeggen die we niet meer nodig hebben.</li>
+  </ol>
+  <div class="note"><b>E-mail veilig:</b> In dit plan verandert er niets aan e-mail. We kopiëren de e-mailrecords alleen 1-op-1. Als de e-mail bij Hostnet gehost wordt, blijft die daar.</div>
+</section>
+
+<section>
+  <h2><span class="n">6</span>Serverinrichting en beveiliging</h2>
+  <ul>
+    <li>Ubuntu Linux met automatische beveiligingsupdates.</li>
+    <li>Firewall: alleen webverkeer staat open. Inloggen op de server alleen met SSH-sleutels, geen wachtwoorden.</li>
+    <li>Alle websites draaien achter Cloudflare, met gratis SSL, DDoS-bescherming en caching.</li>
+    <li>Elke website draait in een eigen container (Docker), zodat de ene site de andere niet kan breken.</li>
+    <li>Back-ups:
+      <ul>
+        <li>Hostinger maakt gratis een wekelijkse back-up van de hele server.</li>
+        <li>Onze eigen dagelijkse back-up van databases en bestanden wordt naar een tweede locatie gekopieerd. Hostinger biedt ook een dagelijkse back-up als add-on, als je dat liever hebt.</li>
+      </ul>
+    </li>
+    <li>Uptime-monitoring met een melding als een site uitvalt.</li>
+    <li>Het account staat op naam van CADINVO en wordt door CADINVO betaald. Ik krijg toegang om het te beheren. Alles is van jou.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="n">7</span>Lopende kosten (schatting)</h2>
+  <p class="muted">Uitgaande van cadinvo.com, cadinvo.nl, cadinvo.be en één planningsdomein. Prijzen exclusief btw.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Onderdeel</th><th>Jaar 1&ndash;2</th><th>Vanaf jaar 3</th></tr></thead>
+    <tbody>
+      <tr><td>Hostinger KVM 2-server</td><td>$105,48 / jaar<br><span class="muted">($210,96 eenmalig voor 24 maanden)</span></td><td>$179,88 / jaar</td></tr>
+      <tr><td>Domeinen (4)</td><td>ca. $60 / jaar</td><td>ca. $60 / jaar</td></tr>
+      <tr><td>Cloudflare</td><td>$0</td><td>$0</td></tr>
+      <tr><td>Optioneel: dagelijkse back-up Hostinger</td><td colspan="2">ca. $6 / maand, alleen als je dat wilt</td></tr>
+      <tr><th>Totaal</th><th>ca. $165 / jaar<br>(&asymp; $14 / maand)</th><th>ca. $240 / jaar<br>(&asymp; $20 / maand)</th></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Waar we mee kunnen stoppen</h3>
+  <ul>
+    <li><b>Systeme.io</b>-abonnement, zodra de nieuwe cadinvo.com live en stabiel is.</li>
+    <li><b>8 ongebruikte domeinen</b>, plus hun jaarlijkse verlengingen.</li>
+    <li><b>Hostnet-hostingpakketten</b> die niet meer nodig zijn (we bevestigen dit in stap 5).</li>
+  </ul>
+  <p class="muted">De precieze besparing hangt af van je huidige facturen van Systeme.io en Hostnet. Die bekijken we samen in week 1.</p>
+</section>
+
+<section>
+  <h2><span class="n">8</span>Plan van aanpak en planning</h2>
+  <div class="week">
+    <div class="when">Week 1 &middot; 6&ndash;12 nov</div>
+    <h3>Beslissen en voorbereiden</h3>
+    <ul>
+      <li>Jij keurt de server en de domeinlijst goed.</li>
+      <li>CADINVO koopt Hostinger KVM 2 (datacenter Nederland) en geeft mij toegang.</li>
+      <li>We bekijken Hostnet, controleren de e-mail en exporteren de DNS.</li>
+      <li>Ik richt de server in: beveiliging, Docker, koppeling met Cloudflare.</li>
+    </ul>
+  </div>
+  <div class="week">
+    <div class="when">Week 2 &middot; 13&ndash;19 nov</div>
+    <h3>Bouwen en verhuizen</h3>
+    <ul>
+      <li>Ik bouw de nieuwe cadinvo.com op een testlink. Dit duurt ongeveer 2&ndash;3 dagen.</li>
+      <li>Ik verhuis scheduling.hai-heroes.com naar de nieuwe server, in overleg met Joost.</li>
+      <li>Jij bekijkt de nieuwe website en stuurt je opmerkingen.</li>
+    </ul>
+  </div>
+  <div class="week">
+    <div class="when">Week 3 &middot; 20&ndash;26 nov</div>
+    <h3>Live gaan</h3>
+    <ul>
+      <li>Aanpassingen op basis van je feedback.</li>
+      <li>De DNS gaat naar Cloudflare en de nieuwe cadinvo.com gaat live.</li>
+      <li>Doorverwijzingen voor de domeinen die we houden. Het planningsdomein wordt gekoppeld.</li>
+    </ul>
+  </div>
+  <div class="week">
+    <div class="when">Week 4 &middot; 27&ndash;30 nov</div>
+    <h3>Opruimen</h3>
+    <ul>
+      <li>Ik monitor alles een week lang.</li>
+      <li>Domeinverhuizingen naar Hostinger starten (optioneel), en automatische verlenging gaat uit voor opgeheven domeinen.</li>
+      <li>Systeme.io wordt opgezegd zodra alles stabiel is.</li>
+    </ul>
+  </div>
+  <p class="muted">De oude Systeme.io-site blijft draaien tot de nieuwe site live is, dus er is geen downtime.</p>
+</section>
+
+<section>
+  <h2><span class="n">9</span>Wat ik van je nodig heb</h2>
+  <ul class="check">
+    <li>Server: Hostinger KVM 2 voor 24 maanden, of een van de alternatieven?</li>
+    <li>Domeinen: akkoord met de lijst houden/opheffen? cadinfo.nl houden of niet?</li>
+    <li>De domeinen die we houden naar Hostinger verhuizen: ja of nee?</li>
+    <li>Planning: welk domein, of een gratis subdomein zoals meet.cadinvo.com?</li>
+    <li>Dagelijkse back-up add-on bij Hostinger: ja of nee? (Onze eigen dagelijkse back-up zit er hoe dan ook bij.)</li>
+    <li>Toegang tot Hostnet (of een kort gesprek), zodat we producten, e-mail en DNS kunnen controleren.</li>
+  </ul>
+</section>
+
+<footer>
+  Prijzen gecontroleerd op 5 november 2026 bij
+  <a href="https://www.hostinger.com/vps-hosting">Hostinger</a>,
+  <a href="https://contabo.com/en/vps/">Contabo</a>,
+  <a href="https://www.netcup.com/en/server/vps">Netcup</a> en
+  <a href="https://www.hetzner.com/cloud/">Hetzner</a>.
+  Prijzen kunnen wijzigen. De definitieve prijs zie je bij het afrekenen.
+</footer>
+
+</div>
+
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var titles = { en: "CADINVO Hosting Plan", nl: "CADINVO Hostingplan" };
+  var buttons = document.querySelectorAll(".switch button");
+
+  function setLang(lang){
+    if (lang !== "en" && lang !== "nl") lang = "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", lang);
+    document.title = titles[lang];
+    for (var i = 0; i < buttons.length; i++){
+      buttons[i].setAttribute("aria-pressed", buttons[i].getAttribute("data-set") === lang ? "true" : "false");
+    }
+    try { localStorage.setItem("cadinvo-plan-lang", lang); } catch (e) {}
+  }
+
+  for (var i = 0; i < buttons.length; i++){
+    buttons[i].addEventListener("click", function(){ setLang(this.getAttribute("data-set")); });
+  }
+
+  // Start language: ?lang=nl or #nl in the link, then the last choice, else English
+  var start = "en";
+  try {
+    var q = new URLSearchParams(location.search).get("lang");
+    if (q) start = q.toLowerCase();
+    else if (location.hash === "#nl" || location.hash === "#en") start = location.hash.slice(1);
+    else {
+      var saved = localStorage.getItem("cadinvo-plan-lang");
+      if (saved) start = saved;
+    }
+  } catch (e) {}
+  setLang(start);
+})();
+</script>
 </body>
 </html>
