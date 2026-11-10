@@ -1,254 +1,211 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>02-Demo — Mục lục trang demo</title>
+  <title>Chào mừng</title>
   <style>
     :root {
-      --bg: #f6f8fa;
-      --surface: #ffffff;
-      --ink: #1a2332;
-      --muted: #5c6b7a;
-      --accent: #0969da;
-      --accent-hover: #0550ae;
-      --border: #d8dee4;
-      --shadow: 0 8px 24px -12px rgba(26, 35, 50, 0.18);
+      --bg: #e8edf1;
+      --ink: #15202b;
+      --muted: #4d5c6b;
+      --accent: #0f6e56;
+      --line: rgba(21, 32, 43, 0.14);
+      --glow: rgba(15, 110, 86, 0.22);
+      --panel: rgba(255, 255, 255, 0.55);
     }
 
-    * {
-      box-sizing: border-box;
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #12181e;
+        --ink: #e7eef4;
+        --muted: #9aabba;
+        --accent: #3dbe9a;
+        --line: rgba(231, 238, 244, 0.16);
+        --glow: rgba(61, 190, 154, 0.2);
+        --panel: rgba(18, 24, 30, 0.55);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
     }
 
     body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
+      min-height: 100dvh;
       color: var(--ink);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      line-height: 1.6;
+      background:
+        radial-gradient(900px 520px at 12% -10%, var(--glow), transparent 60%),
+        radial-gradient(700px 480px at 110% 110%, var(--glow), transparent 55%),
+        var(--bg);
+      font-family: Bahnschrift, "Segoe UI", "Avenir Next", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
-    .wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 48px 20px 64px;
-    }
-
-    header {
-      margin-bottom: 36px;
-    }
-
-    .eyebrow {
-      margin: 0 0 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    h1 {
-      margin: 0 0 12px;
-      font-size: clamp(1.75rem, 5vw, 2.25rem);
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 52ch;
-    }
-
-    .count {
-      margin: 28px 0 16px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .demos {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .stage {
+      min-height: 100dvh;
       display: grid;
-      gap: 14px;
+      grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
+      align-items: center;
+      gap: 32px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 40px 56px;
     }
 
-    .demo-card {
-      display: block;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px 20px;
-      text-decoration: none;
-      color: inherit;
-      box-shadow: var(--shadow);
-      transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-    }
+    .copy { max-width: 640px; }
 
-    .demo-card:hover {
-      border-color: #b6c0cc;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px -14px rgba(26, 35, 50, 0.22);
-    }
-
-    .demo-card:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .demo-title {
-      margin: 0 0 4px;
-      font-size: 1.05rem;
+    .mark {
+      margin: 0 0 18px;
+      font-size: 0.95rem;
       font-weight: 600;
+      letter-spacing: 0.02em;
       color: var(--accent);
     }
 
-    .demo-card:hover .demo-title {
-      color: var(--accent-hover);
-    }
-
-    .demo-path {
+    h1 {
       margin: 0;
-      font-size: 0.85rem;
+      font-size: clamp(2.7rem, 5vw, 4.5rem);
+      font-weight: 650;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .sub {
+      margin: 22px 0 0;
+      max-width: 28ch;
       color: var(--muted);
-      font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
-      word-break: break-all;
+      font-size: 1.125rem;
+      line-height: 1.45;
     }
 
-    footer {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      font-size: 0.85rem;
-      color: var(--muted);
+    .ornament {
+      position: relative;
+      height: min(68dvh, 560px);
+      min-height: 320px;
     }
 
-    @media (max-width: 480px) {
-      .wrap {
-        padding: 32px 16px 48px;
-      }
+    .ring,
+    .disc,
+    .bar,
+    .tile {
+      position: absolute;
+    }
 
-      .demo-card {
-        padding: 16px;
+    .ring {
+      width: min(78%, 420px);
+      aspect-ratio: 1;
+      right: 4%;
+      top: 8%;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+    }
+
+    .ring-inner {
+      inset: 14%;
+      border-style: dashed;
+    }
+
+    .disc {
+      width: 42%;
+      aspect-ratio: 1;
+      left: 6%;
+      bottom: 10%;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .tile {
+      width: 30%;
+      aspect-ratio: 1;
+      right: 2%;
+      bottom: 12%;
+      border-radius: 28px;
+      background: color-mix(in srgb, var(--accent) 32%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .tile {
+        background: var(--bg);
+        backdrop-filter: none;
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .demo-card {
-        transition: none;
+    @media (max-width: 760px) {
+      .stage {
+        grid-template-columns: 1fr;
+        align-content: center;
+        padding: 36px 22px 40px;
+        gap: 28px;
       }
 
-      .demo-card:hover {
-        transform: none;
+      .copy { max-width: none; }
+
+      h1 {
+        font-size: clamp(2.15rem, 9.5vw, 3.1rem);
+        white-space: normal;
+        max-width: 12ch;
       }
+
+      .ornament {
+        height: 220px;
+        min-height: 0;
+        order: -1;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .copy {
+        animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      .ring {
+        animation: drift 14s ease-in-out infinite alternate;
+      }
+
+      .disc {
+        animation: drift 11s ease-in-out infinite alternate-reverse;
+      }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-14px); }
     }
   </style>
 </head>
-
 <body>
-  <div class="wrap">
-    <header>
-      <p class="eyebrow">GitHub Pages · 02-Demo</p>
-      <h1>Mục lục trang demo</h1>
-      <p class="lead">Danh sách các trang HTML trong repo. Bấm vào từng mục để mở và xem demo.</p>
-    </header>
-
-    <p class="count">Tổng cộng <strong>3</strong> trang demo</p>
-
-    <ul class="demos">
-      <li>
-        <a class="demo-card" href="bao-gia-website-thiet-bi-y-te.html">
-          <p class="demo-title">Báo giá — Website bán thiết bị y tế</p>
-          <p class="demo-path">bao-gia-website-thiet-bi-y-te.html</p>
-        </a>
-      </li>
-      <li>
-        <a class="demo-card" href="mo-ta-website-cardlish.html">
-          <p class="demo-title">Website Cardlish — Bản mô tả để xem &amp; duyệt</p>
-          <p class="demo-path">mo-ta-website-cardlish.html</p>
-        </a>
-      </li>
-      <li>
-        <a class="demo-card" href="printcart_3d_edge_preview_implementation_plan.html">
-          <p class="demo-title">Printcart 3D Edge Preview API — Implementation Plan</p>
-          <p class="demo-path">printcart_3d_edge_preview_implementation_plan.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="plan-website-driklux.html">
-          <p class="demo-title">Kế hoạch — Website Driklux</p>
-          <p class="demo-path">plan-website-driklux.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="huong-dan-quan-tri-content-cocopot.html">
-          <p class="demo-title">Hướng dẫn — Quản trị nội dung website Cocopot</p>
-          <p class="demo-path">huong-dan-quan-tri-content-cocopot.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="thumuanuochoa-public-structure-mockup.html">
-          <p class="demo-title">Cấu trúc trang public và mockup</p>
-          <p class="demo-path">thumuanuochoa-public-structure-mockup.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="bao-gia-website-den-san-vuon.html">
-          <p class="demo-title">Cấu trúc trang San Vuon</p>
-          <p class="demo-path">bao-gia-website-den-san-vuon.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="Hoang Nhat Landing Page (Standalone).html">
-          <p class="demo-title">Landing Page — Hoàng Nhật</p>
-          <p class="demo-path">Hoang Nhat Landing Page (Standalone).html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="Wonderland_OneOffice.html">
-          <p class="demo-title">Wonderland Việt Nam — Kiến tạo không gian làm việc đẳng cấp (OneOffice)</p>
-          <p class="demo-path">Wonderland_OneOffice.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="pq-desk-web/index.html">
-          <p class="demo-title">PQ Desk Việt Nam — Kiến tạo không gian làm việc đẳng cấp (OneOffice)</p>
-          <p class="demo-path">pq-desk-web/index.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="preview.html">
-          <p class="demo-title">Thử nghiệm hướng logo — ECO2GO</p>
-          <p class="demo-path">eco2go-logo-directional-options.html</p>
-        </a>
-      </li>
-
-      <li>
-        <a class="demo-card" href="Vat-Tu-In-Quang-Cao.html">
-          <p class="demo-title">Vật tư in quảng cáo — Vat-Tu-In-Quang-Cao</p>
-          <p class="demo-path">Vat-Tu-In-Quang-Cao.html</p>
-        </a>
-      </li>
-
-    </ul>
-
-    <footer>
-      Repo <strong>02-Demo</strong> · Deploy từ branch <code>main</code>, thư mục gốc.
-    </footer>
-  </div>
+  <main class="stage">
+    <div class="copy">
+      <p class="mark">02-Demo</p>
+      <h1 id="greet">Chào mừng</h1>
+      <p class="sub">Bạn vừa mở trang này. Ở lại một lát cũng được.</p>
+    </div>
+    <div class="ornament" aria-hidden="true">
+      <span class="ring"></span>
+      <span class="ring ring-inner"></span>
+      <span class="disc"></span>
+      <span class="tile"></span>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var hour = new Date().getHours();
+      var text = "Chào buổi tối";
+      if (hour < 12) text = "Chào buổi sáng";
+      else if (hour < 18) text = "Chào buổi chiều";
+      document.getElementById("greet").textContent = text;
+    })();
+  </script>
 </body>
-
 </html>

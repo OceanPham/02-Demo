@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WorkFlow on phones: install options and costs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDF0F5;
+    --surface: #FFFFFF;
+    --ink: #16213A;
+    --muted: #586379;
+    --line: #D2D8E3;
+    --a: #0B7A63;
+    --a-soft: #DDF1EB;
+    --b: #2F5BEA;
+    --b-soft: #E2E9FD;
+    --warn: #8A5A00;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1626;
+      --surface: #172036;
+      --ink: #E6EBF5;
+      --muted: #9AA6BD;
+      --line: #2A3550;
+      --a: #44C8A5;
+      --a-soft: #143A33;
+      --b: #86A3FF;
+      --b-soft: #1D2B57;
+      --warn: #E9B95A;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1626; --surface: #172036; --ink: #E6EBF5; --muted: #9AA6BD; --line: #2A3550;
+    --a: #44C8A5; --a-soft: #143A33; --b: #86A3FF; --b-soft: #1D2B57; --warn: #E9B95A;
+    color-scheme: dark;
+  }
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: inherit; }
+
+  html[data-lang="en"] [data-l="nl"],
+  html[data-lang="nl"] [data-l="en"] { display: none !important; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--b); text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--b); outline-offset: 2px; border-radius: 4px; }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+  .bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0; gap: 16px;
+  }
+  .mark { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; color: var(--muted); }
+  .mark svg { width: 30px; height: 30px; flex: none; }
+
+  .switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface); }
+  .switch button {
+    font: inherit; font-size: 14px; font-weight: 600;
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 14px; border-radius: 999px; cursor: pointer;
+  }
+  .switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+  header.hero { padding: 40px 0 8px; }
+  h1 {
+    font-size: clamp(34px, 6vw, 58px);
+    line-height: 1.04; letter-spacing: -0.025em; font-weight: 800;
+    margin: 0 0 18px; max-width: 16ch;
+  }
+  .lede { font-size: 19px; color: var(--muted); max-width: 60ch; margin: 0 0 8px; }
+  .meta { font-size: 14px; color: var(--muted); margin: 0; }
+
+  /* The fork: one CRM, two ways onto the phone */
+  .fork { margin: 48px 0 24px; }
+  .trunk {
+    margin: 0 auto; width: fit-content; max-width: 100%;
+    padding: 12px 20px; border: 2px solid var(--ink); border-radius: 10px;
+    font-weight: 700; background: var(--surface); text-align: center;
+  }
+  .fork svg.lines { display: block; width: 100%; height: 72px; }
+  .fork svg.lines path { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+  .branches { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .branch {
+    background: var(--surface); border-radius: 14px; padding: 22px 24px 24px;
+    border-top: 6px solid var(--c);
+  }
+  .branch.a { --c: var(--a); --soft: var(--a-soft); }
+  .branch.b { --c: var(--b); --soft: var(--b-soft); }
+  .branch h2 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.01em; }
+  .branch p { margin: 0 0 18px; color: var(--muted); }
+  .price {
+    font-size: clamp(30px, 4.6vw, 44px); font-weight: 800; letter-spacing: -0.02em;
+    line-height: 1.05; color: var(--c); font-variant-numeric: tabular-nums;
+  }
+  .price small { display: block; font-size: 15px; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-top: 6px; }
+  .status { display: inline-block; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--soft); color: var(--c); margin-bottom: 12px; }
+
+  section { padding: 56px 0 8px; }
+  h2.sec { font-size: clamp(26px, 3.6vw, 34px); letter-spacing: -0.02em; margin: 0 0 8px; line-height: 1.15; }
+  h3 { font-size: 20px; margin: 32px 0 10px; letter-spacing: -0.01em; }
+  .sec-lede { color: var(--muted); max-width: 64ch; margin: 0 0 24px; }
+  p, li { max-width: 72ch; }
+
+  .table-scroll { overflow-x: auto; background: var(--surface); border-radius: 14px; }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 16px; }
+  th, td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  tr:last-child th, tr:last-child td { border-bottom: 0; }
+  thead th { font-size: 15px; }
+  thead th.a { color: var(--a); }
+  thead th.b { color: var(--b); }
+  tbody th { font-weight: 600; width: 22%; }
+  td.num, th.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.total th, tr.total td { font-weight: 700; border-top: 2px solid var(--ink); }
+
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 12px; }
+  ol.steps li {
+    counter-increment: s; position: relative; padding: 14px 18px 14px 60px;
+    background: var(--surface); border-radius: 12px;
+  }
+  ol.steps li::before {
+    content: counter(s); position: absolute; left: 18px; top: 12px;
+    width: 28px; height: 28px; border-radius: 50%; background: var(--a); color: var(--surface);
+    display: grid; place-items: center; font-weight: 700; font-size: 15px;
+  }
+
+  .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; }
+  .pc > div { border-left: 3px solid var(--line); padding-left: 18px; }
+  .pc h4 { margin: 0 0 8px; font-size: 17px; }
+  .pc ul { margin: 0; padding-left: 18px; }
+  .pc li { margin-bottom: 8px; }
+  .pc .pro { border-color: var(--a); }
+  .pc .con { border-color: var(--warn); }
+
+  .platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .platform { background: var(--surface); border-radius: 14px; padding: 4px 24px 20px; }
+  .platform h3 { margin-top: 20px; }
+  .platform dl { margin: 0; }
+  .platform dt { font-weight: 700; margin-top: 14px; }
+  .platform dd { margin: 4px 0 0; color: var(--ink); }
+  .platform dd .fee { font-weight: 800; color: var(--b); font-variant-numeric: tabular-nums; }
+
+  .note { font-size: 15px; color: var(--muted); margin-top: 12px; }
+  .callout { background: var(--b-soft); border-radius: 12px; padding: 16px 20px; margin-top: 24px; }
+  .callout p { margin: 0; }
+
+  ul.qs { padding-left: 20px; }
+  ul.qs li { margin-bottom: 10px; }
+
+  footer { padding: 56px 0 64px; font-size: 14px; color: var(--muted); }
+  footer ul { padding-left: 18px; }
+  footer li { margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    .fork svg.lines { display: none; }
+    .trunk { margin-bottom: 0; }
+    .branches { grid-template-columns: 1fr; gap: 0; position: relative; padding-left: 22px; margin-top: 0; }
+    .branches::before { content: ""; position: absolute; left: 6px; top: 0; bottom: 40px; width: 3px; background: var(--line); }
+    .branch { margin-top: 20px; }
+    .pc, .platforms { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fork svg.lines path { stroke-dasharray: 200; stroke-dashoffset: 200; animation: draw 900ms ease-out 200ms forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="bar">
+    <div class="mark">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="var(--surface)" stroke="var(--line)"/><text x="6.5" y="21.5" font-family="Schibsted Grotesk, sans-serif" font-weight="800" font-size="14" fill="var(--ink)">CA</text><circle cx="25" cy="22" r="2.4" fill="var(--b)"/></svg>
+      <span>WorkFlow CRM</span>
+    </div>
+    <div class="switch" role="group" aria-label="Language">
+      <button type="button" data-set="en" aria-pressed="true">English</button>
+      <button type="button" data-set="nl" aria-pressed="false">Nederlands</button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <h1>
+      <span data-l="en">WorkFlow on phones: install options and costs</span>
+      <span data-l="nl">WorkFlow op de telefoon: installatieopties en kosten</span>
+    </h1>
+    <p class="lede">
+      <span data-l="en">The CRM already runs as an installed web app with chat notifications on Android. This plan compares keeping that approach with publishing a real app in the App Store and Google Play.</span>
+      <span data-l="nl">Het CRM draait al als geïnstalleerde web-app met chatmeldingen op Android. Dit plan vergelijkt die aanpak met het publiceren van een echte app in de App Store en Google Play.</span>
+    </p>
+    <p class="meta">
+      <span data-l="en">Prepared by Ocean Dev, 6 November 2026. Prices checked on that date.</span>
+      <span data-l="nl">Opgesteld door Ocean Dev, 6 november 2026. Prijzen gecontroleerd op die datum.</span>
+    </p>
+  </header>
+
+  <div class="fork" aria-label="Two ways to install">
+    <div class="trunk">
+      <span data-l="en">One CRM, built and hosted on Base44</span>
+      <span data-l="nl">Eén CRM, gebouwd en gehost op Base44</span>
+    </div>
+    <svg class="lines" viewBox="0 0 100 72" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M50 0 C50 40, 25 32, 25 72" stroke="var(--a)"/>
+      <path d="M50 0 C50 40, 75 32, 75 72" stroke="var(--b)"/>
+    </svg>
+    <div class="branches">
+      <article class="branch a">
+        <span class="status"><span data-l="en">In use now</span><span data-l="nl">Nu in gebruik</span></span>
+        <h2><span data-l="en">A. Web install</span><span data-l="nl">A. Webinstallatie</span></h2>
+        <p><span data-l="en">Installed from the browser. No store, no accounts, no review.</span><span data-l="nl">Geïnstalleerd vanuit de browser. Geen store, geen accounts, geen controle.</span></p>
+        <div class="price">$0<small><span data-l="en">registration cost</span><span data-l="nl">registratiekosten</span></small></div>
+      </article>
+      <article class="branch b">
+        <span class="status"><span data-l="en">Option</span><span data-l="nl">Optie</span></span>
+        <h2><span data-l="en">B. Store app</span><span data-l="nl">B. Store-app</span></h2>
+        <p><span data-l="en">Downloaded from the App Store and Google Play, like any other app.</span><span data-l="nl">Gedownload uit de App Store en Google Play, zoals elke andere app.</span></p>
+        <div class="price">$124<small><span data-l="en">first year, then $99 per year</span><span data-l="nl">eerste jaar, daarna $99 per jaar</span></small></div>
+      </article>
+    </div>
+  </div>
+
+  <section id="compare">
+    <h2 class="sec"><span data-l="en">Side by side</span><span data-l="nl">Naast elkaar</span></h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col"><span class="sr"></span></th>
+            <th scope="col" class="a"><span data-l="en">A. Web install</span><span data-l="nl">A. Webinstallatie</span></th>
+            <th scope="col" class="b"><span data-l="en">B. Store app</span><span data-l="nl">B. Store-app</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><span data-l="en">How people install</span><span data-l="nl">Hoe gebruikers installeren</span></th>
+            <td><span data-l="en">Android: Chrome menu, Install app. iPhone: Safari, Share, Add to Home Screen.</span><span data-l="nl">Android: Chrome-menu, App installeren. iPhone: Safari, Delen, Zet op beginscherm.</span></td>
+            <td><span data-l="en">Download from the App Store or Google Play, or from a private link.</span><span data-l="nl">Downloaden uit de App Store of Google Play, of via een privélink.</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Chat notifications</span><span data-l="nl">Chatmeldingen</span></th>
+            <td><span data-l="en">Web Push, already built. Tested on Android on 5 November 2026. iPhone needs iOS 16.4 or later and the Home Screen install.</span><span data-l="nl">Web Push, al gebouwd. Getest op Android op 5 november 2026. iPhone vereist iOS 16.4 of hoger en installatie op het beginscherm.</span></td>
+            <td><span data-l="en">Native push through Firebase (Android) and Apple’s push service (iPhone), set up in Base44’s native push integration.</span><span data-l="nl">Native push via Firebase (Android) en de pushdienst van Apple (iPhone), ingericht via de native push-integratie van Base44.</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Updates</span><span data-l="nl">Updates</span></th>
+            <td><span data-l="en">Live for everyone as soon as we publish.</span><span data-l="nl">Direct live voor iedereen zodra we publiceren.</span></td>
+            <td><span data-l="en">Screens and features also update on publish, because the store app loads the published CRM. A new store submission is needed only when the app itself changes: name, icon, permissions.</span><span data-l="nl">Schermen en functies worden ook bij publicatie bijgewerkt, omdat de store-app het gepubliceerde CRM laadt. Een nieuwe inzending is alleen nodig als de app zelf verandert: naam, icoon, rechten.</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Review by Apple or Google</span><span data-l="nl">Controle door Apple of Google</span></th>
+            <td><span data-l="en">None.</span><span data-l="nl">Geen.</span></td>
+            <td><span data-l="en">Every submission is reviewed. Apple can reject apps that look like a website in a frame (guideline 4.2).</span><span data-l="nl">Elke inzending wordt gecontroleerd. Apple kan apps afwijzen die op een website in een kader lijken (richtlijn 4.2).</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Registration cost</span><span data-l="nl">Registratiekosten</span></th>
+            <td class="num">$0</td>
+            <td><span data-l="en">Apple $99 per year, Google $25 once</span><span data-l="nl">Apple $99 per jaar, Google $25 eenmalig</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Time to first install</span><span data-l="nl">Tijd tot eerste installatie</span></th>
+            <td><span data-l="en">Available today.</span><span data-l="nl">Vandaag beschikbaar.</span></td>
+            <td><span data-l="en">About 1–2 weeks. Android with a new personal Google account: about 4–5 weeks.</span><span data-l="nl">Ongeveer 1–2 weken. Android met een nieuw persoonlijk Google-account: ongeveer 4–5 weken.</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Findable in the stores</span><span data-l="nl">Vindbaar in de stores</span></th>
+            <td><span data-l="en">No. Users get a link and short instructions.</span><span data-l="nl">Nee. Gebruikers krijgen een link en een korte instructie.</span></td>
+            <td><span data-l="en">Yes, or hidden: unlisted (link only) or private to the company.</span><span data-l="nl">Ja, of verborgen: unlisted (alleen via link) of privé voor het bedrijf.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="option-a">
+    <h2 class="sec"><span data-l="en">Option A: web install</span><span data-l="nl">Optie A: webinstallatie</span></h2>
+    <p class="sec-lede"><span data-l="en">Rollout for each user, in this order:</span><span data-l="nl">Uitrol per gebruiker, in deze volgorde:</span></p>
+    <ol class="steps">
+      <li><span data-l="en">Open crm-cadinvo.base44.app and install it: Chrome on Android, Safari on iPhone.</span><span data-l="nl">Open crm-cadinvo.base44.app en installeer het: Chrome op Android, Safari op iPhone.</span></li>
+      <li><span data-l="en">Open the installed app, tap the bell, tap Enable notifications, then Allow.</span><span data-l="nl">Open de geïnstalleerde app, tik op de bel, tik op Enable notifications en daarna op Toestaan.</span></li>
+      <li><span data-l="en">Tap Send test notification and go to the home screen. The notification should appear within seconds.</span><span data-l="nl">Tik op Send test notification en ga naar het beginscherm. De melding verschijnt binnen enkele seconden.</span></li>
+      <li><span data-l="en">If enabling fails with “push service error”, switch to mobile data, enable once, then turn Wi-Fi back on. The app shows this tip.</span><span data-l="nl">Mislukt het inschakelen met „push service error”, schakel dan over op mobiele data, schakel één keer in en zet daarna wifi weer aan. De app toont deze tip.</span></li>
+    </ol>
+
+    <div class="pc">
+      <div class="pro">
+        <h4><span data-l="en">Pros</span><span data-l="nl">Voordelen</span></h4>
+        <ul>
+          <li><span data-l="en">No fees and no store accounts to manage.</span><span data-l="nl">Geen kosten en geen store-accounts om te beheren.</span></li>
+          <li><span data-l="en">No review: changes go live when we publish.</span><span data-l="nl">Geen controle: wijzigingen staan live zodra we publiceren.</span></li>
+          <li><span data-l="en">One version for Android, iPhone and desktop.</span><span data-l="nl">Eén versie voor Android, iPhone en desktop.</span></li>
+          <li><span data-l="en">Chat notifications already work on Android.</span><span data-l="nl">Chatmeldingen werken al op Android.</span></li>
+        </ul>
+      </div>
+      <div class="con">
+        <h4><span data-l="en">Cons</span><span data-l="nl">Nadelen</span></h4>
+        <ul>
+          <li><span data-l="en">iPhone users must install from Safari with Add to Home Screen, on iOS 16.4 or later. Not yet tested on iPhone.</span><span data-l="nl">iPhone-gebruikers moeten installeren via Safari met Zet op beginscherm, op iOS 16.4 of hoger. Nog niet getest op iPhone.</span></li>
+          <li><span data-l="en">Not in the stores, so every user needs a link and instructions.</span><span data-l="nl">Niet in de stores, dus elke gebruiker heeft een link en instructie nodig.</span></li>
+          <li><span data-l="en">Some networks block notification registration. We saw this on one Wi-Fi network; the workaround is step 4.</span><span data-l="nl">Sommige netwerken blokkeren de aanmelding voor meldingen. We zagen dit op één wifinetwerk; de oplossing staat in stap 4.</span></li>
+          <li><span data-l="en">Developers report that Web Push on iPhone can stop after a while. The app re-registers each time it opens to limit this.</span><span data-l="nl">Ontwikkelaars melden dat Web Push op iPhone na een tijd kan stoppen. De app meldt zich bij elke start opnieuw aan om dit te beperken.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="option-b">
+    <h2 class="sec"><span data-l="en">Option B: store app</span><span data-l="nl">Optie B: store-app</span></h2>
+    <p class="sec-lede"><span data-l="en">Base44 generates the store files: an IPA for iPhone and an AAB for Google Play, plus an APK for direct install. The app is the published CRM inside a native shell (WebView), so there is still one codebase. Each platform needs its own developer account.</span><span data-l="nl">Base44 maakt de store-bestanden: een IPA voor iPhone en een AAB voor Google Play, plus een APK voor directe installatie. De app is het gepubliceerde CRM in een native schil (WebView), dus er blijft één codebase. Elk platform vereist een eigen ontwikkelaarsaccount.</span></p>
+
+    <div class="platforms">
+      <div class="platform">
+        <h3>Android: Google Play Console</h3>
+        <dl>
+          <dt><span data-l="en">Registration</span><span data-l="nl">Registratie</span></dt>
+          <dd><span class="fee">$25</span> <span data-l="en">once per account. No yearly fee.</span><span data-l="nl">eenmalig per account. Geen jaarlijkse kosten.</span></dd>
+          <dt><span data-l="en">Account type</span><span data-l="nl">Accounttype</span></dt>
+          <dd><span data-l="en">Personal: verified with an ID. New personal accounts must run a closed test with 12 testers for 14 days in a row before the app can go live. Organization: needs a D-U-N-S number and skips that test. The type can’t be changed later.</span><span data-l="nl">Persoonlijk: verificatie met een ID. Nieuwe persoonlijke accounts moeten eerst een gesloten test draaien met 12 testers, 14 dagen achter elkaar. Organisatie: vereist een D-U-N-S-nummer en slaat die test over. Het type kan later niet worden gewijzigd.</span></dd>
+          <dt><span data-l="en">Distribution</span><span data-l="nl">Distributie</span></dt>
+          <dd><span data-l="en">Public listing in Google Play, or a testing track limited to invited staff.</span><span data-l="nl">Openbare vermelding in Google Play, of een testtrack voor uitgenodigde medewerkers.</span></dd>
+          <dt><span data-l="en">Without Google Play</span><span data-l="nl">Zonder Google Play</span></dt>
+          <dd><span data-l="en">The APK can be installed directly. Google is introducing developer verification for such apps: first countries from 30 September 2026, worldwide from 2027.</span><span data-l="nl">De APK kan direct worden geïnstalleerd. Google voert ontwikkelaarsverificatie in voor zulke apps: eerste landen vanaf 30 september 2026, wereldwijd vanaf 2027.</span></dd>
+        </dl>
+      </div>
+
+      <div class="platform">
+        <h3>iPhone: Apple Developer Program</h3>
+        <dl>
+          <dt><span data-l="en">Membership</span><span data-l="nl">Lidmaatschap</span></dt>
+          <dd><span class="fee">$99</span> <span data-l="en">per year, shown in local currency when enrolling. If it lapses, the app is removed from the App Store.</span><span data-l="nl">per jaar, getoond in lokale valuta bij inschrijving. Verloopt het, dan wordt de app uit de App Store gehaald.</span></dd>
+          <dt><span data-l="en">Account type</span><span data-l="nl">Accounttype</span></dt>
+          <dd><span data-l="en">Individual: quick, app listed under a personal name. Organization: listed under the company name; needs a D-U-N-S number (free, can take days to weeks) and someone authorized to sign for the company. Apple’s enrollment review takes from a day to about a week.</span><span data-l="nl">Individueel: snel, app staat op een persoonlijke naam. Organisatie: staat op de bedrijfsnaam; vereist een D-U-N-S-nummer (gratis, kan dagen tot weken duren) en iemand die namens het bedrijf mag tekenen. De controle door Apple duurt een dag tot ongeveer een week.</span></dd>
+          <dt><span data-l="en">Distribution</span><span data-l="nl">Distributie</span></dt>
+          <dd><span data-l="en">Public App Store: risk of rejection for website-like or internal-only apps. Unlisted: only reachable through a direct link, requested with a form. Custom app through Apple Business Manager: private to the company. TestFlight: for testing only, each build installs for 90 days.</span><span data-l="nl">Openbare App Store: kans op afwijzing voor apps die op een website lijken of alleen intern zijn. Unlisted: alleen bereikbaar via een directe link, aan te vragen met een formulier. Custom app via Apple Business Manager: privé voor het bedrijf. TestFlight: alleen voor testen, elke build is 90 dagen te installeren.</span></dd>
+          <dt><span data-l="en">Notifications</span><span data-l="nl">Meldingen</span></dt>
+          <dd><span data-l="en">Need an Apple push key (APNs), which comes with the paid membership.</span><span data-l="nl">Vereisen een Apple-pushsleutel (APNs), die bij het betaalde lidmaatschap hoort.</span></dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><span data-l="en">Base44: downloading the store files requires the Builder plan or higher. This CRM already uses backend functions and GitHub sync, which are Builder features, so the current plan most likely covers it. To confirm.</span><span data-l="nl">Base44: voor het downloaden van de store-bestanden is het Builder-abonnement of hoger nodig. Dit CRM gebruikt al backendfuncties en GitHub-synchronisatie, die bij Builder horen, dus het huidige abonnement dekt dit waarschijnlijk. Nog te bevestigen.</span></p>
+    </div>
+
+    <div class="pc" style="margin-top:28px">
+      <div class="pro">
+        <h4><span data-l="en">Pros</span><span data-l="nl">Voordelen</span></h4>
+        <ul>
+          <li><span data-l="en">Installed from the App Store and Google Play, a step everyone knows.</span><span data-l="nl">Installeren via de App Store en Google Play, een stap die iedereen kent.</span></li>
+          <li><span data-l="en">Native notifications on iPhone, without the Home Screen step.</span><span data-l="nl">Native meldingen op iPhone, zonder de stap via het beginscherm.</span></li>
+          <li><span data-l="en">The company name and icon appear in the stores.</span><span data-l="nl">De bedrijfsnaam en het icoon staan in de stores.</span></li>
+        </ul>
+      </div>
+      <div class="con">
+        <h4><span data-l="en">Cons</span><span data-l="nl">Nadelen</span></h4>
+        <ul>
+          <li><span data-l="en">A yearly Apple fee and two developer accounts to manage.</span><span data-l="nl">Jaarlijkse kosten bij Apple en twee ontwikkelaarsaccounts om te beheren.</span></li>
+          <li><span data-l="en">Review on every submission, with a real risk of rejection by Apple under guideline 4.2.</span><span data-l="nl">Controle bij elke inzending, met een reële kans op afwijzing door Apple onder richtlijn 4.2.</span></li>
+          <li><span data-l="en">Notifications must be set up again in Base44’s native push integration (Firebase and APNs).</span><span data-l="nl">Meldingen moeten opnieuw worden ingericht in de native push-integratie van Base44 (Firebase en APNs).</span></li>
+          <li><span data-l="en">Slower start: 1 to 5 weeks before the first install, depending on account type.</span><span data-l="nl">Tragere start: 1 tot 5 weken tot de eerste installatie, afhankelijk van het accounttype.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="costs">
+    <h2 class="sec"><span data-l="en">Registration costs</span><span data-l="nl">Registratiekosten</span></h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col"><span data-l="en">Item</span><span data-l="nl">Onderdeel</span></th>
+            <th scope="col" class="a num"><span data-l="en">A. Web install</span><span data-l="nl">A. Webinstallatie</span></th>
+            <th scope="col" class="b num"><span data-l="en">B. Store app</span><span data-l="nl">B. Store-app</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Apple Developer Program</th>
+            <td class="num">–</td>
+            <td class="num"><span data-l="en">$99 per year</span><span data-l="nl">$99 per jaar</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Google Play Console</th>
+            <td class="num">–</td>
+            <td class="num"><span data-l="en">$25 once</span><span data-l="nl">$25 eenmalig</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">D-U-N-S number (organization accounts)</span><span data-l="nl">D-U-N-S-nummer (organisatieaccounts)</span></th>
+            <td class="num">–</td>
+            <td class="num"><span data-l="en">free</span><span data-l="nl">gratis</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Base44 plan</span><span data-l="nl">Base44-abonnement</span></th>
+            <td><span data-l="en">current plan</span><span data-l="nl">huidig abonnement</span></td>
+            <td><span data-l="en">Builder or higher (likely the current plan)</span><span data-l="nl">Builder of hoger (waarschijnlijk het huidige)</span></td>
+          </tr>
+          <tr class="total">
+            <th scope="row"><span data-l="en">First year</span><span data-l="nl">Eerste jaar</span></th>
+            <td class="num">$0</td>
+            <td class="num">$124</td>
+          </tr>
+          <tr>
+            <th scope="row"><span data-l="en">Each following year</span><span data-l="nl">Elk volgend jaar</span></th>
+            <td class="num">$0</td>
+            <td class="num">$99</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><span data-l="en">Registration fees only. Excludes the Base44 subscription and development time. Prices in US dollars as published; Apple charges in local currency.</span><span data-l="nl">Alleen registratiekosten. Exclusief het Base44-abonnement en ontwikkeltijd. Prijzen in Amerikaanse dollars zoals gepubliceerd; Apple rekent af in lokale valuta.</span></p>
+  </section>
+
+  <section id="decide">
+    <h2 class="sec"><span data-l="en">How to choose</span><span data-l="nl">Hoe te kiezen</span></h2>
+    <p><span data-l="en">Option A fits when the app is for staff, most users have Android, and a short install guide is acceptable. Option B fits when the app must be in the stores, many users have an iPhone, or the company wants its name and icon in the stores. Both can run side by side: keep A in use while B is being registered and reviewed.</span><span data-l="nl">Optie A past als de app voor medewerkers is, de meeste gebruikers Android hebben en een korte installatie-instructie acceptabel is. Optie B past als de app in de stores moet staan, veel gebruikers een iPhone hebben of het bedrijf zijn naam en icoon in de stores wil. Beide kunnen naast elkaar bestaan: A blijft in gebruik terwijl B wordt geregistreerd en gecontroleerd.</span></p>
+
+    <h3><span data-l="en">Open questions before deciding</span><span data-l="nl">Open vragen vóór de beslissing</span></h3>
+    <ul class="qs">
+      <li><span data-l="en">Who owns the store accounts: the company as an organization (needs a D-U-N-S number) or one person?</span><span data-l="nl">Wie wordt eigenaar van de store-accounts: het bedrijf als organisatie (vereist een D-U-N-S-nummer) of één persoon?</span></li>
+      <li><span data-l="en">How many users have an iPhone, and are they comfortable with Add to Home Screen?</span><span data-l="nl">Hoeveel gebruikers hebben een iPhone, en kunnen ze overweg met Zet op beginscherm?</span></li>
+      <li><span data-l="en">Must the app be findable in the stores, or is it for staff only?</span><span data-l="nl">Moet de app vindbaar zijn in de stores, of is hij alleen voor medewerkers?</span></li>
+      <li><span data-l="en">Can Base44 upload the iPhone build to Apple directly, or is a Mac needed for the upload? To confirm with Base44.</span><span data-l="nl">Kan Base44 de iPhone-build rechtstreeks naar Apple uploaden, of is er een Mac nodig voor de upload? Te bevestigen bij Base44.</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p><strong><span data-l="en">Sources</span><span data-l="nl">Bronnen</span></strong></p>
+    <ul>
+      <li><a href="https://developer.apple.com/programs/enroll/">Apple Developer Program: enrollment</a></li>
+      <li><a href="https://www.testerscommunity.com/blog/google-play-developer-account-guide">Google Play developer account: cost and account types</a></li>
+      <li><a href="https://docs.base44.com/Integrations/built-in-integrations">Base44: built-in integrations, push notifications</a></li>
+      <li><a href="https://bilt.me/blog/base44-review">Base44 review: store files and plan requirements</a></li>
+      <li><a href="https://www.mobigyaan.com/android-apps-block-developers-september-2026">Android developer verification timeline</a></li>
+      <li><a href="https://www.mobiloud.com/blog/app-store-review-guidelines-webview-wrapper">App Store guideline 4.2 and web wrappers</a></li>
+    </ul>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var titles = {
+      en: "WorkFlow on phones: install options and costs",
+      nl: "WorkFlow op de telefoon: installatieopties en kosten"
+    };
+    var buttons = document.querySelectorAll(".switch button");
+    function setLang(lang) {
+      if (lang !== "en" && lang !== "nl") lang = "en";
+      root.setAttribute("data-lang", lang);
+      root.setAttribute("lang", lang);
+      document.title = titles[lang];
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.set === lang)); });
+      try { localStorage.setItem("wf-plan-lang", lang); } catch (e) {}
+    }
+    var saved = null;
+    try { saved = localStorage.getItem("wf-plan-lang"); } catch (e) {}
+    var initial = saved || ((navigator.language || "").toLowerCase().indexOf("nl") === 0 ? "nl" : "en");
+    setLang(initial);
+    buttons.forEach(function (b) { b.addEventListener("click", function () { setLang(b.dataset.set); }); });
+  })();
+</script>
+</body>
+</html>

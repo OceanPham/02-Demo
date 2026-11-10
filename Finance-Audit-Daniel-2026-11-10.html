@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance Audit Report</title>
+<style>
+:root {
+  --bg: #f5f7fb; --surface: #ffffff; --surface-2: #f0f3f9; --text: #1b2433; --muted: #5b6577;
+  --border: #dde3ee; --accent: #1f5fbf; --accent-soft: #e6eefb;
+  --p0: #b42318; --p0-soft: #fdecea; --p1: #b54708; --p1-soft: #fef3e6; --p2: #475467; --p2-soft: #eef1f5;
+  --ok: #067647; --ok-soft: #e7f6ee; --code: #eef1f6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141c; --surface: #171e29; --surface-2: #1d2532; --text: #e6ebf3; --muted: #9aa6b8;
+    --border: #2a3444; --accent: #6ea2ff; --accent-soft: #1c2b45;
+    --p0: #ff8a80; --p0-soft: #3a1c1c; --p1: #ffb366; --p1-soft: #3a2a17; --p2: #b8c2d1; --p2-soft: #242d3a;
+    --ok: #5fd39a; --ok-soft: #16302a; --code: #222b38;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141c; --surface: #171e29; --surface-2: #1d2532; --text: #e6ebf3; --muted: #9aa6b8;
+  --border: #2a3444; --accent: #6ea2ff; --accent-soft: #1c2b45;
+  --p0: #ff8a80; --p0-soft: #3a1c1c; --p1: #ffb366; --p1-soft: #3a2a17; --p2: #b8c2d1; --p2-soft: #242d3a;
+  --ok: #5fd39a; --ok-soft: #16302a; --code: #222b38;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px 64px; }
+header.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--border); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; padding-bottom: 12px; }
+.brand { font-weight: 700; letter-spacing: .2px; }
+.brand small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+.switch { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.switch button { border: 0; background: transparent; color: var(--text); padding: 7px 14px; font: inherit; font-size: 13px; cursor: pointer; }
+.switch button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+h1 { font-size: 28px; line-height: 1.25; margin: 32px 0 6px; }
+h2 { font-size: 21px; margin: 44px 0 12px; padding-top: 8px; border-top: 1px solid var(--border); }
+h3 { font-size: 16px; margin: 22px 0 8px; }
+p { margin: 8px 0; }
+.lead { color: var(--muted); margin-bottom: 20px; }
+.meta { color: var(--muted); font-size: 13px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 16px 0; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.card .num { font-size: 26px; font-weight: 700; line-height: 1.1; }
+.card .lbl { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin: 14px 0; }
+.box.note { background: var(--accent-soft); border-color: transparent; }
+.box.warn { background: var(--p0-soft); border-color: transparent; }
+.box.good { background: var(--ok-soft); border-color: transparent; }
+.tbl { width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); margin: 12px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+th { background: var(--surface-2); font-weight: 600; font-size: 13px; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.tag.p0 { color: var(--p0); background: var(--p0-soft); }
+.tag.p1 { color: var(--p1); background: var(--p1-soft); }
+.tag.p2 { color: var(--p2); background: var(--p2-soft); }
+.tag.ok { color: var(--ok); background: var(--ok-soft); }
+.tag.wait { color: var(--accent); background: var(--accent-soft); }
+code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+.change { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin: 18px 0; overflow: hidden; }
+.change .head { padding: 14px 18px; background: var(--surface-2); display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.change .head strong { font-size: 16px; }
+.change .body { padding: 6px 18px 16px; }
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+.ba > div { border-radius: 8px; padding: 10px 12px; }
+.ba .before { background: var(--p0-soft); }
+.ba .after { background: var(--ok-soft); }
+.ba h4 { margin: 0 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .4px; }
+dl.kv { display: grid; grid-template-columns: 170px 1fr; gap: 6px 14px; margin: 10px 0 0; }
+dl.kv dt { color: var(--muted); font-size: 13px; }
+dl.kv dd { margin: 0; }
+ol.q { padding-left: 0; list-style: none; counter-reset: q; }
+ol.q > li { counter-increment: q; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px 14px 56px; margin: 12px 0; position: relative; }
+ol.q > li::before { content: counter(q); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+ol.q .ctx { color: var(--muted); font-size: 14px; margin: 4px 0 6px; }
+ol.q .sub { font-weight: 600; margin: 14px 0 2px; font-size: 14px; }
+.choices { margin: 8px 0 0; }
+.opt { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; margin: 6px 0; cursor: pointer; background: var(--surface); }
+.opt:hover { border-color: var(--accent); }
+.opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.opt input[type="radio"] { margin: 3px 0 0; accent-color: var(--accent); flex: none; width: 16px; height: 16px; }
+.opt .letter { flex: none; width: 22px; height: 22px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.opt.on .letter { background: var(--accent); border-color: var(--accent); color: #fff; }
+.opt .txt { flex: 1; min-width: 0; }
+.opt .rec { color: var(--ok); font-weight: 600; font-size: 12px; }
+.opt.other { flex-wrap: wrap; }
+.other-text, .comment { width: 100%; font: inherit; font-size: 14px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); margin-top: 6px; }
+.comment { min-height: 80px; resize: vertical; }
+.answers td:first-child { white-space: nowrap; font-weight: 600; }
+.answers .none { color: var(--muted); font-style: italic; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: #fff; padding: 8px 14px; border-radius: 8px; font: inherit; font-size: 14px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.copied { color: var(--ok); font-size: 13px; align-self: center; }
+.lang { display: none; }
+body[data-lang="en"] .lang[data-lang="en"], body[data-lang="nl"] .lang[data-lang="nl"] { display: block; }
+.toc { columns: 2; column-gap: 28px; padding-left: 18px; }
+.toc li { margin: 3px 0; }
+a { color: var(--accent); }
+footer { color: var(--muted); font-size: 12px; margin-top: 48px; }
+@media (max-width: 640px) {
+  h1 { font-size: 23px; }
+  .ba { grid-template-columns: 1fr; }
+  dl.kv { grid-template-columns: 1fr; }
+  .toc { columns: 1; }
+  ol.q > li { padding-left: 50px; }
+}
+@media print {
+  header.top { position: static; }
+  .switch { display: none; }
+  body { background: #fff; }
+  .change, .box, .tbl, ol.q > li { break-inside: avoid; }
+}
+</style>
+</head>
+<body data-lang="en">
+<header class="top">
+  <div class="wrap">
+    <div class="brand">CADINVO CRM · Finance Audit<small>10-11-2026 · Ocean</small></div>
+    <div class="switch" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en" aria-pressed="true">English</button>
+      <button type="button" data-set-lang="nl" aria-pressed="false">Nederlands</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ ENGLISH ============================ -->
+<div class="wrap lang" data-lang="en">
+  <h1>Finance, invoices, quotations &amp; Work Packages — audit report</h1>
+  <p class="lead">What we found, what we will change in the code, what (little) we propose to change in the data, and the decisions we need from you.</p>
+  <p class="meta">Basis: code review of the CRM plus a <b>read-only</b> check of the live data on 10-11-2026. Nothing was changed, created or sent during this audit.</p>
+
+  <div class="cards">
+    <div class="card"><div class="num">0</div><div class="lbl">invoices ever created from a Work Package</div></div>
+    <div class="card"><div class="num">25</div><div class="lbl">issues found, grouped into 8 work packages (A–H)</div></div>
+    <div class="card"><div class="num">7</div><div class="lbl">decisions needed from you</div></div>
+    <div class="card"><div class="num">0</div><div class="lbl">bulk data scripts — data is only touched by hand, with approval</div></div>
+  </div>
+
+  <h3>Contents</h3>
+  <ol class="toc">
+    <li><a href="#en-why">Why invoices cannot be sent from WPs</a></li>
+    <li><a href="#en-findings">All findings</a></li>
+    <li><a href="#en-plan">Planned code updates (A–H)</a></li>
+    <li><a href="#en-data">Data updates — before / after / impact</a></li>
+    <li><a href="#en-display">Numbers that will look different</a></li>
+    <li><a href="#en-decisions">Decisions needed from you</a></li>
+    <li><a href="#en-order">Proposed order</a></li>
+    <li><a href="#en-scope">Scope &amp; limits of this audit</a></li>
+  </ol>
+
+  <h2 id="en-why">1. Why invoices cannot be sent from Work Packages</h2>
+  <div class="box warn">
+    <p><b>The WP package was added but never connected to invoicing.</b> The "Apply billing" action only works for WPs with billing method <i>Hours</i> or <i>Per unit</i>. Fixed price, periodic, milestone, instalment and percentage WPs have <b>no path to an invoice</b>. The invoice editor ignores WPs completely and builds lines from logged hours × hourly price.</p>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Fact (live data)</th><th>Value</th></tr>
+    <tr><td>Projects with Work Packages</td><td>10 of 331 (23 WPs in total)</td></tr>
+    <tr><td>Invoice lines created from a WP</td><td>0</td></tr>
+    <tr><td>147-001 Mobilane Configuratie</td><td>4 fixed-price WPs, total €5,460. All 4 still in <i>draft</i>, so "not ready". The invoice queue shows <b>254h30</b> instead of €5,460.</td></tr>
+    <tr><td>152-001 Jannie vd Meer</td><td>2 fixed-price WPs: €500 (completed, ready) + €390 (draft). The project itself says <i>time &amp; materials</i>. Queue shows <b>81h45</b>.</td></tr>
+    <tr><td>"144-" projects ('t Stalenhuys)</td><td>207 projects, 0 WPs — they run on a separate, hard-coded branch (Thống is aligning this with WP).</td></tr>
+    <tr><td>WP / project billing status</td><td>Never updated by invoices. WPs never become "partially / fully invoiced"; project billing status is empty on 310 of 331 projects.</td></tr>
+  </table></div>
+  <p>We believe 147-001 and 152-001 are the two invoices you mentioned — please confirm (decision 1).</p>
+
+  <h2 id="en-findings">2. All findings</h2>
+  <p><span class="tag p0">P0</span> blocks invoicing or has legal/financial risk &nbsp; <span class="tag p1">P1</span> wrong or inconsistent numbers &nbsp; <span class="tag p2">P2</span> hygiene / security</p>
+
+  <h3>Invoicing &amp; Work Packages</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Level</th><th>Finding</th><th>Evidence</th></tr>
+    <tr><td>1</td><td><span class="tag p0">P0</span></td><td>Fixed price / periodic / milestone / instalment / percentage WPs cannot be invoiced.</td><td>Apply supports hours &amp; per unit only; 0 WP invoice lines.</td></tr>
+    <tr><td>2</td><td><span class="tag p0">P0</span></td><td>Invoice editor and "To invoice" queue ignore WP values and use hours.</td><td>147-001 shows 254h30 instead of €5,460.</td></tr>
+    <tr><td>3</td><td><span class="tag p0">P0</span></td><td>WP and project billing status never reflect what was invoiced.</td><td>310/331 projects have no billing status.</td></tr>
+    <tr><td>4</td><td><span class="tag p0">P0</span></td><td>A WP left in <i>draft</i> can never be invoiced, and the screen does not say why.</td><td>All 4 WPs of 147-001 are draft.</td></tr>
+    <tr><td>5</td><td><span class="tag p0">P0</span></td><td>"144-" projects bypass WPs entirely.</td><td>207 projects, 0 WPs.</td></tr>
+  </table></div>
+
+  <h3>Invoice numbers, dates &amp; credit notes</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Level</th><th>Finding</th><th>Evidence</th></tr>
+    <tr><td>6</td><td><span class="tag p0">P0</span></td><td>Gaps in the invoice number sequence, and test invoices inside the real sequence.</td><td>Missing: INV-0101, 0106, 0113, 0114, 0120–0147 (28 numbers used by a test run on 18-09, some carrying a real client name, then moved to Trash). Test invoices still active with real numbers: INV-0117, 0118, 0149, 0150, 0159.</td></tr>
+    <tr><td>7</td><td><span class="tag p0">P0</span></td><td>Invoice date is not set when the invoice is actually issued — invoices can go out already past due.</td><td>INV-0100/0102/0103/0104/0107: dated 26-08, due 05-09, sent 09-09. INV-0159 dated 06-10 but numbered after INV-0158 (29-10).</td></tr>
+    <tr><td>8</td><td><span class="tag p0">P0</span></td><td>No credit-note flow. The issuing step refuses totals ≤ 0; the CR- number series exists in settings but is never used.</td><td>INV-0151 (−€2,500, RMS) has an INV number, status "paid", was never sent; INV-0108 (€6,250, RMS) is still fully "overdue".</td></tr>
+    <tr><td>9</td><td><span class="tag p0">P0</span></td><td>Credit lines show positive quantity × price but a negative total.</td><td>INV-0151: 125 × €10 = −€1,250 (twice).</td></tr>
+  </table></div>
+
+  <h3>Hours linked to invoices</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Level</th><th>Finding</th><th>Evidence</th></tr>
+    <tr><td>10</td><td><span class="tag p0">P0</span></td><td>Moving an invoice to Trash keeps its hours locked — they never come back to the "To invoice" queue.</td><td>≈98 billable hours stuck: 144-113 (3.5h), 145-001 (43.25h), 148-001 (51h). Plus 629h on internal project 100-001 (not billable).</td></tr>
+    <tr><td>11</td><td><span class="tag p0">P0</span></td><td>Risk of double billing: permanently deleting a trashed draft can unlock hours that are already billed on another invoice.</td><td>434h of 148-001 are billed on INV-0108 but still point to trashed draft-0003.</td></tr>
+  </table></div>
+
+  <h3>Reports, dashboard &amp; project status</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Level</th><th>Finding</th><th>Evidence</th></tr>
+    <tr><td>12</td><td><span class="tag p1">P1</span></td><td>Settings are stored 3 times (2 old test copies); the dashboard and margin report read a test copy.</td><td>Margin target shown as 50% instead of your configured 60%.</td></tr>
+    <tr><td>13</td><td><span class="tag p1">P1</span></td><td>Invoice KPIs include test invoices and credit notes.</td><td>"Paid €53,703.02" includes −€2,500 credit and a €0 test invoice.</td></tr>
+    <tr><td>14</td><td><span class="tag p1">P1</span></td><td>"Outstanding" excludes overdue invoices.</td><td>Shows €22,066.10; total receivable is €28,316.10.</td></tr>
+    <tr><td>15</td><td><span class="tag p1">P1</span></td><td>Some screens show amounts incl. VAT, others excl. VAT, under the same words.</td><td>Invoices / Dashboard incl. VAT; Project Financials / Client account excl. VAT.</td></tr>
+    <tr><td>16</td><td><span class="tag p1">P1</span></td><td>Project Financials ignore credit notes.</td><td>Credited and negative invoices are skipped.</td></tr>
+    <tr><td>17</td><td><span class="tag p1">P1</span></td><td>Dashboard "To create" never shows an amount.</td><td>Withheld because ready projects (144-/146-) have no price.</td></tr>
+    <tr><td>18</td><td><span class="tag p1">P1</span></td><td>Margin forecast is meaningless for periodic / retainer projects.</td><td>127-002 Gamma: −18,105%.</td></tr>
+    <tr><td>19</td><td><span class="tag p1">P1</span></td><td>Projects do not move to "Paid" reliably when their invoices are paid.</td><td>68 projects fully paid but still "Invoiced" (e.g. 130-013). 151-001 and 144-095 "Invoiced" without an issued invoice.</td></tr>
+    <tr><td>20</td><td><span class="tag p1">P1</span></td><td>Two spellings of the same project status.</td><td>45 projects "completed" vs. the official "complete".</td></tr>
+  </table></div>
+
+  <h3>Quotations</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Level</th><th>Finding</th><th>Evidence</th></tr>
+    <tr><td>21</td><td><span class="tag p1">P1</span></td><td>Quotations are linked to projects by free text only; accepted quotations do not create WPs on the server; invoice ↔ quotation links get lost.</td><td>Q-2026-014 (Mobilane) not linked to 147-001. Q-2026-006 points to cancelled draft-0027; the real INV-0155 (€3,539.25) has no project and no quotation link. Q-2026-004/008 have no client record.</td></tr>
+    <tr><td>22</td><td><span class="tag p1">P1</span></td><td>Expired quotations stay "Sent".</td><td>Q-2026-008 valid until 28-10, still "Sent".</td></tr>
+  </table></div>
+
+  <h3>VAT, payments &amp; security</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Level</th><th>Finding</th><th>Evidence</th></tr>
+    <tr><td>23</td><td><span class="tag p2">P2</span></td><td>VAT rate not checked against the allowed rates (0/9/21); different legal VAT text for the same foreign client.</td><td>12% used on test invoices. 145 WB&amp;E: INV-0156 "BTW verlegd" vs INV-0161 "Verkoop Intracommunautair".</td></tr>
+    <tr><td>24</td><td><span class="tag p2">P2</span></td><td>Payments can be registered on cancelled / trashed invoices; old amounts stored unrounded.</td><td>€40 payment on cancelled INV-0150; e.g. €18,206.71875 on INV-0107.</td></tr>
+    <tr><td>25</td><td><span class="tag p2">P2</span></td><td>Since 09-11 every logged-in user (incl. employees) can read all invoices, quotations and payments through the system; the screens only hide them.</td><td>Read permission opened for all roles.</td></tr>
+  </table></div>
+
+  <h2 id="en-plan">3. Planned code updates</h2>
+  <p>The 25 findings come down to 8 work packages. Code changes only affect what happens <b>from the moment they go live</b>; they do not rewrite existing records.</p>
+  <div class="tbl"><table>
+    <tr><th>Package</th><th>What changes</th><th>Fixes</th><th>Status</th></tr>
+    <tr><td><b>A. WP → Invoice</b></td><td>"Apply billing" works for every WP method and creates an invoice line from the WP value; the invoice queue shows WP amounts; WP and project billing status follow the invoices; a draft WP shows clearly why it cannot be invoiced; "144-" projects join the WP flow.</td><td>1–5</td><td><span class="tag wait">needs decisions 1–2</span></td></tr>
+    <tr><td><b>B. Hours on deleted invoices</b></td><td>Moving to Trash releases the hours (restore locks them again). Hours that are on another invoice are never released. Done in one server step instead of several browser steps.</td><td>10–11</td><td><span class="tag ok">can start now</span></td></tr>
+    <tr><td><b>C. Credit notes &amp; invoice date</b></td><td>Proper credit note linked to the original invoice and subtracted from what the client owes; invoice date / due date set when the invoice is issued.</td><td>7–9</td><td><span class="tag wait">needs decisions 4 &amp; 6</span></td></tr>
+    <tr><td><b>D. One settings source</b></td><td>Every screen and server function reads the same (real) settings record.</td><td>12</td><td><span class="tag ok">can start now</span></td></tr>
+    <tr><td><b>E. Consistent figures</b></td><td>KPIs exclude test invoices; credit notes shown separately; one VAT basis with clear labels; total receivable; "To create" amount; sensible margin for periodic projects.</td><td>13–18</td><td><span class="tag wait">needs decision 7</span></td></tr>
+    <tr><td><b>F. Project status sync</b></td><td>"Paid" sync runs on the server when an invoice is paid; both status spellings accepted.</td><td>19–20</td><td><span class="tag ok">can start now</span></td></tr>
+    <tr><td><b>G. Quotation links</b></td><td>Quotation must be linked to a client and project; accepting creates the WPs on the server; invoice keeps its quotation link; expired state.</td><td>21–22</td><td><span class="tag ok">after A</span></td></tr>
+    <tr><td><b>H. Guards &amp; security</b></td><td>VAT rate check; fixed VAT legal text per VAT treatment; rounding; no payments on cancelled invoices; read access limited to financial roles.</td><td>23–25</td><td><span class="tag wait">security part needs decision 7</span></td></tr>
+  </table></div>
+
+  <h2 id="en-data">4. Data updates — exactly what, before / after, and impact</h2>
+  <div class="box good">
+    <p><b>Principle:</b> we fix the code so it reads existing data correctly, instead of rewriting old data. There are <b>no bulk scripts</b>. The few data actions below are done by hand in the normal screens, one record at a time, only after approval.</p>
+  </div>
+  <div class="box note">
+    <p><b>What will NOT change:</b> issued invoices (numbers, amounts, dates, PDFs already sent), registered payments, time entries already billed, and client data.</p>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p0">Needed</span><strong>D1 · Release ≈98 billable hours stuck on trashed drafts</strong></div>
+    <div class="body">
+      <div class="tbl"><table>
+        <tr><th>Project</th><th>Hours</th><th>Locked to</th></tr>
+        <tr><td>144-113</td><td>3.5h</td><td>INV-0037 (in Trash)</td></tr>
+        <tr><td>145-001</td><td>43.25h</td><td>draft-0051, draft-0052 (in Trash)</td></tr>
+        <tr><td>148-001</td><td>51h</td><td>draft-0003 (in Trash)</td></tr>
+        <tr><td>100-001 (internal)</td><td>629.25h</td><td>INV-0101 (in Trash) — <b>no action</b>, not billable</td></tr>
+      </table></div>
+      <div class="ba">
+        <div class="before"><h4>Before</h4>The hours are marked "invoiced" but the invoice is in Trash. They do not appear in "To invoice", the project cannot bill them, and the work report misses them.</div>
+        <div class="after"><h4>After</h4>The hours are back in "To invoice" for their project; the project returns to "Ready to invoice" and can be billed normally.</div>
+      </div>
+      <dl class="kv">
+        <dt>How</dt><dd>After package B is live: the PM confirms per project that these hours were not billed elsewhere; then the trashed draft is restored and cancelled (or deleted) in the Invoices screen, which releases its hours.</dd>
+        <dt>Flows affected</dt><dd>Invoice queue, project status, work report, margin of those 3 projects. No invoice number is used, nothing is sent.</dd>
+        <dt>Approval</dt><dd>PM of each project.</dd>
+        <dt>If we do nothing</dt><dd>≈98 hours of work are never invoiced.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag ok">No data change</span><strong>D2 · 434h of 148-001 linked to the wrong invoice</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Before</h4>The hours are billed on INV-0108 but internally still point to trashed draft-0003. Deleting draft-0003 permanently would put them back in the queue → risk of billing them twice.</div>
+        <div class="after"><h4>After</h4>Package B never releases hours that are on another invoice, so the risk disappears. The record stays as it is.</div>
+      </div>
+      <dl class="kv"><dt>Approval</dt><dd>None needed.</dd></dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p0">Your decision</span><strong>D3 · RMS Engineering: INV-0108 and credit INV-0151</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Before</h4>INV-0108 €6,250 "overdue" since 08-09. Credit INV-0151 −€2,500 is marked "paid" and was never sent through the CRM. Receivables show the full €6,250 open.</div>
+        <div class="after"><h4>After (depends on your answer)</h4>Fully paid → mark INV-0108 paid. €3,750 still open → register the credit properly once package C is live (or record a partial payment). Receivables show the real amount.</div>
+      </div>
+      <dl class="kv">
+        <dt>How</dt><dd>In the Invoices screen, by you or the accountant.</dd>
+        <dt>Flows affected</dt><dd>Receivables, overdue reminders to RMS, dashboard overdue amount, project 148-001 status.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p0">Your decision</span><strong>D4 · Test invoices and number gaps</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Before</h4>INV-0117, 0118, 0149, 0150, 0159 are test invoices with real numbers. INV-0101, 0106, 0113, 0114, 0120–0147 are missing from the active sequence.</div>
+        <div class="after"><h4>After</h4>Test invoices stay cancelled with a "test – void" note (numbers and amounts unchanged), and the accountant gets a list explaining each gap. Package E excludes them from KPIs; new tests can no longer use the real sequence.</div>
+      </div>
+      <dl class="kv">
+        <dt>Flows affected</dt><dd>Only the note on those cancelled invoices. Nothing is renumbered, nothing is sent.</dd>
+        <dt>Approval</dt><dd>You / accountant (decision 5).</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p2">Optional</span><strong>D5 · 68 fully paid projects still marked "Invoiced"</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Before</h4>All invoices of these projects are paid, but the project status is "Invoiced" (mostly old, closed 144- projects).</div>
+        <div class="after"><h4>After</h4>Project status "Paid" and Note "600 Paid", same as the automatic sync does today for new payments.</div>
+      </div>
+      <dl class="kv">
+        <dt>Flows affected</dt><dd>Project lists / filters by status and the project Note. No invoice or payment changes.</dd>
+        <dt>Recommendation</dt><dd>Only do this if you use the "Paid" status for reporting; otherwise leave the old projects as they are.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p2">Optional</span><strong>D6 · Re-link a few quotations</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Before</h4>Q-2026-014, Q-2026-006, Q-2026-005, Q-2026-004, Q-2026-008 are not (correctly) linked to a client, project or invoice.</div>
+        <div class="after"><h4>After</h4>Each is linked to the right client / project after the PM confirms which one.</div>
+      </div>
+      <dl class="kv"><dt>Flows affected</dt><dd>Quotation overview and project "source quotation" only.</dd></dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag ok">No data change</span><strong>D7 · Old test settings records</strong></div>
+    <div class="body">
+      <p>After package D, the 2 old "Cadinvo test" settings records are ignored. They can be deleted later, but this is not needed.</p>
+    </div>
+  </div>
+
+  <h2 id="en-display">5. Numbers that will look different (no data changes)</h2>
+  <p>After package E some screens show different figures. The data is the same — only the calculation becomes consistent.</p>
+  <div class="tbl"><table>
+    <tr><th>Screen / figure</th><th>Today</th><th>After</th><th>Why</th></tr>
+    <tr><td>Invoices · Paid</td><td>€53,703.02 (18)</td><td>€56,203.02 (16) + credit notes shown separately</td><td>Credit note and €0 test invoice no longer mixed in</td></tr>
+    <tr><td>Invoices · total receivable</td><td>— (Outstanding €22,066.10 + Overdue €6,250 shown apart)</td><td>€28,316.10 (or €25,816.10 if the RMS credit applies)</td><td>Overdue is also money owed</td></tr>
+    <tr><td>Invoices · Total invoiced count</td><td>26</td><td>24</td><td>Two €0 test invoices excluded</td></tr>
+    <tr><td>Dashboard · margin target</td><td>50%</td><td>60%</td><td>Reads your real settings</td></tr>
+    <tr><td>Project Financials</td><td>Credit notes ignored</td><td>Credit notes subtracted</td><td>Correct net revenue</td></tr>
+    <tr><td>All money screens</td><td>Mixed incl./excl. VAT</td><td>One basis, labelled</td><td>Decision 7</td></tr>
+  </table></div>
+
+  <h2 id="en-decisions">6. Decisions needed from you</h2>
+  <div class="box note"><p><b>How to answer:</b> tick one option per question, or choose <b>Other</b> and type your own answer. Your choices appear in the box <b>"Your answers"</b> at the end of this section — take a screenshot of that box (or click "Copy answers") and send it back to us. Choices are kept in this browser only; nothing is sent automatically.</p></div>
+  <ol class="q" data-decisions="en"></ol>
+  <div class="box" data-summary="en"></div>
+
+  <h2 id="en-order">7. Proposed order</h2>
+  <div class="tbl"><table>
+    <tr><th>Step</th><th>What</th><th>Waits for</th></tr>
+    <tr><td>1</td><td>B (hours), D (settings), F (status sync), H guards</td><td>Nothing — can start now</td></tr>
+    <tr><td>2</td><td>A (WP → Invoice), test on 147-001 / 152-001</td><td>Decisions 1–2</td></tr>
+    <tr><td>3</td><td>C (credit notes, invoice date)</td><td>Decisions 4 &amp; 6</td></tr>
+    <tr><td>4</td><td>E (figures), H security</td><td>Decision 7</td></tr>
+    <tr><td>5</td><td>G (quotations)</td><td>After A</td></tr>
+    <tr><td>6</td><td>Data actions D1, D3, D4 (and optional D5, D6)</td><td>PM / your approval, after B and C are live</td></tr>
+  </table></div>
+
+  <h2 id="en-scope">8. Scope &amp; limits of this audit</h2>
+  <p>Checked: invoices, invoice numbering and issuing, payments, Work Packages and billing, quotations, project billing status, dashboard finance, invoice KPIs, margin/financial calculations, permissions — in code and in live data (read-only).</p>
+  <p>Not yet checked: recurring invoices, automatic payment reminders, PDF layout and email sending (nothing may be sent from production), and a screen-by-screen walk-through of project detail / WP card / reports. We will do the screen walk-through with screenshots before starting package A.</p>
+
+  <footer>Prepared by Ocean · CADINVO CRM · 10-11-2026 · Read-only audit, no data was changed.</footer>
+</div>
+
+<!-- ============================ NEDERLANDS ============================ -->
+<div class="wrap lang" data-lang="nl">
+  <h1>Financiën, facturen, offertes &amp; werkpakketten — auditrapport</h1>
+  <p class="lead">Wat we gevonden hebben, wat we in de code gaan aanpassen, wat (weinig) we in de data willen aanpassen, en de beslissingen die we van je nodig hebben.</p>
+  <p class="meta">Basis: code-review van het CRM plus een <b>alleen-lezen</b> controle van de live data op 10-11-2026. Tijdens deze audit is niets gewijzigd, aangemaakt of verstuurd.</p>
+
+  <div class="cards">
+    <div class="card"><div class="num">0</div><div class="lbl">facturen ooit aangemaakt vanuit een werkpakket</div></div>
+    <div class="card"><div class="num">25</div><div class="lbl">bevindingen, gegroepeerd in 8 werkpakketten (A–H)</div></div>
+    <div class="card"><div class="num">7</div><div class="lbl">beslissingen die we van je nodig hebben</div></div>
+    <div class="card"><div class="num">0</div><div class="lbl">bulkscripts — data wordt alleen handmatig en na akkoord aangepast</div></div>
+  </div>
+
+  <h3>Inhoud</h3>
+  <ol class="toc">
+    <li><a href="#nl-why">Waarom facturen niet vanuit WP's verstuurd kunnen worden</a></li>
+    <li><a href="#nl-findings">Alle bevindingen</a></li>
+    <li><a href="#nl-plan">Geplande code-aanpassingen (A–H)</a></li>
+    <li><a href="#nl-data">Data-aanpassingen — voor / na / impact</a></li>
+    <li><a href="#nl-display">Cijfers die er anders uit gaan zien</a></li>
+    <li><a href="#nl-decisions">Beslissingen nodig van jou</a></li>
+    <li><a href="#nl-order">Voorgestelde volgorde</a></li>
+    <li><a href="#nl-scope">Scope &amp; grenzen van deze audit</a></li>
+  </ol>
+
+  <h2 id="nl-why">1. Waarom facturen niet vanuit werkpakketten verstuurd kunnen worden</h2>
+  <div class="box warn">
+    <p><b>Het WP-pakket is toegevoegd maar nooit aan de facturatie gekoppeld.</b> De actie "Apply billing" werkt alleen voor WP's met factuurmethode <i>Uren</i> of <i>Per stuk</i>. Vaste prijs, periodiek, mijlpaal, termijnen en percentage hebben <b>geen weg naar een factuur</b>. De factuureditor negeert WP's volledig en bouwt regels op uit gelogde uren × uurtarief.</p>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Feit (live data)</th><th>Waarde</th></tr>
+    <tr><td>Projecten met werkpakketten</td><td>10 van 331 (in totaal 23 WP's)</td></tr>
+    <tr><td>Factuurregels aangemaakt vanuit een WP</td><td>0</td></tr>
+    <tr><td>147-001 Mobilane Configuratie</td><td>4 WP's met vaste prijs, totaal € 5.460. Alle 4 nog in <i>concept</i>, dus "niet gereed". De factuurwachtrij toont <b>254u30</b> in plaats van € 5.460.</td></tr>
+    <tr><td>152-001 Jannie vd Meer</td><td>2 WP's met vaste prijs: € 500 (afgerond, gereed) + € 390 (concept). Het project zelf staat op <i>nacalculatie</i>. Wachtrij toont <b>81u45</b>.</td></tr>
+    <tr><td>"144-" projecten ('t Stalenhuys)</td><td>207 projecten, 0 WP's — ze lopen via een aparte, hard-gecodeerde route (Thống brengt dit in lijn met WP).</td></tr>
+    <tr><td>Factuurstatus van WP / project</td><td>Wordt nooit bijgewerkt door facturen. WP's worden nooit "deels / volledig gefactureerd"; de factuurstatus van projecten is leeg bij 310 van de 331 projecten.</td></tr>
+  </table></div>
+  <p>Wij denken dat 147-001 en 152-001 de twee facturen zijn die je bedoelde — graag bevestigen (beslissing 1).</p>
+
+  <h2 id="nl-findings">2. Alle bevindingen</h2>
+  <p><span class="tag p0">P0</span> blokkeert facturatie of geeft juridisch/financieel risico &nbsp; <span class="tag p1">P1</span> foute of inconsistente cijfers &nbsp; <span class="tag p2">P2</span> opschoning / beveiliging</p>
+
+  <h3>Facturatie &amp; werkpakketten</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Niveau</th><th>Bevinding</th><th>Bewijs</th></tr>
+    <tr><td>1</td><td><span class="tag p0">P0</span></td><td>WP's met vaste prijs / periodiek / mijlpaal / termijnen / percentage kunnen niet gefactureerd worden.</td><td>Apply ondersteunt alleen uren &amp; per stuk; 0 WP-factuurregels.</td></tr>
+    <tr><td>2</td><td><span class="tag p0">P0</span></td><td>Factuureditor en wachtrij "Te factureren" negeren de WP-waarde en gebruiken uren.</td><td>147-001 toont 254u30 in plaats van € 5.460.</td></tr>
+    <tr><td>3</td><td><span class="tag p0">P0</span></td><td>De factuurstatus van WP en project laat nooit zien wat gefactureerd is.</td><td>310/331 projecten zonder factuurstatus.</td></tr>
+    <tr><td>4</td><td><span class="tag p0">P0</span></td><td>Een WP dat in <i>concept</i> blijft, kan nooit gefactureerd worden en het scherm zegt niet waarom.</td><td>Alle 4 WP's van 147-001 staan op concept.</td></tr>
+    <tr><td>5</td><td><span class="tag p0">P0</span></td><td>"144-" projecten slaan WP's volledig over.</td><td>207 projecten, 0 WP's.</td></tr>
+  </table></div>
+
+  <h3>Factuurnummers, datums &amp; creditnota's</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Niveau</th><th>Bevinding</th><th>Bewijs</th></tr>
+    <tr><td>6</td><td><span class="tag p0">P0</span></td><td>Gaten in de factuurnummering en testfacturen in de echte reeks.</td><td>Ontbrekend: INV-0101, 0106, 0113, 0114, 0120–0147 (28 nummers gebruikt door een testrun op 18-09, deels met een echte klantnaam, daarna naar de prullenbak). Testfacturen nog actief met echte nummers: INV-0117, 0118, 0149, 0150, 0159.</td></tr>
+    <tr><td>7</td><td><span class="tag p0">P0</span></td><td>De factuurdatum wordt niet gezet op het moment van uitgifte — facturen kunnen al over de vervaldatum verstuurd worden.</td><td>INV-0100/0102/0103/0104/0107: gedateerd 26-08, vervaldatum 05-09, verstuurd 09-09. INV-0159 gedateerd 06-10 maar genummerd na INV-0158 (29-10).</td></tr>
+    <tr><td>8</td><td><span class="tag p0">P0</span></td><td>Geen creditnota-proces. De uitgiftestap weigert totalen ≤ 0; de CR-nummerreeks staat in de instellingen maar wordt nooit gebruikt.</td><td>INV-0151 (−€ 2.500, RMS) heeft een INV-nummer, status "betaald", nooit verstuurd; INV-0108 (€ 6.250, RMS) staat nog volledig "vervallen".</td></tr>
+    <tr><td>9</td><td><span class="tag p0">P0</span></td><td>Creditregels tonen positief aantal × prijs maar een negatief totaal.</td><td>INV-0151: 125 × € 10 = −€ 1.250 (twee keer).</td></tr>
+  </table></div>
+
+  <h3>Uren gekoppeld aan facturen</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Niveau</th><th>Bevinding</th><th>Bewijs</th></tr>
+    <tr><td>10</td><td><span class="tag p0">P0</span></td><td>Een factuur naar de prullenbak verplaatsen houdt de uren vastgezet — ze komen nooit terug in "Te factureren".</td><td>≈98 factureerbare uren vast: 144-113 (3,5u), 145-001 (43,25u), 148-001 (51u). Plus 629u op intern project 100-001 (niet factureerbaar).</td></tr>
+    <tr><td>11</td><td><span class="tag p0">P0</span></td><td>Risico op dubbele facturatie: een concept uit de prullenbak definitief verwijderen kan uren vrijgeven die al op een andere factuur staan.</td><td>434u van 148-001 staan gefactureerd op INV-0108 maar verwijzen nog naar concept draft-0003 in de prullenbak.</td></tr>
+  </table></div>
+
+  <h3>Rapportages, dashboard &amp; projectstatus</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Niveau</th><th>Bevinding</th><th>Bewijs</th></tr>
+    <tr><td>12</td><td><span class="tag p1">P1</span></td><td>Instellingen staan 3 keer opgeslagen (2 oude testkopieën); dashboard en margerapport lezen een testkopie.</td><td>Margedoel getoond als 50% in plaats van jouw ingestelde 60%.</td></tr>
+    <tr><td>13</td><td><span class="tag p1">P1</span></td><td>Factuur-KPI's tellen testfacturen en creditnota's mee.</td><td>"Betaald € 53.703,02" bevat −€ 2.500 credit en een testfactuur van € 0.</td></tr>
+    <tr><td>14</td><td><span class="tag p1">P1</span></td><td>"Openstaand" telt vervallen facturen niet mee.</td><td>Toont € 22.066,10; totaal te ontvangen is € 28.316,10.</td></tr>
+    <tr><td>15</td><td><span class="tag p1">P1</span></td><td>Sommige schermen tonen bedragen incl. btw, andere excl. btw, onder dezelfde woorden.</td><td>Facturen / Dashboard incl. btw; Projectfinanciën / Klantoverzicht excl. btw.</td></tr>
+    <tr><td>16</td><td><span class="tag p1">P1</span></td><td>Projectfinanciën negeren creditnota's.</td><td>Gecrediteerde en negatieve facturen worden overgeslagen.</td></tr>
+    <tr><td>17</td><td><span class="tag p1">P1</span></td><td>Dashboard "Aan te maken" toont nooit een bedrag.</td><td>Weggelaten omdat gereede projecten (144-/146-) geen prijs hebben.</td></tr>
+    <tr><td>18</td><td><span class="tag p1">P1</span></td><td>Margeprognose is zinloos voor periodieke / retainerprojecten.</td><td>127-002 Gamma: −18.105%.</td></tr>
+    <tr><td>19</td><td><span class="tag p1">P1</span></td><td>Projecten gaan niet betrouwbaar naar "Betaald" als hun facturen betaald zijn.</td><td>68 projecten volledig betaald maar nog "Gefactureerd" (bijv. 130-013). 151-001 en 144-095 "Gefactureerd" zonder uitgegeven factuur.</td></tr>
+    <tr><td>20</td><td><span class="tag p1">P1</span></td><td>Twee schrijfwijzen voor dezelfde projectstatus.</td><td>45 projecten "completed" naast het officiële "complete".</td></tr>
+  </table></div>
+
+  <h3>Offertes</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Niveau</th><th>Bevinding</th><th>Bewijs</th></tr>
+    <tr><td>21</td><td><span class="tag p1">P1</span></td><td>Offertes zijn alleen via vrije tekst aan projecten gekoppeld; geaccepteerde offertes maken op de server geen WP's aan; de koppeling factuur ↔ offerte gaat verloren.</td><td>Q-2026-014 (Mobilane) niet gekoppeld aan 147-001. Q-2026-006 verwijst naar geannuleerd draft-0027; de echte INV-0155 (€ 3.539,25) heeft geen project en geen offertekoppeling. Q-2026-004/008 hebben geen klantrecord.</td></tr>
+    <tr><td>22</td><td><span class="tag p1">P1</span></td><td>Verlopen offertes blijven op "Verstuurd".</td><td>Q-2026-008 geldig tot 28-10, nog steeds "Verstuurd".</td></tr>
+  </table></div>
+
+  <h3>Btw, betalingen &amp; beveiliging</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Niveau</th><th>Bevinding</th><th>Bewijs</th></tr>
+    <tr><td>23</td><td><span class="tag p2">P2</span></td><td>Btw-tarief wordt niet gecontroleerd op de toegestane tarieven (0/9/21); verschillende wettelijke btw-tekst voor dezelfde buitenlandse klant.</td><td>12% gebruikt op testfacturen. 145 WB&amp;E: INV-0156 "BTW verlegd" vs INV-0161 "Verkoop Intracommunautair".</td></tr>
+    <tr><td>24</td><td><span class="tag p2">P2</span></td><td>Betalingen kunnen geregistreerd worden op geannuleerde / verwijderde facturen; oude bedragen ongerond opgeslagen.</td><td>Betaling € 40 op geannuleerde INV-0150; bijv. € 18.206,71875 op INV-0107.</td></tr>
+    <tr><td>25</td><td><span class="tag p2">P2</span></td><td>Sinds 09-11 kan elke ingelogde gebruiker (ook medewerkers) via het systeem alle facturen, offertes en betalingen lezen; de schermen verbergen ze alleen.</td><td>Leesrecht opengezet voor alle rollen.</td></tr>
+  </table></div>
+
+  <h2 id="nl-plan">3. Geplande code-aanpassingen</h2>
+  <p>De 25 bevindingen komen neer op 8 werkpakketten. Code-aanpassingen werken alleen <b>vanaf het moment dat ze live gaan</b>; bestaande records worden niet herschreven.</p>
+  <div class="tbl"><table>
+    <tr><th>Pakket</th><th>Wat verandert</th><th>Lost op</th><th>Status</th></tr>
+    <tr><td><b>A. WP → Factuur</b></td><td>"Apply billing" werkt voor elke WP-methode en maakt een factuurregel op basis van de WP-waarde; de wachtrij toont WP-bedragen; factuurstatus van WP en project volgt de facturen; een WP in concept laat duidelijk zien waarom het niet gefactureerd kan worden; "144-" projecten gaan mee in de WP-route.</td><td>1–5</td><td><span class="tag wait">wacht op beslissing 1–2</span></td></tr>
+    <tr><td><b>B. Uren op verwijderde facturen</b></td><td>Naar de prullenbak verplaatsen geeft de uren vrij (terugzetten legt ze weer vast). Uren die op een andere factuur staan worden nooit vrijgegeven. In één serverstap in plaats van meerdere browserstappen.</td><td>10–11</td><td><span class="tag ok">kan nu starten</span></td></tr>
+    <tr><td><b>C. Creditnota's &amp; factuurdatum</b></td><td>Echte creditnota gekoppeld aan de originele factuur en afgetrokken van wat de klant verschuldigd is; factuurdatum / vervaldatum gezet bij uitgifte.</td><td>7–9</td><td><span class="tag wait">wacht op beslissing 4 &amp; 6</span></td></tr>
+    <tr><td><b>D. Eén bron voor instellingen</b></td><td>Elk scherm en elke serverfunctie leest hetzelfde (echte) instellingenrecord.</td><td>12</td><td><span class="tag ok">kan nu starten</span></td></tr>
+    <tr><td><b>E. Consistente cijfers</b></td><td>KPI's zonder testfacturen; creditnota's apart getoond; één btw-basis met duidelijke labels; totaal te ontvangen; bedrag bij "Aan te maken"; zinnige marge voor periodieke projecten.</td><td>13–18</td><td><span class="tag wait">wacht op beslissing 7</span></td></tr>
+    <tr><td><b>F. Projectstatus synchroon</b></td><td>Synchronisatie naar "Betaald" draait op de server zodra een factuur betaald is; beide schrijfwijzen van de status worden geaccepteerd.</td><td>19–20</td><td><span class="tag ok">kan nu starten</span></td></tr>
+    <tr><td><b>G. Offertekoppelingen</b></td><td>Offerte moet aan klant en project gekoppeld zijn; accepteren maakt de WP's op de server aan; factuur houdt de offertekoppeling; status "verlopen".</td><td>21–22</td><td><span class="tag ok">na A</span></td></tr>
+    <tr><td><b>H. Controles &amp; beveiliging</b></td><td>Controle btw-tarief; vaste wettelijke btw-tekst per btw-behandeling; afronding; geen betalingen op geannuleerde facturen; leesrecht beperkt tot financiële rollen.</td><td>23–25</td><td><span class="tag wait">beveiligingsdeel wacht op beslissing 7</span></td></tr>
+  </table></div>
+
+  <h2 id="nl-data">4. Data-aanpassingen — precies wat, voor / na, en impact</h2>
+  <div class="box good">
+    <p><b>Uitgangspunt:</b> we passen de code aan zodat die bestaande data correct leest, in plaats van oude data te herschrijven. Er zijn <b>geen bulkscripts</b>. De paar data-acties hieronder gebeuren handmatig in de gewone schermen, record voor record, en alleen na akkoord.</p>
+  </div>
+  <div class="box note">
+    <p><b>Wat NIET verandert:</b> uitgegeven facturen (nummers, bedragen, datums, al verstuurde pdf's), geregistreerde betalingen, al gefactureerde uren en klantgegevens.</p>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p0">Nodig</span><strong>D1 · ≈98 factureerbare uren vrijgeven die vastzitten op concepten in de prullenbak</strong></div>
+    <div class="body">
+      <div class="tbl"><table>
+        <tr><th>Project</th><th>Uren</th><th>Vastgezet op</th></tr>
+        <tr><td>144-113</td><td>3,5u</td><td>INV-0037 (prullenbak)</td></tr>
+        <tr><td>145-001</td><td>43,25u</td><td>draft-0051, draft-0052 (prullenbak)</td></tr>
+        <tr><td>148-001</td><td>51u</td><td>draft-0003 (prullenbak)</td></tr>
+        <tr><td>100-001 (intern)</td><td>629,25u</td><td>INV-0101 (prullenbak) — <b>geen actie</b>, niet factureerbaar</td></tr>
+      </table></div>
+      <div class="ba">
+        <div class="before"><h4>Voor</h4>De uren staan op "gefactureerd" maar de factuur zit in de prullenbak. Ze verschijnen niet in "Te factureren", het project kan ze niet factureren en het werkrapport mist ze.</div>
+        <div class="after"><h4>Na</h4>De uren staan weer in "Te factureren" bij hun project; het project gaat terug naar "Gereed om te factureren" en kan normaal gefactureerd worden.</div>
+      </div>
+      <dl class="kv">
+        <dt>Hoe</dt><dd>Nadat pakket B live is: de PM bevestigt per project dat deze uren niet elders gefactureerd zijn; daarna wordt het concept uit de prullenbak teruggezet en geannuleerd (of verwijderd) in het factuurscherm, waardoor de uren vrijkomen.</dd>
+        <dt>Geraakte processen</dt><dd>Factuurwachtrij, projectstatus, werkrapport, marge van die 3 projecten. Er wordt geen factuurnummer gebruikt en niets verstuurd.</dd>
+        <dt>Akkoord</dt><dd>PM van elk project.</dd>
+        <dt>Als we niets doen</dt><dd>≈98 uur werk wordt nooit gefactureerd.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag ok">Geen data-wijziging</span><strong>D2 · 434u van 148-001 gekoppeld aan de verkeerde factuur</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Voor</h4>De uren staan gefactureerd op INV-0108 maar verwijzen intern nog naar draft-0003 in de prullenbak. draft-0003 definitief verwijderen zou ze terugzetten in de wachtrij → risico op dubbele facturatie.</div>
+        <div class="after"><h4>Na</h4>Pakket B geeft nooit uren vrij die op een andere factuur staan, dus het risico verdwijnt. Het record blijft zoals het is.</div>
+      </div>
+      <dl class="kv"><dt>Akkoord</dt><dd>Niet nodig.</dd></dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p0">Jouw beslissing</span><strong>D3 · RMS Engineering: INV-0108 en creditnota INV-0151</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Voor</h4>INV-0108 € 6.250 "vervallen" sinds 08-09. Credit INV-0151 −€ 2.500 staat op "betaald" en is nooit via het CRM verstuurd. Debiteuren tonen de volle € 6.250 open.</div>
+        <div class="after"><h4>Na (afhankelijk van jouw antwoord)</h4>Volledig betaald → INV-0108 op betaald zetten. Nog € 3.750 open → de credit correct registreren zodra pakket C live is (of een deelbetaling vastleggen). Debiteuren tonen het echte bedrag.</div>
+      </div>
+      <dl class="kv">
+        <dt>Hoe</dt><dd>In het factuurscherm, door jou of de boekhouder.</dd>
+        <dt>Geraakte processen</dt><dd>Debiteuren, betalingsherinneringen aan RMS, vervallen bedrag op het dashboard, status van project 148-001.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p0">Jouw beslissing</span><strong>D4 · Testfacturen en gaten in de nummering</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Voor</h4>INV-0117, 0118, 0149, 0150, 0159 zijn testfacturen met echte nummers. INV-0101, 0106, 0113, 0114, 0120–0147 ontbreken in de actieve reeks.</div>
+        <div class="after"><h4>Na</h4>Testfacturen blijven geannuleerd met een notitie "test – vervallen" (nummers en bedragen ongewijzigd), en de boekhouder krijgt een lijst die elk gat verklaart. Pakket E sluit ze uit van de KPI's; nieuwe tests kunnen de echte reeks niet meer gebruiken.</div>
+      </div>
+      <dl class="kv">
+        <dt>Geraakte processen</dt><dd>Alleen de notitie op die geannuleerde facturen. Niets wordt hernummerd, niets wordt verstuurd.</dd>
+        <dt>Akkoord</dt><dd>Jij / boekhouder (beslissing 5).</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p2">Optioneel</span><strong>D5 · 68 volledig betaalde projecten nog op "Gefactureerd"</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Voor</h4>Alle facturen van deze projecten zijn betaald, maar de projectstatus is "Gefactureerd" (vooral oude, gesloten 144-projecten).</div>
+        <div class="after"><h4>Na</h4>Projectstatus "Betaald" en notitie "600 Paid", zoals de automatische synchronisatie nu al doet bij nieuwe betalingen.</div>
+      </div>
+      <dl class="kv">
+        <dt>Geraakte processen</dt><dd>Projectlijsten / filters op status en de projectnotitie. Geen wijziging aan facturen of betalingen.</dd>
+        <dt>Advies</dt><dd>Alleen doen als je de status "Betaald" voor rapportage gebruikt; anders de oude projecten laten zoals ze zijn.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag p2">Optioneel</span><strong>D6 · Enkele offertes opnieuw koppelen</strong></div>
+    <div class="body">
+      <div class="ba">
+        <div class="before"><h4>Voor</h4>Q-2026-014, Q-2026-006, Q-2026-005, Q-2026-004, Q-2026-008 zijn niet (correct) gekoppeld aan een klant, project of factuur.</div>
+        <div class="after"><h4>Na</h4>Elke offerte wordt aan de juiste klant / het juiste project gekoppeld nadat de PM bevestigt welke.</div>
+      </div>
+      <dl class="kv"><dt>Geraakte processen</dt><dd>Alleen het offerteoverzicht en de "bronofferte" van het project.</dd></dl>
+    </div>
+  </div>
+
+  <div class="change">
+    <div class="head"><span class="tag ok">Geen data-wijziging</span><strong>D7 · Oude test-instellingenrecords</strong></div>
+    <div class="body">
+      <p>Na pakket D worden de 2 oude "Cadinvo test"-instellingenrecords genegeerd. Ze kunnen later verwijderd worden, maar dat is niet nodig.</p>
+    </div>
+  </div>
+
+  <h2 id="nl-display">5. Cijfers die er anders uit gaan zien (geen data-wijziging)</h2>
+  <p>Na pakket E tonen sommige schermen andere cijfers. De data blijft hetzelfde — alleen de berekening wordt consistent.</p>
+  <div class="tbl"><table>
+    <tr><th>Scherm / cijfer</th><th>Nu</th><th>Daarna</th><th>Waarom</th></tr>
+    <tr><td>Facturen · Betaald</td><td>€ 53.703,02 (18)</td><td>€ 56.203,02 (16) + creditnota's apart getoond</td><td>Creditnota en testfactuur van € 0 niet meer meegeteld</td></tr>
+    <tr><td>Facturen · totaal te ontvangen</td><td>— (Openstaand € 22.066,10 en Vervallen € 6.250 apart)</td><td>€ 28.316,10 (of € 25.816,10 als de RMS-credit geldt)</td><td>Vervallen is ook verschuldigd geld</td></tr>
+    <tr><td>Facturen · aantal Totaal gefactureerd</td><td>26</td><td>24</td><td>Twee testfacturen van € 0 uitgesloten</td></tr>
+    <tr><td>Dashboard · margedoel</td><td>50%</td><td>60%</td><td>Leest jouw echte instellingen</td></tr>
+    <tr><td>Projectfinanciën</td><td>Creditnota's genegeerd</td><td>Creditnota's afgetrokken</td><td>Juiste netto-omzet</td></tr>
+    <tr><td>Alle geldschermen</td><td>Gemengd incl./excl. btw</td><td>Eén basis, met label</td><td>Beslissing 7</td></tr>
+  </table></div>
+
+  <h2 id="nl-decisions">6. Beslissingen nodig van jou</h2>
+  <div class="box note"><p><b>Zo beantwoord je:</b> vink per vraag één optie aan, of kies <b>Anders</b> en typ je eigen antwoord. Je keuzes verschijnen in het vak <b>"Jouw antwoorden"</b> aan het einde van dit hoofdstuk — maak een screenshot van dat vak (of klik op "Antwoorden kopiëren") en stuur het naar ons terug. Keuzes worden alleen in deze browser bewaard; er wordt niets automatisch verstuurd.</p></div>
+  <ol class="q" data-decisions="nl"></ol>
+  <div class="box" data-summary="nl"></div>
+
+  <h2 id="nl-order">7. Voorgestelde volgorde</h2>
+  <div class="tbl"><table>
+    <tr><th>Stap</th><th>Wat</th><th>Wacht op</th></tr>
+    <tr><td>1</td><td>B (uren), D (instellingen), F (statussynchronisatie), H controles</td><td>Niets — kan nu starten</td></tr>
+    <tr><td>2</td><td>A (WP → Factuur), test op 147-001 / 152-001</td><td>Beslissing 1–2</td></tr>
+    <tr><td>3</td><td>C (creditnota's, factuurdatum)</td><td>Beslissing 4 &amp; 6</td></tr>
+    <tr><td>4</td><td>E (cijfers), H beveiliging</td><td>Beslissing 7</td></tr>
+    <tr><td>5</td><td>G (offertes)</td><td>Na A</td></tr>
+    <tr><td>6</td><td>Data-acties D1, D3, D4 (en optioneel D5, D6)</td><td>Akkoord PM / jij, nadat B en C live zijn</td></tr>
+  </table></div>
+
+  <h2 id="nl-scope">8. Scope &amp; grenzen van deze audit</h2>
+  <p>Gecontroleerd: facturen, factuurnummering en uitgifte, betalingen, werkpakketten en facturatie, offertes, factuurstatus van projecten, financieel dashboard, factuur-KPI's, marge-/financiële berekeningen, rechten — in de code en in de live data (alleen-lezen).</p>
+  <p>Nog niet gecontroleerd: terugkerende facturen, automatische betalingsherinneringen, pdf-opmaak en e-mailverzending (vanuit productie mag niets verstuurd worden), en een scherm-voor-scherm doorloop van projectdetail / WP-kaart / rapportages. Die doorloop met screenshots doen we vóór de start van pakket A.</p>
+
+  <footer>Opgesteld door Ocean · CADINVO CRM · 10-11-2026 · Alleen-lezen audit, er is geen data gewijzigd.</footer>
+</div>
+
+<script>
+(function () {
+  var KEY = 'financeAuditLang';
+  function apply(lang) {
+    document.body.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    var btns = document.querySelectorAll('[data-set-lang]');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-set-lang') === lang ? 'true' : 'false');
+    }
+  }
+  var initial = 'en';
+  try { var saved = localStorage.getItem(KEY); if (saved === 'en' || saved === 'nl') initial = saved; } catch (e) {}
+  apply(initial);
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-set-lang]');
+    if (!b) return;
+    var lang = b.getAttribute('data-set-lang');
+    apply(lang);
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+    window.scrollTo(0, 0);
+  });
+
+  /* ---------------- Decisions (tickable) ---------------- */
+  var ANS_KEY = 'financeAuditAnswers.v1';
+  var T = {
+    other: { en: 'Other:', nl: 'Anders:' },
+    otherPh: { en: 'Type your answer…', nl: 'Typ je antwoord…' },
+    rec: { en: 'recommended', nl: 'aanbevolen' },
+    sumTitle: { en: 'Your answers — please take a screenshot of this box and send it back', nl: 'Jouw antwoorden — maak een screenshot van dit vak en stuur het terug' },
+    q: { en: 'Question', nl: 'Vraag' },
+    a: { en: 'Answer', nl: 'Antwoord' },
+    none: { en: 'not answered yet', nl: 'nog niet beantwoord' },
+    comments: { en: 'Comments', nl: 'Opmerkingen' },
+    commentsPh: { en: 'Anything else you want to tell us (optional)…', nl: 'Verder nog iets dat je ons wilt laten weten (optioneel)…' },
+    copy: { en: 'Copy answers', nl: 'Antwoorden kopiëren' },
+    clear: { en: 'Clear all', nl: 'Alles wissen' },
+    copied: { en: 'Copied — paste it in the chat.', nl: 'Gekopieerd — plak het in de chat.' },
+    clearConfirm: { en: 'Clear all answers?', nl: 'Alle antwoorden wissen?' },
+    answered: { en: 'answered', nl: 'beantwoord' }
+  };
+  var QUESTIONS = [
+    { n: '1', id: 'q1',
+      title: { en: 'Which 2 invoices could not be sent?', nl: 'Welke 2 facturen konden niet verstuurd worden?' },
+      ctx: { en: 'We think they are 147-001 Mobilane and 152-001 (both fixed-price WP projects).', nl: 'Wij denken 147-001 Mobilane en 152-001 (beide projecten met WP\'s met vaste prijs).' },
+      opts: [
+        { v: 'A', en: 'Yes — 147-001 and 152-001. Use them as the acceptance test for package A.', nl: 'Ja — 147-001 en 152-001. Gebruik ze als acceptatietest voor pakket A.' },
+        { v: 'B', en: 'Only 147-001 Mobilane.', nl: 'Alleen 147-001 Mobilane.' },
+        { v: 'C', en: 'Only 152-001.', nl: 'Alleen 152-001.' }
+      ] },
+    { n: '2', id: 'q2',
+      title: { en: 'Fixed-price WP: when is it invoiced?', nl: 'WP met vaste prijs: wanneer wordt het gefactureerd?' },
+      ctx: { en: 'Decides the main logic of package A.', nl: 'Bepaalt de hoofdlogica van pakket A.' },
+      opts: [
+        { v: 'A', en: 'Full WP value once the WP is completed → one invoice line per WP.', nl: 'Volledige WP-waarde zodra het WP afgerond is → één factuurregel per WP.' },
+        { v: 'B', en: 'In instalments → each instalment from the WP schedule is invoiced separately.', nl: 'In termijnen → elke termijn uit het WP-schema wordt apart gefactureerd.' },
+        { v: 'C', en: 'Per WP — the WP setting decides (full value or instalments).', nl: 'Per WP — de WP-instelling bepaalt het (volledige waarde of termijnen).' }
+      ] },
+    { n: '3', id: 'q3',
+      title: { en: 'RMS Engineering: what is really still open?', nl: 'RMS Engineering: wat staat er echt nog open?' },
+      ctx: { en: 'INV-0108 €6,250 overdue since 08-09; credit INV-0151 −€2,500 was never sent through the CRM. (see D3)', nl: 'INV-0108 € 6.250 vervallen sinds 08-09; credit INV-0151 −€ 2.500 is nooit via het CRM verstuurd. (zie D3)' },
+      opts: [
+        { v: 'A', en: 'RMS has paid everything → mark INV-0108 as paid.', nl: 'RMS heeft alles betaald → INV-0108 op betaald zetten.' },
+        { v: 'B', en: 'The credit was already sent to RMS outside the CRM; €3,750 is still open.', nl: 'De credit is al buiten het CRM naar RMS gestuurd; € 3.750 staat nog open.' },
+        { v: 'C', en: 'The credit was not sent yet; €3,750 is open → make a proper credit note once package C is live.', nl: 'De credit is nog niet verstuurd; € 3.750 staat open → een echte creditnota maken zodra pakket C live is.' }
+      ] },
+    { n: '4', id: 'q4',
+      title: { en: 'Credit notes: which number series?', nl: 'Creditnota\'s: welke nummerreeks?' },
+      ctx: { en: 'Decides the design of package C.', nl: 'Bepaalt het ontwerp van pakket C.' },
+      opts: [
+        { v: 'A', rec: true, en: 'Separate series CR-0001 (already configured in settings).', nl: 'Aparte reeks CR-0001 (al ingesteld in de instellingen).' },
+        { v: 'B', en: 'Same INV series as normal invoices.', nl: 'Dezelfde INV-reeks als gewone facturen.' }
+      ] },
+    { n: '5', id: 'q5',
+      title: { en: 'Number gaps and test invoices', nl: 'Gaten in de nummering en testfacturen' },
+      ctx: { en: 'INV-0120–0147 used by a test run on 18-09; INV-0101/0106/0113/0114 missing; test invoices INV-0117/0118/0149/0150/0159 carry real numbers. (see D4)', nl: 'INV-0120–0147 gebruikt door een testrun op 18-09; INV-0101/0106/0113/0114 ontbreken; testfacturen INV-0117/0118/0149/0150/0159 hebben echte nummers. (zie D4)' },
+      opts: [
+        { v: 'A', en: 'Keep the test invoices cancelled with a "test – void" note; give the accountant a list explaining each gap.', nl: 'Testfacturen geannuleerd laten met een notitie "test – vervallen"; de boekhouder een lijst geven die elk gat verklaart.' },
+        { v: 'B', en: 'I will ask the accountant first and send you their instructions.', nl: 'Ik vraag het eerst aan de boekhouder en stuur jullie de instructies.' }
+      ] },
+    { n: '6', id: 'q6',
+      title: { en: 'Invoice date = send date?', nl: 'Factuurdatum = verzenddatum?' },
+      ctx: { en: 'Today some invoices were sent after their due date.', nl: 'Nu zijn sommige facturen pas na hun vervaldatum verstuurd.' },
+      opts: [
+        { v: 'A', en: 'Yes — when issued, the invoice date becomes that day and the due date is recalculated from the payment term.', nl: 'Ja — bij uitgifte wordt de factuurdatum die dag en wordt de vervaldatum opnieuw berekend op basis van de betalingstermijn.' },
+        { v: 'B', en: 'No — keep the date, but warn before sending if it is already past due.', nl: 'Nee — datum behouden, maar waarschuwen vóór verzenden als de vervaldatum al verstreken is.' }
+      ] },
+    { n: '7', title: { en: 'Figures and access', nl: 'Cijfers en toegang' },
+      parts: [
+        { n: '7a', id: 'q7a', title: { en: 'KPIs show amounts…', nl: 'KPI\'s tonen bedragen…' },
+          opts: [
+            { v: 'A', en: 'Incl. VAT.', nl: 'Incl. btw.' },
+            { v: 'B', en: 'Excl. VAT.', nl: 'Excl. btw.' },
+            { v: 'C', en: 'Both (incl. and excl. VAT side by side).', nl: 'Beide (incl. en excl. btw naast elkaar).' }
+          ] },
+        { n: '7b', id: 'q7b', title: { en: '"Outstanding"…', nl: '"Openstaand"…' },
+          opts: [
+            { v: 'A', en: 'Includes overdue invoices (one total receivable).', nl: 'Bevat ook vervallen facturen (één totaal te ontvangen).' },
+            { v: 'B', en: 'Stays separate from overdue (two figures, as today).', nl: 'Blijft apart van vervallen (twee cijfers, zoals nu).' }
+          ] },
+        { n: '7c', id: 'q7c', title: { en: 'May employees (non-PM) see invoice amounts?', nl: 'Mogen medewerkers (niet-PM) factuurbedragen zien?' },
+          opts: [
+            { v: 'A', en: 'No — only admin / PM / users with financial access. Close the read access again.', nl: 'Nee — alleen admin / PM / gebruikers met financiële toegang. Leesrecht weer afsluiten.' },
+            { v: 'B', en: 'Yes — every logged-in user may see them.', nl: 'Ja — elke ingelogde gebruiker mag ze zien.' }
+          ] }
+      ] }
+  ];
+  var FLAT = [];
+  QUESTIONS.forEach(function (q) { if (q.parts) q.parts.forEach(function (p) { FLAT.push(p); }); else FLAT.push(q); });
+
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(ANS_KEY) || '{}') || {}; } catch (e) { state = {}; }
+  function save() { try { localStorage.setItem(ANS_KEY, JSON.stringify(state)); } catch (e) {} }
+  function el(tag, cls, text) { var x = document.createElement(tag); if (cls) x.className = cls; if (text != null) x.textContent = text; return x; }
+  function otherLetter(q) { return String.fromCharCode(65 + q.opts.length); }
+
+  function renderChoices(q, lang, host) {
+    var wrap = el('div', 'choices');
+    q.opts.forEach(function (o) {
+      var lab = el('label', 'opt');
+      var r = document.createElement('input'); r.type = 'radio'; r.name = lang + '-' + q.id; r.value = o.v;
+      r.setAttribute('data-q', q.id);
+      lab.appendChild(r); lab.appendChild(el('span', 'letter', o.v));
+      var txt = el('span', 'txt', o[lang]);
+      if (o.rec) { txt.appendChild(document.createTextNode(' ')); txt.appendChild(el('span', 'rec', '(' + T.rec[lang] + ')')); }
+      lab.appendChild(txt); wrap.appendChild(lab);
+    });
+    var lab = el('label', 'opt other');
+    var r = document.createElement('input'); r.type = 'radio'; r.name = lang + '-' + q.id; r.value = 'other'; r.setAttribute('data-q', q.id);
+    lab.appendChild(r); lab.appendChild(el('span', 'letter', otherLetter(q)));
+    var txt = el('span', 'txt', T.other[lang]);
+    var inp = document.createElement('input'); inp.type = 'text'; inp.className = 'other-text'; inp.placeholder = T.otherPh[lang]; inp.setAttribute('data-q', q.id);
+    txt.appendChild(inp); lab.appendChild(txt); wrap.appendChild(lab);
+    host.appendChild(wrap);
+  }
+
+  function renderDecisions(lang) {
+    var host = document.querySelector('[data-decisions="' + lang + '"]');
+    if (!host) return;
+    QUESTIONS.forEach(function (q) {
+      var li = document.createElement('li');
+      li.appendChild(el('b', null, q.title[lang]));
+      if (q.ctx) li.appendChild(el('div', 'ctx', q.ctx[lang]));
+      if (q.parts) {
+        q.parts.forEach(function (p) { li.appendChild(el('div', 'sub', p.n + ' · ' + p.title[lang])); renderChoices(p, lang, li); });
+      } else renderChoices(q, lang, li);
+      host.appendChild(li);
+    });
+    var li = document.createElement('li');
+    li.appendChild(el('b', null, T.comments[lang]));
+    var ta = document.createElement('textarea'); ta.className = 'comment'; ta.placeholder = T.commentsPh[lang]; ta.setAttribute('data-comment', '1');
+    li.appendChild(ta); host.appendChild(li);
+  }
+
+  function answerText(q, lang) {
+    var a = state[q.id];
+    if (!a || !a.v) return null;
+    if (a.v === 'other') return otherLetter(q) + ' — ' + T.other[lang] + ' ' + (a.text || '');
+    var o = q.opts.filter(function (x) { return x.v === a.v; })[0];
+    return o ? o.v + ' — ' + o[lang] : null;
+  }
+
+  function renderSummary(lang) {
+    var host = document.querySelector('[data-summary="' + lang + '"]');
+    if (!host) return;
+    host.innerHTML = '';
+    var done = FLAT.filter(function (q) { return state[q.id] && state[q.id].v; }).length;
+    host.appendChild(el('h3', null, T.sumTitle[lang]));
+    host.appendChild(el('p', 'meta', 'Finance Audit · 10-11-2026 · ' + done + '/' + FLAT.length + ' ' + T.answered[lang]));
+    var box = el('div', 'tbl'); var tbl = el('table', 'answers');
+    var hr = el('tr'); hr.appendChild(el('th', null, T.q[lang])); hr.appendChild(el('th', null, T.a[lang])); tbl.appendChild(hr);
+    FLAT.forEach(function (q) {
+      var tr = el('tr'); tr.appendChild(el('td', null, q.n + '. ' + q.title[lang]));
+      var t = answerText(q, lang);
+      tr.appendChild(t ? el('td', null, t) : el('td', 'none', T.none[lang]));
+      tbl.appendChild(tr);
+    });
+    if (state.comment) { var tr = el('tr'); tr.appendChild(el('td', null, T.comments[lang])); tr.appendChild(el('td', null, state.comment)); tbl.appendChild(tr); }
+    box.appendChild(tbl); host.appendChild(box);
+    var act = el('div', 'actions');
+    var c = el('button', 'btn', T.copy[lang]); c.type = 'button'; c.setAttribute('data-act', 'copy');
+    var x = el('button', 'btn ghost', T.clear[lang]); x.type = 'button'; x.setAttribute('data-act', 'clear');
+    act.appendChild(c); act.appendChild(x); host.appendChild(act);
+  }
+
+  function syncInputs() {
+    var radios = document.querySelectorAll('input[type="radio"][data-q]');
+    for (var i = 0; i < radios.length; i++) {
+      var r = radios[i], a = state[r.getAttribute('data-q')];
+      r.checked = !!(a && a.v === r.value);
+      r.closest('.opt').classList.toggle('on', r.checked);
+    }
+    var texts = document.querySelectorAll('input.other-text');
+    for (var j = 0; j < texts.length; j++) {
+      var a2 = state[texts[j].getAttribute('data-q')];
+      var v = (a2 && a2.text) || '';
+      if (texts[j] !== document.activeElement && texts[j].value !== v) texts[j].value = v;
+    }
+    var tas = document.querySelectorAll('textarea[data-comment]');
+    for (var k = 0; k < tas.length; k++) if (tas[k] !== document.activeElement && tas[k].value !== (state.comment || '')) tas[k].value = state.comment || '';
+  }
+  function refresh() { syncInputs(); renderSummary('en'); renderSummary('nl'); save(); }
+
+  renderDecisions('en'); renderDecisions('nl');
+  refresh();
+
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (t.matches('input[type="radio"][data-q]')) {
+      var id = t.getAttribute('data-q');
+      state[id] = { v: t.value, text: (state[id] && state[id].text) || '' };
+      refresh();
+      if (t.value === 'other') { var f = t.closest('.opt').querySelector('.other-text'); if (f) f.focus(); }
+    }
+  });
+  document.addEventListener('input', function (ev) {
+    var t = ev.target;
+    if (t.matches('input.other-text')) {
+      var id = t.getAttribute('data-q');
+      state[id] = { v: 'other', text: t.value };
+      refresh();
+    } else if (t.matches('textarea[data-comment]')) {
+      state.comment = t.value;
+      refresh();
+    }
+  });
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-act]');
+    if (!b) return;
+    var lang = document.body.getAttribute('data-lang') || 'en';
+    if (b.getAttribute('data-act') === 'clear') {
+      if (window.confirm(T.clearConfirm[lang])) { state = {}; refresh(); }
+      return;
+    }
+    var lines = ['Finance Audit · 10-11-2026 — ' + (lang === 'nl' ? 'antwoorden Daniel' : 'Daniel\'s answers')];
+    FLAT.forEach(function (q) { lines.push(q.n + '. ' + q.title[lang] + ': ' + (answerText(q, lang) || '—')); });
+    if (state.comment) lines.push(T.comments[lang] + ': ' + state.comment);
+    var text = lines.join('\n');
+    function done() {
+      var host = b.parentNode; var old = host.querySelector('.copied'); if (old) old.remove();
+      host.appendChild(el('span', 'copied', T.copied[lang]));
+    }
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { window.prompt('', text); }
+      ta.remove();
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+</body>
+</html>
