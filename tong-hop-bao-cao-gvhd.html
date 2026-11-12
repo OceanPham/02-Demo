@@ -1,0 +1,2520 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tổng hợp Báo cáo ĐATN – Mộc Decor (Chuẩn bị họp GVHD)</title>
+    <style>
+      :root {
+        --bg: #f8f5f0;
+        --surface: #ffffff;
+        --surface-soft: #fbf9f5;
+        --border: #e7dfd3;
+        --text: #1f2937;
+        --text-muted: #5b6472;
+        --brand: #6b4423;
+        --brand-dark: #4a2d15;
+        --brand-light: #f3eadf;
+        --accent: #b86b35;
+        --green-bg: #ecfdf5;
+        --green-text: #065f46;
+        --green-bd: #a7f3d0;
+        --amber-bg: #fffbeb;
+        --amber-text: #92400e;
+        --amber-bd: #fde68a;
+        --blue-bg: #eff6ff;
+        --blue-text: #1e40af;
+        --blue-bd: #bfdbfe;
+        --red-bg: #fef2f2;
+        --red-text: #991b1b;
+        --red-bd: #fecaca;
+        --shadow: 0 4px 18px rgba(45, 29, 15, 0.06);
+        --radius: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          "Segoe UI",
+          -apple-system,
+          BlinkMacSystemFont,
+          Roboto,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        font-size: 15px;
+      }
+
+      /* Layout */
+      .layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        background: #231810;
+        color: #e8dfd5;
+        padding: 22px 18px;
+        border-right: 1px solid #3a291c;
+      }
+
+      .brand-box {
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .brand-badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        background: var(--accent);
+        color: #fff;
+        padding: 3px 9px;
+        border-radius: 999px;
+        margin-bottom: 8px;
+      }
+
+      .brand-box h1 {
+        font-size: 18px;
+        line-height: 1.35;
+        margin: 0 0 4px;
+        color: #fff;
+      }
+
+      .brand-box p {
+        margin: 0;
+        font-size: 12.5px;
+        color: #cbbba8;
+      }
+
+      .nav-group-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #a89682;
+        margin: 18px 8px 8px;
+        font-weight: 700;
+      }
+
+      .nav-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-list a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        color: #e7ddd2;
+        text-decoration: none;
+        font-size: 13.5px;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+
+      .nav-list a:hover,
+      .nav-list a.active {
+        background: rgba(184, 107, 53, 0.25);
+        color: #ffffff;
+      }
+
+      .nav-list a .num {
+        font-size: 11px;
+        font-weight: 700;
+        min-width: 24px;
+        color: #e6a979;
+      }
+
+      .sidebar-actions {
+        margin-top: 22px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .btn {
+        cursor: pointer;
+        border: 0;
+        border-radius: 8px;
+        padding: 9px 12px;
+        font-size: 13px;
+        font-weight: 600;
+        transition:
+          transform 0.1s,
+          opacity 0.15s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #f3eadf;
+      }
+
+      .btn:hover {
+        opacity: 0.92;
+      }
+
+      /* Main content */
+      .main {
+        padding: 28px 36px 64px;
+        max-width: 1180px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      /* Mobile top bar */
+      .mobile-bar {
+        display: none;
+        background: #231810;
+        color: #fff;
+        padding: 12px 16px;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+      /* Hero */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          #5a381d 0%,
+          #83522b 60%,
+          #a56436 100%
+        );
+        color: #fff;
+        border-radius: 16px;
+        padding: 28px 30px;
+        box-shadow: var(--shadow);
+        margin-bottom: 24px;
+      }
+
+      .hero-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .hero h2 {
+        margin: 0 0 8px;
+        font-size: 25px;
+        line-height: 1.3;
+      }
+
+      .hero-sub {
+        margin: 0;
+        color: #f4e6d8;
+        font-size: 14.5px;
+        max-width: 720px;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .meta-item {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 13px;
+        border-radius: 10px;
+      }
+
+      .meta-item span {
+        display: block;
+        font-size: 11.5px;
+        color: #ebd6c1;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .meta-item strong {
+        font-size: 14px;
+        color: #fff;
+      }
+
+      /* Section */
+      .section {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px 26px;
+        margin-bottom: 22px;
+        box-shadow: var(--shadow);
+      }
+
+      .section-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 2px solid var(--brand-light);
+        padding-bottom: 12px;
+        margin-bottom: 18px;
+      }
+
+      .section-header h3 {
+        margin: 0;
+        font-size: 20px;
+        color: var(--brand-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+      }
+
+      .tag-brand {
+        background: var(--brand-light);
+        color: var(--brand-dark);
+        border-color: #decbb5;
+      }
+
+      .tag-green {
+        background: var(--green-bg);
+        color: var(--green-text);
+        border-color: var(--green-bd);
+      }
+
+      .tag-amber {
+        background: var(--amber-bg);
+        color: var(--amber-text);
+        border-color: var(--amber-bd);
+      }
+
+      .tag-blue {
+        background: var(--blue-bg);
+        color: var(--blue-text);
+        border-color: var(--blue-bd);
+      }
+
+      .tag-red {
+        background: var(--red-bg);
+        color: var(--red-text);
+        border-color: var(--red-bd);
+      }
+
+      h4 {
+        margin: 18px 0 10px;
+        font-size: 16px;
+        color: var(--brand);
+      }
+
+      p {
+        margin: 0 0 10px;
+      }
+
+      ul,
+      ol {
+        margin: 6px 0 12px;
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+
+      /* Cards & Grids */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 16px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 14px;
+      }
+
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 12px;
+      }
+
+      .card {
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 15px 16px;
+      }
+
+      .card-title {
+        font-weight: 700;
+        color: var(--brand-dark);
+        margin-bottom: 6px;
+        font-size: 14.5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .stat-card {
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--accent);
+        border-radius: 10px;
+        padding: 14px 16px;
+      }
+
+      .stat-card .stat-val {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--brand-dark);
+        line-height: 1.2;
+      }
+
+      .stat-card .stat-lbl {
+        font-size: 12.5px;
+        color: var(--text-muted);
+        margin-top: 3px;
+      }
+
+      /* Callouts */
+      .callout {
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin: 14px 0;
+        border-left: 4px solid;
+        font-size: 14px;
+      }
+
+      .callout-info {
+        background: var(--blue-bg);
+        border-color: #2563eb;
+        color: #1e3a8a;
+      }
+
+      .callout-warn {
+        background: var(--amber-bg);
+        border-color: #d97706;
+        color: #78350f;
+      }
+
+      .callout-good {
+        background: var(--green-bg);
+        border-color: #059669;
+        color: #064e3b;
+      }
+
+      .callout-title {
+        font-weight: 700;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      /* Tables */
+      .table-wrap {
+        overflow-x: auto;
+        margin: 12px 0;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13.8px;
+        background: #fff;
+      }
+
+      th,
+      td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--brand-light);
+        color: var(--brand-dark);
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tr:hover td {
+        background: #fcfaf7;
+      }
+
+      code {
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        background: #f1ece4;
+        color: #5a3418;
+        padding: 1px 6px;
+        border-radius: 5px;
+        font-size: 12.8px;
+      }
+
+      /* Flow Diagram */
+      .flow-box {
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px;
+        margin: 12px 0;
+      }
+
+      .flow-steps {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .flow-node {
+        background: #fff;
+        border: 1.5px solid var(--brand);
+        color: var(--brand-dark);
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 13px;
+        text-align: center;
+      }
+
+      .flow-node.end {
+        background: var(--green-bg);
+        border-color: #059669;
+        color: var(--green-text);
+      }
+
+      .flow-node.cancel {
+        background: var(--red-bg);
+        border-color: #dc2626;
+        color: var(--red-text);
+      }
+
+      .flow-arrow {
+        font-weight: 800;
+        color: var(--accent);
+        font-size: 16px;
+      }
+
+      /* Accordion / Use Cases & QA */
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      .search-input {
+        flex: 1;
+        min-width: 240px;
+        padding: 9px 12px;
+        border: 1px solid #d6cbbd;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #fff;
+      }
+
+      .filter-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .pill {
+        cursor: pointer;
+        padding: 6px 11px;
+        border-radius: 999px;
+        border: 1px solid #d6cbbd;
+        background: #fff;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+
+      .pill.active {
+        background: var(--brand);
+        color: #fff;
+        border-color: var(--brand);
+      }
+
+      details.uc-card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      details.uc-card summary {
+        cursor: pointer;
+        padding: 12px 16px;
+        background: var(--surface-soft);
+        font-weight: 700;
+        color: var(--brand-dark);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        list-style: none;
+      }
+
+      details.uc-card summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details.uc-card[open] summary {
+        border-bottom: 1px solid var(--border);
+        background: var(--brand-light);
+      }
+
+      .uc-body {
+        padding: 14px 16px;
+        font-size: 14px;
+      }
+
+      .uc-meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .uc-meta-box {
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 11px;
+        font-size: 13.2px;
+      }
+
+      .uc-meta-box strong {
+        display: block;
+        color: var(--brand);
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+      }
+
+      /* Checklist */
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        margin-bottom: 8px;
+      }
+
+      .check-item input[type="checkbox"] {
+        margin-top: 4px;
+        width: 16px;
+        height: 16px;
+        accent-color: var(--brand);
+      }
+
+      /* Responsive */
+      @media (max-width: 960px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          position: fixed;
+          left: -300px;
+          top: 0;
+          width: 280px;
+          z-index: 100;
+          transition: left 0.25s ease;
+        }
+        .sidebar.open {
+          left: 0;
+        }
+        .mobile-bar {
+          display: flex;
+        }
+        .main {
+          padding: 18px 16px 48px;
+        }
+      }
+
+      /* Print */
+      @media print {
+        .sidebar,
+        .mobile-bar,
+        .toolbar,
+        .sidebar-actions {
+          display: none !important;
+        }
+        .layout {
+          display: block;
+        }
+        body {
+          background: #fff;
+          font-size: 12.5px;
+        }
+        .section,
+        .hero {
+          box-shadow: none;
+          break-inside: avoid;
+        }
+        details.uc-card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Header -->
+    <div class="mobile-bar">
+      <strong>Mộc Decor – Họp GVHD</strong>
+      <button
+        class="btn btn-secondary"
+        onclick="document.getElementById('sidebar').classList.toggle('open')"
+      >
+        ☰ Mục lục
+      </button>
+    </div>
+
+    <div class="layout">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar" id="sidebar">
+        <div class="brand-box">
+          <span class="brand-badge">Chuẩn bị họp GVHD</span>
+          <h1>Website Mộc Decor</h1>
+          <p>
+            SV: Trần Hoài Nam – 2151170563<br />GVHD: ThS. Nguyễn Thị Thu Hương
+          </p>
+        </div>
+
+        <div class="nav-group-title">Phần 1: Tổng quan đề tài</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#tong-quan"
+              ><span class="num">01</span> Bối cảnh, Mục tiêu &amp; Phạm vi</a
+            >
+          </li>
+          <li>
+            <a href="#khao-sat"
+              ><span class="num">02</span> Khảo sát BAYA &amp; JYSK</a
+            >
+          </li>
+          <li>
+            <a href="#cong-nghe"
+              ><span class="num">03</span> Kiến trúc &amp; 6 Kỹ thuật lõi</a
+            >
+          </li>
+          <li>
+            <a href="#tien-do"
+              ><span class="num">04</span> Tiến độ Báo cáo &amp; Kiểm thử</a
+            >
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Phần 2: Trọng tâm Chương 3</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#c3-yeu-cau"
+              ><span class="num">3.1</span> Yêu cầu (F01–F13 &amp; NFR)</a
+            >
+          </li>
+          <li>
+            <a href="#c3-phan-ra"
+              ><span class="num">3.2–3</span> Phân rã chức năng &amp; Tác
+              nhân</a
+            >
+          </li>
+          <li>
+            <a href="#c3-usecase"
+              ><span class="num">3.4</span> Đặc tả 10 Use Case (UC01–10)</a
+            >
+          </li>
+          <li>
+            <a href="#c3-bieu-do"
+              ><span class="num">3.5–6</span> Biểu đồ Hoạt động &amp; Tuần tự</a
+            >
+          </li>
+          <li>
+            <a href="#c3-db"
+              ><span class="num">3.7–8</span> Biểu đồ Lớp &amp; Thiết kế CSDL</a
+            >
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Phần 3: Chuẩn bị họp tối nay</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#kich-ban"
+              ><span class="num">★</span> Kịch bản báo cáo 3–5 phút</a
+            >
+          </li>
+          <li>
+            <a href="#hoi-dap"
+              ><span class="num">Q&amp;A</span> Câu hỏi GVHD hay hỏi</a
+            >
+          </li>
+          <li>
+            <a href="#han-che"
+              ><span class="num">!</span> Hạn chế &amp; Việc làm tiếp</a
+            >
+          </li>
+        </ul>
+
+        <div class="sidebar-actions">
+          <button class="btn btn-primary" onclick="toggleAllDetails(true)">
+            Mở tất cả Use Case / Q&amp;A
+          </button>
+          <button class="btn btn-secondary" onclick="toggleAllDetails(false)">
+            Thu gọn tất cả
+          </button>
+          <button class="btn btn-secondary" onclick="window.print()">
+            In / Lưu PDF
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main">
+        <!-- Hero -->
+        <section class="hero">
+          <div class="hero-top">
+            <div>
+              <h2>Xây dựng Website Bán Đồ Trang Trí Nhà Cửa Mộc Decor</h2>
+              <p class="hero-sub">
+                Tài liệu tóm tắt cô đọng toàn bộ <strong>Đề tài</strong> và
+                trọng tâm
+                <strong>Chương 3 (Phân tích &amp; Thiết kế hệ thống)</strong>,
+                tổng hợp trực tiếp từ báo cáo ĐATN để phục vụ buổi họp báo cáo
+                tiến độ với Giáo viên hướng dẫn.
+              </p>
+            </div>
+            <span class="tag tag-amber">Trọng tâm: Chương 3 + Toàn đề tài</span>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span>Sinh viên thực hiện</span>
+              <strong>Trần Hoài Nam (63KTPM1)</strong>
+            </div>
+            <div class="meta-item">
+              <span>Mã sinh viên / Ngành</span>
+              <strong>2151170563 · Kỹ thuật phần mềm</strong>
+            </div>
+            <div class="meta-item">
+              <span>Giáo viên hướng dẫn</span>
+              <strong>ThS. Nguyễn Thị Thu Hương</strong>
+            </div>
+            <div class="meta-item">
+              <span>Stack &amp; Quy mô CSDL</span>
+              <strong>React + Express + MySQL (16 bảng)</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quick KPIs -->
+        <div class="grid-4" style="margin-bottom: 22px">
+          <div class="stat-card">
+            <div class="stat-val">13 nhóm</div>
+            <div class="stat-lbl">Yêu cầu chức năng (F01–F13)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">10 UC</div>
+            <div class="stat-lbl">Use Case đặc tả chi tiết (UC01–UC10)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">22 hình</div>
+            <div class="stat-lbl">Sơ đồ phân tích &amp; thiết kế Chương 3</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">16 bảng / 20 FK</div>
+            <div class="stat-lbl">CSDL MySQL chia theo 5 module</div>
+          </div>
+        </div>
+
+        <!-- 1. TỔNG QUAN ĐỀ TÀI -->
+        <section class="section" id="tong-quan">
+          <div class="section-header">
+            <h3>
+              <span>01</span> Tổng quan Đề tài: Bối cảnh, Mục tiêu &amp; Phạm vi
+              (Chương 1)
+            </h3>
+            <span class="tag tag-brand">Chương 1</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">1. Bài toán &amp; Lý do chọn đề tài</div>
+              <ul>
+                <li>
+                  <strong>Nhu cầu thực tế:</strong> Khách mua đồ decor (đèn,
+                  tranh, lọ hoa, gối tựa, đồng hồ, khung ảnh...) thường khó hình
+                  dung cách phối màu sắc, kích thước, chất liệu với không gian
+                  phòng khách/phòng ngủ.
+                </li>
+                <li>
+                  <strong>Điểm nhấn nghiệp vụ:</strong> Website không chỉ bán
+                  hàng TMĐT cơ bản mà còn có
+                  <strong>luồng Tư vấn Decor có cấu trúc</strong> (khách gửi nhu
+                  cầu không gian, phong cách, màu sắc → Admin tiếp nhận &amp;
+                  phản hồi).
+                </li>
+                <li>
+                  <strong>Ý nghĩa học thuật:</strong> Vận dụng trọn vẹn quy
+                  trình phần mềm: khảo sát → phân tích thiết kế → xây dựng
+                  React/Node/MySQL → kiểm thử API &amp; giao diện.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">2. Mục tiêu &amp; Đối tượng sử dụng</div>
+              <ul>
+                <li>
+                  <strong>Khách truy cập (chưa login):</strong> Xem sản phẩm
+                  công khai, lọc theo danh mục không gian, tìm kiếm, xem đánh
+                  giá công khai, đăng ký/đăng nhập.
+                </li>
+                <li>
+                  <strong>Khách hàng (<code>Customer</code>):</strong> Quản lý
+                  hồ sơ/địa chỉ, giỏ hàng, danh sách yêu thích, đặt hàng (COD /
+                  VNPay), theo dõi &amp; hủy đơn chờ xác nhận, đánh giá sau mua,
+                  gửi yêu cầu tư vấn.
+                </li>
+                <li>
+                  <strong>Quản trị viên (<code>Admin</code>):</strong> Quản trị
+                  danh mục, sản phẩm &amp; ảnh, khách hàng, xử lý đơn hàng, phản
+                  hồi tư vấn, kiểm duyệt đánh giá, xem dashboard thống kê.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-warn">
+            <span class="callout-title"
+              >Chốt rõ Phạm vi giới hạn (để trả lời GVHD không bị hỏi lan
+              man):</span
+            >
+            <ul>
+              <li>
+                <strong>Thương hiệu giả lập:</strong> Dữ liệu phục vụ minh họa
+                &amp; kiểm thử, không dùng số liệu doanh thu hay vận hành doanh
+                nghiệp thật.
+              </li>
+              <li>
+                <strong>Vai trò gọn:</strong> Chỉ có 2 role nghiệp vụ
+                (<code>Customer</code>, <code>Admin</code>); Admin đảm nhiệm
+                luôn việc phản hồi tư vấn (không tách nhân viên tư vấn riêng).
+              </li>
+              <li>
+                <strong>Thanh toán:</strong> Hỗ trợ <strong>COD</strong> và
+                <strong>VNPay</strong> (chưa tích hợp MoMo, chưa có hoàn tiền
+                VNPay tự động).
+              </li>
+              <li>
+                <strong>Ngoài phạm vi phiên bản này:</strong> Giao vận thực tế,
+                nhiều chi nhánh, kế toán, quản lý kho chuyên sâu/nhà cung cấp,
+                mã giảm giá, tích điểm thành viên, AI tự gợi ý phối cảnh/dựng
+                3D, app di động.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 2. KHẢO SÁT -->
+        <section class="section" id="khao-sat">
+          <div class="section-header">
+            <h3>
+              <span>02</span> Kết quả Khảo sát &amp; Định hướng cho Mộc Decor
+              (Mục 1.2)
+            </h3>
+            <span class="tag tag-brand">Bảng 1.1</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hệ thống khảo sát</th>
+                  <th>Điểm mạnh học hỏi</th>
+                  <th>Khoảng trống / Điều chỉnh khi áp dụng vào Mộc Decor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>BAYA</strong><br /><small>(Hình 1.1, 1.2)</small>
+                  </td>
+                  <td>
+                    Phân nhóm sản phẩm theo
+                    <strong>không gian sống</strong> (phòng khách, phòng ngủ...)
+                    kết hợp cẩm nang trang trí &amp; hỗ trợ VNPay-QR.
+                  </td>
+                  <td>
+                    BAYA chủ yếu tư vấn qua hotline/showroom → Mộc Decor xây
+                    dựng
+                    <strong
+                      >luồng gửi &amp; phản hồi yêu cầu tư vấn trực tiếp trên
+                      web</strong
+                    >
+                    để mô hình hóa thành nghiệp vụ rõ ràng.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>JYSK Việt Nam</strong><br /><small
+                      >(Hình 1.3, 1.4)</small
+                    >
+                  </td>
+                  <td>
+                    Luồng tìm kiếm – lọc – giỏ hàng – đặt hàng rõ ràng; khuyến
+                    nghị đăng nhập để
+                    <strong>lưu lịch sử &amp; theo dõi đơn</strong>.
+                  </td>
+                  <td>
+                    JYSK quy mô lớn (tồn kho nhiều cửa hàng, nhận tại quầy) →
+                    Mộc Decor tinh gọn chỉ tập trung phòng khách, phòng ngủ, phụ
+                    kiện decor và các luồng cốt lõi.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. KIẾN TRÚC & CÔNG NGHỆ -->
+        <section class="section" id="cong-nghe">
+          <div class="section-header">
+            <h3>
+              <span>03</span> Kiến trúc hệ thống &amp; 6 Kỹ thuật điểm nhấn
+              (Chương 2)
+            </h3>
+            <span class="tag tag-brand">Chương 2</span>
+          </div>
+
+          <p>
+            Hệ thống tổ chức theo mô hình
+            <strong>Client – Server phân lớp</strong>, tách 2 project độc lập
+            giao tiếp qua REST API (JSON) và Socket.IO. Frontend không bao giờ
+            kết nối trực tiếp MySQL.
+          </p>
+
+          <div class="grid-3" style="margin-bottom: 16px">
+            <div class="card">
+              <div class="card-title">Frontend (SPA)</div>
+              <ul>
+                <li>
+                  <strong>React + Vite</strong> (lazy loading theo route, code
+                  splitting).
+                </li>
+                <li>
+                  <strong>React Router:</strong> <code>slug</code> cho SP,
+                  <code>UUID</code> cho đơn/tư vấn;
+                  <code>RequireAuth</code> &amp; <code>RequireRole</code>.
+                </li>
+                <li>
+                  <strong>Redux Toolkit + Persist:</strong> Lưu phiên đăng nhập
+                  &amp; ngôn ngữ.
+                </li>
+                <li>
+                  <strong>TanStack Query + Axios:</strong> Cache dữ liệu server,
+                  tự động làm mới access token qua hàng đợi.
+                </li>
+                <li>
+                  <strong>UI &amp; Validate:</strong> Tailwind CSS + Ant Design,
+                  Formik + Yup, i18next (Việt/Anh).
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Backend (REST API)</div>
+              <ul>
+                <li>
+                  <strong>Node.js + Express.js</strong> (ES Modules,
+                  <code>async/await</code>).
+                </li>
+                <li>
+                  <strong>Phân lớp chặt:</strong>
+                  <code>Route → Middleware → Controller → Service → Model</code
+                  >.
+                </li>
+                <li>
+                  <strong>Bảo vệ đầu vào:</strong>
+                  <code>express-validator</code>, CORS theo địa chỉ frontend,
+                  giới hạn body JSON.
+                </li>
+                <li>
+                  <strong>Quản trị lỗi &amp; log:</strong> Lớp
+                  <code>AppError</code> (trả HTTP 201, 401, 403, 404, 409 rõ
+                  nghĩa) + <strong>Winston</strong>.
+                </li>
+                <li>
+                  Tách file <code>app</code> riêng để
+                  <strong>Supertest</strong> test trực tiếp Express.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Dữ liệu &amp; Tích hợp</div>
+              <ul>
+                <li>
+                  <strong>MySQL 8 (InnoDB) + Sequelize ORM:</strong> 16 bảng, 20
+                  FK, <code>CHAR(36)</code> UUID, <code>DECIMAL</code> tiền tệ,
+                  <code>utf8mb4</code>.
+                </li>
+                <li>
+                  <strong>Migration &amp; Seeder:</strong> 16 migrations + bảng
+                  <code>SequelizeMeta</code> tái lập schema độc lập.
+                </li>
+                <li>
+                  <strong>Cloudinary + Multer:</strong> Upload tối đa 8 ảnh/SP +
+                  ảnh đại diện/danh mục.
+                </li>
+                <li>
+                  <strong>Nodemailer (SMTP):</strong> Gửi mail quên mật khẩu.
+                </li>
+                <li>
+                  <strong>Google OAuth 2.0 (Passport):</strong> Đăng nhập Google
+                  rồi cấp cặp JWT nội bộ.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h4>
+            6 Kỹ thuật xử lý nghiệp vụ quan trọng (Rất nên nhấn mạnh với GVHD)
+          </h4>
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                1. Bảo vệ tồn kho bằng Transaction &amp; Lock
+                <span class="tag tag-green">InnoDB</span>
+              </div>
+              <p>
+                Khi đặt hàng, backend mở transaction,
+                <strong>khóa bản ghi sản phẩm theo thứ tự ID</strong> trước khi
+                kiểm tra &amp; trừ tồn kho, xóa giỏ hàng. Nếu 1 sản phẩm lỗi →
+                <code>rollback</code> toàn bộ. Chống 2 người cùng mua món cuối
+                cùng.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                2. Lưu Snapshot &amp; Tính lại giá ở Server
+                <span class="tag tag-green">Toàn vẹn</span>
+              </div>
+              <p>
+                Giá do client gửi không bao giờ làm căn cứ thanh toán; server
+                luôn đọc lại giá hiện hành &amp; tính phí ship. Đơn hàng lưu
+                <strong>snapshot</strong> (tên, ảnh, giá SP, người nhận, địa
+                chỉ) để lịch sử đơn không đổi khi sửa/xóa mềm SP.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                3. Xác thực Dual JWT &amp; Phân quyền sâu
+                <span class="tag tag-blue">Bảo mật</span>
+              </div>
+              <p>
+                Access token và refresh token dùng 2 secret khác nhau + kiểm tra
+                trường <code>type</code>. Mật khẩu băm <code>bcrypt</code>,
+                reset token băm <code>SHA-256</code>. Middleware &amp; Service
+                truy vấn lại DB để chặn tài khoản bị khóa và kiểm tra
+                <strong>quyền sở hữu</strong>.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                4. Thanh toán VNPay &amp; Chống callback lặp
+                <span class="tag tag-blue">Idempotent</span>
+              </div>
+              <p>
+                Ký tham số bằng <code>HMAC SHA-512</code>. Cả Return URL và IPN
+                đều đi qua hàm xác minh chữ ký, <code>txn_ref</code>, số tiền và
+                khóa bản ghi để không cộng/xác nhận trùng nếu callback tới lặp
+                hoặc sai thứ tự. Có cron hủy đơn VNPay quá hạn.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                5. Thông báo Realtime sau <code>afterCommit</code>
+                <span class="tag tag-amber">Socket.IO</span>
+              </div>
+              <p>
+                Dùng WebSocket thuần, xác thực JWT qua middleware vào room
+                <code>user:&lt;id&gt;</code> và <code>admin</code>. Bản ghi
+                <code>notifications</code> lưu vào MySQL trong transaction
+                nghiệp vụ và chỉ emit <code>notification:new</code> trong hook
+                <code>afterCommit</code> để tránh báo ảo khi rollback.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                6. Xóa mềm (Soft Delete) &amp; Trạng thái nhất quán
+                <span class="tag tag-amber">Bảo trì</span>
+              </div>
+              <p>
+                Danh mục, sản phẩm, người dùng, vai trò dùng cơ chế xóa mềm để
+                bảo toàn liên kết lịch sử đơn hàng &amp; đánh giá; công khai chỉ
+                trả về bản ghi đang hoạt động.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. TIẾN ĐỘ BÁO CÁO -->
+        <section class="section" id="tien-do">
+          <div class="section-header">
+            <h3>
+              <span>04</span> Hiện trạng Báo cáo Word &amp; Môi trường Kiểm thử
+              (Chương 4)
+            </h3>
+            <span class="tag tag-amber">Cập nhật tiến độ</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                Hiện trạng các chương trong file báo cáo DOCX
+              </div>
+              <ul>
+                <li>
+                  <span class="tag tag-green">Đã hoàn thiện nội dung</span>
+                  <strong>Chương 1:</strong> Giới thiệu bài toán, khảo sát BAYA
+                  &amp; JYSK, mục tiêu, phạm vi.
+                </li>
+                <li>
+                  <span class="tag tag-green">Đã hoàn thiện nội dung</span>
+                  <strong>Chương 2:</strong> Kiến trúc hệ thống, công nghệ
+                  FE/BE/DB, 4 kỹ thuật tích hợp &amp; realtime.
+                </li>
+                <li>
+                  <span class="tag tag-green">Đã hoàn thiện nội dung</span>
+                  <strong>Chương 3:</strong> Yêu cầu F01–F13, phân rã, Use Case,
+                  đặc tả UC01–10, sơ đồ hoạt động/tuần tự/lớp/CSDL.
+                  <em
+                    >(Lưu ý: Hình sơ đồ cần chèn đầy đủ từ thư mục
+                    <code>diagram/</code>).</em
+                  >
+                </li>
+                <li>
+                  <span class="tag tag-amber">Đang hoàn thiện</span>
+                  <strong>Chương 4 &amp; Kết luận:</strong> Đã viết
+                  <strong>Mục 4.1 (Môi trường phát triển &amp; kiểm thử)</strong
+                  >; các mục <strong>4.2 → 4.9</strong> và
+                  <strong>Kết luận</strong> mới có khung tiêu đề, cần viết tiếp.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                Môi trường phát triển &amp; Kiểm thử (Mục 4.1)
+              </div>
+              <ul>
+                <li>
+                  <strong>Quản lý &amp; chất lượng mã:</strong> Yarn 4.9.2,
+                  Vite, ESLint, Prettier, script kiểm tra đồng bộ khóa i18n,
+                  Git, draw.io.
+                </li>
+                <li>
+                  <strong>Kiểm thử tích hợp API:</strong> Dùng
+                  <strong>Jest + Supertest</strong> chạy trên CSDL riêng, tắt
+                  tác vụ định kỳ &amp; kết nối Socket.IO thật để test tập trung
+                  API (bao gồm test tranh chấp mua món cuối cùng).
+                </li>
+                <li>
+                  <strong>Kiểm thử giao diện:</strong> Thực hiện trực tiếp trên
+                  trình duyệt để quan sát điều hướng sau login, giỏ hàng, đặt
+                  hàng.
+                </li>
+                <li>
+                  <strong>Trung thực phạm vi:</strong> Kết quả test API không
+                  thay thế cho đo tải hoặc bằng chứng chuyển phát Socket.IO
+                  trong môi trường production.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= PHẦN 2: TRỌNG TÂM CHƯƠNG 3 ================= -->
+        <section class="section" id="c3-yeu-cau">
+          <div class="section-header">
+            <h3>
+              <span>3.1</span> Yêu cầu Chức năng (F01–F13) &amp; Phi chức năng
+            </h3>
+            <span class="tag tag-brand">Bảng 3.1 · Trọng tâm Chương 3</span>
+          </div>
+
+          <p>
+            Các yêu cầu ở Chương 3 được đối chiếu sát với <code>route</code>,
+            <code>service</code>, <code>model</code> và
+            <code>migration</code> thực tế của mã nguồn.
+          </p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mã</th>
+                  <th>Nhóm chức năng</th>
+                  <th>Nội dung &amp; Quy tắc nghiệp vụ cốt lõi</th>
+                  <th>Nhóm</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>F01</strong></td>
+                  <td>Tài khoản</td>
+                  <td>
+                    Đăng ký Customer; đăng nhập email/password hoặc Google;
+                    logout; refresh token; quên/đổi mật khẩu.
+                  </td>
+                  <td><span class="tag tag-blue">Tài khoản</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F02</strong></td>
+                  <td>Hồ sơ &amp; Địa chỉ</td>
+                  <td>
+                    Cập nhật hồ sơ, avatar; tối đa <strong>10 địa chỉ</strong>;
+                    chọn địa chỉ mặc định &amp; kiểm tra quyền sở hữu (owner).
+                  </td>
+                  <td><span class="tag tag-blue">Tài khoản</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F03</strong></td>
+                  <td>Catalog sản phẩm</td>
+                  <td>
+                    Danh sách, chi tiết theo <code>slug</code>, tìm kiếm
+                    <strong>không dấu</strong>, lọc danh mục/khoảng giá, sắp
+                    xếp, phân trang.
+                  </td>
+                  <td><span class="tag tag-green">Mua sắm</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F04</strong></td>
+                  <td>Giỏ hàng &amp; Yêu thích</td>
+                  <td>
+                    Cộng dồn số lượng giỏ, kiểm tra tồn kho, sửa/xóa dòng giỏ;
+                    lưu yêu thích không trùng lặp.
+                  </td>
+                  <td><span class="tag tag-green">Mua sắm</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F05</strong></td>
+                  <td>Đặt hàng</td>
+                  <td>
+                    Bắt buộc đăng nhập; hỗ trợ COD/VNPay; lưu snapshot; tính lại
+                    giá ở server; transaction &amp; trừ kho.
+                  </td>
+                  <td><span class="tag tag-green">Mua sắm</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F06</strong></td>
+                  <td>Theo dõi đơn hàng</td>
+                  <td>
+                    Xem lịch sử &amp; chi tiết đơn; Customer chỉ được hủy đơn
+                    khi đang <code>PENDING</code> và hệ thống hoàn tồn kho.
+                  </td>
+                  <td><span class="tag tag-green">Mua sắm</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F07</strong></td>
+                  <td>Đánh giá (Review)</td>
+                  <td>
+                    Chỉ đánh giá khi có đơn <code>COMPLETED</code> chứa SP; tối
+                    đa <strong>1 review/user/product</strong>; sửa/xóa review
+                    của mình.
+                  </td>
+                  <td><span class="tag tag-amber">Tương tác</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F08</strong></td>
+                  <td>Tư vấn decor</td>
+                  <td>
+                    Khách gửi nhu cầu (không gian, màu, phong cách...) &amp;
+                    theo dõi yêu cầu của mình; Admin phản hồi, đổi trạng thái.
+                  </td>
+                  <td><span class="tag tag-amber">Tương tác</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F09</strong></td>
+                  <td>Thông báo</td>
+                  <td>
+                    Lưu DB theo từng người nhận, đọc/chưa đọc; đẩy realtime
+                    <code>notification:new</code> sau khi commit transaction.
+                  </td>
+                  <td><span class="tag tag-amber">Tương tác</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F10</strong></td>
+                  <td>Quản trị Catalog</td>
+                  <td>
+                    CRUD danh mục, sản phẩm, tối đa <strong>8 ảnh/SP</strong>;
+                    bật/ẩn hiển thị, xóa mềm giữ dữ liệu lịch sử.
+                  </td>
+                  <td><span class="tag tag-red">Quản trị</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F11</strong></td>
+                  <td>Quản trị Khách hàng</td>
+                  <td>
+                    Tìm kiếm, xem thông tin, khóa/mở tài khoản Customer; không
+                    cho Admin tự khóa chính mình.
+                  </td>
+                  <td><span class="tag tag-red">Quản trị</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F12</strong></td>
+                  <td>Quản trị Đơn hàng</td>
+                  <td>
+                    Chuyển đúng luồng trạng thái; hủy đơn bắt buộc có lý do; đơn
+                    COD khi hoàn thành tự chuyển thành <code>PAID</code>.
+                  </td>
+                  <td><span class="tag tag-red">Quản trị</span></td>
+                </tr>
+                <tr>
+                  <td><strong>F13</strong></td>
+                  <td>Dashboard &amp; Review</td>
+                  <td>
+                    4 thẻ tổng quan, biểu đồ 7/30 ngày, 5 đơn mới nhất; ẩn/hiện
+                    kiểm duyệt đánh giá.
+                  </td>
+                  <td><span class="tag tag-red">Quản trị</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>4 Trụ cột Yêu cầu Phi chức năng (Mục 3.1.2)</h4>
+          <div class="grid-4">
+            <div class="card">
+              <div class="card-title">Toàn vẹn dữ liệu</div>
+              <p>
+                Tồn kho không âm khi đặt đồng thời; tạo đơn nguyên tử (atomic);
+                giữ snapshot đơn; callback VNPay / hủy lặp không cập nhật kho
+                nhiều lần.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">Bảo mật</div>
+              <p>
+                Kiểm tra JWT, trạng thái hoạt động, role &amp; quyền sở hữu ở
+                server; không lộ <code>password</code>/reset token thô; server
+                validation bắt buộc.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">Khả năng sử dụng</div>
+              <p>
+                Có trạng thái loading/thành công/lỗi/rỗng; phân trang &amp; đồng
+                bộ bộ lọc; hiển thị rõ chi phí trước khi đặt; responsive + tiếng
+                Việt chuẩn.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">Bảo trì &amp; Giới hạn</div>
+              <p>
+                Tách route–controller–service–model; dùng constant thống nhất;
+                migration tái lập DB.
+                <em>(Chưa đo ngưỡng chịu tải/độ trễ production).</em>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3.2 - 3.3 PHÂN RÃ & USE CASE -->
+        <section class="section" id="c3-phan-ra">
+          <div class="section-header">
+            <h3>
+              <span>3.2–3.3</span> Sơ đồ Phân rã chức năng &amp; Mô hình Tác
+              nhân
+            </h3>
+            <span class="tag tag-brand">Hình 3.1 – 3.4</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                Sơ đồ Phân rã chức năng (Hình 3.1 ·
+                <code>diagram/02-phan-ra-chuc-nang.xml</code>)
+              </div>
+              <p>
+                Hệ thống chia thành <strong>4 nhánh chức năng lớn</strong> liên
+                kết chặt qua Tài khoản &amp; Sản phẩm:
+              </p>
+              <ol>
+                <li>
+                  <strong>Quản lý Tài khoản:</strong> Danh tính, xác thực, hồ
+                  sơ, tối đa 10 địa chỉ.
+                </li>
+                <li>
+                  <strong>Mua sắm:</strong> Tra cứu catalog, giỏ hàng, yêu
+                  thích, đặt hàng, thanh toán, theo dõi đơn.
+                </li>
+                <li>
+                  <strong>Tương tác:</strong> Đánh giá sau mua, gửi/phản hồi tư
+                  vấn decor, thông báo.
+                </li>
+                <li>
+                  <strong>Quản trị (Admin):</strong> Vận hành catalog, khách
+                  hàng, đơn hàng, tư vấn, kiểm duyệt review, dashboard.
+                </li>
+              </ol>
+              <p>
+                <small
+                  ><em>Lưu ý thiết kế:</em> Yêu thích sản phẩm ≠ đã mua; Quyền
+                  đánh giá chỉ xác định từ đơn <code>COMPLETED</code>; Khách
+                  đăng nhập 1 lần đặt nhiều đơn.</small
+                >
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                Các Tác nhân &amp; Use Case (Hình 3.2 – 3.4)
+              </div>
+              <ul>
+                <li>
+                  <strong>Khách truy cập:</strong> Trạng thái chưa đăng nhập
+                  (<em>không phải một role trong bảng <code>roles</code></em
+                  >). Xem sản phẩm công khai, đăng ký/đăng nhập.
+                </li>
+                <li>
+                  <strong>Khách hàng (<code>Customer</code>):</strong> Mua sắm,
+                  quản lý thông tin cá nhân, tương tác sau mua (Hình 3.3).
+                </li>
+                <li>
+                  <strong>Quản trị viên (<code>Admin</code>):</strong> Vận hành
+                  dữ liệu &amp; xử lý đơn/tư vấn/review (Hình 3.4). Không tự
+                  khóa chính mình.
+                </li>
+                <li>
+                  <strong>Tác nhân hệ thống ngoài:</strong>
+                  <strong>VNPay</strong> (thanh toán), cùng các dịch vụ tích hợp
+                  <strong>Google OAuth, SMTP, Cloudinary</strong> (không lưu như
+                  user trong CSDL).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3.4 ĐẶC TẢ 10 USE CASE -->
+        <section class="section" id="c3-usecase">
+          <div class="section-header">
+            <h3><span>3.4</span> Đặc tả 10 Use Case Trọng tâm (UC01 – UC10)</h3>
+            <span class="tag tag-brand">Bảng 3.2 – 3.11</span>
+          </div>
+
+          <div class="toolbar">
+            <input
+              type="text"
+              id="ucSearch"
+              class="search-input"
+              placeholder="Tìm nhanh Use Case (vd: VNPay, tồn kho, tư vấn, hủy đơn, snapshot...)"
+              oninput="filterUCs()"
+            />
+            <div class="filter-pills">
+              <button
+                class="pill active"
+                data-role="all"
+                onclick="setRoleFilter('all', this)"
+              >
+                Tất cả (10)
+              </button>
+              <button
+                class="pill"
+                data-role="customer"
+                onclick="setRoleFilter('customer', this)"
+              >
+                Khách hàng
+              </button>
+              <button
+                class="pill"
+                data-role="admin"
+                onclick="setRoleFilter('admin', this)"
+              >
+                Admin
+              </button>
+              <button
+                class="pill"
+                data-role="external"
+                onclick="setRoleFilter('external', this)"
+              >
+                Có VNPay / Khách lạ
+              </button>
+            </div>
+          </div>
+
+          <div id="ucList">
+            <!-- UC01 -->
+            <details class="uc-card" data-role="customer admin external" open>
+              <summary>
+                <span
+                  >UC01 — Đăng nhập và phân quyền truy cập
+                  <small>(Bảng 3.2)</small></span
+                >
+                <span class="tag tag-blue">Customer · Admin</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Mục tiêu</strong>Xác thực người dùng và cấp quyền
+                    đúng khu vực Customer hoặc Admin.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Tiền / Hậu điều kiện</strong>Tài khoản đang hoạt
+                    động; thành công trả thông tin an toàn + cặp access/refresh
+                    token.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Nhập email/mật khẩu → Server tìm
+                  user &amp; role từ DB → Kiểm tra active &amp; so khớp
+                  <code>bcrypt</code> → Trả user + dual JWT → Client lưu phiên
+                  &amp; điều hướng theo role → Mọi API riêng tư sau đó đều
+                  verify lại token, trạng thái tài khoản &amp; role ở server.
+                </p>
+                <p>
+                  <strong>Thay thế &amp; Ngoại lệ:</strong> Token hết hạn dùng
+                  refresh token để làm mới; Logout xóa phiên phía client (token
+                  cũ chịu TTL hiện có); Có đăng nhập Google OAuth; Chặn tài
+                  khoản bị khóa hoặc role giả mạo từ client.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC02 -->
+            <details class="uc-card" data-role="customer external">
+              <summary>
+                <span
+                  >UC02 — Tra cứu và xem chi tiết sản phẩm
+                  <small>(Bảng 3.3)</small></span
+                >
+                <span class="tag tag-green">Khách truy cập · Customer</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Mục tiêu</strong>Tìm sản phẩm decor theo không
+                    gian/nhu cầu và xem đủ thông tin trước khi mua.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Tiền / Hậu điều kiện</strong>Không cần login; chỉ
+                    đọc dữ liệu công khai, không làm thay đổi DB.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Chọn danh mục không gian hoặc
+                  danh sách → Nhập từ khóa, khoảng giá, sắp xếp → Server lọc các
+                  SP đang công khai &amp; phân trang → Mở chi tiết xem gallery,
+                  mô tả, chất liệu, kích thước, giá hiệu lực, tồn kho, đánh giá
+                  công khai &amp; SP liên quan.
+                </p>
+                <p>
+                  <strong>Ngoại lệ:</strong> Từ chối tham số lọc sai; SP xóa mềm
+                  hoặc ngừng bán không trả về cho khách; khách không được dùng
+                  tham số quản trị để xem SP ẩn.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC03 -->
+            <details class="uc-card" data-role="customer">
+              <summary>
+                <span>UC03 — Quản lý giỏ hàng <small>(Bảng 3.4)</small></span>
+                <span class="tag tag-green">Customer</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Mục tiêu</strong>Lưu SP dự định mua, điều chỉnh số
+                    lượng và xem tạm tính trước Checkout.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Quy tắc quan trọng</strong>Mỗi SP có 1 dòng (thêm
+                    trùng sẽ cộng dồn);
+                    <strong>thêm/sửa giỏ chưa trừ tồn kho</strong>.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Chọn SP &amp; số lượng dương →
+                  Server check SP còn bán &amp; tồn kho → Cộng dồn hoặc tạo dòng
+                  mới → Xem giỏ (hiển thị giá hiện tại, thành tiền, phí ship) →
+                  Sửa số lượng / xóa dòng / làm trống giỏ.
+                </p>
+                <p>
+                  <strong>Ngoại lệ:</strong> Chưa login bị yêu cầu đăng nhập; số
+                  lượng ≤ 0 hoặc vượt tồn kho bị từ chối; không sửa/xóa được
+                  dòng giỏ của người khác.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC04 -->
+            <details class="uc-card" data-role="customer" open>
+              <summary>
+                <span
+                  >UC04 — Đặt hàng <small>(Bảng 3.5 · Trọng tâm)</small></span
+                >
+                <span class="tag tag-amber">Customer · Transaction</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Tiền điều kiện</strong>Đã đăng nhập, giỏ không rỗng,
+                    có địa chỉ thuộc sở hữu tài khoản.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Hậu điều kiện</strong>Lưu đơn <code>PENDING</code> +
+                    snapshot; trừ kho; xóa giỏ; ghi thông báo Admin trong cùng 1
+                    transaction.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Chọn địa chỉ &amp; COD/VNPay →
+                  Server xác minh quyền sở hữu địa chỉ,
+                  <strong>khóa giỏ &amp; các SP cần mua</strong> trong
+                  transaction → Đọc lại giá hiệu lực &amp; tồn kho, tính lại
+                  tiền hàng + phí ship (cấu hình minh họa:
+                  <strong>30.000đ, miễn phí từ 500.000đ</strong>) → Tạo mã đơn +
+                  snapshot người nhận/địa chỉ/tên-ảnh-giá SP → Trừ kho, xóa giỏ,
+                  lưu thông báo Admin → Commit.
+                </p>
+                <p>
+                  <strong>Thay thế &amp; Ngoại lệ:</strong> COD mở trang kết
+                  quả; VNPay chuyển sang UC05 (nếu tạo URL VNPay lỗi thì đơn đã
+                  tạo vẫn giữ để xử lý tiếp). Nếu 1 SP hết hàng/ngừng bán/thiếu
+                  tồn → <strong>rollback toàn bộ</strong> và giữ nguyên giỏ để
+                  khách sửa.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC05 -->
+            <details class="uc-card" data-role="customer external" open>
+              <summary>
+                <span
+                  >UC05 — Thanh toán qua VNPay
+                  <small>(Bảng 3.6 · Trọng tâm)</small></span
+                >
+                <span class="tag tag-amber">Customer · VNPay</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Tiền điều kiện</strong>Đơn thuộc khách, phương thức
+                    <code>VNPAY</code>, trạng thái <code>PENDING</code> &amp;
+                    chưa <code>PAID</code>; có cấu hình VNPay.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Hậu điều kiện</strong>Callback hợp lệ đưa
+                    transaction → <code>SUCCESS</code> &amp; đơn →
+                    <code>PAID</code> (hoặc <code>FAILED</code>). Không có hoàn
+                    tiền tự động.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Server khóa đơn, tạo
+                  <code>PaymentTransaction</code> (<code>PENDING</code>,
+                  <code>txn_ref</code> duy nhất) → Ký tham số trả URL → Khách
+                  thanh toán trên VNPay → Return URL / IPN gửi kết quả về
+                  backend → Server xác minh chữ ký, <code>txn_ref</code>, số
+                  tiền &amp; khóa bản ghi → Cập nhật <code>SUCCESS/PAID</code> +
+                  thời điểm thanh toán + thông báo khách &amp; Admin.
+                </p>
+                <p>
+                  <strong>Thay thế &amp; Ngoại lệ:</strong> Giao dịch
+                  <code>FAILED</code> hợp lệ cho phép thử thanh toán lại nếu đơn
+                  vẫn <code>PENDING</code> &amp; chưa <code>PAID</code>; Return
+                  &amp; IPN tới lặp hoặc ngược thứ tự chỉ áp dụng
+                  <strong>đúng 1 lần</strong>; Cron quá hạn tự hủy đơn
+                  <code>PENDING + UNPAID</code> &amp; hoàn kho. Sai chữ ký/sai
+                  số tiền bị từ chối.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC06 -->
+            <details class="uc-card" data-role="customer">
+              <summary>
+                <span
+                  >UC06 — Theo dõi và hủy đơn hàng
+                  <small>(Bảng 3.7)</small></span
+                >
+                <span class="tag tag-green">Customer</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Mục tiêu</strong>Xem lịch sử/chi tiết đơn đúng chủ
+                    sở hữu và tự hủy khi còn chờ xác nhận.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Quy tắc hủy</strong>Chỉ hủy được khi đơn còn
+                    <code>PENDING</code>; hoàn kho <strong>đúng 1 lần</strong>,
+                    giữ nguyên snapshot.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Lọc lịch sử đơn → Xem chi tiết
+                  (dòng hàng, địa chỉ snapshot, thanh toán, mốc xử lý) → Chọn
+                  Hủy đơn (khi <code>PENDING</code>) → Server khóa đơn, check
+                  lại owner &amp; trạng thái → Hoàn tồn kho, đổi sang
+                  <code>CANCELLED</code>, lưu lý do &amp; thông báo.
+                </p>
+                <p>
+                  <strong>Trường hợp đặc biệt:</strong> Đơn VNPay đã
+                  <code>PAID</code> được hủy hợp lệ sẽ giữ trạng thái đã thanh
+                  toán và ghi chú <strong>cần hoàn tiền thủ công</strong>. Đơn
+                  đã <code>CONFIRMED/SHIPPING/COMPLETED/CANCELLED</code> bị chặn
+                  hủy.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC07 -->
+            <details class="uc-card" data-role="customer">
+              <summary>
+                <span
+                  >UC07 — Đánh giá sản phẩm sau mua
+                  <small>(Bảng 3.8)</small></span
+                >
+                <span class="tag tag-green">Customer</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Tiền điều kiện</strong>Khách có đơn
+                    <code>COMPLETED</code> chứa sản phẩm và chưa đánh giá cặp
+                    khách–SP đó.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Hậu điều kiện</strong>Tối đa 1 review / cặp
+                    khách–SP; chỉ tính điểm trung bình từ các review đang hiển
+                    thị.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Chọn đánh giá 1–5 sao &amp; nội
+                  dung → Server khóa sản phẩm, xác minh đơn
+                  <code>COMPLETED</code> &amp; chưa trùng → Lưu review gắn với
+                  đơn mua → Tính lại <code>rating_avg</code> và
+                  <code>rating_count</code>.
+                </p>
+                <p>
+                  <strong>Thay thế &amp; Ngoại lệ:</strong> Khách sửa/xóa review
+                  của mình (tính lại điểm); Admin ẩn review để kiểm duyệt (giữ
+                  bản ghi DB nhưng loại khỏi điểm &amp; hiển thị công khai).
+                  Chưa mua hoặc đơn chưa <code>COMPLETED</code> bị từ chối.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC08 -->
+            <details class="uc-card" data-role="customer admin" open>
+              <summary>
+                <span
+                  >UC08 — Gửi và phản hồi yêu cầu tư vấn decor
+                  <small>(Bảng 3.9 · Điểm nhấn đề tài)</small></span
+                >
+                <span class="tag tag-amber">Customer · Admin</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Mục tiêu</strong>Tiếp nhận nhu cầu trang trí không
+                    gian có cấu trúc và phản hồi tới đúng khách hàng.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Giới hạn thiết kế</strong>Lưu
+                    <strong
+                      >1 phản hồi hiện tại (<code>admin_reply</code>)</strong
+                    >, chưa có lịch sử chat nhiều lượt; không dùng AI tự sinh.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Khách điền không gian, phong
+                  cách, màu sắc, SĐT, mô tả (+ diện tích, ngân sách tùy chọn) →
+                  Server sinh mã <code>TV</code>, lưu <code>PENDING</code> &amp;
+                  báo Admin → Admin đọc, có thể chuyển <code>IN_PROGRESS</code>,
+                  nhập phản hồi → Server khóa bản ghi (check chưa
+                  <code>CLOSED</code>), lưu nội dung/người trả lời/thời điểm,
+                  mặc định chuyển <code>RESPONDED</code> &amp; báo khách → Khách
+                  xem trong tài khoản.
+                </p>
+                <p>
+                  <strong>Ngoại lệ:</strong> Ngân sách min &gt; max hoặc thiếu
+                  trường bắt buộc bị chặn; Khách không xem được yêu cầu của
+                  người khác; Yêu cầu đã <code>CLOSED</code> không cho sửa phản
+                  hồi hoặc đổi trạng thái nữa.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC09 -->
+            <details class="uc-card" data-role="admin">
+              <summary>
+                <span
+                  >UC09 — Quản lý sản phẩm và hình ảnh
+                  <small>(Bảng 3.10)</small></span
+                >
+                <span class="tag tag-red">Admin</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Mục tiêu</strong>Duy trì catalog chính xác về thông
+                    tin, giá, tồn kho và bộ ảnh.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Quy tắc</strong>SKU duy nhất; giá &gt; 0; giá KM
+                    &lt; giá gốc; tồn kho ≥ 0; tối đa <strong>8 ảnh/SP</strong>;
+                    xóa mềm giữ lịch sử đơn.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Admin thêm/sửa SP (tên, SKU,
+                  danh mục, mô tả, chất liệu, kích thước, giá, giá KM, tồn kho,
+                  trạng thái) &amp; upload ảnh → Server kiểm tra SKU, danh mục
+                  tồn tại, tạo slug &amp; chọn ảnh đầu làm ảnh chính.
+                </p>
+                <p>
+                  <strong>Ngoại lệ:</strong> Thiếu cấu hình dịch vụ ảnh
+                  (Cloudinary) sẽ báo lỗi rõ ràng, không coi upload thành công;
+                  thao tác sửa/xóa mềm không ảnh hưởng snapshot đơn cũ.
+                </p>
+              </div>
+            </details>
+
+            <!-- UC10 -->
+            <details class="uc-card" data-role="admin" open>
+              <summary>
+                <span
+                  >UC10 — Xử lý đơn hàng
+                  <small>(Bảng 3.11 · Trọng tâm)</small></span
+                >
+                <span class="tag tag-red">Admin</span>
+              </summary>
+              <div class="uc-body">
+                <div class="uc-meta">
+                  <div class="uc-meta-box">
+                    <strong>Mục tiêu</strong>Điều hành vòng đời đơn hàng và đồng
+                    bộ tồn kho, số lượng đã bán, thanh toán, thông báo.
+                  </div>
+                  <div class="uc-meta-box">
+                    <strong>Trạng thái cuối</strong><code>COMPLETED</code> và
+                    <code>CANCELLED</code> là trạng thái cuối, không thể chuyển
+                    tiếp.
+                  </div>
+                </div>
+                <p>
+                  <strong>Luồng chính:</strong> Admin lọc/mở chi tiết đơn → Chọn
+                  chuyển trạng thái tuần tự
+                  <code>PENDING → CONFIRMED → SHIPPING → COMPLETED</code> (không
+                  được nhảy cóc) → Server khóa đơn, kiểm tra bảng chuyển đổi
+                  &amp; lưu mốc thời gian → Khi <code>COMPLETED</code>: tăng số
+                  lượng đã bán, đơn COD tự chuyển <code>PAID</code> → Lưu thông
+                  báo cho khách &amp; commit.
+                </p>
+                <p>
+                  <strong>Hủy đơn phía Admin:</strong> Được hủy ở
+                  <code>PENDING</code>, <code>CONFIRMED</code> hoặc
+                  <code>SHIPPING</code> nhưng
+                  <strong>bắt buộc nhập lý do</strong>; hoàn tồn kho đúng 1 lần;
+                  đơn VNPay đã <code>PAID</code> giữ nguyên trạng thái đã thanh
+                  toán &amp; ghi chú hoàn tiền thủ công.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- 3.5 - 3.6 BIỂU ĐỒ HOẠT ĐỘNG & TUẦN TỰ -->
+        <section class="section" id="c3-bieu-do">
+          <div class="section-header">
+            <h3>
+              <span>3.5–3.6</span> Biểu đồ Hoạt động &amp; Biểu đồ Tuần tự
+            </h3>
+            <span class="tag tag-brand">Hình 3.5 – 3.12</span>
+          </div>
+
+          <h4>Vòng đời Trạng thái Đơn hàng (UC04, UC06, UC10)</h4>
+          <div class="flow-box">
+            <div class="flow-steps">
+              <div class="flow-node">
+                PENDING<br /><small>Mới đặt (đã trừ kho)</small>
+              </div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node">
+                CONFIRMED<br /><small>Admin xác nhận</small>
+              </div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node">
+                SHIPPING<br /><small>Đang giao hàng</small>
+              </div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node end">
+                COMPLETED<br /><small>+Đã bán · COD→PAID</small>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 12px;
+                font-size: 13.5px;
+                color: var(--text-muted);
+              "
+            >
+              <strong
+                >Nhánh hủy <span class="tag tag-red">CANCELLED</span> (hoàn kho
+                đúng 1 lần):</strong
+              >
+              Customer chỉ hủy được ở <code>PENDING</code> · Admin hủy được ở
+              <code>PENDING / CONFIRMED / SHIPPING</code> (bắt buộc nhập lý do)
+              · Cron hủy đơn VNPay <code>PENDING + UNPAID</code> quá hạn (không
+              quét đơn <code>FAILED</code>).
+            </div>
+          </div>
+
+          <h4>
+            Tổng hợp 4 Biểu đồ Hoạt động &amp; 4 Biểu đồ Tuần tự trong Chương 3
+          </h4>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Luồng nghiệp vụ</th>
+                  <th>Biểu đồ Hoạt động (3.5)</th>
+                  <th>Biểu đồ Tuần tự (3.6)</th>
+                  <th>Điểm mấu chốt cần nhớ khi giải thích</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Đăng nhập (UC01)</strong></td>
+                  <td>—</td>
+                  <td><strong>Hình 3.9</strong></td>
+                  <td>
+                    Client → Auth API → Service đọc User+Role → check active
+                    &amp; <code>bcrypt</code> → cấp dual JWT.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Đặt hàng (UC04)</strong></td>
+                  <td><strong>Hình 3.5</strong></td>
+                  <td><strong>Hình 3.10</strong></td>
+                  <td>
+                    Khóa giỏ &amp; SP trong transaction; lưu snapshot; trừ kho;
+                    ghi thông báo Admin;
+                    <strong>chỉ emit Socket sau khi commit</strong>.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Thanh toán VNPay (UC05)</strong></td>
+                  <td><strong>Hình 3.6</strong></td>
+                  <td><strong>Hình 3.11</strong></td>
+                  <td>
+                    Return &amp; IPN dùng chung bộ xác minh chữ ký/số
+                    tiền/<code>txn_ref</code>; khóa bản ghi xử lý 1 lần dù 2
+                    callback tới lặp/ngược thứ tự.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Tư vấn decor (UC08)</strong></td>
+                  <td><strong>Hình 3.7</strong></td>
+                  <td><strong>Hình 3.12</strong></td>
+                  <td>
+                    Khách gửi <code>PENDING</code> → thông báo Admin → Admin trả
+                    lời thành <code>RESPONDED</code> → thông báo khách; Socket
+                    chỉ báo hiệu, nội dung đọc từ API (check owner).
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Đánh giá sau mua (UC07)</strong></td>
+                  <td><strong>Hình 3.8</strong></td>
+                  <td>—</td>
+                  <td>
+                    Kiểm tra đơn <code>COMPLETED</code> + chưa trùng; tính lại
+                    <code>rating_avg</code> &amp; <code>rating_count</code> chỉ
+                    trên các đánh giá đang hiển thị (không ẩn).
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3.7 - 3.8 BIỂU ĐỒ LỚP & THIẾT KẾ CSDL -->
+        <section class="section" id="c3-db">
+          <div class="section-header">
+            <h3>
+              <span>3.7–3.8</span> Biểu đồ Lớp &amp; Thiết kế Cơ sở dữ liệu
+            </h3>
+            <span class="tag tag-brand">Hình 3.13 – 3.22</span>
+          </div>
+
+          <p>
+            Hệ thống tổ chức đồng bộ theo <strong>5 module</strong> từ Biểu đồ
+            lớp (Hình 3.13–3.17) xuống Lược đồ CSDL trên dbdiagram.io (Hình
+            3.18–3.22): tổng cộng
+            <strong>16 bảng nghiệp vụ, 20 khóa ngoại</strong> (cùng bảng
+            <code>SequelizeMeta</code> quản lý migration).
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">
+                1. Tài khoản &amp; Thông báo <small>Hình 3.13, 3.18</small>
+              </div>
+              <p>
+                Quản lý người dùng, vai trò (<code>roles</code>:
+                Customer/Admin), sổ địa chỉ (tối đa 10/user), token đặt lại mật
+                khẩu (băm SHA-256) và bảng thông báo bền vững
+                <code>notifications</code>.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                2. Danh mục sản phẩm <small>Hình 3.14, 3.19</small>
+              </div>
+              <p>
+                <code>Category</code> có nhiều <code>Product</code>; bảng
+                <code>products</code> &amp; <code>product_images</code> tách
+                riêng để lưu nhiều ảnh có thứ tự &amp; ảnh chính (tối đa 8
+                ảnh/SP). Hỗ trợ xóa mềm.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                3. Giỏ hàng &amp; Yêu thích <small>Hình 3.15, 3.20</small>
+              </div>
+              <p>
+                Giỏ hàng gắn với tài khoản khách; các dòng giỏ hàng và danh sách
+                yêu thích sử dụng
+                <strong>ràng buộc duy nhất ghép (composite unique)</strong> để
+                không trùng lặp cùng một sản phẩm.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                4. Đơn hàng &amp; Thanh toán <small>Hình 3.16, 3.21</small>
+              </div>
+              <p>
+                <code>orders</code> lưu snapshot người nhận &amp; địa chỉ;
+                <code>order_items</code> giữ tên, ảnh, giá SP lúc đặt. Một
+                <code>Order</code> có thể có nhiều lần thử
+                <code>PaymentTransaction</code> (mỗi giao dịch có
+                <code>txn_ref</code> duy nhất).
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                5. Tư vấn decor &amp; Đánh giá <small>Hình 3.17, 3.22</small>
+              </div>
+              <p>
+                Lưu yêu cầu tư vấn (mã TV, không gian, phong cách, màu, 1
+                <code>admin_reply</code> hiện tại) và đánh giá sản phẩm gắn với
+                khách, sản phẩm, đơn mua (tối đa 1 review/khách/SP).
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">Quy chuẩn kiểu dữ liệu</div>
+              <p>
+                Khóa chính UUID lưu bằng <code>CHAR(36)</code>; giá tiền và tổng
+                tiền dùng <code>DECIMAL</code> tránh sai số dấu phẩy động; tiếng
+                Việt dùng bộ mã <code>utf8mb4</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= PHẦN 3: CHUẨN BỊ HỌP GVHD ================= -->
+        <section class="section" id="kich-ban">
+          <div class="section-header">
+            <h3><span>★</span> Kịch bản Trình bày Nhanh 3–5 Phút với GVHD</h3>
+            <span class="tag tag-green">Mẹo họp hiệu quả</span>
+          </div>
+
+          <ol>
+            <li>
+              <strong>Mở đầu (30 giây):</strong> Nêu tên đề tài
+              <em>“Website bán đồ trang trí nhà cửa Mộc Decor”</em>, xác định rõ
+              phạm vi (thương hiệu giả lập, 2 role Customer/Admin, COD + VNPay,
+              điểm nhấn là <strong>luồng Tư vấn Decor có cấu trúc</strong> bên
+              cạnh mua sắm trực tuyến).
+            </li>
+            <li>
+              <strong>Kiến trúc &amp; Công nghệ (1 phút):</strong> Tách React
+              SPA + Express REST API + MySQL/Sequelize (16 bảng, 20 FK). Nhấn
+              mạnh 3 điểm kỹ thuật làm thật:
+              <em
+                >Transaction khóa bản ghi chống tranh chấp tồn kho, Snapshot đơn
+                hàng, và Socket.IO emit sau <code>afterCommit</code></em
+              >.
+            </li>
+            <li>
+              <strong>Trọng tâm Chương 3 (2 phút):</strong>
+              <ul>
+                <li>
+                  Hệ thống gom thành
+                  <strong>13 nhóm chức năng (F01–F13)</strong> trên 4 phân hệ
+                  (Tài khoản, Mua sắm, Tương tác, Quản trị).
+                </li>
+                <li>
+                  Đặc tả chi tiết
+                  <strong>10 Use Case trọng tâm (UC01–UC10)</strong> đối chiếu
+                  thẳng với code <code>route/service/model</code>.
+                </li>
+                <li>
+                  Trình bày luồng chuyển trạng thái đơn hàng chặt chẽ (<code
+                    >PENDING → CONFIRMED → SHIPPING → COMPLETED</code
+                  >) và cơ chế VNPay chống callback lặp.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Tiến độ hiện tại &amp; Xin ý kiến (1 phút):</strong> Đã
+              xong Chương 1, 2, 3 và Mục 4.1 (môi trường &amp; kiểm thử
+              Jest/Supertest); đang hoàn thiện nốt Chương 4 (4.2–4.9), Kết luận
+              và chèn hình sơ đồ. Nhờ cô góp ý thêm về phần phân tích thiết kế
+              Chương 3 trước khi chốt báo cáo.
+            </li>
+          </ol>
+        </section>
+
+        <!-- Q&A -->
+        <section class="section" id="hoi-dap">
+          <div class="section-header">
+            <h3>
+              <span>Q&amp;A</span> Các Câu hỏi GVHD hay hỏi &amp; Cách trả lời
+              chuẩn theo Báo cáo
+            </h3>
+            <span class="tag tag-blue">Chuẩn bị phản biện</span>
+          </div>
+
+          <details class="uc-card" open>
+            <summary>
+              <span
+                >1. Đề tài bán đồ decor có gì khác biệt so với website bán hàng
+                thông thường?</span
+              >
+            </summary>
+            <div class="uc-body">
+              Từ khảo sát BAYA và JYSK (Chương 1), đồ decor khó chọn vì phụ
+              thuộc không gian, màu sắc, phong cách. Ngoài phân nhóm sản phẩm
+              theo không gian (phòng khách, phòng ngủ, phụ kiện), đề tài bổ sung
+              <strong>nghiệp vụ Tư vấn Decor có cấu trúc (UC08)</strong> ngay
+              trên website để khách mô tả nhu cầu (không gian, phong cách, màu,
+              diện tích, ngân sách) và Admin tiếp nhận, phản hồi, theo dõi trạng
+              thái — thay vì chỉ để số hotline như các trang tham khảo.
+            </div>
+          </details>
+
+          <details class="uc-card" open>
+            <summary>
+              <span
+                >2. Nếu 2 khách hàng cùng đặt mua sản phẩm cuối cùng trong kho
+                thì hệ thống xử lý sao?</span
+              >
+            </summary>
+            <div class="uc-body">
+              Ở Backend (Mục 2.4.2 &amp; UC04), quá trình đặt hàng bọc trong
+              <strong>InnoDB Transaction</strong> và
+              <strong>khóa các bản ghi sản phẩm theo thứ tự ID</strong> trước
+              khi kiểm tra tồn kho và trừ kho. Nhờ vậy hai yêu cầu đồng thời
+              phải xếp hàng tuần tự: chỉ 1 đơn thành công, đơn còn lại nhận lỗi
+              thiếu tồn kho và rollback toàn bộ (không làm âm kho, không tạo đơn
+              dở dang). Luồng này đã có ca test tranh chấp bằng Jest/Supertest.
+            </div>
+          </details>
+
+          <details class="uc-card">
+            <summary>
+              <span
+                >3. Nếu Admin sửa giá hoặc xóa sản phẩm thì đơn hàng cũ của
+                khách có bị thay đổi không?</span
+              >
+            </summary>
+            <div class="uc-body">
+              Không. Thứ nhất, bảng <code>orders</code> và
+              <code>order_items</code> lưu
+              <strong>bản chụp dữ liệu (snapshot)</strong> gồm tên, ảnh, đơn giá
+              sản phẩm và thông tin người nhận/địa chỉ tại thời điểm đặt hàng
+              (Mục 2.4.1 &amp; 3.8). Thứ hai, sản phẩm và danh mục áp dụng cơ
+              chế <strong>xóa mềm (soft delete)</strong> nên liên kết khóa ngoại
+              và lịch sử giao dịch luôn được giữ nguyên.
+            </div>
+          </details>
+
+          <details class="uc-card">
+            <summary>
+              <span
+                >4. Thanh toán VNPay xử lý thế nào nếu người dùng tắt trình
+                duyệt giữa chừng hoặc Return URL và IPN gọi trùng?</span
+              >
+            </summary>
+            <div class="uc-body">
+              Cả Return URL và IPN đều đi qua cùng bộ xử lý kiểm chứng tại
+              backend: xác minh chữ ký <code>HMAC SHA-512</code>, mã
+              <code>txn_ref</code>, số tiền, đồng thời khóa đơn &amp; bản ghi
+              giao dịch (Mục 2.5.2 &amp; UC05). Nếu callback đến lặp hoặc ngược
+              thứ tự, hệ thống kiểm tra trạng thái đã xử lý để chỉ ghi nhận đúng
+              1 lần. Với đơn VNPay khách bỏ dở còn
+              <code>PENDING + UNPAID</code> quá hạn, có tác vụ định kỳ (cron) tự
+              hủy và hoàn tồn kho.
+            </div>
+          </details>
+
+          <details class="uc-card">
+            <summary>
+              <span
+                >5. Tại sao dùng cả MySQL và Socket.IO cho chức năng Thông báo?
+                Lỡ đơn hàng bị rollback thì sao?</span
+              >
+            </summary>
+            <div class="uc-body">
+              Socket.IO chỉ là kênh truyền cập nhật tức thời lên giao diện khi
+              đang mở web, còn MySQL (<code>notifications</code>) là nơi lưu
+              lịch sử bền vững (Mục 2.5.3.4). Để tránh gửi thông báo ảo khi giao
+              dịch thất bại, hệ thống tạo bản ghi thông báo trong transaction
+              nghiệp vụ nhưng chỉ gọi
+              <code>emit('notification:new')</code> trong hook
+              <strong><code>afterCommit</code></strong> của Sequelize.
+            </div>
+          </details>
+
+          <details class="uc-card">
+            <summary>
+              <span
+                >6. Khách chưa mua hàng hoặc đơn đang giao có đánh giá sản phẩm
+                được không?</span
+              >
+            </summary>
+            <div class="uc-body">
+              Không (UC07). Server bắt buộc kiểm tra người dùng đã đăng nhập, có
+              ít nhất một đơn ở trạng thái <code>COMPLETED</code> chứa sản phẩm
+              đó, và mỗi cặp khách hàng – sản phẩm chỉ tạo được tối đa 1 đánh
+              giá. Nếu Admin ẩn đánh giá để kiểm duyệt, bản ghi vẫn giữ trong DB
+              nhưng bị loại khỏi <code>rating_avg</code> và
+              <code>rating_count</code> công khai.
+            </div>
+          </details>
+
+          <details class="uc-card">
+            <summary>
+              <span
+                >7. “Khách truy cập” có phải là một Role trong cơ sở dữ liệu
+                không?</span
+              >
+            </summary>
+            <div class="uc-body">
+              Không (Mục 3.3.1). Khách truy cập chỉ là trạng thái người dùng
+              chưa đăng nhập trên hệ thống. Trong bảng <code>roles</code> của
+              CSDL hiện chỉ có 2 vai trò nghiệp vụ là <code>Customer</code> và
+              <code>Admin</code>.
+            </div>
+          </details>
+        </section>
+
+        <!-- HẠN CHẾ & VIỆC CẦN LÀM -->
+        <section class="section" id="han-che">
+          <div class="section-header">
+            <h3>
+              <span>!</span> Hạn chế đã tự nhận diện &amp; Checklist việc cần
+              làm tiếp
+            </h3>
+            <span class="tag tag-red">Trung thực &amp; Rõ ràng</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                4 Hạn chế kỹ thuật đã nêu thẳng thắn trong báo cáo
+              </div>
+              <ul>
+                <li>
+                  <strong>Thu hồi phiên đăng nhập:</strong> Logout mới xóa token
+                  phía client (Redux Persist), chưa có danh sách thu hồi
+                  (blacklist) refresh token ở server (Mục 2.5.1).
+                </li>
+                <li>
+                  <strong>Đồng bộ Socket.IO khi rớt mạng:</strong> Có bật tự kết
+                  nối lại nhưng chưa tự động tải bù thông báo bị lỡ ngay lúc
+                  reconnect (người dùng xem lại qua trang thông báo / API) (Mục
+                  2.5.3.6).
+                </li>
+                <li>
+                  <strong>Luồng Tư vấn Decor:</strong> Hiện lưu 1 nội dung
+                  <code>admin_reply</code> hiện tại, chưa hỗ trợ lịch sử hội
+                  thoại nhiều lượt (Mục 3.4.8).
+                </li>
+                <li>
+                  <strong>Thanh toán &amp; Hiệu năng:</strong> Chưa có hoàn tiền
+                  VNPay tự động (hủy đơn đã <code>PAID</code> ghi chú hoàn thủ
+                  công); chưa thực hiện đo tải/độ trễ production cho API &amp;
+                  Socket.IO (Mục 2.5.2, 2.5.3.6, 3.1.2).
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                Checklist hoàn thiện đồ án sau buổi họp tối nay
+              </div>
+              <label class="check-item"
+                ><input type="checkbox" />
+                <span
+                  >Rà soát &amp; chèn đầy đủ ảnh sơ đồ Chương 3 (Hình 3.1 → 3.22
+                  từ <code>diagram/</code> và dbdiagram.io) vào file Word.</span
+                ></label
+              >
+              <label class="check-item"
+                ><input type="checkbox" />
+                <span
+                  >Hoàn thiện nội dung Chương 4 (Mục 4.2 → 4.9: cấu trúc code,
+                  giao diện khách/admin, tích hợp API/DB, kết quả test
+                  Jest/Supertest, đánh giá &amp; hạn chế).</span
+                ></label
+              >
+              <label class="check-item"
+                ><input type="checkbox" />
+                <span
+                  >Viết phần <strong>Kết luận</strong> (kết quả đạt được &amp;
+                  hướng phát triển) và hoàn thiện
+                  <strong>Phụ lục</strong>.</span
+                ></label
+              >
+              <label class="check-item"
+                ><input type="checkbox" />
+                <span
+                  >Kiểm tra lại mục lục tự động, danh mục hình ảnh, danh mục
+                  bảng biểu &amp; đánh số trang trong file
+                  <code>.docx</code>.</span
+                ></label
+              >
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      function toggleAllDetails(openState) {
+        document.querySelectorAll("details.uc-card").forEach((d) => {
+          d.open = openState;
+        });
+      }
+
+      let currentRole = "all";
+
+      function setRoleFilter(role, btn) {
+        currentRole = role;
+        document
+          .querySelectorAll(".filter-pills .pill")
+          .forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        filterUCs();
+      }
+
+      function filterUCs() {
+        const q = (document.getElementById("ucSearch").value || "")
+          .trim()
+          .toLowerCase();
+        document.querySelectorAll("#ucList details.uc-card").forEach((card) => {
+          const roles = (card.getAttribute("data-role") || "").split(" ");
+          const text = card.textContent.toLowerCase();
+          const roleMatch =
+            currentRole === "all" || roles.includes(currentRole);
+          const textMatch = !q || text.includes(q);
+          card.style.display = roleMatch && textMatch ? "" : "none";
+        });
+      }
+
+      // Highlight active sidebar link on scroll
+      const sections = document.querySelectorAll("main section[id]");
+      const navLinks = document.querySelectorAll(".nav-list a");
+
+      window.addEventListener("scroll", () => {
+        let currentId = "";
+        sections.forEach((sec) => {
+          const top = sec.offsetTop - 120;
+          if (window.scrollY >= top) {
+            currentId = sec.getAttribute("id");
+          }
+        });
+        navLinks.forEach((link) => {
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + currentId,
+          );
+        });
+      });
+
+      // Close mobile sidebar after clicking link
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          document.getElementById("sidebar").classList.remove("open");
+        });
+      });
+    </script>
+  </body>
+</html>
