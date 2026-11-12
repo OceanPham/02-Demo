@@ -1,0 +1,2738 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; connect-src 'none'"
+    />
+    <title>#147 — Freelancer compensation and client billing</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: light-dark(#fff, #15191e);
+        --fg: light-dark(#19212b, #e8edf4);
+        --muted: light-dark(#55616f, #b9c3d0);
+        --line: light-dark(#d7dfe8, #3b4654);
+        --soft: light-dark(#eef3f8, #252e39);
+        --accent: light-dark(#245d8f, #93c8f5);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          15px/1.55 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 1600px;
+        margin: auto;
+        padding: 36px;
+      }
+      h1 {
+        font-size: 28px;
+        line-height: 1.25;
+        margin: 12px 0;
+      }
+      h2 {
+        font-size: 21px;
+        margin: 0 0 14px;
+      }
+      p {
+        margin: 8px 0;
+      }
+      section {
+        margin-top: 36px;
+      }
+      header {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 20px;
+      }
+      .eyebrow {
+        letter-spacing: 0.12em;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .status {
+        font-weight: 600;
+        color: var(--accent);
+      }
+      ol {
+        padding-left: 25px;
+      }
+      li {
+        padding-left: 5px;
+        margin: 9px 0;
+      }
+      code {
+        font:
+          12px/1.5 ui-monospace,
+          monospace;
+        overflow-wrap: anywhere;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: left;
+        font-size: 13px;
+      }
+      caption {
+        text-align: left;
+        color: var(--muted);
+        padding: 9px 0;
+      }
+      th {
+        background: var(--soft);
+        font-weight: 600;
+      }
+      td,
+      th {
+        border-bottom: 1px solid var(--line);
+        padding: 12px;
+        vertical-align: top;
+      }
+      thead th {
+        position: sticky;
+        top: 0;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      #impact {
+        min-width: 1050px;
+      }
+      #impact td:nth-child(1) {
+        width: 16%;
+      }
+      #impact td:nth-child(2) {
+        width: 25%;
+      }
+      #impact td:nth-child(3) {
+        width: 17%;
+      }
+      #impact td:nth-child(4) {
+        width: 24%;
+      }
+      #impact td:nth-child(5) {
+        width: 18%;
+      }
+      .controls {
+        display: flex;
+        gap: 16px;
+        align-items: end;
+        flex-wrap: wrap;
+      }
+      .controls label {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      input,
+      select,
+      button {
+        font: inherit;
+        padding: 8px 10px;
+        color: var(--fg);
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+      }
+      input {
+        width: min(100%, 350px);
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      @media (max-width: 600px) {
+        main {
+          padding: 18px;
+        }
+        h1 {
+          font-size: 23px;
+        }
+        .controls {
+          align-items: stretch;
+          flex-direction: column;
+        }
+        table {
+          font-size: 12px;
+        }
+      }
+      @media print {
+        @page {
+          size: A3 landscape;
+          margin: 14mm;
+        }
+        .controls {
+          display: none;
+        }
+        main {
+          padding: 0;
+          max-width: none;
+        }
+        body {
+          font-size: 11px;
+        }
+        table {
+          font-size: 10px;
+        }
+        thead {
+          display: table-header-group;
+        }
+        thead th {
+          position: static;
+        }
+        .table-wrap {
+          overflow: visible;
+        }
+        #impact {
+          min-width: 0;
+        }
+        tr {
+          break-inside: avoid;
+        }
+        section {
+          margin-top: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">WORK · TEAM REVIEW · #147</p>
+        <h1>#147 — Freelancer compensation and client billing</h1>
+        <p class="status">
+          Prepared for team review — no application implementation or historical
+          migration
+        </p>
+        <p>
+          Static review of the current working tree in
+          E:/WorkSpace/CADINVO/CRM-Base. Daniel&#x27;s original handoff, 6/9
+          November responses and latest four decisions supplied in chat are the
+          business sources. No production records were read or changed.
+        </p>
+        <p>
+          <code>f5082c8ccfb253346dc80f73dcec32f7e23d2aaf</code> · Working tree
+          reviewed on 2026-11-12
+        </p>
+      </header>
+      <section>
+        <h2>Decisions to preserve</h2>
+        <ol>
+          <li>
+            Keep four quantities distinct: actual valid work, approved payable
+            time, checked client-billable time and final invoiced quantity.
+          </li>
+          <li>
+            NGOCSON approves compensation/client billability; Daniel sets final
+            invoice quantity, selling rates, amounts and currency, with a
+            documented variance where applicable.
+          </li>
+          <li>
+            Resolve the agreed freelancer cost rate effective on the work date;
+            Work Type default is an estimate only. Missing/unsupported facts
+            remain visible.
+          </li>
+          <li>
+            Full work reports and freelancer costs stay internal. Optional
+            client time breakdown reconciles exactly to final invoice lines.
+          </li>
+          <li>
+            Phase 1 adds an internal report/export for manual freelancer-invoice
+            reconciliation; no automatic payment, invoice matching or historical
+            migration.
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Verified current-system findings</h2>
+        <ol>
+          <li>
+            <strong>Compensation data absent</strong>
+            <p>
+              TimeEntry has one actual duration, operational status, billable
+              boolean and invoice pointers; no independent payable/billable
+              minutes or compensation decision.
+            </p>
+          </li>
+          <li>
+            <strong>Manual team process unverified</strong>
+            <p>
+              Search of app entities/functions/components/helpers found generic
+              supplier obligations and time exports, but no dedicated
+              payable-hour reconciliation. The user has no current process
+              example. Code cannot prove how the team works outside WORK.
+            </p>
+          </li>
+          <li>
+            <strong>Costs disagree by consumer</strong>
+            <p>
+              Standalone/Margin reports use snapshot then current-person
+              fallback; Project Financials splits by operational approval;
+              KPI/Queue use snapshot or zero; invoice-attached builder uses
+              current User cost. Neither source nor historical effectiveness is
+              consistently recorded.
+            </p>
+          </li>
+          <li>
+            <strong>Cost/sale crossover</strong>
+            <p>
+              WP hourly Apply and Create from Time can price sales using
+              hourly_rate_snapshot. This must be removed from every hourly path,
+              not only from one button.
+            </p>
+          </li>
+          <li>
+            <strong>Actual time versus finance</strong>
+            <p>
+              Task summary currently filters approved+billable. A financial
+              correction today would have to alter duration; a separate
+              financial decision/correction layer is needed.
+            </p>
+          </li>
+          <li>
+            <strong>Invoice breakdown and frozen history</strong>
+            <p>
+              Client attachment reuses work report calculations; front/server
+              snapshot builders are duplicated. Both must reconcile final
+              invoiced quantity while preserving old archived documents.
+            </p>
+          </li>
+          <li>
+            <strong>Currency boundary</strong>
+            <p>
+              Project schema offers EUR/USD/GBP, but User costs,
+              PaymentObligation, margin formatter and issuance snapshot use EUR.
+              A selectable invoice currency without an agreed conversion basis
+              would make margins incomparable.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Impact mapping — 38 groups</h2>
+        <div class="controls">
+          <label
+            >Search outputs or source references
+            <input id="search" type="search" /></label
+          ><label
+            >Area
+            <select id="area">
+              <option value="all">All areas</option>
+              <option>Billing</option>
+              <option>Boundaries</option>
+              <option>Coverage</option>
+              <option>Exports</option>
+              <option>Financials</option>
+              <option>History</option>
+              <option>Inputs</option>
+              <option>Operational reports</option>
+              <option>Read models</option>
+              <option>Review</option>
+            </select></label
+          ><button id="print" type="button">Print review</button>
+        </div>
+        <p id="count" aria-live="polite">38 groups</p>
+        <div class="table-wrap">
+          <table id="impact">
+            <caption>
+              Current source behaviour and proposed #147 changes — 12 November
+              2026
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Output / audience</th>
+                <th scope="col">Data source · hours/status · rate</th>
+                <th scope="col">Current behaviour</th>
+                <th scope="col">Proposed behaviour</th>
+                <th scope="col">Historical implications / evidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-area="Inputs">
+                <td>
+                  <strong>01 · Manual time registration</strong>
+                  <p>Inputs · Internal</p>
+                </td>
+                <td>
+                  <p><strong>Source:</strong> TimeEntry, User, WorkType</p>
+                  <p>
+                    <strong>Hours/status:</strong> duration_minutes; billable
+                    boolean; pending/approved/reject/cancel
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> User cost or Work Type default;
+                    missing value can become 0 in form
+                  </p>
+                </td>
+                <td>
+                  One duration and billing flag; no payable quantity or
+                  compensation decision.
+                </td>
+                <td>
+                  Preserve worked minutes; propose full payable minutes pending
+                  review; resolve billing from WP then Project, otherwise Needs
+                  review.
+                </td>
+                <td>
+                  Existing rows remain legacy; do not infer compensation from
+                  status or billable.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/time/TimeEntryFormModal.jsx:115</code
+                      >
+                    </li>
+                    <li><code>base44/entities/TimeEntry.jsonc:51</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Inputs">
+                <td>
+                  <strong>02 · Timer popover</strong>
+                  <p>Inputs · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> RunningTimer -&gt; TimeEntry
+                    through logTimeEntry
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Stopped elapsed minutes; Work
+                    Type billable flag
+                  </p>
+                  <p><strong>Rate:</strong> Current User.hourly_rate or 0</p>
+                </td>
+                <td>
+                  Stopping a timer creates ordinary logged time with a billing
+                  default from Work Type.
+                </td>
+                <td>
+                  Keep timer/elapsed facts; apply the same financial proposals
+                  server-side; Work Type must not decide client agreement.
+                </td>
+                <td>
+                  No backfill or reconstruction of deleted timer sessions.
+                  <ol>
+                    <li>
+                      <code>src/components/time/TimerPopover.jsx:110</code>
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Inputs">
+                <td>
+                  <strong>03 · Attendance and workday submission</strong>
+                  <p>Inputs · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> AttendanceDayModal,
+                    workDaySubmission, approveAttendanceTimeEntries
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Saved task time; pending or
+                    operationally approved; assignments alone are not time
+                  </p>
+                  <p><strong>Rate:</strong> Server rate stamping if missing</p>
+                </td>
+                <td>
+                  Attendance can approve logged time; this is not a dedicated
+                  compensation decision.
+                </td>
+                <td>
+                  Keep time validity/workday review separate; NGOCSON-only
+                  financial decisions must never be granted by attendance
+                  auto-approval.
+                </td>
+                <td>
+                  Existing Attendance approval cannot establish historical
+                  compensation.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/attendance/AttendanceDayModal.jsx:67</code
+                      >
+                    </li>
+                    <li>
+                      <code
+                        >base44/functions/workDaySubmission/entry.ts:157</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Inputs">
+                <td>
+                  <strong>04 · DayHub timer, quick log and edits</strong>
+                  <p>Inputs · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> DayHub -&gt;
+                    createTimeEntriesWithBudget/updateTimeEntryGuarded
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Timer stop and manual blocks;
+                    pending by default
+                  </p>
+                  <p><strong>Rate:</strong> Shared timeEntryRate on creation</p>
+                </td>
+                <td>Creates/edits real time; billability follows Work Type.</td>
+                <td>
+                  One shared financial default path; changing compensation or
+                  billing must not resize a DayHub time block.
+                </td>
+                <td>
+                  Preserve original time ranges and descriptions.
+                  <ol>
+                    <li><code>src/pages/DayHub.jsx:311</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Inputs">
+                <td>
+                  <strong>05 · Planning: mark planned work as logged</strong>
+                  <p>Inputs · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> PlanItemModal -&gt; TimeEntry;
+                    source_planned_item_id
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Only confirmed logging
+                    creates pending time; task slices
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Work Type/current person through
+                    shared snapshot resolver
+                  </p>
+                </td>
+                <td>
+                  Selected time slices become TimeEntry rows with Work Type
+                  billable defaults.
+                </td>
+                <td>
+                  Apply financial proposals per saved slice; do not create
+                  payable work from plans alone.
+                </td>
+                <td>
+                  Keep original plan linkage; no assumed actual time from
+                  historical plans.
+                  <ol>
+                    <li>
+                      <code>src/components/planning/PlanItemModal.jsx:628</code>
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Review">
+                <td>
+                  <strong>06 · Review Logtime and task log editors</strong>
+                  <p>Review · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> logtimeReview, logtimeWriteAccess;
+                    task/project log panels
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Operational status, duration,
+                    billable boolean
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Financial access controls visibility
+                    of rates
+                  </p>
+                </td>
+                <td>
+                  PM/member scopes and some self-approval exist for operational
+                  time; no unique financial approver.
+                </td>
+                <td>
+                  Keep operational review; add independent financial decisions
+                  restricted to NGOCSON on server, including his own entries.
+                </td>
+                <td>
+                  Do not convert approved time to compensation approved.
+                  <ol>
+                    <li><code>base44/shared/logtimeReview.js:16</code></li>
+                    <li>
+                      <code
+                        >src/components/tasks/TaskTimeLogsPanel.jsx:210</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Review">
+                <td>
+                  <strong
+                    >07 · All financial write paths and bulk decisions</strong
+                  >
+                  <p>Review · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> logTimeEntry, guarded edits,
+                    bulkUpdateTimeEntries, entity RLS
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Current direct edits include
+                    billable/memo/status; existing bulk API is invoice
+                    bookkeeping
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Current rate snapshot can be edited
+                    through a financial form
+                  </p>
+                </td>
+                <td>
+                  Some edits go directly to TimeEntry.update; current bulk patch
+                  keys are invoiced/invoice_id/status_invoice.
+                </td>
+                <td>
+                  New dedicated decision command with expected revision,
+                  idempotency, per-row authorization, reason/evidence and audit;
+                  deny direct financial-field changes. Reuse bulk UI patterns,
+                  not invoice-bookkeeping bulk authority.
+                </td>
+                <td>
+                  Bulk review only where evidence covers every selected row;
+                  show conflicts without overwriting.
+                  <ol>
+                    <li><code>src/lib/projectTimeBudget.js:94</code></li>
+                    <li>
+                      <code
+                        >base44/functions/bulkUpdateTimeEntries/entry.ts:4</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Review">
+                <td>
+                  <strong
+                    >08 · Processed time and financial-only corrections</strong
+                  >
+                  <p>Review · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> TimeEntry correction links,
+                    AuditEvent, createTimeEntryCorrection
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Existing correction duration
+                    can be positive/negative; processed original locked
+                  </p>
+                  <p><strong>Rate:</strong> Copies original cost snapshot</p>
+                </td>
+                <td>
+                  Current correction changes net worked duration; it cannot
+                  represent a purely financial change independently.
+                </td>
+                <td>
+                  Keep actual-time correction for factual time errors; separate
+                  append-only compensation/billing adjustments which leave
+                  actual time intact. Retain invoice/payment links and reason.
+                </td>
+                <td>
+                  Include supplier-processed records as well as client-invoiced
+                  records; issued invoices require a separate financial
+                  correction.
+                  <ol>
+                    <li>
+                      <code
+                        >base44/functions/createTimeEntryCorrection/entry.ts:75</code
+                      >
+                    </li>
+                    <li><code>src/lib/timeEntryLock.js:17</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong
+                    >09 · Project totals, Project Logtime and timesheets</strong
+                  >
+                  <p>Operational reports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> savedTimeEntry,
+                    projectLoggedTotals, projectTimeOverview; Week/TeamTimesheet
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Saved pending+approved;
+                    exclude provisional/reject/cancel; signed factual
+                    corrections
+                  </p>
+                  <p><strong>Rate:</strong> No rate for effort</p>
+                </td>
+                <td>
+                  Actual hours generally include non-billable work; no payable
+                  split.
+                </td>
+                <td>
+                  Keep total valid worked time; show pending/unknown financial
+                  buckets separately; never remove valid unpaid rework.
+                </td>
+                <td>
+                  Historical valid work stays visible even when compensation is
+                  unknown.
+                  <ol>
+                    <li><code>base44/shared/savedTimeEntry.js:2</code></li>
+                    <li>
+                      <code>base44/shared/projectLoggedTotals.js:20</code>
+                    </li>
+                    <li><code>src/lib/projectTimeOverview.js:84</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong>10 · Task Time Logged / Summary</strong>
+                  <p>Operational reports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> taskTimeAgg and its task-board
+                    consumers
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Approved AND billable;
+                    excludes provisional
+                  </p>
+                  <p><strong>Rate:</strong> None</p>
+                </td>
+                <td>
+                  buildApprovedTimeIndex excludes valid non-billable time from
+                  its totals.
+                </td>
+                <td>
+                  Separate actual worked summary from approved billing summary;
+                  label scope rather than forcing one total to mean both.
+                </td>
+                <td>
+                  Non-billable/unpaid rework must remain in effort after
+                  rollout.
+                  <ol>
+                    <li><code>src/lib/taskTimeAgg.js:28</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong
+                    >11 · Budgets, overrun, remaining hours and forecast</strong
+                  >
+                  <p>Operational reports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> taskBudget, timeCap, wpForecast,
+                    projectControlHours, projectOverrunReport
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Current budget helpers count
+                    valid work regardless of billable despite legacy helper
+                    names
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Forecast costs belong in a separate
+                    financial projection
+                  </p>
+                </td>
+                <td>
+                  Caps can refuse extra logged time; remaining effort uses
+                  actual time and task estimates.
+                </td>
+                <td>
+                  Keep effort/cap semantics distinct from payable/billable
+                  quantities. Never shorten duration to fit compensation.
+                  Surface failed recording without losing timer evidence; any
+                  cap-policy change needs review.
+                </td>
+                <td>
+                  No reconstruction from budget values; signed factual
+                  corrections reduce net effort only with evidence.
+                  <ol>
+                    <li><code>base44/shared/taskBudget.ts:11</code></li>
+                    <li><code>src/lib/wpForecast.js:31</code></li>
+                    <li>
+                      <code>base44/shared/projectControlHours.js:48</code>
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong
+                    >12 · Reports &gt; Work Report: full internal report</strong
+                  >
+                  <p>Operational reports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> invoiceWorkReport +
+                    standaloneWorkReport; TimeEntry/User/Project
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Filtered saved time by work
+                    date and members; total/billable/non-billable
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Standalone projection: snapshot then
+                    current User rate; missing cost can remain null
+                  </p>
+                </td>
+                <td>
+                  Standalone report already avoids treating unallocated order
+                  value as selected member/period revenue; compensation is
+                  absent.
+                </td>
+                <td>
+                  Add total worked/payable/non-payable/pending/unknown, plus
+                  independent client-billing split; use rate
+                  provenance/effective date; retain unallocated revenue as
+                  context.
+                </td>
+                <td>
+                  Current-rate fallback cannot silently confirm historical
+                  agreed costs; label reanalysis date.
+                  <ol>
+                    <li><code>src/lib/invoiceWorkReport.js:259</code></li>
+                    <li><code>src/lib/standaloneWorkReport.js:33</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong>13 · Logtime Report and project breakdowns</strong>
+                  <p>Operational reports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> TimeEntry via timeEntryFetch;
+                    logtimeProjectBreakdown
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Saved valid time;
+                    period/dimension/billable filters
+                  </p>
+                  <p><strong>Rate:</strong> No cost rate in hour-only charts</p>
+                </td>
+                <td>
+                  Effort charts and billable split use full entry duration under
+                  a boolean.
+                </td>
+                <td>
+                  Keep effort charts on actual; add clearly labelled billing
+                  quantities/statuses where the split is shown. Payable detail
+                  is an authorized internal view.
+                </td>
+                <td>
+                  Unknown financial decisions stay visible; do not hide old
+                  non-billable work.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/reports/logtime/LogtimeReport.jsx:5</code
+                      >
+                    </li>
+                    <li><code>src/lib/logtimeProjectBreakdown.js:34</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong>14 · Member Productivity</strong>
+                  <p>Operational reports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> operationalReportSource(member)
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Actual hours and
+                    boolean-based billable ratio; completion metrics from tasks
+                  </p>
+                  <p><strong>Rate:</strong> None</p>
+                </td>
+                <td>
+                  Billable percentage uses whole entry hours; compensation
+                  absent.
+                </td>
+                <td>
+                  Keep actual effort and task metrics; compute billing ratio
+                  from reviewed billable minutes, with unresolved bucket rather
+                  than false zero.
+                </td>
+                <td>
+                  Historical ratios identify legacy classification and review
+                  coverage.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/reports/memberProductivity/MemberProductivityReport.jsx:34</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong>15 · Team Performance and team insight tables</strong>
+                  <p>Operational reports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong>
+                    operationalReportSource(team/teams), teamInsightData
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Saved valid time;
+                    date/member/project filters; billable ratio
+                  </p>
+                  <p><strong>Rate:</strong> None for effort statistics</p>
+                </td>
+                <td>
+                  Team utilization/logged hours use actual; billing split uses
+                  boolean.
+                </td>
+                <td>
+                  Preserve utilization and contributors on actual; add distinct
+                  financial slices only where relevant. Do not replace logged
+                  effort with payable effort.
+                </td>
+                <td>
+                  Keep old time visible; explain scope/member filtering
+                  differences.
+                  <ol>
+                    <li><code>src/lib/teamInsightData.js:63</code></li>
+                    <li><code>src/lib/operationalReportSource.js:11</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong>16 · Project Status / Subtask Completion</strong>
+                  <p>
+                    Operational reports · Internal; external sharing requires
+                    explicit output review
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> ProjectStatusReport source;
+                    operationalReportSource(subtask)
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Project Status uses lifetime
+                    project hours although period selects project updates;
+                    subtask report sums actual by task
+                  </p>
+                  <p><strong>Rate:</strong> None</p>
+                </td>
+                <td>
+                  Different period semantics legitimately produce different hour
+                  totals.
+                </td>
+                <td>
+                  Keep and label period basis; actual effort stays independent
+                  of compensation; never add freelancer details to client
+                  output.
+                </td>
+                <td>
+                  Explain lifetime vs work-date totals in reconciliation;
+                  preserve generated historical exports.
+                  <ol>
+                    <li><code>src/lib/projectStatusReport.js:29</code></li>
+                    <li>
+                      <code
+                        >src/components/reports/subtaskCompletion/SubtaskCompletionReport.jsx:37</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Operational reports">
+                <td>
+                  <strong>17 · Capacity Load component</strong>
+                  <p>
+                    Operational reports · Internal; source-only in current
+                    Reports route/catalog
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> operationalReportSource(capacity)
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Actual recorded hours /
+                    weekly capacity
+                  </p>
+                  <p><strong>Rate:</strong> None</p>
+                </td>
+                <td>
+                  CapacityLoadReport component exists, but is not registered in
+                  current Reports detail map/catalog.
+                </td>
+                <td>
+                  Keep valid unpaid and non-billable work in capacity. Include
+                  in regression review if activated; do not invent a new menu
+                  entry.
+                </td>
+                <td>
+                  Do not present source presence as proof of published
+                  availability.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/reports/capacityLoad/CapacityLoadReport.jsx:32</code
+                      >
+                    </li>
+                    <li><code>src/pages/Reports.jsx:26</code></li>
+                    <li><code>src/lib/reportsCatalog.js:7</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Financials">
+                <td>
+                  <strong>18 · Pre-invoice Hour Report</strong>
+                  <p>Financials · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong>
+                    operationalReportSource(preInvoice), scope project status
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Countable, not invoiced;
+                    optional non-billable display; pending included by source
+                  </p>
+                  <p><strong>Rate:</strong> No sale rate in its hours table</p>
+                </td>
+                <td>
+                  Can include pending hours and total entry durations; not
+                  itself proof of eligible billing.
+                </td>
+                <td>
+                  Show actual unprocessed hours separately from checked billable
+                  quantity proposed to Daniel; label Needs review; fixed-price
+                  hours do not become extra revenue.
+                </td>
+                <td>
+                  Keep legacy flags and processed ownership; distinguish
+                  proposal from actual invoice quantities.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/reports/preInvoiceHours/PreInvoiceHourReport.jsx:144</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Financials">
+                <td>
+                  <strong
+                    >19 · Project Financials: actual cost and forecast</strong
+                  >
+                  <p>Financials · Internal with financial access</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> projectFinancialControl -&gt;
+                    projectControlCosts / projectCostBreakdown
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Currently operationally
+                    approved actual labour, pending labour, remaining task
+                    effort; expenses/subscriptions separate
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Snapshot then current person; some
+                    pending/future averages are estimates
+                  </p>
+                </td>
+                <td>
+                  Approval currently acts as cost recognition; no compensation
+                  basis or confirmed/estimated/unknown classification.
+                </td>
+                <td>
+                  Actual confirmed labour = reviewed payable time x verified
+                  date-effective rate. Estimated/unresolved costs separate;
+                  remaining effort/future costs remain forecasts. Keep other
+                  cost categories disjoint.
+                </td>
+                <td>
+                  Corrected project analysis may differ from issued history;
+                  show as-of basis and audit links.
+                  <ol>
+                    <li>
+                      <code>base44/shared/projectControlCosts.js:40</code>
+                    </li>
+                    <li><code>src/lib/projectCostBreakdown.js:2</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Financials">
+                <td>
+                  <strong>20 · Project Overview financial KPI cards</strong>
+                  <p>Financials · Internal with financial access</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> OverviewFinancialKpis;
+                    projectInvoiceNet
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Countable minutes for logged
+                    cost; invoice revenue excludes VAT
+                  </p>
+                  <p><strong>Rate:</strong> hourly_rate_snapshot or 0</p>
+                </td>
+                <td>
+                  Logged cost uses full actual time and silently prices missing
+                  snapshots at 0.
+                </td>
+                <td>
+                  Use same compensation/rate classifier as Project Financials;
+                  indicate incomplete/provisional values; keep agreed value and
+                  invoiced revenue separate.
+                </td>
+                <td>
+                  Do not change issued invoice values when costs are reviewed.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/projects/overview/OverviewFinancialKpis.jsx:33</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Financials">
+                <td>
+                  <strong
+                    >21 · Invoice Margin Report / invoice-list margins /
+                    PDF</strong
+                  >
+                  <p>Financials · Internal with financial access</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> getInvoiceMarginData,
+                    invoiceMarginReport, useInvoiceMargins
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Linked/in-scope entries;
+                    fallback countable pending+approved; ownership allocation
+                    checked
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Snapshot then current User rate;
+                    missing cost may make margin unknown
+                  </p>
+                </td>
+                <td>
+                  Costs can include non-billable work; no compensation split;
+                  shared/unlinked allocation may already block line margin.
+                </td>
+                <td>
+                  Cost only CADINVO-responsible payable hours; retain actual
+                  hours for effort and margin/hour. Carry rate/decision
+                  uncertainty and existing allocation warnings; do not double
+                  count costs across invoices.
+                </td>
+                <td>
+                  Clearly separate current analysis from original issuance
+                  snapshot; retain correction lineage.
+                  <ol>
+                    <li><code>src/lib/invoiceMarginReport.js:92</code></li>
+                    <li><code>src/hooks/useInvoiceMargins.js:38</code></li>
+                    <li><code>src/lib/invoiceMarginPdf.js:4</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Financials">
+                <td>
+                  <strong
+                    >22 · Client Account Summary / margin / original client
+                    overview</strong
+                  >
+                  <p>Financials · Internal with financial access</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> getClientAccountReportData,
+                    clientAccountReport, ClientAccountOverviewReport
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Selected eligible invoices
+                    and optional active project time; different scope than a
+                    single invoice
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Snapshot/current User cost fallback
+                    in margin builder
+                  </p>
+                </td>
+                <td>
+                  Active orders and selected invoices can have different
+                  revenue/time scopes; compensation absent.
+                </td>
+                <td>
+                  Use shared payable-cost projection; preserve invoice/project
+                  allocation; label selected invoice revenue versus
+                  agreed/forecast value; show unallocated effort rather than
+                  force a match.
+                </td>
+                <td>
+                  Show unknown historical decisions and prevent current costs
+                  from rewriting invoice records.
+                  <ol>
+                    <li><code>src/lib/clientAccountReport.js:106</code></li>
+                    <li>
+                      <code
+                        >src/components/reports/clientAccount/ClientAccountOverviewReport.jsx:95</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Financials">
+                <td>
+                  <strong
+                    >23 · Dashboard margin pressure / hour-risk widgets</strong
+                  >
+                  <p>
+                    Financials · Internal, respecting existing financial access
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong>
+                    dashboardFinance/buildMarginPressure, dashboardWork
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Pending+approved valid work;
+                    remaining budget effort
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Snapshot then current User; forecast
+                    blended rate
+                  </p>
+                </td>
+                <td>
+                  Forecast margin uses all recorded hours as cost; returns
+                  unknown when not fully costed.
+                </td>
+                <td>
+                  Use payable confirmed cost plus distinct estimated
+                  pending/future exposure; warn provisional rather than
+                  confirmed margin. Hour-risk still uses all valid actual hours.
+                </td>
+                <td>
+                  Legacy uncertainty must not disappear behind a healthy margin
+                  label.
+                  <ol>
+                    <li><code>base44/shared/dashboardFinance.js:288</code></li>
+                    <li>
+                      <code
+                        >src/components/dashboard/home/MarginPressureBlock.jsx:19</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Financials">
+                <td>
+                  <strong>24 · Business overview / Weekly Digest</strong>
+                  <p>Financials · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> businessOverviewData; WeeklyDigest
+                    -&gt; ClientAccountExecutiveReport
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Period actual hours and
+                    boolean billable percentage; invoice/receivable metrics
+                    separate
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Existing invoice amounts; no payable
+                    split in effort KPI
+                  </p>
+                </td>
+                <td>
+                  Operational work ratios coexist with commercial metrics.
+                </td>
+                <td>
+                  Keep actual hours on effort KPIs; use approved client minutes
+                  for billable ratios; add uncertainty only to affected
+                  cost/margin outputs. No duplicate freelancer cost from payment
+                  obligations.
+                </td>
+                <td>
+                  Explain date bases: work date vs invoice issue/payment dates.
+                  <ol>
+                    <li><code>src/lib/businessOverviewData.js:90</code></li>
+                    <li>
+                      <code
+                        >src/components/reports/weeklyDigest/WeeklyDigestReport.jsx:1</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Billing">
+                <td>
+                  <strong
+                    >25 · Work Package Apply: hourly and fixed-price</strong
+                  >
+                  <p>Billing · Internal; invoice output external</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> billingApply / applyWpBilling;
+                    WorkPackage/Project agreement
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Hourly source = approved
+                    billable uninvoiced entries; source_quantity,
+                    invoice_quantity and variance separate
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> WP selling price, currently falls
+                    back to time-entry cost snapshot
+                  </p>
+                </td>
+                <td>
+                  Hourly Apply supports documented quantity variance;
+                  fixed-price release has a commercial path.
+                </td>
+                <td>
+                  Propose checked client-billable minutes; keep NGOCSON decision
+                  distinct from Daniel&#x27;s final invoice. Resolve agreed sale
+                  rate WP then Project; missing sale blocks hourly issue.
+                  Fixed-price revenue remains commercial.
+                </td>
+                <td>
+                  Preserve original billing_source, ownership and issued lines;
+                  no retrospective recomputation of source quantity.
+                  <ol>
+                    <li><code>base44/shared/billingApply.ts:83</code></li>
+                    <li><code>base44/shared/billingApply.ts:185</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Billing">
+                <td>
+                  <strong>26 · Create Invoice from Time</strong>
+                  <p>Billing · Internal; draft not a payment</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> CreateFromTimeModal;
+                    TimeEntry/Project/WP
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Uninvoiced countable billable
+                    entries; whole duration
+                  </p>
+                  <p><strong>Rate:</strong> hourly_rate_snapshot</p>
+                </td>
+                <td>
+                  Legacy creation calculates invoice amounts from cost-rate
+                  snapshots.
+                </td>
+                <td>
+                  Remove cost-to-sale pricing; use checked billing minutes and
+                  agreement sale rate, then Daniel&#x27;s final documented edit.
+                  Retain entry provenance and missing-rate block.
+                </td>
+                <td>
+                  Legacy draft proposals need review; issued invoices remain
+                  unchanged.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/invoices/CreateFromTimeModal.jsx:40</code
+                      >
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Billing">
+                <td>
+                  <strong
+                    >27 · Invoice seeded from Work Report / draft hour
+                    selection</strong
+                  >
+                  <p>Billing · Internal; final invoice external</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> InvoiceFormModal,
+                    invoiceWorkReport, invoiceDraftHourData
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Report hours can seed
+                    quarter-hour quantities; task/group/article matching exists
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Article selling price, manual invoice
+                    edits; report cost uses another basis
+                  </p>
+                </td>
+                <td>
+                  Draft invoice quantities can originate in report total actual
+                  hours.
+                </td>
+                <td>
+                  Seed only checked billable quantities; preserve minute
+                  precision before explicit billing rounding; final line facts
+                  authoritative. Prevent full internal work report from becoming
+                  a client attachment.
+                </td>
+                <td>
+                  Do not reinterpret old article/title matches as historical
+                  compensation evidence.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/invoices/InvoiceFormModal.jsx:69</code
+                      >
+                    </li>
+                    <li><code>src/lib/invoiceWorkReport.js:648</code></li>
+                    <li><code>src/lib/invoiceDraftHourData.js:6</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Billing">
+                <td>
+                  <strong
+                    >28 · Client invoice time breakdown / email
+                    attachment</strong
+                  >
+                  <p>Billing · Client-facing</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> Invoice lines + final invoice
+                    allocation; InvoiceSendModal, WorkReportPreview
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Currently full work-report
+                    builder/period scoping reused; optional attachment off by
+                    default
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Final invoice sale rates/amounts; no
+                    freelancer cost may be exposed
+                  </p>
+                </td>
+                <td>
+                  Email attachment is optional, but its work hours originate
+                  from registrations and may differ from final edited invoice
+                  quantity.
+                </td>
+                <td>
+                  Create a separate billed-time projection from final invoice
+                  lines. Total breakdown must equal final invoiced hours; show
+                  documented billing adjustments honestly, never fabricate
+                  worked time or expose compensation. Block inconsistent
+                  attachment.
+                </td>
+                <td>
+                  Old issued attachment remains archived; corrected documents
+                  require the normal financial correction process.
+                  <ol>
+                    <li>
+                      <code
+                        >src/components/invoices/InvoiceSendModal.jsx:142</code
+                      >
+                    </li>
+                    <li>
+                      <code
+                        >src/components/invoices/WorkReportPreview.jsx:12</code
+                      >
+                    </li>
+                    <li><code>src/lib/invoiceWorkReport.js:527</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Billing">
+                <td>
+                  <strong
+                    >29 · Frozen issuance snapshot / archived PDF /
+                    resend</strong
+                  >
+                  <p>
+                    Billing · Client-facing frozen history + internal provenance
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> invoiceSnapshot,
+                    invoiceWorkReportSnapshot; issuance/archive pipeline
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Snapshot of line references
+                    and work report facts at issuance
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Current invoice snapshot explicitly
+                    uses EUR; report tree has server-side duplicate calculation
+                  </p>
+                </td>
+                <td>
+                  Frontend and server report builders must change together; old
+                  snapshots/hash remain immutable.
+                </td>
+                <td>
+                  Freeze final billed-time breakdown and invoice currency/rates
+                  separately from internal worked/payable analysis. Fail closed
+                  on a mismatch; use archived version for resend.
+                </td>
+                <td>
+                  Never re-render old issued PDFs from new compensation
+                  decisions; version new snapshot contract.
+                  <ol>
+                    <li><code>base44/shared/invoiceSnapshot.ts:140</code></li>
+                    <li>
+                      <code>base44/shared/invoiceWorkReportSnapshot.ts:94</code>
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Billing">
+                <td>
+                  <strong
+                    >30 · Invoice Queue totals, billed rows and summary
+                    caches</strong
+                  >
+                  <p>Billing · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> invoiceQueueTimeRead/Detail,
+                    invoiceQueueSummaryStore, invoiceQueueFinancials
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> billable=true entries;
+                    total/invoiced/remaining minutes; pending/approved filters
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Queue cost = full countable minutes x
+                    snapshot or 0
+                  </p>
+                </td>
+                <td>
+                  Invoiced entry duration can differ from invoice quantity;
+                  derived cache not invoice authority.
+                </td>
+                <td>
+                  Separate source actual/checked billable/final invoiced
+                  quantities. Cache financial decision revisions and invalidate
+                  on decisions/corrections; use canonical payable costs. Keep
+                  cache a display projection.
+                </td>
+                <td>
+                  Rebuild only derived summaries after authorized rollout; never
+                  use cache to migrate decisions.
+                  <ol>
+                    <li>
+                      <code>base44/shared/invoiceQueueTimeRead.js:20</code>
+                    </li>
+                    <li>
+                      <code>base44/shared/invoiceQueueSummaryStore.js:6</code>
+                    </li>
+                    <li>
+                      <code>base44/shared/invoiceQueueFinancials.js:14</code>
+                    </li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Exports">
+                <td>
+                  <strong>31 · Time Tracking Excel export</strong>
+                  <p>Exports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> timeEntriesExport +
+                    TimeEntriesExportModal
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Date/member/project/raw
+                    duration; boolean billable/invoiced
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> No rate or payable fields in export
+                  </p>
+                </td>
+                <td>
+                  Current selected columns lack compensation, rate basis and
+                  expected freelancer amount.
+                </td>
+                <td>
+                  Add explicit actual/payable/non-payable/pending/unknown
+                  minutes, decision status, rate source/date/currency and
+                  expected amount where authorized; do not infer invoice hours
+                  from boolean.
+                </td>
+                <td>
+                  Version columns and record generation/as-of time; preserve
+                  original exported files.
+                  <ol>
+                    <li><code>src/lib/timeEntriesExport.js:6</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Exports">
+                <td>
+                  <strong
+                    >32 · Work Report Excel / per-member PDF / combined
+                    PDF</strong
+                  >
+                  <p>Exports · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> workReportExport,
+                    standaloneWorkReport, PDF export renderer
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Per member and chosen date
+                    period; current bill flag, approver and hours
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Current Excel has no
+                    payable/rate/expected amount columns
+                  </p>
+                </td>
+                <td>
+                  Internal export uses same report shapes as invoice-related
+                  views.
+                </td>
+                <td>
+                  Internal report/export shares canonical financial buckets; per
+                  freelancer and period totals must match on-screen view. Keep
+                  client billed breakdown a separate export type.
+                </td>
+                <td>
+                  Add as-of/source IDs and evidence refs so later corrections
+                  explain differences.
+                  <ol>
+                    <li><code>src/lib/workReportExport.js:19</code></li>
+                    <li><code>src/lib/workReportExport.js:37</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Exports">
+                <td>
+                  <strong
+                    >33 · Margin / Client Account exports and print</strong
+                  >
+                  <p>Exports · Internal with financial access</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> invoiceMarginPrint/Pdf, client
+                    account report renderers
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Same scope as their on-screen
+                    parent reports
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Inherited financial basis; EUR
+                    formatting currently present
+                  </p>
+                </td>
+                <td>
+                  Export projections need the same uncertainty and rate
+                  semantics as UI.
+                </td>
+                <td>
+                  Reuse one projection including confirmed/estimated/unknown
+                  costs, worked/payable/billed hours and revenue basis; no
+                  export-only recalculation.
+                </td>
+                <td>
+                  Include analysis as-of and correction references; preserve
+                  historical exports as issued.
+                  <ol>
+                    <li><code>src/lib/invoiceMarginPrint.js:2</code></li>
+                    <li><code>src/lib/invoiceMarginPdf.js:4</code></li>
+                    <li><code>src/lib/clientAccountReport.js:204</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Exports">
+                <td>
+                  <strong>34 · Freelancer invoice check: phase 1</strong>
+                  <p>Exports · Internal; proposed capability</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> Existing Work Report + TimeEntry;
+                    new approved decision/rate projection
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Registered valid hours,
+                    payable approved minutes, pending and unknown by freelancer
+                    + inclusive invoice period
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Verified date-effective agreed rate;
+                    Work Type estimate separately labelled
+                  </p>
+                </td>
+                <td>
+                  No dedicated freelancer-invoice reconciliation workflow or
+                  payable fields found in searched app code. Existing exports
+                  are raw hours.
+                </td>
+                <td>
+                  Provide screen + export for manual check: worked/approved
+                  payable/non-payable/pending/unknown hours, rate bands,
+                  evidence, expected net labour amount, currency and subtotals.
+                  Manual external invoice/payment remains separate.
+                </td>
+                <td>
+                  Current real-world team method is unverified; repository
+                  presence/absence cannot establish who checks, monthly cycle or
+                  evidence used.
+                  <ol>
+                    <li><code>src/lib/timeEntriesExport.js:6</code></li>
+                    <li>
+                      <code>base44/entities/PaymentObligation.jsonc:6</code>
+                    </li>
+                    <li><code>src/lib/workReportExport.js:37</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="History">
+                <td>
+                  <strong
+                    >35 · Historical projects / Teamleader imports / deleted
+                    time</strong
+                  >
+                  <p>History · Internal</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> TimeEntry legacy fields; Project
+                    legacy Teamleader totals; importTeamleaderHistory
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Some imported project totals
+                    lack dated time entries
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Current person rates may be display
+                    fallback, not historical evidence
+                  </p>
+                </td>
+                <td>
+                  Legacy billable class, aggregate hours and snapshots do not
+                  prove freelancer compensation or historical rate.
+                </td>
+                <td>
+                  Preserve billing class and original registrations;
+                  compensation Unknown until NGOCSON reviews
+                  invoice/timesheet/decision evidence. Keep aggregate undated
+                  imports separate from dated period totals.
+                </td>
+                <td>
+                  Controlled per-project review; recover removed/reduced time
+                  only from reliable records. No automatic rewrite or migration
+                  now.
+                  <ol>
+                    <li><code>base44/entities/Project.jsonc:657</code></li>
+                    <li>
+                      <code
+                        >base44/functions/importTeamleaderHistory/entry.ts:20</code
+                      >
+                    </li>
+                    <li><code>base44/entities/TimeEntry.jsonc:122</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Boundaries">
+                <td>
+                  <strong
+                    >36 · Supplier obligations / actual payment / client
+                    receivables</strong
+                  >
+                  <p>Boundaries · Internal with financial/payment grants</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> PaymentObligation, InvoicePayment;
+                    paymentObligations/dashboardFinance
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Supplier confirmed/paid
+                    obligations; issued client invoice balances
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> PaymentObligation.amount in EUR;
+                    invoice totals and receipts
+                  </p>
+                </td>
+                <td>
+                  Generic supplier invoice obligation exists, but has no
+                  freelancer_id/time-entry/payable-minute link.
+                </td>
+                <td>
+                  Keep actual payment separate from compensation approval and
+                  client invoiced/paid states. Do not count approved labour plus
+                  the same supplier invoice twice in margin.
+                </td>
+                <td>
+                  Paid status alone does not prove which hours/rate were
+                  compensated; preserve evidence and source payment records.
+                  <ol>
+                    <li>
+                      <code>base44/entities/PaymentObligation.jsonc:39</code>
+                    </li>
+                    <li>
+                      <code>base44/entities/PaymentObligation.jsonc:32</code>
+                    </li>
+                    <li><code>base44/shared/dashboardFinance.js:152</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Read models">
+                <td>
+                  <strong
+                    >37 · Financial access, scoped readers and cache
+                    keys</strong
+                  >
+                  <p>Read models · Internal only</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> getInvoiceMarginData,
+                    getClientAccountReportData, invoiceReportSource, resolveCaps
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Explicit field projections;
+                    existing financial role/claim gates
+                  </p>
+                  <p>
+                    <strong>Rate:</strong> Cost fields protected by financial
+                    access; decision authority separate
+                  </p>
+                </td>
+                <td>
+                  New fields would not automatically reach readers/caches; some
+                  report users are filtered.
+                </td>
+                <td>
+                  Include decision/rate provenance in server projections and
+                  cache dependencies; use existing financial access for cost
+                  visibility and configured unique identity for financial
+                  approval. No display-name or generic-admin shortcut.
+                </td>
+                <td>
+                  Do not grant new visibility or infer NGOCSON&#x27;s account ID
+                  from fixture names.
+                  <ol>
+                    <li>
+                      <code
+                        >base44/functions/getInvoiceMarginData/entry.ts:51</code
+                      >
+                    </li>
+                    <li>
+                      <code
+                        >base44/functions/getClientAccountReportData/entry.ts:46</code
+                      >
+                    </li>
+                    <li><code>base44/shared/invoiceReportSource.js:4</code></li>
+                    <li><code>src/hooks/useRole.js:9</code></li>
+                  </ol>
+                </td>
+              </tr>
+              <tr data-area="Coverage">
+                <td>
+                  <strong
+                    >38 · Report catalog: indirect and unaffected
+                    outputs</strong
+                  >
+                  <p>Coverage · Mixed; explicit sharing only</p>
+                </td>
+                <td>
+                  <p>
+                    <strong>Source:</strong> Reports detail map/catalog;
+                    Delivery/Planning/Email/Issue/Publish reports
+                  </p>
+                  <p>
+                    <strong>Hours/status:</strong> Direct hour/margin readers
+                    mapped above; other reports primarily work on tasks, issues,
+                    delivery and publication events
+                  </p>
+                  <p><strong>Rate:</strong> No new compensation rate implied</p>
+                </td>
+                <td>
+                  Not every catalog report consumes time/cost; source-only
+                  Capacity differs from routed reports.
+                </td>
+                <td>
+                  Do not add compensation columns everywhere. Regression-check
+                  downstream hours, permissions and client exports only where
+                  time/cost is consumed; leave unrelated metrics unchanged.
+                </td>
+                <td>
+                  This is source coverage, not live UI verification; runtime and
+                  external tools may add consumers.
+                  <ol>
+                    <li><code>src/pages/Reports.jsx:26</code></li>
+                    <li><code>src/lib/reportsCatalog.js:7</code></li>
+                  </ol>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <h2>Shared reconciliation rules</h2>
+        <ol>
+          <li>
+            <strong>Worked-time inclusion</strong>
+            <p>
+              Count saved, non-provisional valid registrations (pending/approved
+              currently). Exclude invalid Rejected and Cancelled records from
+              valid-work totals; retain them in review/audit. Keep signed
+              factual corrections linked to the original.
+            </p>
+          </li>
+          <li>
+            <strong>Financial decisions</strong>
+            <p>
+              Compensation and client billing each have proposed minutes,
+              reviewed approved minutes, decision state, actor, timestamp,
+              reason/evidence and revision. Zero is a reviewed decision; null is
+              unresolved. Each approved amount is independently 0..valid worked
+              minutes.
+            </p>
+          </li>
+          <li>
+            <strong>Disjoint hour buckets</strong>
+            <p>
+              Actual valid minutes = payable + non-payable + pending
+              compensation + unknown historical compensation. Independently
+              actual valid minutes = reviewed client-billable + reviewed
+              non-billable + pending/unknown billing minutes. Do not add
+              compensation and billing columns together.
+            </p>
+          </li>
+          <li>
+            <strong>Confirmed cost</strong>
+            <p>
+              Reviewed payable minutes x verified agreed rate effective on work
+              date. Reviewed non-payable minutes cost zero even when the rate is
+              missing. Approval never marks a freelancer as paid.
+            </p>
+          </li>
+          <li>
+            <strong>Estimated cost</strong>
+            <p>
+              A separately labelled estimate for awaiting-review proposed hours
+              with a known rate, or payable hours priced with a Work Type
+              default. It never becomes confirmed cost. An estimate must
+              identify its basis/as-of date.
+            </p>
+          </li>
+          <li>
+            <strong>Unknown cost</strong>
+            <p>
+              Expose affected hours/entries when compensation or applicable rate
+              cannot be verified. Do not represent an unquantifiable cost as EUR
+              0 or a final margin. An optional scenario estimate must stay
+              separate.
+            </p>
+          </li>
+          <li>
+            <strong>Revenue and invoice facts</strong>
+            <p>
+              Actual revenue follows eligible issued invoice lines and financial
+              corrections, excluding VAT. Checked billable hours are a proposal;
+              Daniel&#x27;s documented final quantity is a separate fact.
+              Fixed-price agreed/forecast value stays separate from issued
+              revenue.
+            </p>
+          </li>
+          <li>
+            <strong>Margin and forecast</strong>
+            <p>
+              Confirmed-only margin must not be presented as the final outcome
+              when unresolved costs remain. Show known confirmed costs,
+              estimated exposure and unknown-cost counts/hours separately;
+              projected margin is provisional. Total project cost can also
+              include expenses/subscriptions without double counting supplier
+              payments.
+            </p>
+          </li>
+          <li>
+            <strong>Scope and periods</strong>
+            <p>
+              Group manual reconciliation by stable freelancer ID and selected
+              inclusive work-date interval; split rate bands across effective
+              dates. Invoice issue/payment dates, lifetime project totals and
+              filtered work-date reports can differ legitimately.
+            </p>
+          </li>
+          <li>
+            <strong>Historical basis</strong>
+            <p>
+              Preserve legacy client billable classification and invoice
+              ownership; existing time approval or non-billable flag never
+              proves compensation. Preserve issued snapshots and old exports;
+              corrected analysis shows the new as-of/revision and evidence.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Proposed workflow and responsibilities</h2>
+        <ol>
+          <li>
+            <strong>1. Register actual work</strong>
+            <p>
+              Member — Manual, timer, Attendance or confirmed Planning records
+              actual valid minutes. Propose full compensation pending review.
+              Billing proposal follows WP agreement then Project; unclear terms
+              stay Needs review.
+            </p>
+          </li>
+          <li>
+            <strong>2. Check work and exceptions</strong>
+            <p>
+              Team / PM — Review validity, task/WP link, duplicates, rework and
+              time evidence using existing operational permissions. Proposed
+              quantities may be reviewed, but this does not grant financial
+              approval.
+            </p>
+          </li>
+          <li>
+            <strong>3. Decide independently</strong>
+            <p>
+              NGOCSON — Approve payable minutes and client-billable minutes
+              separately, including his own time. Bulk-approve standard entries;
+              require reasons/evidence for exceptions and corrections.
+            </p>
+          </li>
+          <li>
+            <strong>4. Resolve cost basis</strong>
+            <p>
+              Authorized financial administration — Use documented freelancer
+              rate effective on work date. If unavailable, show Work Type
+              default only as an estimate. Record gaps without filling unknown
+              costs with zero.
+            </p>
+          </li>
+          <li>
+            <strong>5. Reconcile freelancer invoice</strong>
+            <p>
+              Manual team check; actual current checker/period not verified —
+              Generate internal Work Report/export per freelancer and chosen
+              work-date period, grouped by rate band. Compare registered vs
+              approved payable hours and expected net labour amount against the
+              external freelancer invoice. Flag pending and estimated/unknown
+              facts; no payment is triggered.
+            </p>
+          </li>
+          <li>
+            <strong>6. Prepare client invoice</strong>
+            <p>
+              Daniel — WORK proposes checked billable hours; Daniel enters final
+              quantity, sale rate, amount and currency. A difference from
+              proposed hours requires a reason; payment and compensation
+              decisions remain unchanged.
+            </p>
+          </li>
+          <li>
+            <strong>7. Issue optional client breakdown</strong>
+            <p>
+              Daniel / existing issuance process — Send invoice information by
+              default. If hourly time breakdown is included, project it from
+              final invoice allocations; reconcile exact final quantity and
+              freeze it at issuance. Do not attach full internal compensation
+              report.
+            </p>
+          </li>
+          <li>
+            <strong>8. Review project outcome</strong>
+            <p>
+              Authorized internal users — Reconcile all valid actual work,
+              approved payable cost, unresolved exposure, billed source/final
+              quantity variance, issued revenue and remaining forecast. Fix
+              processed facts through traceable corrections.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Recommended technical design — proposal, not deployed schema</h2>
+        <ol>
+          <li>
+            <strong>Keep TimeEntry as work evidence</strong>
+            <p>
+              Do not replace duration_minutes with payable or billable minutes.
+              Keep start/end/date/project/task/WP and operational validity. Once
+              financially processed, use linked factual corrections for
+              actual-time errors.
+            </p>
+          </li>
+          <li>
+            <strong>Append financial decision events</strong>
+            <p>
+              Proposed separate decision ledger per time entry and decision
+              kind, with proposed/approved minutes, pending/approved/unknown
+              state, expected revision, idempotency key,
+              actor/time/reason/evidence and predecessor. A read projection may
+              expose latest values; exact schema names are proposals for review.
+            </p>
+          </li>
+          <li>
+            <strong>Record date-effective freelancer agreements</strong>
+            <p>
+              Proposed internal rate agreement history: freelancer ID,
+              valid-from/to, rate/currency, evidence and approval. Resolve by
+              work date; ambiguous/overlapping/missing agreements do not
+              auto-confirm. Existing snapshots need provenance review, not blind
+              promotion.
+            </p>
+          </li>
+          <li>
+            <strong>One canonical projection</strong>
+            <p>
+              A shared pure calculator takes time validity, latest decisions,
+              rate evidence, scope and invoice allocations and returns
+              actual/compensation/billing buckets plus
+              confirmed/estimated/unknown costs. Frontend, backend readers,
+              exports and caches use the same semantics.
+            </p>
+          </li>
+          <li>
+            <strong>Authoritative write commands</strong>
+            <p>
+              Server validates configured NGOCSON identity, active account,
+              financial permission, row scope, integer bounds, revision and
+              processed-record rules. Cost visibility uses existing financial
+              access. Direct entity writes cannot change protected financial
+              decisions. Do not infer identity from display name.
+            </p>
+          </li>
+          <li>
+            <strong>Distinct invoice allocation</strong>
+            <p>
+              Freeze checked source minutes, final invoice
+              quantity/rate/currency, source entry IDs and documented variance.
+              For a multi-row client breakdown use explicit billed
+              allocations/adjustment rows, not altered actual registrations or
+              fabricated timestamps. Verify sum equals final hourly line
+              quantity before issue/send.
+            </p>
+          </li>
+          <li>
+            <strong>Keep payment outside approval</strong>
+            <p>
+              Phase 1 produces a reconciliation dataset for manual checking.
+              Existing PaymentObligation may record a supplier invoice/payment
+              independently, but is not evidence of approved hours and must not
+              duplicate labour cost in project margin.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Simpler alternatives considered</h2>
+        <ol>
+          <li>
+            <strong>Two extra booleans</strong>
+            <p>
+              Rejected as insufficient — Cannot represent partial amounts,
+              pending/unknown values, date-effective rate evidence or
+              independent audited corrections.
+            </p>
+          </li>
+          <li>
+            <strong>Split/shorten time entries to match pay or billing</strong>
+            <p>
+              Rejected — Would lose actual effort or fragment one registration;
+              financial decisions would change the underlying work evidence.
+            </p>
+          </li>
+          <li>
+            <strong>Minimal fields on TimeEntry + AuditEvent</strong>
+            <p>
+              Simpler implementation option — Separate minute/status fields and
+              robust immutable audit may suffice if concurrency and processed
+              financial-only corrections are proven. Compare to the proposed
+              ledger at team review; direct unguarded field edits are
+              unacceptable.
+            </p>
+          </li>
+          <li>
+            <strong>Separate decision ledger + shared projection</strong>
+            <p>
+              Recommended proposal — Preserves one registration, independent
+              decisions and review/correction history. Requires explicit server
+              commands, projection completeness and idempotent retries.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Worked examples — isolated EUR sample data</h2>
+        <p>
+          Illustrative cost rate EUR 20/h and selling rate EUR 60/h where
+          applicable. Values exclude VAT; no production rates or records.
+          Fixed-price EUR 500 is illustrative. Approval and payment are
+          separate.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>
+                  Actual / payable / checked billable / final invoiced (hours)
+                </th>
+                <th>Confirmed labour cost (EUR)</th>
+                <th>Issued revenue (EUR)</th>
+                <th>Labour-only margin (EUR)</th>
+                <th>Expected reconciliation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Regular hourly work</th>
+                <td>6.0 / 6.0 / 6.0 / 6</td>
+                <td>120</td>
+                <td>360</td>
+                <td>240</td>
+                <td>
+                  Confirmed
+                  <p>
+                    6h worked / 6h payable / 6h checked billable / 6h invoice.
+                    Freelancer expected EUR 120; revenue EUR 360 excluding VAT.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Paid rework</th>
+                <td>2.0 / 2.0 / 0.0 / 0</td>
+                <td>40</td>
+                <td>0</td>
+                <td>-40</td>
+                <td>
+                  Confirmed
+                  <p>
+                    2h valid actual and payable; no separate client charge. Cost
+                    EUR 40 remains visible.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Unpaid rework</th>
+                <td>2.0 / 0.0 / 0.0 / 0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>
+                  Confirmed
+                  <p>
+                    2h valid actual, 2h non-payable; no freelancer cost even
+                    though rate is unknown. Never mark this time invalid.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Daniel example: 8 / 6 / 5</th>
+                <td>8.0 / 6.0 / 5.0 / 5</td>
+                <td>120</td>
+                <td>300</td>
+                <td>180</td>
+                <td>
+                  Confirmed
+                  <p>
+                    8h actual = 6h payable + 2h non-payable; separately 5h
+                    billable + 3h non-billable. Manual freelancer check EUR 120;
+                    invoice/breakdown 5h. Rates are isolated examples, not
+                    production rates.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Final invoice variance</th>
+                <td>8.0 / 6.0 / 5.0 / 7</td>
+                <td>120</td>
+                <td>420</td>
+                <td>300</td>
+                <td>
+                  Confirmed with documented sales variance
+                  <p>
+                    WORK proposes 5h, Daniel invoices 7h with a reason. Internal
+                    actual/payable/billable remain 8/6/5; final client breakdown
+                    totals 7h; variance +2h is not new worked time.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Fixed-price work</th>
+                <td>8.0 / 6.0 / 5.0 / Fixed-price</td>
+                <td>120</td>
+                <td>500</td>
+                <td>380</td>
+                <td>
+                  Confirmed if agreed EUR 500 is issued; otherwise forecast only
+                  <p>
+                    Fixed-price agreement EUR 500; 8h effort and 6h cost basis.
+                    Hours do not create extra revenue. Distinguish
+                    agreed/forecast EUR 500 from actually issued revenue.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Compensation awaiting review</th>
+                <td>8.0 / Unknown / unresolved / 5.0 / 5</td>
+                <td>Unknown / unresolved</td>
+                <td>300</td>
+                <td>Unknown / unresolved</td>
+                <td>
+                  Provisional
+                  <p>Estimated cost EUR 160</p>
+                  <p>
+                    8h compensation pending; EUR 160 is an estimate on proposed
+                    full hours, not approved payable cost or a payment. Any EUR
+                    140 projected margin is explicitly provisional.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Work Type rate estimate</th>
+                <td>8.0 / 6.0 / 5.0 / 5</td>
+                <td>Unknown / unresolved</td>
+                <td>300</td>
+                <td>Unknown / unresolved</td>
+                <td>
+                  Provisional
+                  <p>Estimated cost EUR 120</p>
+                  <p>
+                    6h payable confirmed, but rate not confirmed. Estimated cost
+                    EUR 120 is separate; no final confirmed margin.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">No applicable cost rate</th>
+                <td>8.0 / 6.0 / 5.0 / 5</td>
+                <td>Unknown / unresolved</td>
+                <td>300</td>
+                <td>Unknown / unresolved</td>
+                <td>
+                  Unknown / provisional
+                  <p>
+                    6h payable with unquantifiable cost; cost and final margin
+                    unavailable, never zero.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Historical non-billable work</th>
+                <td>8.0 / Unknown / unresolved / 0.0 / 0</td>
+                <td>Unknown / unresolved</td>
+                <td>0</td>
+                <td>Unknown / unresolved</td>
+                <td>
+                  Needs review
+                  <p>
+                    Preserve 8h worked and historical non-billable label.
+                    Compensation remains unknown; do not label 8h non-payable.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Financial-only historical correction</th>
+                <td>8.0 / 6.0 / 5.0 / 5</td>
+                <td>120</td>
+                <td>300</td>
+                <td>180</td>
+                <td>
+                  Restated current analysis
+                  <p>
+                    Previously recorded 8h payable (EUR 160); evidence verifies
+                    6h (EUR 120). Append compensation adjustment -2h / -EUR 40.
+                    Actual 8h and issued 5h client invoice stay unchanged; past
+                    payment is not automatically recovered.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Invalid duplicate registration</th>
+                <td>0.0 / 0.0 / 0.0 / 0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>
+                  Excluded from valid worked totals
+                  <p>
+                    Keep raw duplicate/audit evidence, mark Rejected; excluded
+                    from valid actual, compensation and invoice source totals.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <h2>Historical projects and corrections</h2>
+        <ol>
+          <li>
+            Perform no historical migration during this analysis. First produce
+            a read-only inventory by project: validity, legacy billable flag,
+            operational approval, client invoice ownership, existing corrections
+            and cost-rate evidence.
+          </li>
+          <li>
+            Leave compensation Unknown / Needs review unless documented evidence
+            is reviewed by NGOCSON. Preserve existing client billing
+            classification without treating it as approved compensation or
+            blindly inventing partial minutes.
+          </li>
+          <li>
+            Use detailed freelancer invoices, approved timesheets or documented
+            compensation decisions as evidence. A paid supplier obligation alone
+            does not identify the compensated entries or effective rate.
+          </li>
+          <li>
+            Bulk-review only an explicit project/period/entry selection covered
+            by the same evidence; preview counts, hour totals, rate bands and
+            affected reports before commit. Record every decision and report
+            partial failures.
+          </li>
+          <li>
+            For processed entries append financial-only corrections linked to
+            the original decision; actual minutes stay unchanged unless evidence
+            proves a time-registration error. Supplier payment corrections and
+            issued client invoice corrections remain separate.
+          </li>
+          <li>
+            Show restated project analysis as-of the correction date alongside
+            original issued report/invoice snapshots. Do not silently regenerate
+            old documents or overwrite their hashes.
+          </li>
+          <li>
+            Recover deleted or reduced time only with reliable source records;
+            undated Teamleader aggregate totals stay separate from dated
+            invoice-period detail.
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Phased implementation and validation plan</h2>
+        <ol>
+          <li>
+            <strong>0. Team review preparation</strong>
+            <p>
+              This deliverable — Source impact map, decision rules, sample
+              reconciliations, historical plan, proposed screens and outstanding
+              operational facts. No application writes.
+            </p>
+          </li>
+          <li>
+            <strong>1. Agree workflow and implementation contract</strong>
+            <p>
+              Before application implementation — Team/PM review; confirm manual
+              check ownership/period, configured NGOCSON and Daniel accounts,
+              rate-evidence administration, invoice breakdown allocation, cap
+              handling and currency/conversion scope. Record acceptance
+              criteria.
+            </p>
+          </li>
+          <li>
+            <strong>2. Model and shared calculator</strong>
+            <p>
+              After review agreement — Add independent financial decisions and
+              date-effective rates; derive disjoint buckets. Use isolated
+              fixture data for partial decisions, effective dates, unknowns and
+              factual/financial corrections.
+            </p>
+          </li>
+          <li>
+            <strong>3. Server permissions and write paths</strong>
+            <p>
+              After phase 2 verification — Protect all commands/direct financial
+              fields; identity-specific approval, independent operational
+              review, bounds, evidence, idempotency, concurrent edits and
+              processed records. Preserve unknown mutation outcomes.
+            </p>
+          </li>
+          <li>
+            <strong>4. Internal screens and canonical financial readers</strong>
+            <p>
+              After server controls — Update affected
+              review/project/report/dashboard/queue views, scoped field
+              projections and cache invalidation together. Keep effort/cap and
+              commercial/financial meanings distinct.
+            </p>
+          </li>
+          <li>
+            <strong>5. Invoices, exports and immutable attachments</strong>
+            <p>
+              Before release — Checked quantity proposal plus Daniel variance;
+              remove cost/sale fallbacks; build final-invoice time breakdown,
+              update front/server snapshot contracts, manual freelancer check
+              report/export and all affected PDF/Excel outputs.
+            </p>
+          </li>
+          <li>
+            <strong>6. Isolated end-to-end validation and team sign-off</strong>
+            <p>
+              Before rollout — Use cases below; compare UI/export/read-model
+              totals; run declared lint/typecheck/build and report-hours checks
+              at that time. Distinguish baseline failures. No production test
+              writes.
+            </p>
+          </li>
+          <li>
+            <strong>7. Controlled rollout and later historical review</strong>
+            <p>
+              Only after agreement — Deploy/publish through normal approved
+              process, then verify published UI read-only. Historical
+              classification is a separate controlled rollout with
+              backups/inventory/replay and traceable evidence. No broad
+              auto-reclassification.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>
+          Validation acceptance matrix — future isolated application tests
+        </h2>
+        <ol>
+          <li>
+            <strong>Independent decisions</strong>
+            <p>
+              Changing payable minutes leaves actual/billable unchanged;
+              changing checked billable leaves actual/payable unchanged. Reject
+              negative/over-actual/fractional approved minutes. Null remains
+              different from reviewed zero.
+            </p>
+          </li>
+          <li>
+            <strong>Authority</strong>
+            <p>
+              NGOCSON succeeds including own time; PM/other admin/member
+              financial changes fail server-side and via direct-field attempts;
+              Daniel&#x27;s invoice-finalization grant remains distinct.
+              Existing financial access protects cost visibility.
+            </p>
+          </li>
+          <li>
+            <strong>Entry points</strong>
+            <p>
+              Manual, timer, DayHub, Attendance, Planning confirmed-log path
+              produce consistent proposals. Workday/attendance auto-approval
+              never approves compensation. Budget/cap failures retain
+              actual-time evidence.
+            </p>
+          </li>
+          <li>
+            <strong>Rates</strong>
+            <p>
+              Work-date boundary, mid-period rate changes, late/backdated
+              logging, overlapping/missing agreements, missing/default rates,
+              genuine zero rate, legacy snapshot provenance and current-rate
+              changes. Non-payable confirmed zero produces zero cost without a
+              rate.
+            </p>
+          </li>
+          <li>
+            <strong>Reconciliation</strong>
+            <p>
+              Regular/paid rework/unpaid
+              rework/partial/fixed-price/pending/unknown/historical correction;
+              compare every affected parent/child projection, Excel/PDF and
+              screen. Aggregate before explicit presentation rounding; no
+              duplicate cost across invoices or supplier payments.
+            </p>
+          </li>
+          <li>
+            <strong>Invoice variance and attachments</strong>
+            <p>
+              Checked 5h -&gt; final 7h with reason; reject unexplained
+              variance. Multi-line/entry/period allocations sum to final invoice
+              quantity and net amount; include no freelancer data; archived
+              resend remains unchanged.
+            </p>
+          </li>
+          <li>
+            <strong>Historic and processed records</strong>
+            <p>
+              Unknown compensation remains unknown; review does not alter
+              original time, issued invoices, payments or old exports.
+              Financial-only adjustment changes compensation/cost only. Reliable
+              actual-time correction remains separately auditable.
+            </p>
+          </li>
+          <li>
+            <strong>Failures/concurrency/cache</strong>
+            <p>
+              Idempotent retry, stale expected revision, lost acknowledgement,
+              partial bulk success, missing reader fields, failed pagination and
+              cache invalidation. Failed read is unavailable, never a zero-total
+              success.
+            </p>
+          </li>
+          <li>
+            <strong>Currency and release</strong>
+            <p>
+              Only compare same-currency cost/revenue or an explicitly agreed
+              stored conversion basis. Check declared lint/typecheck/build plus
+              repository report-hour commands after implementation; then
+              read-only production verification after Publish.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Items to bring to team review</h2>
+        <ol>
+          <li>
+            <strong>1. Current manual reconciliation method</strong>
+            <p>
+              Unverified operational fact — No dedicated mechanism found in
+              repo; user has no example. Team should demonstrate current
+              external invoice/timesheet comparison, period and responsible
+              checker. The proposal explicitly records this gap.
+            </p>
+          </li>
+          <li>
+            <strong>2. Stable identities and financial responsibility</strong>
+            <p>
+              Configuration to verify — Business authority is already decided:
+              NGOCSON financial approval, Daniel invoice finalization. Map to
+              verified account IDs/configuration; PM or generic admin status
+              must not accidentally substitute.
+            </p>
+          </li>
+          <li>
+            <strong>3. Historical rate evidence administration</strong>
+            <p>
+              Implementation choice for team review — Agree where effective-date
+              rate agreements/evidence are maintained, who may record them, and
+              treatment of overlapping/missing periods. Do not reopen
+              Daniel&#x27;s agreed-rate-first rule.
+            </p>
+          </li>
+          <li>
+            <strong>4. Currency and comparable margin</strong>
+            <p>
+              Scope requiring review — Project schema permits multiple
+              currencies but issuance snapshot and several financial
+              calculations use EUR. Keep this report&#x27;s examples EUR. Do not
+              implement a cosmetic currency selector or subtract mixed
+              currencies; agree conversion/date/source or keep non-EUR
+              consolidated margin unresolved.
+            </p>
+          </li>
+          <li>
+            <strong>5. Client billed allocation and rounding</strong>
+            <p>
+              Implementation choice for team review — Recommend explicit
+              invoice-level billing adjustment and residual rounding rules.
+              Final breakdown must match final quantity without changing
+              registered work; test multiple tasks/lines, partial periods and
+              reissued corrections.
+            </p>
+          </li>
+          <li>
+            <strong>6. Time caps versus complete effort</strong>
+            <p>
+              Existing workflow interaction — Current caps can refuse extra
+              actual time. Preserve timer/evidence and propose an explicit
+              over-limit recording/review route for team agreement. Do not
+              silently remove budget enforcement or treat refused time as zero
+              actual effort.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h2>Evidence and limits</h2>
+        <ol>
+          <li>
+            38 impact rows / 80 source anchors resolved against current working
+            tree
+          </li>
+          <li>
+            12 synthetic specification examples; arithmetic checked offline.
+            These are not tests of implemented application behaviour.
+          </li>
+          <li>
+            No live UI, production data or freelancer invoices were inspected.
+            No backend/API calls, Save/Send actions, schema migrations,
+            application code changes, commits, push or Publish were performed
+            for this analysis.
+          </li>
+          <li>
+            This map groups direct readers and their wrappers/exports;
+            source-only components are labelled. External spreadsheets,
+            automations outside the repository, and the actual human
+            reconciliation process remain unverified.
+          </li>
+        </ol>
+      </section>
+    </main>
+    <script>
+      const search = document.getElementById("search"),
+        area = document.getElementById("area"),
+        count = document.getElementById("count");
+      const rows = [...document.querySelectorAll("#impact tbody tr")];
+      function filter() {
+        let n = 0;
+        const q = search.value.toLocaleLowerCase().trim();
+        for (const row of rows) {
+          const match =
+            (area.value === "all" || row.dataset.area === area.value) &&
+            (!q || row.textContent.toLocaleLowerCase().includes(q));
+          row.hidden = !match;
+          if (match) n++;
+        }
+        count.textContent = n + " of " + rows.length + " groups";
+      }
+      search.addEventListener("input", filter);
+      area.addEventListener("change", filter);
+      document
+        .getElementById("print")
+        .addEventListener("click", () => window.print());
+    </script>
+  </body>
+</html>
