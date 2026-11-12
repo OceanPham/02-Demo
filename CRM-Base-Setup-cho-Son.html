@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn Sơn thiết lập CRM-Base trên Windows: Git, Node.js, NVM, clone repo, nhánh son-dev, chạy local và quy tắc làm việc với AI.">
+  <title>CRM-Base · Hướng dẫn setup cho Sơn</title>
+  <style>
+    :root { color-scheme: light; --ink:#17283f; --muted:#526177; --blue:#1556b8; --pale:#edf4ff; --line:#d9e1ed; --paper:#fff; --canvas:#f4f7fb; --red:#a62c2c; --red-pale:#fff2ef; --green:#176346; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:28px; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font-family:"Segoe UI",Tahoma,Arial,sans-serif; font-size:16px; line-height:1.75; }
+    a { color:var(--blue); text-underline-offset:3px; overflow-wrap:anywhere; }
+    a:hover { text-decoration-thickness:2px; }
+    :focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+    .skip { position:fixed; top:-80px; left:20px; z-index:20; background:white; padding:10px 18px; }
+    .skip:focus { top:10px; }
+    .sidebar { position:fixed; inset:0 auto 0 0; width:270px; padding:28px 22px; overflow-y:auto; background:#102944; color:#fff; }
+    .brand { display:flex; align-items:center; gap:12px; font-size:21px; font-weight:700; }
+    .brand-mark { width:36px; height:36px; display:grid; place-items:center; background:#fff; color:#102944; border-radius:8px; font-size:15px; letter-spacing:-1px; }
+    .sidebar .subtitle { margin:10px 0 24px; color:#c1d2e8; font-size:13px; line-height:1.6; }
+    .sidebar nav a { display:flex; gap:12px; color:#e2ebf7; text-decoration:none; padding:7px 10px; border-left:2px solid transparent; font-size:14px; line-height:1.5; margin:3px 0; }
+    .sidebar nav a:hover, .sidebar nav a[aria-current] { background:#1e3d60; border-left-color:#a6caff; color:#fff; }
+    .sidebar nav span { min-width:20px; color:#a9c1df; font-variant-numeric:tabular-nums; }
+    .rail-note { margin-top:26px; padding:14px 10px 0; border-top:1px solid #35516e; font-size:13px; line-height:1.65; color:#c1d2e8; }
+    .rail-note code { color:white; background:#1e3d60; }
+    .page { margin-left:270px; padding:32px 44px 64px; }
+    .document { max-width:920px; margin:0 auto; background:var(--paper); border:1px solid var(--line); }
+    header { padding:42px 46px 32px; border-bottom:1px solid var(--line); }
+    .meta { display:flex; flex-wrap:wrap; gap:10px 20px; font-size:13px; color:var(--muted); }
+    h1 { font-size:clamp(30px,3.7vw,44px); line-height:1.18; letter-spacing:-1.5px; margin:24px 0 18px; max-width:650px; }
+    .intro { font-size:18px; color:var(--muted); max-width:680px; margin:0; }
+    .quickfacts { display:flex; flex-wrap:wrap; gap:9px; margin-top:24px; }
+    .chip { display:inline-block; padding:3px 11px; border:1px solid #c9d9ee; border-radius:5px; font-size:13px; color:#214d83; background:#f8fbff; }
+    .actions { margin-top:20px; }
+    button { font:inherit; cursor:pointer; }
+    .print { background:#fff; border:1px solid #b6c7de; border-radius:5px; padding:7px 14px; color:var(--ink); font-size:13px; }
+    section { padding:33px 46px; border-bottom:1px solid var(--line); scroll-margin-top:22px; }
+    section:last-child { border-bottom:0; }
+    h2 { display:flex; align-items:baseline; gap:13px; font-size:25px; line-height:1.35; letter-spacing:-.45px; margin:0 0 19px; }
+    .num { color:var(--blue); font-size:15px; min-width:28px; font-weight:600; font-variant-numeric:tabular-nums; }
+    h3 { font-size:18px; line-height:1.45; margin:26px 0 9px; }
+    p { margin:10px 0; }
+    ul,ol { padding-left:25px; margin:12px 0; }
+    li { padding-left:3px; margin:8px 0; }
+    li::marker { color:var(--muted); font-weight:600; }
+    strong { font-weight:650; }
+    code { font-family:Consolas,"Cascadia Code",monospace; font-size:.88em; background:#eef2f7; border-radius:3px; padding:2px 5px; overflow-wrap:anywhere; }
+    .command { margin:15px 0; border:1px solid #28476a; border-radius:7px; overflow:hidden; background:#102944; color:#edf4ff; }
+    .command-head { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 13px; border-bottom:1px solid #35516e; background:#173653; font-size:12px; color:#cedced; }
+    .copy { color:#fff; background:#284e76; border:1px solid #6686aa; padding:3px 10px; border-radius:4px; font-size:12px; white-space:nowrap; }
+    .copy:hover { background:#37628f; }
+    pre { margin:0; padding:15px 17px; overflow-x:auto; white-space:pre; tab-size:2; line-height:1.65; }
+    pre code { padding:0; border:0; background:none; color:inherit; font-size:14px; border-radius:0; overflow-wrap:normal; }
+    .output { margin:10px 0; padding:10px 15px; border-left:3px solid #89a9d3; background:#f5f8fd; font-size:14px; color:#3c536f; }
+    .output code { background:transparent; }
+    .note { margin:18px 0; padding:14px 17px; border-left:3px solid var(--blue); background:var(--pale); }
+    .note p:first-child, .danger p:first-child { margin-top:0; }
+    .note p:last-child, .danger p:last-child { margin-bottom:0; }
+    .danger { margin:18px 0; padding:16px 19px; border-left:4px solid var(--red); background:var(--red-pale); }
+    .danger strong { color:#8d2525; }
+    .rules { display:grid; gap:12px; }
+    .rule { display:grid; grid-template-columns:36px 1fr; gap:11px; padding:19px 20px; background:var(--pale); border:1px solid #cbdcf5; }
+    .rule.critical { background:var(--red-pale); border-color:#e8bfba; }
+    .rule-index { font-size:26px; font-weight:700; color:var(--blue); line-height:1.2; }
+    .critical .rule-index { color:var(--red); }
+    .rule h3 { margin:0 0 6px; font-size:19px; }
+    .rule p { margin:0; }
+    .forks { display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:16px 0; }
+    .fork { display:grid; grid-template-columns:180px 1fr; gap:15px; background:#fff; padding:13px 16px; }
+    .fork strong { color:#244b7b; }
+    .source { color:var(--muted); font-size:12px; line-height:1.65; margin-top:16px; }
+    details { border:1px solid var(--line); border-radius:5px; margin:12px 0; padding:0 16px; }
+    summary { cursor:pointer; padding:13px 0; font-weight:600; line-height:1.5; }
+    details[open] { padding-bottom:13px; }
+    details p { font-size:15px; }
+    .prompt pre { white-space:pre-wrap; overflow-wrap:anywhere; }
+    .prompt pre code { font-family:"Segoe UI",Tahoma,Arial,sans-serif; font-size:14px; }
+    .checklist { list-style:none; padding:0; }
+    .checklist li { position:relative; padding:9px 0 9px 31px; border-bottom:1px solid #edf0f5; margin:0; }
+    .checklist li::before { content:"□"; position:absolute; left:2px; top:7px; font-size:22px; color:var(--blue); }
+    .closing { padding:20px 46px 28px; color:var(--muted); font-size:13px; }
+    .status { position:fixed; bottom:20px; right:22px; z-index:10; max-width:calc(100vw - 44px); padding:10px 16px; border-radius:6px; background:#102944; color:white; font-size:14px; }
+    .status:empty { display:none; }
+    @media (min-width:1550px) { .page { padding-top:48px; } }
+    @media (max-width:1100px) { .sidebar { width:235px; padding:22px 15px; } .page { margin-left:235px; padding:22px; } header,section { padding-left:30px; padding-right:30px; } }
+    @media (max-width:780px) { .sidebar { position:static; width:auto; padding:20px; } .sidebar .subtitle { margin-bottom:12px; } .sidebar nav { display:grid; grid-template-columns:1fr 1fr; gap:0 10px; } .sidebar nav a { font-size:13px; padding:6px; } .rail-note { display:none; } .page { margin-left:0; padding:18px 12px 36px; } header,section { padding:26px 22px; } .closing { padding:20px 22px; } h2 { font-size:22px; } .intro { font-size:16px; } .fork { grid-template-columns:1fr; gap:4px; } }
+    @media (max-width:420px) { header,section { padding:23px 17px; } .rule { padding:15px 13px; grid-template-columns:26px 1fr; gap:9px; } h1 { letter-spacing:-.9px; } pre { padding:13px; } .command-head { padding:7px 10px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    @media print { @page { size:A4; margin:16mm; } html { scroll-padding-top:0; } body { background:white; color:#17283f; font-size:10.5pt; line-height:1.55; } .sidebar,.actions,.copy,.skip,.status { display:none!important; } .page { padding:0; margin:0; } .document { max-width:none; border:0; } header,section { padding:17px 0; } h1 { font-size:27pt; } h2 { font-size:17pt; break-after:avoid; } h3,summary { break-after:avoid; } pre { white-space:pre-wrap; overflow-wrap:anywhere; padding:10px; } pre code { font-size:9pt; } .command,.rule,.note,.danger,details { break-inside:avoid; } .command,.command-head { background:#f3f6fa!important; color:#17283f!important; border-color:#bac8d9; } .closing { padding:15px 0; } a { color:#1556b8; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#noi-dung">Chuyển đến nội dung</a>
+  <aside class="sidebar" aria-label="Mục lục hướng dẫn">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">WF</span>WorkFlow</div>
+    <p class="subtitle">CRM-Base / Developer setup<br>Dành cho anh Sơn · Windows</p>
+    <nav aria-label="Các bước setup">
+      <a href="#quy-tac"><span>01</span>Hai luật bất biến</a>
+      <a href="#chuan-bi"><span>02</span>Chuẩn bị máy &amp; quyền</a>
+      <a href="#git"><span>03</span>Kiểm tra / cài Git</a>
+      <a href="#node"><span>04</span>Kiểm tra Node.js</a>
+      <a href="#nvm"><span>05</span>Cài NVM &amp; Node.js</a>
+      <a href="#clone"><span>06</span>Clone &amp; chuyển son-dev</a>
+      <a href="#env"><span>07</span>Tạo .env.local</a>
+      <a href="#chay-local"><span>08</span>Cài project &amp; chạy local</a>
+      <a href="#kiem-tra"><span>09</span>Kiểm tra chỉ xem</a>
+      <a href="#ai"><span>10</span>Luật &amp; prompt cho AI</a>
+      <a href="#hang-ngay"><span>11</span>Dev, commit &amp; push</a>
+      <a href="#loi"><span>12</span>Xử lý lỗi thường gặp</a>
+      <a href="#checklist"><span>13</span>Checklist hoàn tất</a>
+    </nav>
+    <p class="rail-note">Nhánh làm việc duy nhất<br><code>son-dev</code><br><br>Local kết nối dữ liệu thật.<br><strong>Chỉ xem dữ liệu.</strong></p>
+  </aside>
+
+  <main class="page" id="noi-dung">
+    <article class="document">
+      <header>
+        <div class="meta"><span>Hướng dẫn thiết lập từ A–Z</span><span>Cập nhật: 12/11/2026</span></div>
+        <h1>Sơn bắt đầu dev<br>CRM-Base từ đây.</h1>
+        <p class="intro">Làm lần lượt từ kiểm tra máy, cài Node.js, clone repo đến chạy ứng dụng trên cổng 5178. Đọc hai luật bên dưới trước khi giao bất kỳ việc gì cho AI.</p>
+        <div class="quickfacts"><span class="chip">Windows + VS Code</span><span class="chip">Node.js ≥ 20</span><span class="chip">Nhánh son-dev</span><span class="chip">Local :5178</span></div>
+        <div class="actions"><button class="print" id="print-guide" type="button">In / lưu PDF hướng dẫn</button></div>
+        <p class="source">File HTML độc lập: có thể gửi nguyên file và mở bằng Edge / Chrome. Không cần cài project để đọc tài liệu. Nút sao chép chỉ sao chép văn bản, không chạy lệnh.</p>
+      </header>
+
+      <section id="quy-tac">
+        <h2><span class="num">01</span>Hai luật bất biến</h2>
+        <div class="rules">
+          <div class="rule"><div class="rule-index">1</div><div><h3>Chỉ làm việc và commit trên son-dev</h3><p>Mọi thay đổi của anh Sơn phải được commit trên <code>son-dev</code>. Trước khi sửa code, commit hoặc push, kiểm tra nhánh. Không commit lên <code>main</code>, không tự tạo nhánh khác và không tự merge vào nhánh chung.</p></div></div>
+          <div class="rule critical"><div class="rule-index">2</div><div><h3>Local dùng dữ liệu production: chỉ được xem</h3><p>Chạy trên máy anh Sơn vẫn kết nối dữ liệu thật của công ty. <strong>Không thêm, không sửa, không xóa dữ liệu</strong> bằng giao diện, API, script hay AI. Nhánh riêng và địa chỉ localhost không tạo ra database riêng.</p></div></div>
+        </div>
+        <div class="danger"><p><strong>Không bấm Save, Create, Add, Delete, Send, Confirm, đổi trạng thái, kéo thả để cập nhật, ghi payment hoặc chỉnh hóa đơn.</strong> Không chạy seed, import, migration, upload file, đồng bộ mail hay script thử ghi vào Base44. Quy tắc áp dụng với mọi bản ghi, kể cả <code>draft-0044</code>.</p><p>Được sửa <strong>mã nguồn</strong> theo task. Nếu cần kiểm thử thao tác ghi, phải dùng mock / fixture hoặc backend thử nghiệm <strong>cách ly hoàn toàn với production</strong>. Chưa có môi trường đó thì chỉ kiểm tra phần đọc và báo phần chưa kiểm thử.</p></div>
+        <p>Đây là quy tắc vận hành, <strong>không phải một khóa kỹ thuật đã tự bật</strong>. Giao diện có thể vẫn cho phép bấm nút ghi. Anh Sơn và AI phải chủ động tuân thủ.</p>
+      </section>
+
+      <section id="chuan-bi">
+        <h2><span class="num">02</span>Chuẩn bị trước khi cài</h2>
+        <ol>
+          <li><strong>VS Code đã có sẵn.</strong> Mở VS Code, chọn <strong>Terminal → New Terminal</strong>. Trong menu cạnh nút <strong>+</strong> của Terminal, chọn <strong>Select Default Profile → PowerShell</strong>, rồi mở terminal mới.</li>
+          <li><strong>Tài khoản GitHub có quyền repo.</strong> Đăng nhập GitHub và mở <a href="https://github.com/HaiRetail/CRM-Base" target="_blank" rel="noopener noreferrer">repository HaiRetail/CRM-Base</a>. Nếu thấy 404 hoặc không xem được code, nhờ người phụ trách cấp quyền; nếu có lời mời collaborator thì nhận lời mời trước.</li>
+          <li><strong>Nhận cấu hình local và quyền đăng nhập app.</strong> Nhờ người phụ trách gửi riêng hai giá trị <code>VITE_BASE44_APP_ID</code>, <code>VITE_BASE44_APP_BASE_URL</code> và cấp tài khoản ứng dụng phù hợp. Không đưa mật khẩu, access token hoặc file cấu hình vào Git.</li>
+          <li><strong>Chọn chỗ lưu code.</strong> Tài liệu dùng thư mục <code>C:\Users\&lt;ten-Windows&gt;\source\CRM-Base</code>. Không cần ổ E: giống máy người khác. Tránh thư mục đang đồng bộ OneDrive để giảm lỗi khóa file.</li>
+        </ol>
+        <div class="note"><p><strong>Cách dùng lệnh:</strong> chạy từng khối, chờ xong và đọc kết quả rồi mới sang khối tiếp. Các lệnh bên dưới dành cho anh Sơn nhập trực tiếp trong PowerShell; không gõ thêm ký hiệu <code>PS C:\...</code> ở đầu dòng. Nếu có chỗ ghi “thay giá trị”, phải thay trước khi chạy.</p><p>Khi AI thực thi terminal trong repository, AI còn phải tuân thủ quy tắc <code>rtk</code> của <code>AGENTS.md</code>; xem bước 10.</p></div>
+      </section>
+
+      <section id="git">
+        <h2><span class="num">03</span>Kiểm tra và cài Git</h2>
+        <h3>3.1. Kiểm tra Git đã có chưa</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · kiểm tra</span><button class="copy" type="button">Sao chép</button></div><pre><code>git --version</code></pre></div>
+        <p>Nếu hiện <code>git version 2.x.x...</code> thì đã có Git, chuyển đến bước 4. Nếu báo <code>git is not recognized</code> hoặc <code>The term 'git' is not recognized</code>, cài theo mục tiếp.</p>
+        <h3>3.2. Nếu chưa có Git</h3>
+        <ol>
+          <li>Mở <a href="https://git-scm.com/install/windows" target="_blank" rel="noopener noreferrer">Git for Windows</a>, tải bản Setup phù hợp máy: thường là <strong>x64</strong>; dùng ARM64 nếu máy chạy Windows ARM.</li>
+          <li>Chạy bộ cài. Giữ các lựa chọn mặc định; ở phần PATH chọn <strong>Git from the command line and also from 3rd-party software</strong>. Giữ <strong>Git Credential Manager</strong> để đăng nhập GitHub qua trình duyệt.</li>
+          <li>Cài xong, đóng toàn bộ cửa sổ VS Code, mở lại và chọn <strong>Terminal → New Terminal</strong>.</li>
+          <li>Chạy lại <code>git --version</code>. Chỉ sang bước tiếp khi đã thấy phiên bản.</li>
+        </ol>
+        <p class="source">Nguồn tải: <a href="https://git-scm.com/install/windows" target="_blank" rel="noopener noreferrer">trang cài đặt chính thức của Git</a>.</p>
+      </section>
+
+      <section id="node">
+        <h2><span class="num">04</span>Kiểm tra Node.js phải ≥ 20</h2>
+        <h3>4.1. Xem phiên bản Node.js và npm</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · chạy từng dòng</span><button class="copy" type="button">Sao chép</button></div><pre><code>node -v
+npm -v</code></pre></div>
+        <p>Ví dụ <code>v22.23.2</code> nghĩa là Node.js major version <strong>22</strong>, đáp ứng yêu cầu <strong>≥ 20</strong>. <code>v18.x.x</code> hoặc <code>v16.x.x</code> không đạt.</p>
+        <div class="forks">
+          <div class="fork"><strong>Node ≥ 20, npm chạy</strong><span>Đã đạt ngưỡng yêu cầu. Có thể sang bước 6; không bắt buộc cài NVM nếu Node hiện tại dùng ổn.</span></div>
+          <div class="fork"><strong>Node dưới 20</strong><span>Sang bước 5: kiểm tra NVM, cài / chọn bản Node mới hơn.</span></div>
+          <div class="fork"><strong>Không tìm thấy node</strong><span>Sang bước 5. Đây là tình huống bình thường trên máy chưa cài Node.</span></div>
+          <div class="fork"><strong>npm.ps1 bị chặn</strong><span>Thử <code>npm.cmd -v</code>. Nếu chạy được thì Node đã có; xem cách dùng <code>npm.cmd</code> ở bước 12.</span></div>
+        </div>
+        <h3>4.2. Kiểm tra ngưỡng bằng lệnh</h3>
+        <p>Chỉ chạy khi <code>node -v</code> đã trả về phiên bản:</p>
+        <div class="command"><div class="command-head"><span>PowerShell · xác nhận Node ≥ 20</span><button class="copy" type="button">Sao chép</button></div><pre><code>node -e "const major=Number(process.versions.node.split('.')[0]); if(major&lt;20){console.error('CAN NANG CAP: Node.js &gt;= 20');process.exit(1)} console.log('OK: Node.js '+process.versions.node)"</code></pre></div>
+        <div class="output">Đạt: hiện <code>OK: Node.js ...</code>. Nếu hiện <code>CAN NANG CAP</code>, thực hiện bước 5.</div>
+        <div class="note"><p><strong>Khuyến nghị cho máy cài mới: Node.js 22 LTS.</strong> Ngưỡng “≥ 20” là yêu cầu tối thiểu; Node 20 đã hết vòng hỗ trợ tại ngày cập nhật tài liệu. Chọn nhánh LTS còn được hỗ trợ; nếu gặp <code>EBADENGINE</code> thì dùng Node 22 bản vá mới nhất hoặc phiên bản được team thống nhất.</p></div>
+        <p class="source">Tình trạng hỗ trợ phiên bản: <a href="https://nodejs.org/en/about/previous-releases" target="_blank" rel="noopener noreferrer">Node.js Releases</a>.</p>
+      </section>
+
+      <section id="nvm">
+        <h2><span class="num">05</span>Chưa có Node phù hợp: dùng NVM</h2>
+        <p><strong>NVM for Windows</strong> giúp cài và chuyển giữa nhiều phiên bản Node.js. Đây là bản cho Windows; không dùng lệnh cài NVM dành cho macOS / Linux trong PowerShell.</p>
+        <h3>5.1. Kiểm tra đã có NVM chưa</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · tìm NVM</span><button class="copy" type="button">Sao chép</button></div><pre><code>where.exe nvm
+nvm</code></pre></div>
+        <p>Nếu dòng đầu hiện đường dẫn <code>nvm.exe</code> và dòng sau hiện thông tin / danh sách lệnh NVM: đã cài, chuyển đến <strong>5.3</strong>. Nếu không tìm thấy NVM, thực hiện <strong>5.2</strong>. Nếu vừa cài mà vẫn không thấy, đóng VS Code và mở lại trước khi cài thêm.</p>
+        <h3>5.2. Cài NVM for Windows</h3>
+        <ol>
+          <li>Mở <a href="https://nvm-windows.com/" target="_blank" rel="noopener noreferrer">nvm-windows.com</a>, chọn tải <strong>Community Build</strong> cho Windows.</li>
+          <li>Chọn installer <strong>x64</strong> cho máy Intel / AMD; chọn <strong>ARM64</strong> nếu <strong>Settings → System → About → System type</strong> ghi ARM. Tải file Setup <code>.exe</code>, không tải source code.</li>
+          <li>Với bản <strong>v2</strong>, mở installer bằng tài khoản Windows đang dùng; không chủ động chọn <strong>Run as administrator</strong>. Chọn <strong>Next</strong> qua wizard, chấp nhận điều khoản nếu đồng ý; giữ cấu hình mặc định / shim.</li>
+          <li>Nếu phát hiện Node cài riêng, đọc lựa chọn <strong>Adopt</strong>: chuyển Node hiện có sang NVM và gỡ bản cài riêng. Không chọn xóa nếu chưa hiểu tác động.</li>
+          <li>Chọn <strong>Install</strong>, đợi xong rồi <strong>Finish</strong> nếu wizard có các nút này. Đóng VS Code / terminal, mở lại và kiểm tra theo 5.1.</li>
+        </ol>
+        <p class="source">Cách cài và xử lý Node hiện có: <a href="https://docs.nvm-windows.com/install/installers/" target="_blank" rel="noopener noreferrer">NVM Windows — Installers</a>. Giao diện installer có thể thay đổi theo phiên bản.</p>
+        <details><summary>Nếu máy đã dùng NVM v1 từ trước</summary><p>Không bắt buộc nâng NVM chỉ để setup project nếu cài và chọn Node vẫn hoạt động. Bản v1 thường dùng installer tên <code>nvm-setup.exe</code> và có thể cần quyền Administrator khi <code>nvm use</code> tạo symlink. Chỉ mở PowerShell bằng <strong>Run as administrator</strong> để xử lý lỗi quyền của v1 nếu cần; VS Code chạy project vẫn mở bình thường.</p><p>Không cài chồng hai hệ NVM. Nếu v1 không nhận phiên bản rút gọn <code>22</code>, dùng đúng số đầy đủ mà <code>nvm list</code> hiển thị.</p><p class="source">Tham khảo: <a href="https://github.com/coreybutler/nvm-windows/wiki/Common-Issues" target="_blank" rel="noopener noreferrer">NVM Windows — Common Issues</a>.</p></details>
+        <h3>5.3. Cài và kích hoạt Node.js 22</h3>
+        <p>Chạy lần lượt. Chờ <code>nvm install 22</code> cài xong thành công rồi mới chạy <code>nvm use 22</code>.</p>
+        <div class="command"><div class="command-head"><span>PowerShell · cài Node và chuyển phiên bản</span><button class="copy" type="button">Sao chép</button></div><pre><code>nvm install 22
+nvm use 22
+nvm list
+node -v
+npm -v</code></pre></div>
+        <p><code>install</code> tải Node; <code>use</code> chọn bản đang chạy. Chỉ cài xong mà chưa chọn thì <code>node -v</code> có thể vẫn hiện bản cũ. <code>nvm list</code> liệt kê các bản đã cài.</p>
+        <div class="output">Kết quả cần thấy: <code>node -v</code> trả về <code>v22.x.x</code>, <code>npm -v</code> trả về một số phiên bản. Số patch có thể khác ví dụ trong tài liệu.</div>
+        <p>Nếu NVM yêu cầu số đầy đủ, nhìn kết quả <code>nvm list</code> rồi chạy <code>nvm use</code> kèm số đó, ví dụ <code>nvm use 22.23.2</code> <strong>chỉ khi bản này đã có trong danh sách trên máy anh</strong>.</p>
+        <p>Chạy lại lệnh kiểm tra ngưỡng ở <strong>4.2</strong>. Nếu terminal mới chưa nhận phiên bản, đóng VS Code, mở lại và kiểm tra lại.</p>
+        <p class="source">Cú pháp: <a href="https://docs.nvm-windows.com/command/nvm/install/" target="_blank" rel="noopener noreferrer">nvm install</a>, <a href="https://docs.nvm-windows.com/command/nvm/use/" target="_blank" rel="noopener noreferrer">nvm use</a>, <a href="https://docs.nvm-windows.com/command/nvm/list/" target="_blank" rel="noopener noreferrer">nvm list</a>.</p>
+      </section>
+
+      <section id="clone">
+        <h2><span class="num">06</span>Clone repository và chuyển son-dev</h2>
+        <h3>6.1. Tạo thư mục chứa project</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · tạo thư mục source trong tài khoản Windows</span><button class="copy" type="button">Sao chép</button></div><pre><code>New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\source"
+Set-Location "$env:USERPROFILE\source"</code></pre></div>
+        <h3>6.2. Clone code về máy</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · clone đúng repository</span><button class="copy" type="button">Sao chép</button></div><pre><code>git clone https://github.com/HaiRetail/CRM-Base.git</code></pre></div>
+        <p>Nếu Git mở trình duyệt để xác thực, đăng nhập <strong>đúng tài khoản GitHub đã được cấp quyền</strong> và hoàn tất xác thực. Không dùng mật khẩu GitHub làm mật khẩu Git qua terminal. Nếu Git yêu cầu token mà anh chưa có, dùng luồng đăng nhập của Git Credential Manager hoặc nhờ người phụ trách hỗ trợ; không dán token vào URL clone.</p>
+        <div class="command"><div class="command-head"><span>PowerShell · vào project sau khi clone thành công</span><button class="copy" type="button">Sao chép</button></div><pre><code>Set-Location CRM-Base
+git remote -v
+git fetch origin
+git branch -r</code></pre></div>
+        <div class="output">Kiểm tra: remote <code>origin</code> trỏ đến <code>https://github.com/HaiRetail/CRM-Base.git</code>, danh sách nhánh có <code>origin/son-dev</code>.</div>
+        <h3>6.3. Chuyển sang nhánh đã tạo cho Sơn</h3>
+        <p>Với lần clone mới, chạy:</p>
+        <div class="command"><div class="command-head"><span>PowerShell · tạo nhánh local theo đúng remote son-dev</span><button class="copy" type="button">Sao chép</button></div><pre><code>git switch --track origin/son-dev</code></pre></div>
+        <p>Nếu báo nhánh <code>son-dev</code> đã tồn tại trên máy, chỉ cần:</p>
+        <div class="command"><div class="command-head"><span>PowerShell · chỉ dùng khi son-dev local đã tồn tại</span><button class="copy" type="button">Sao chép</button></div><pre><code>git switch son-dev</code></pre></div>
+        <div class="command"><div class="command-head"><span>PowerShell · bắt buộc kiểm tra sau khi chuyển</span><button class="copy" type="button">Sao chép</button></div><pre><code>git branch --show-current
+git status -sb</code></pre></div>
+        <div class="output">Dòng đầu phải đúng <code>son-dev</code>. Lần clone mới, status thường bắt đầu bằng <code>## son-dev...origin/son-dev</code>.</div>
+        <div class="danger"><p><strong>Nếu vẫn hiện main, nhánh khác hoặc không có origin/son-dev: dừng trước khi sửa code.</strong> Kiểm tra lỗi của lệnh chuyển nhánh và nhờ người phụ trách xác nhận. Không tự tạo <code>son-dev</code> từ <code>main</code> để bỏ qua lỗi.</p></div>
+        <h3>6.4. Mở đúng thư mục trong VS Code</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · mở thư mục hiện tại</span><button class="copy" type="button">Sao chép</button></div><pre><code>code .</code></pre></div>
+        <p>Nếu không có lệnh <code>code</code>, chọn <strong>File → Open Folder...</strong>, chọn thư mục <strong>CRM-Base</strong> vừa clone. Khi được hỏi Workspace Trust, chỉ chọn tin cậy sau khi đã kiểm tra đúng repo của team.</p>
+        <p>Mở <strong>Terminal → New Terminal</strong> trong cửa sổ project. Explorer phải thấy <code>package.json</code>, <code>package-lock.json</code>, <code>src/</code>, <code>base44/</code> và <code>AGENTS.md</code>. Góc trái thanh trạng thái VS Code phải là <code>son-dev</code>.</p>
+        <h3>6.5. Khai báo tên và email người commit</h3>
+        <p>Thay <code>EMAIL_GITHUB_CUA_ANH</code> bằng email commit của tài khoản GitHub (có thể là email noreply do GitHub cung cấp). Chạy trong CRM-Base; cấu hình này chỉ áp dụng cho repo này.</p>
+        <div class="command"><div class="command-head"><span>PowerShell · thay email trước khi chạy</span><button class="copy" type="button">Sao chép</button></div><pre><code>git config user.name "Son"
+git config user.email "EMAIL_GITHUB_CUA_ANH"
+git config --get user.name
+git config --get user.email</code></pre></div>
+        <p>Tên và email dùng để ghi tác giả commit; chúng không thay cho bước đăng nhập hoặc cấp quyền GitHub.</p>
+        <p class="source">Tham khảo clone HTTPS và quyền truy cập: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository" target="_blank" rel="noopener noreferrer">GitHub — Cloning a repository</a>.</p>
+      </section>
+
+      <section id="env">
+        <h2><span class="num">07</span>Tạo .env.local đúng cấu hình</h2>
+        <p><strong>Không thể chỉ clone rồi chạy là đủ.</strong> App cần cấu hình Base44. File <code>.env.local</code> bị Git bỏ qua nên thường không có trong bản clone.</p>
+        <ol>
+          <li>Trong Explorer của VS Code, chọn thư mục gốc <strong>CRM-Base</strong>, bấm <strong>New File...</strong>, đặt đúng tên <code>.env.local</code>.</li>
+          <li>File phải nằm <strong>cùng cấp với package.json</strong>, không nằm trong <code>src/</code>, không có đuôi <code>.txt</code>.</li>
+          <li>Dán mẫu bên dưới, thay hai phần <code>DIEN_...</code> bằng giá trị thật do người phụ trách gửi riêng. Nếu nhận nguyên file từ team, dùng file đó thay vì tự đoán.</li>
+          <li>Lưu bằng <strong>Ctrl + S</strong>. Sau mỗi lần đổi env, dừng dev server bằng <strong>Ctrl + C</strong> và chạy lại.</li>
+        </ol>
+        <div class="command"><div class="command-head"><span>Nội dung file .env.local · không chạy trong terminal</span><button class="copy" type="button">Sao chép</button></div><pre><code>VITE_BASE44_APP_ID=DIEN_APP_ID_DO_TEAM_CUNG_CAP
+VITE_BASE44_APP_BASE_URL=DIEN_BACKEND_URL_DO_TEAM_CUNG_CAP
+PORT=5178</code></pre></div>
+        <div class="danger"><p><strong>Mẫu trên chưa phải cấu hình dùng được.</strong> Không giữ nguyên placeholder. Không lấy App ID / URL ví dụ trong README, không tự suy ra backend URL và không đưa access token vào file HTML này.</p><p>Không tự thêm <code>NODE_ENV=development</code> theo hướng dẫn cũ để mở luồng sửa deadline. Thiết lập local không cho phép anh Sơn ghi dữ liệu thật.</p></div>
+        <p>Xác nhận Git đang bỏ qua file:</p>
+        <div class="command"><div class="command-head"><span>PowerShell · kiểm tra ignore, không hiển thị nội dung env</span><button class="copy" type="button">Sao chép</button></div><pre><code>git check-ignore .env.local</code></pre></div>
+        <div class="output">Cần thấy <code>.env.local</code>. Nếu không có kết quả, nhờ người phụ trách kiểm tra trước khi stage / commit. Không dùng <code>git add -f</code> với file cấu hình.</div>
+        <p>Frontend chạy bằng Vite + React; backend và dữ liệu vẫn trên Base44. Bước này <strong>không tạo database local</strong>, không cần chạy seed và không cần cài database để setup frontend.</p>
+      </section>
+
+      <section id="chay-local">
+        <h2><span class="num">08</span>Cài project và chạy cổng 5178</h2>
+        <h3>8.1. Kiểm tra trước khi cài</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · tại thư mục CRM-Base</span><button class="copy" type="button">Sao chép</button></div><pre><code>Get-Location
+git branch --show-current
+node -v
+npm -v
+Test-Path package.json
+Test-Path package-lock.json
+Test-Path .env.local</code></pre></div>
+        <p>Đường dẫn phải kết thúc bằng <code>CRM-Base</code>, nhánh là <code>son-dev</code>, Node đạt yêu cầu, ba lệnh <code>Test-Path</code> đều trả về <code>True</code>. Nếu thiếu file, quay lại bước tương ứng trước khi cài.</p>
+        <h3>8.2. Cài thư viện của project</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · cài theo package-lock.json</span><button class="copy" type="button">Sao chép</button></div><pre><code>npm ci</code></pre></div>
+        <p>Repo có <code>package-lock.json</code>, nên dùng <code>npm ci</code> để cài đúng các phiên bản đã khóa. Chờ lệnh kết thúc và terminal nhận lệnh mới. Lần đầu có thể mất vài phút tùy mạng; thư viện được cài vào <code>node_modules/</code>.</p>
+        <p>Lệnh cài thông thường là <code>npm install</code>, nhưng có thể làm thay đổi lockfile. Với project này, <strong>ưu tiên npm ci</strong>. Nếu lỗi lockfile, không tự xóa <code>package-lock.json</code> hoặc đổi thư viện để “cài cho qua”; gửi nguyên lỗi cho người phụ trách.</p>
+        <p class="source">Cài đặt theo lockfile: <a href="https://docs.npmjs.com/cli/v11/commands/npm-ci/" target="_blank" rel="noopener noreferrer">npm — npm ci</a>.</p>
+        <p>Cảnh báo package deprecated / vulnerabilities không đồng nghĩa đã cài thất bại. Kiểm tra có <code>npm error</code> hay không. Không tự chạy <code>npm audit fix --force</code> vì có thể đổi phiên bản ngoài phạm vi task.</p>
+        <h3>8.3. Khởi động local</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · chạy đúng cổng, không tự nhảy cổng khác</span><button class="copy" type="button">Sao chép</button></div><pre><code>npm run dev -- --port 5178 --strictPort</code></pre></div>
+        <p><code>npm run dev</code> gọi Vite; <code>--</code> chuyển các tham số phía sau cho Vite; <code>--port 5178</code> chọn cổng; <code>--strictPort</code> báo lỗi nếu cổng bận thay vì chuyển sang cổng khác.</p>
+        <div class="output">Khi server chạy, terminal tiếp tục mở và không trả lại dấu nhắc nhập lệnh. Repo đặt mức log là <code>error</code>, nên có thể không có banner “ready” như các project Vite khác.</div>
+        <h3>8.4. Mở ứng dụng</h3>
+        <p>Mở Edge / Chrome và nhập địa chỉ local theo yêu cầu:</p>
+        <div class="command"><div class="command-head"><span>Địa chỉ mở trong trình duyệt · không phải lệnh terminal</span><button class="copy" type="button">Sao chép</button></div><pre><code>http://localhost:5178/</code></pre></div>
+        <p>Giữ terminal chạy suốt lúc dùng app. Nếu cần chạy lệnh Git, mở terminal thứ hai bằng nút <strong>+</strong>. Sửa và lưu mã nguồn thường được Vite cập nhật tự động trên trình duyệt.</p>
+        <h3>8.5. Dừng / chạy lại</h3>
+        <p>Chọn terminal đang chạy Vite, nhấn <strong>Ctrl + C</strong>; nếu được hỏi xác nhận dừng thì xác nhận. Lần sau chạy lại bằng đúng lệnh ở 8.3. Không cần cài lại thư viện mỗi lần mở máy; chỉ cài lại khi dependencies thay đổi hoặc môi trường cần khôi phục.</p>
+      </section>
+
+      <section id="kiem-tra">
+        <h2><span class="num">09</span>Kiểm tra kết quả theo chế độ chỉ xem</h2>
+        <ol>
+          <li>App mở được trên cổng <strong>5178</strong>, không có lỗi thiếu cấu hình Base44.</li>
+          <li>Nếu được yêu cầu đăng nhập, dùng tài khoản app được team cấp. GitHub và tài khoản app có thể khác nhau. Nếu chưa được cấp quyền, báo người phụ trách; không tự đăng ký để tạo dữ liệu thử hoặc tắt kiểm tra quyền trong code.</li>
+          <li>Khi có lựa chọn ngôn ngữ, dùng <strong>English</strong> để trao đổi tên màn hình / nút với team thống nhất.</li>
+          <li>Chỉ mở các màn hình / chi tiết đã biết là chỉ đọc. Có thể xem bố cục, đọc số liệu và dùng bộ lọc không lưu vào hệ thống. Không mở tính năng tự đồng bộ, tự khởi động timer hoặc tự cập nhật dữ liệu khi tải.</li>
+          <li>Không thử chức năng bằng cách sửa một bản ghi thật rồi “đổi lại như cũ”. Ghi rồi hoàn tác vẫn là ghi production.</li>
+        </ol>
+        <div class="note"><p><strong>Nếu cần kiểm thử Create / Save / Delete:</strong> dùng dữ liệu mẫu với client mock hoặc backend riêng đã được xác nhận cách ly. Dữ liệu mẫu nằm trong database production vẫn là production. Không chỉ đổi tên project / task để coi đó là môi trường an toàn.</p></div>
+        <p>Checklist setup chỉ xác nhận máy chạy được frontend và phần xem được cấp quyền. Nó không xác nhận các luồng ghi đã được kiểm thử.</p>
+      </section>
+
+      <section id="ai">
+        <h2><span class="num">10</span>Thiết lập cách làm việc với AI</h2>
+        <h3>10.1. Cho AI đúng ngữ cảnh</h3>
+        <ol>
+          <li>Mở workspace gốc <strong>CRM-Base</strong> trong VS Code. Nếu dùng extension AI của team, cài qua <strong>Extensions</strong> (<strong>Ctrl + Shift + X</strong>) và đăng nhập tài khoản cá nhân được phép sử dụng.</li>
+          <li>Yêu cầu AI đọc <code>AGENTS.md</code> ở gốc repository trước khi sửa. Không mặc định mọi công cụ AI đều tự đọc file này.</li>
+          <li>Dán nguyên khối quy tắc ở 10.2 vào đầu <strong>mỗi cuộc chat / phiên AI mới</strong>, sau đó mô tả task cụ thể. Nếu công cụ có project instructions, có thể lưu thêm ở đó; không sửa / ghi đè luật repo để nới quyền.</li>
+          <li>AI phải kiểm tra nhánh và cả working tree / staging area, nêu đúng phạm vi file định sửa rồi làm task. Nếu có thay đổi chưa rõ nguồn gốc, giữ nguyên và không gom vào commit.</li>
+        </ol>
+        <h3>10.2. Sao chép và dán nguyên khối này cho AI</h3>
+        <div class="command prompt"><div class="command-head"><span>Prompt bắt buộc · dán vào chat AI, không chạy terminal</span><button class="copy" type="button">Sao chép prompt</button></div><pre><code>Bạn đang hỗ trợ Sơn phát triển WorkFlow / CRM-Base trên Windows.
+Hãy đọc AGENTS.md ở gốc repo trước khi làm việc và tuân thủ toàn bộ hướng dẫn liên quan.
+
+HAI LUẬT BẤT BIẾN:
+1. Nhánh làm việc duy nhất của Sơn là son-dev. Trước khi sửa code, commit hoặc push, kiểm tra git branch --show-current. Chỉ tiếp tục khi đúng son-dev. Không commit lên main hoặc nhánh khác; không tự tạo nhánh / worktree khác; không tự merge vào nhánh chung. Nếu sai nhánh hoặc chuyển nhánh bị lỗi, dừng phần chỉnh sửa và báo Sơn.
+2. Local kết nối cùng dữ liệu production trên Base44. Chỉ được xem dữ liệu. Tuyệt đối không thêm, sửa, xóa bằng UI, API, script hoặc automation; không seed / import / migration / upload; không Save, Send, đổi trạng thái, payment, chỉnh hóa đơn hay kéo thả để lưu. Không có ngoại lệ cho draft-0044. Không thử ghi rồi hoàn tác. Kiểm tra cả tác dụng phụ khi mở màn hình / chạy effect. Luồng cần ghi phải dùng mock / fixture hoặc backend cách ly hoàn toàn, không kết nối production; nếu chưa có thì báo chưa kiểm thử phần ghi.
+
+CÁCH THỰC HIỆN:
+3. Trước khi sửa, đọc yêu cầu và tài liệu liên quan; kiểm tra git status, git diff và git diff --cached. Giữ nguyên các thay đổi không thuộc task. Phân biệt sửa UI, logic, schema và thao tác dữ liệu.
+4. Chỉ sửa code đúng phạm vi task. Không tự gọi hàm backend có tác dụng ghi; không tự deploy backend, Publish, gửi mail / tin nhắn hoặc thực hiện thao tác bên ngoài repo. Không tắt auth / phân quyền hoặc tạo cờ giả để coi production là sandbox.
+5. Khi sửa logic dữ liệu, đọc schema trong base44/entities/ trước. Dùng Base44 client chung ở src/api/base44Client.js và helper sẵn có. Giữ frontend JavaScript; không tự thêm REST layer hoặc Redux.
+6. Khi sửa UI, theo docs/ui-standards/HANDBOOK.md và src/components/standards/. Không sửa component sinh tự động trong src/components/ui/. Dùng useRole, useI18n; thêm chuỗi mới ở đủ nl/en/vi. Nếu có form, đọc skill form-controls.
+7. Khi AI chạy terminal, dùng prefix rtk theo AGENTS.md. Nếu chưa có RTK, báo rõ công cụ chưa khả dụng, không tự xóa / sửa luật repo. Các lệnh gốc trong guide là để Sơn thiết lập máy thủ công.
+8. Chạy kiểm tra phù hợp trong các script có thật của package.json. Không tự đặt ra npm test. Với lint / typecheck, phân biệt lỗi nền và lỗi mới. Xác minh UI chỉ đọc; phần cần ghi dùng môi trường mẫu cách ly. Không tạo đầu ra trong reports/; ảnh / log tạm lưu ngoài repo.
+9. Chỉ commit khi Sơn yêu cầu; luôn commit trên son-dev và chỉ gồm thay đổi thuộc task hiện tại. Kiểm tra cả staging area; stage từng file / từng hunk cần thiết. Không git add . hoặc git add -A. Không commit .env.local, token, mật khẩu, node_modules hay dist.
+10. Chỉ push khi Sơn yêu cầu và chỉ push origin son-dev. Không force push, reset --hard, clean hoặc tự rebase để giải quyết lỗi. Không tự merge PR hoặc Publish. Nếu lệnh bị từ chối / có conflict, báo nguyên nhân và giữ dữ liệu hiện tại.
+11. Báo đúng điều đã làm: đã code, đã kiểm tra, đã commit, đã push, đã Publish là các trạng thái riêng. Không khẳng định đã kiểm thử phần chưa chạy.
+
+Trước khi bắt đầu task, hãy cho biết: nhánh hiện tại, trạng thái thay đổi đang có và phạm vi bạn sẽ thực hiện. Sau đó làm đúng task tôi giao dưới đây.</code></pre></div>
+        <div class="danger"><p><strong>“Chỉ xem dữ liệu” không có nghĩa là “không được sửa code”.</strong> AI được sửa code theo task, nhưng không được dùng hệ thống dữ liệu thật để thử các thao tác ghi. Anh Sơn vẫn phải xem diff và kiểm soát lệnh AI chuẩn bị chạy.</p></div>
+        <h3>10.3. Ví dụ giao task rõ ràng</h3>
+        <div class="command prompt"><div class="command-head"><span>Ví dụ nội dung task sau khối luật</span><button class="copy" type="button">Sao chép</button></div><pre><code>Task: Điều chỉnh khoảng cách hiển thị ở màn hình [tên màn hình].
+Yêu cầu: [mô tả hành vi / giao diện cần thay đổi].
+Chỉ sửa các file cần thiết cho task này trên son-dev.
+Kiểm tra local cổng 5178 theo chế độ chỉ xem; nếu cần test thao tác ghi thì dùng mock cách ly.
+Chưa commit, chưa push. Khi xong, báo những gì đã đổi, đã kiểm tra và phần chưa xác minh.</code></pre></div>
+      </section>
+
+      <section id="hang-ngay">
+        <h2><span class="num">11</span>Quy trình dev, commit và push</h2>
+        <h3>11.1. Đầu mỗi phiên làm việc</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · xem trạng thái trước</span><button class="copy" type="button">Sao chép</button></div><pre><code>git branch --show-current
+git status -sb
+git diff --stat
+git diff --cached --stat</code></pre></div>
+        <p>Phải đúng <code>son-dev</code>. Nếu đang nhánh khác và có thay đổi chưa commit, không tự switch / reset / bỏ thay đổi; nhờ người phụ trách xử lý đúng nguồn gốc.</p>
+        <p>Khi đã đúng nhánh và working tree / staging area sạch, cập nhật từ <strong>chính son-dev</strong>:</p>
+        <div class="command"><div class="command-head"><span>PowerShell · chỉ chạy khi repo sạch và đang son-dev</span><button class="copy" type="button">Sao chép</button></div><pre><code>git pull --ff-only origin son-dev</code></pre></div>
+        <p>Nếu bị từ chối vì nhánh phân kỳ / có thay đổi local, dừng và nhờ team xử lý. Không tự kéo <code>main</code> vào, không tự rebase. Nếu <code>package.json</code> / lockfile vừa đổi, chạy lại <code>npm ci</code>; sau đó khởi động local theo 8.3.</p>
+        <h3>11.2. Sửa code và kiểm tra</h3>
+        <p>Đọc <code>AGENTS.md</code>, giao task cho AI theo bước 10, xem diff và xác minh màn hình chỉ đọc. Tùy thay đổi, dùng các lệnh có sẵn:</p>
+        <div class="command"><div class="command-head"><span>PowerShell · các lệnh kiểm tra, chạy lần lượt theo phạm vi</span><button class="copy" type="button">Sao chép</button></div><pre><code>npm run lint
+npm run typecheck
+npm run build</code></pre></div>
+        <p><code>build</code> tạo bản build trong <code>dist/</code> và chạy bước <code>prebuild</code> khai báo trong package.json; không tự Publish. Không commit thư mục build. Nếu có lỗi nền, báo rõ lỗi nền / lỗi do task; không sửa lan sang tính năng khác chỉ để làm sạch toàn repo.</p>
+        <h3>11.3. Chỉ commit khi task đã sẵn sàng và được yêu cầu</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · rà soát trước khi stage</span><button class="copy" type="button">Sao chép</button></div><pre><code>git branch --show-current
+git status
+git diff
+git diff --cached</code></pre></div>
+        <p>Nhánh phải là <code>son-dev</code>. Kiểm tra cả phần đã stage sẵn; không để file của task khác lọt vào commit.</p>
+        <p><strong>Mẫu sau cần thay trước khi chạy:</strong> thay <code>DUONG_DAN_FILE_THUOC_TASK</code> bằng đường dẫn tương đối thật của file vừa sửa, và thay nội dung message bằng mô tả task. Có nhiều file thì stage từng file. Nếu một file có thay đổi của nhiều task, dùng <code>git add -p</code> để chọn đúng hunk thay vì stage cả file.</p>
+        <div class="command"><div class="command-head"><span>PowerShell · mẫu stage một file, phải thay đường dẫn</span><button class="copy" type="button">Sao chép</button></div><pre><code>git add -- "DUONG_DAN_FILE_THUOC_TASK"
+git diff --cached --stat
+git diff --cached</code></pre></div>
+        <p>Chỉ khi phần staged đúng toàn bộ phạm vi task, tạo commit:</p>
+        <div class="command"><div class="command-head"><span>PowerShell · chỉ commit nếu đúng son-dev, thay message phù hợp</span><button class="copy" type="button">Sao chép</button></div><pre><code>if ((git branch --show-current) -ceq "son-dev") {
+    git commit -m "Fix: mo ta ngan gon thay doi cua task"
+    git status -sb
+} else {
+    throw "DUNG LAI: Nhanh hien tai khong phai son-dev."
+}</code></pre></div>
+        <p><strong>Không dùng <code>git add .</code>, <code>git add -A</code> hoặc <code>git commit -a</code></strong> để gom thay đổi hàng loạt.</p>
+        <h3>11.4. Push đúng nhánh khi được yêu cầu</h3>
+        <div class="command"><div class="command-head"><span>PowerShell · chỉ khi đã được yêu cầu push, có kiểm tra son-dev</span><button class="copy" type="button">Sao chép</button></div><pre><code>if ((git branch --show-current) -ceq "son-dev") {
+    git push origin son-dev
+} else {
+    throw "DUNG LAI: Nhanh hien tai khong phai son-dev."
+}</code></pre></div>
+        <p>Hai khối commit / push trên tự kiểm tra tên nhánh trước khi chạy. Đây chỉ là chốt kiểm tra trong mẫu lệnh, không khóa các cách commit khác của VS Code / AI. Nếu push bị từ chối, xem bước 12; không dùng <code>--force</code>.</p>
+        <div class="note"><p><strong>Commit, push và Publish là ba việc khác nhau.</strong> Commit lưu lịch sử trên máy; push đưa code lên GitHub. Repo có tích hợp Base44, vì vậy phải lưu ý việc đồng bộ Builder theo cấu hình của team; không coi nhánh riêng là một sandbox dữ liệu. Merge vào nhánh chung và Publish do người phụ trách thực hiện theo quy trình, anh Sơn / AI không tự làm.</p></div>
+      </section>
+
+      <section id="loi">
+        <h2><span class="num">12</span>Xử lý các lỗi thường gặp</h2>
+        <p>Bấm từng mục để xem. Nếu chưa xử lý được, gửi người phụ trách <strong>lệnh vừa chạy + nguyên thông báo lỗi</strong>; che thông tin nhạy cảm, không gửi nguyên file env / token.</p>
+        <details><summary>node / npm / nvm / git is not recognized</summary><p>Đóng mọi cửa sổ VS Code và terminal, mở lại để nhận PATH mới. Kiểm tra công cụ tương ứng đã cài chưa. Chạy <code>where.exe node</code>, <code>where.exe npm</code>, <code>where.exe nvm</code>, <code>where.exe git</code> để tìm đường dẫn. Nếu có NVM, chạy <code>nvm list</code>, chọn Node đã cài bằng <code>nvm use 22</code>, rồi kiểm tra lại <code>node -v</code>. Không cài chồng nhiều bản Node độc lập để chữa PATH.</p></details>
+        <details><summary>npm.ps1 cannot be loaded because running scripts is disabled</summary><p>Không cần tắt Execution Policy toàn máy. Trong PowerShell dùng bản <code>.cmd</code> tương ứng:</p><div class="command"><div class="command-head"><span>PowerShell · thay cho npm khi npm.ps1 bị chặn</span><button class="copy" type="button">Sao chép</button></div><pre><code>npm.cmd -v
+npm.cmd ci
+npm.cmd run dev -- --port 5178 --strictPort</code></pre></div><p>Chạy từng lệnh theo đúng giai đoạn setup. Với các lệnh khác, cũng có thể thay <code>npm</code> bằng <code>npm.cmd</code>, ví dụ <code>npm.cmd run build</code>.</p></details>
+        <details><summary>NVM cài xong nhưng node -v vẫn ra bản cũ / lỗi quyền</summary><p>Chạy <code>nvm list</code> và <code>where.exe node</code>. Có thể Node cài riêng đang đứng trước NVM trong PATH. Khởi động lại VS Code trước; nếu vẫn sai, đọc hướng dẫn sửa PATH của NVM hoặc nhờ team hỗ trợ. Với NVM v2 có thể dùng <code>nvm env</code> để xem môi trường. Với v1, lỗi tạo symlink có thể cần PowerShell Administrator khi chọn phiên bản. Không xóa thư mục <code>C:\Program Files\nodejs</code> bằng tay nếu chưa xác định nó là thư mục thật hay link.</p><p class="source">Nguồn xử lý lỗi bản mới: <a href="https://docs.nvm-windows.com/troubleshooting/general/" target="_blank" rel="noopener noreferrer">NVM — General Troubleshooting</a>.</p></details>
+        <details><summary>Repository not found / 403 / Authentication failed</summary><p>Mở repo trên GitHub bằng đúng tài khoản của anh Sơn. Kiểm tra đã nhận lời mời và có quyền đọc / push. Xác thực lại qua Git Credential Manager nếu đăng nhập nhầm tài khoản. Không tự đổi URL sang repo khác, không đưa token vào URL. Quyền xem repo và quyền push có thể khác nhau.</p></details>
+        <details><summary>Clone báo thư mục CRM-Base đã tồn tại</summary><p>Không xóa thư mục cũ. Kiểm tra có phải bản clone đang dùng không bằng <code>git remote -v</code> trong thư mục đó. Nếu đúng repo, tiếp tục từ bước kiểm tra / chuyển nhánh; nếu thư mục thuộc việc khác, chọn thư mục cha khác để clone. Không clone lồng thêm CRM-Base vào bên trong CRM-Base.</p></details>
+        <details><summary>Không thấy origin/son-dev / không switch được</summary><p>Chạy lại <code>git fetch origin</code>, rồi <code>git branch -r</code>. Nếu không có <code>origin/son-dev</code>, người phụ trách cần kiểm tra nhánh đã được push và quyền truy cập. Nếu branch đã tồn tại local thì dùng <code>git switch son-dev</code>. Nếu có thông báo thay đổi local sẽ bị ghi đè, dừng; không dùng reset / force checkout để vượt lỗi.</p></details>
+        <details><summary>npm ci báo ENOENT / không tìm thấy package.json</summary><p>Terminal đang ở sai thư mục. Chọn thư mục gốc CRM-Base; kiểm tra <code>Get-Location</code> và <code>Test-Path package.json</code>. Không chạy lệnh ở thư mục cha <code>source</code>, cũng không chạy trong <code>src</code>.</p></details>
+        <details><summary>npm ci lỗi lockfile / EBADENGINE / tải package thất bại</summary><p>Với <code>EBADENGINE</code>, kiểm tra <code>node -v</code> và chọn Node 22 bản vá mới nhất / phiên bản team yêu cầu. Với lockfile lệch <code>package.json</code>, gửi lỗi để team sửa đúng nguồn, không xóa lockfile hoặc dùng <code>--force</code>. Nếu lỗi mạng / proxy / certificate, kiểm tra mạng và cấu hình của công ty; không tắt kiểm tra SSL để cài cho qua.</p></details>
+        <details><summary>Port 5178 is already in use</summary><p>Tìm terminal đang chạy project cũ và dừng bằng <strong>Ctrl + C</strong> nếu đó là phiên của anh. Nếu chưa rõ chương trình nào chiếm cổng, xem tiến trình bằng lệnh chỉ đọc:</p><div class="command"><div class="command-head"><span>PowerShell · xem cổng, không dừng tiến trình</span><button class="copy" type="button">Sao chép</button></div><pre><code>Get-NetTCPConnection -LocalPort 5178 -State Listen | Select-Object LocalAddress, LocalPort, OwningProcess</code></pre></div><p>Nhờ người phụ trách xác định PID trước khi tắt ứng dụng không rõ. Sau khi cổng trống, chạy lại lệnh 8.3. Không bỏ <code>--strictPort</code> để server âm thầm đổi cổng.</p></details>
+        <details><summary>localhost không mở / ERR_CONNECTION_REFUSED</summary><p>Kiểm tra terminal Vite còn chạy, không có lỗi khởi động, và địa chỉ là <code>http://localhost:5178/</code> (HTTP, không phải HTTPS). Nếu đã đóng terminal, chạy lại lệnh 8.3. Nếu cổng bận, xử lý mục phía trên. Không mở <code>index.html</code> của project bằng cách bấm đúp để thay cho dev server.</p></details>
+        <details><summary>App báo thiếu App ID / không có quyền / trang trắng</summary><p>Kiểm tra <code>.env.local</code> nằm đúng chỗ, hai tên biến đúng chính tả và đã thay placeholder. Dừng / chạy lại server sau khi sửa env. Nếu chưa có quyền app, nhờ team cấp đúng tài khoản; không tắt auth trong code. Để xem lỗi, mở <strong>F12 → Console</strong>, gửi lỗi đã che thông tin nhạy cảm; không dán token / cookie hoặc toàn bộ response chứa dữ liệu khách hàng vào chat AI.</p></details>
+        <details><summary>Commit báo Please tell me who you are</summary><p>Thực hiện lại bước 6.5 để cài <code>user.name</code> và <code>user.email</code> trong repo. Đó là danh tính commit, không phải mật khẩu. Kiểm tra nhánh <code>son-dev</code> trước khi chạy lại commit.</p></details>
+        <details><summary>Push bị non-fast-forward / rejected</summary><p>Không force push. Xem <code>git status -sb</code> và nhờ team kiểm tra thay đổi remote. Khi repo sạch, có thể dùng quy trình <code>git pull --ff-only origin son-dev</code>; nếu vẫn bị từ chối do nhánh phân kỳ thì dừng và phối hợp xử lý, không tự merge / rebase.</p></details>
+        <details><summary>AI đề nghị tạo dữ liệu mẫu trên local để thử Save</summary><p>Từ chối thao tác đó vì local đang dùng dữ liệu production. Yêu cầu AI dùng fixture / client mock không gọi backend thật hoặc chờ một backend thử nghiệm đã cách ly. “Tạo xong xóa lại” hoặc “dùng một draft” không phải ngoại lệ.</p></details>
+      </section>
+
+      <section id="checklist">
+        <h2><span class="num">13</span>Checklist trước task đầu tiên</h2>
+        <p>Đối chiếu từng dòng. Có thể in hướng dẫn để đánh dấu; các ô dưới đây là checklist đọc, không ghi dữ liệu vào CRM.</p>
+        <ul class="checklist">
+          <li><code>git --version</code> chạy được.</li>
+          <li><code>node -v</code> đạt <strong>≥ 20</strong>; máy cài mới ưu tiên Node 22 LTS.</li>
+          <li><code>npm -v</code> hoặc <code>npm.cmd -v</code> chạy được.</li>
+          <li>Nếu cần NVM: <code>nvm list</code> có Node đã cài và <code>node -v</code> đúng bản đã chọn.</li>
+          <li>Clone đúng <code>HaiRetail/CRM-Base</code>, remote origin đúng repo.</li>
+          <li><code>git branch --show-current</code> trả về chính xác <strong>son-dev</strong>.</li>
+          <li>VS Code đang mở thư mục gốc CRM-Base, có <code>package.json</code>.</li>
+          <li>Đã đặt tên / email commit của Sơn, không để email placeholder.</li>
+          <li><code>.env.local</code> có cấu hình thật do team cấp và đang được Git bỏ qua.</li>
+          <li><code>npm ci</code> cài xong không có lỗi chặn.</li>
+          <li>Dev server chạy đúng <strong>5178</strong> và mở được trên trình duyệt.</li>
+          <li>Đã được cấp quyền app; chỉ kiểm tra phần xem dữ liệu.</li>
+          <li>Đã đọc <code>AGENTS.md</code> và dán khối luật ở bước 10 cho AI.</li>
+          <li>Hiểu rõ: mọi commit của Sơn ở <strong>son-dev</strong>; mọi dữ liệu local là <strong>production, chỉ được xem</strong>.</li>
+        </ul>
+        <div class="note"><p><strong>Khi nhờ hỗ trợ, cung cấp:</strong> bước đang làm, lệnh vừa chạy, lỗi đầy đủ đã che thông tin nhạy cảm, phiên bản Node / npm và nhánh hiện tại. Không gửi mật khẩu, access token hay nội dung <code>.env.local</code> vào kênh công khai.</p></div>
+      </section>
+      <footer class="closing">Tài liệu dành cho onboarding Sơn vào CRM-Base trên Windows. Đối chiếu từ cấu hình repository và tài liệu chính thức tại ngày 12/11/2026. Khi quy trình project thay đổi, ưu tiên chỉ dẫn mới nhất của người phụ trách và AGENTS.md; hai luật bất biến vẫn phải được giữ.</footer>
+    </article>
+  </main>
+  <div class="status" role="status" aria-live="polite"></div>
+  <script>
+    (() => {
+      const status = document.querySelector('.status');
+      let statusTimer;
+      function announce(message) {
+        status.textContent = message;
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(() => { status.textContent = ''; }, 4200);
+      }
+      async function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          try { await navigator.clipboard.writeText(text); return; } catch (_) { /* use local fallback */ }
+        }
+        const helper = document.createElement('textarea');
+        helper.value = text;
+        helper.setAttribute('readonly', '');
+        helper.style.cssText = 'position:fixed;left:-9999px;top:0';
+        document.body.appendChild(helper);
+        helper.select();
+        let copied = false;
+        try { copied = document.execCommand('copy'); } finally { helper.remove(); }
+        if (!copied) throw new Error('clipboard unavailable');
+      }
+      document.querySelectorAll('.copy').forEach(button => {
+        const label = button.textContent;
+        const block = button.closest('.command');
+        const blockLabel = block.querySelector('.command-head span').textContent;
+        button.setAttribute('aria-label', label + ': ' + blockLabel);
+        button.addEventListener('click', async () => {
+          try {
+            await copyText(block.querySelector('pre code').textContent);
+            button.textContent = 'Đã sao chép';
+            announce('Đã sao chép. Đọc ghi chú và thay placeholder nếu có trước khi dùng.');
+            setTimeout(() => { button.textContent = label; }, 2200);
+          } catch (_) {
+            const range = document.createRange();
+            range.selectNodeContents(block.querySelector('pre code'));
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            announce('Đã chọn nội dung. Nhấn Ctrl + C để sao chép.');
+          } finally { button.focus({ preventScroll: true }); }
+        });
+      });
+      let detailStates = [];
+      window.addEventListener('beforeprint', () => {
+        detailStates = [...document.querySelectorAll('details')].map(detail => [detail, detail.open]);
+        detailStates.forEach(([detail]) => { detail.open = true; });
+      });
+      window.addEventListener('afterprint', () => {
+        detailStates.forEach(([detail, wasOpen]) => { detail.open = wasOpen; });
+        detailStates = [];
+      });
+      document.getElementById('print-guide').addEventListener('click', () => window.print());
+      if ('IntersectionObserver' in window) {
+        const links = [...document.querySelectorAll('.sidebar nav a')];
+        const observer = new IntersectionObserver(entries => {
+          const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          if (!visible.length) return;
+          links.forEach(link => {
+            if (link.hash === '#' + visible[0].target.id) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+          });
+        }, { rootMargin: '-8% 0px -72% 0px', threshold: 0 });
+        document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
+      }
+    })();
+  </script>
+</body>
+</html>
