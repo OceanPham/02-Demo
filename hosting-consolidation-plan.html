@@ -1,27 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
 <title>Hosting Consolidation Plan</title>
-<meta name="description" content="Two-week hosting consolidation plan for DaCu3D and Cadinvo: codebase websites, domains, DNS and CRM at Hostinger, email on Microsoft 365. Available in English, Dutch and Vietnamese.">
+<meta name="description" content="Two-week hosting consolidation plan for DaCu3D and Cadinvo: codebase websites, domains and CRM at Hostinger, DNS and DDoS protection at Cloudflare, email on Microsoft 365. Available in English, Dutch and Vietnamese.">
 <style>
 :root {
+  color-scheme: light;
   --bg: #f7f7f5; --surface: #ffffff; --surface-2: #f0efeb; --text: #1d1d1b; --muted: #5f5e5a;
   --border: #dddcd6; --accent: #5b3fd1; --accent-soft: #ece8fb;
   --ok: #1f7a4d; --ok-soft: #e3f3ea; --warn: #9a5b00; --warn-soft: #fbf0dc; --bad: #b3261e; --bad-soft: #fbe5e3;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #161615; --surface: #1f1f1d; --surface-2: #2a2a27; --text: #ecebe6; --muted: #a8a7a0;
-    --border: #3a3a36; --accent: #a796f5; --accent-soft: #2c2650;
-    --ok: #6fd19c; --ok-soft: #173326; --warn: #f0b85a; --warn-soft: #3a2b12; --bad: #f28b82; --bad-soft: #3d1c1a;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #161615; --surface: #1f1f1d; --surface-2: #2a2a27; --text: #ecebe6; --muted: #a8a7a0;
-  --border: #3a3a36; --accent: #a796f5; --accent-soft: #2c2650;
-  --ok: #6fd19c; --ok-soft: #173326; --warn: #f0b85a; --warn-soft: #3a2b12; --bad: #f28b82; --bad-soft: #3d1c1a;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
@@ -86,14 +76,14 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <main lang="en">
 
 <div class="callout">
-  <strong>Goal:</strong> put the domains, DNS, all websites and CRM server of DaCu3D and Cadinvo with <strong>one provider (Hostinger)</strong>, and stop using Hostnet, Strato, Cloudflare, systeme.io and Base44.
-  <br><strong>Email:</strong> according to the original checks, email for all three domains already runs on <strong>Microsoft 365</strong>, not on Strato or Hostnet. We recommend keeping it there (section 4.3).
+  <strong>Goal:</strong> consolidate domain registration, all websites and the CRM of DaCu3D and Cadinvo at <strong>Hostinger</strong>, keep <strong>Cloudflare for DNS and security</strong>, and keep <strong>Microsoft 365 for email and files</strong>. Retire Hostnet, Strato, systeme.io and Base44 after successful migration.
+  <br><strong>Email:</strong> email for all three domains already runs on <strong>Microsoft 365</strong>, not on Strato or Hostnet. We recommend keeping it there (section 4.3).
   <br><strong>Confirmed approach:</strong> every website uses a version-controlled codebase deployed to the VPS. No WordPress or Hostinger Website Builder.
   <br><strong>Target:</strong> 2 weeks (10 working days) from the agreed start, subject to the readiness conditions in section 5.
 </div>
 
 <nav class="card toc">
-  <div><a href="#en-found">1. Findings from the original plan</a></div>
+  <div><a href="#en-found">1. Service overview</a></div>
   <div><a href="#en-target">2. Before and after</a></div>
   <div><a href="#en-inventory">3. Full inventory (please confirm)</a></div>
   <div><a href="#en-steps">4. Plan per service</a></div>
@@ -104,8 +94,8 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <div><a href="#en-need">9. What we need from you</a></div>
 </nav>
 
-<h2 id="en-found">1. Findings from the original plan</h2>
-<p>The following DNS and domain registry findings are carried over from the original plan dated 10 November 2026; they were not rechecked for this revision. Public records show only what is visible from the outside. Items marked <span class="pill warn">to confirm</span> must be checked in the provider accounts.</p>
+<h2 id="en-found">1. Service overview</h2>
+<p>Overview of the domains, hosting and email services. Check the items marked <span class="pill warn">to confirm</span> in the provider accounts and add any missing subscriptions.</p>
 <div class="tbl"><table>
   <tr><th>Domain</th><th>Registered at</th><th>DNS managed at</th><th>Website</th><th>Email</th></tr>
   <tr><td><strong>dacu3d.nl</strong></td>
@@ -143,15 +133,16 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
     <div class="svc"><span>Microsoft 365</span><span>email, Teams, OneDrive, SharePoint</span></div>
   </div>
   <div class="card box">
-    <h3>After: 2 providers</h3>
-    <div class="svc"><span><strong>Hostinger</strong></span><span>all 3 domains + DNS</span></div>
+    <h3>After: 3 providers</h3>
+    <div class="svc"><span><strong>Hostinger</strong></span><span>registration and renewal of all 3 domains</span></div>
     <div class="svc"><span></span><span>VPS KVM 2: all codebase websites + CRM</span></div>
     <div class="svc"><span></span><span>VPS daily backups</span></div>
+    <div class="svc"><span><strong>Cloudflare</strong></span><span>DNS + Proxy, WAF and DDoS protection</span></div>
     <div class="svc"><span><strong>Microsoft 365</strong></span><span>email, Teams, OneDrive, SharePoint (as today)</span></div>
     <div class="svc"><span></span><span>+ off-site copy of the CRM backup</span></div>
   </div>
 </div>
-<p class="meta">Why Microsoft 365 stays: it is your office suite (mail, Teams, files), and the CRM reads and sends Outlook mail and uses OneDrive/SharePoint. Moving mail to Hostinger would require migrating every mailbox and adapting the affected integrations, while the other Microsoft services would still be needed. Cloudflare R2, which was in our earlier CRM plan for file storage, is dropped: CRM files stay on the VPS disk and the backup copy goes to your Microsoft 365.</p>
+<p class="meta">Why Microsoft 365 stays: it is your office suite (mail, Teams, files), and the CRM reads and sends Outlook mail and uses OneDrive/SharePoint. Moving mail to Hostinger would require migrating every mailbox and adapting the affected integrations, while the other Microsoft services would still be needed. Cloudflare stays for DNS and web protection; Cloudflare R2 storage is not part of this plan. CRM files stay on the VPS disk and the backup copy goes to Microsoft 365.</p>
 
 <h2 id="en-inventory">3. Full inventory (please confirm)</h2>
 <p>Please check every row in the provider accounts and add anything we missed (other domains, subscriptions paid by credit card, tools that send mail in your name).</p>
@@ -159,11 +150,12 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <tr><th>Service</th><th>What it does today</th><th>What happens</th><th>Status</th></tr>
   <tr><td>Hostnet</td><td>Registrar of cadinvo.nl, probably cadinvo.com. Any mail or hosting package?</td><td>Transfer domains to Hostinger, then cancel</td><td><span class="pill warn">to confirm</span></td></tr>
   <tr><td>Strato</td><td>dacu3d.nl domain + DNS, Mail Business 1 (unused), since 2019</td><td>Transfer domain to Hostinger, save old mail, then cancel</td><td><span class="pill ok">found</span></td></tr>
-  <tr><td>Cloudflare</td><td>DNS + redirects for cadinvo.com and cadinvo.nl</td><td>DNS to Hostinger, redirects to the VPS, then delete the account</td><td><span class="pill ok">found</span></td></tr>
+  <tr><td>Cloudflare</td><td>DNS + redirects for cadinvo.com and cadinvo.nl</td><td>Keep; add dacu3d.nl and protect website/CRM traffic with Proxy, WAF and DDoS protection</td><td><span class="pill ok">keep</span></td></tr>
   <tr><td>systeme.io</td><td>Website www.cadinvo.com. Also forms, mailing lists, funnels, courses or payments?</td><td>Rebuild as a codebase website on the VPS, then cancel</td><td><span class="pill warn">to confirm</span></td></tr>
   <tr><td>Base44</td><td>CRM</td><td>Move to the VPS (separate CRM migration plan)</td><td><span class="pill ok">found</span></td></tr>
-  <tr><td>Microsoft 365</td><td>Mail for all 3 domains, Teams, OneDrive, SharePoint</td><td>Stays. Only DNS records move</td><td><span class="pill ok">found</span></td></tr>
-  <tr><td>WhatsApp server (Evolution API)</td><td>Used by the CRM for WhatsApp. Where is it hosted?</td><td>If on another server: move to the VPS</td><td><span class="pill warn">to confirm</span></td></tr>
+  <tr><td>Microsoft 365</td><td>Mail for all 3 domains, Teams, OneDrive, SharePoint</td><td>Keep. Preserve Microsoft mail records in Cloudflare DNS</td><td><span class="pill ok">keep</span></td></tr>
+  <tr><td>WhatsApp / Evolution API</td><td>WhatsApp in the CRM is being replaced by the CRM's own Chat</td><td>Do not include in the VPS migration; plan retirement after confirming remaining dependencies and required archives</td><td><span class="pill warn">retirement proposed</span></td></tr>
+  <tr><td>CRM Chat</td><td>Now being adopted for CRM conversations</td><td>Keep and migrate chat history, attachments, permissions and notifications with the CRM</td><td><span class="pill ok">keep</span></td></tr>
   <tr><td>n8n</td><td>Automations / data backup flow. Where is it hosted?</td><td>If on another server: move to the VPS</td><td><span class="pill warn">to confirm</span></td></tr>
   <tr><td>Google Search Console</td><td>Verification record on cadinvo.com</td><td>Copy the record, nothing else</td><td><span class="pill ok">found</span></td></tr>
   <tr><td>Other?</td><td>Other domains, newsletter tool, payment provider, etc.</td><td>—</td><td><span class="pill warn">to confirm</span></td></tr>
@@ -175,25 +167,19 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <ol class="steps">
   <li>One Hostinger account in the company's name, with a company email address (not a personal one) and two-factor login on.</li>
   <li>Daniel is the owner; Joost a second admin if wanted. Ocean gets access through Hostinger's account-sharing feature, so no passwords are shared.</li>
-  <li>Have <strong>VPS KVM 2</strong> ready before Day 1: 24-month term, datacenter in Europe, OS "Ubuntu 24.04" (plain, no control panel), as proposed in the original plan. Buying on Black Friday (27 November 2026) remains an option; confirm the price and available plan at purchase. Confirm the "Daily backups" add-on or an equivalent backup arrangement.</li>
+  <li>Have <strong>VPS KVM 2</strong> ready before Day 1: 24-month term, datacenter in Europe, OS "Ubuntu 24.04" (plain, no control panel). Buying on Black Friday (27 November 2026) remains an option; confirm the price and available plan at purchase. Confirm the "Daily backups" add-on or an equivalent backup arrangement.</li>
 </ol>
 
-<h3>4.2 Domains and DNS</h3>
-<p>The order matters: first copy all DNS records to Hostinger, then move the domain, then switch DNS. This way mail and website keep working the whole time.</p>
+<h3>4.2 Domains at Hostinger, DNS at Cloudflare</h3>
+<p>Domain registration and DNS are separate: move registration/renewal to Hostinger while keeping Cloudflare nameservers for the Cadinvo domains. Move only dacu3d.nl DNS from Strato to Cloudflare.</p>
 <ol class="steps">
-  <li><strong>Copy every DNS record</strong>: export the zone file from Cloudflare (cadinvo.com, cadinvo.nl) and write down every record at Strato (dacu3d.nl). Create the same records in Hostinger DNS. We compare old and new with a script before switching.</li>
-  <li><strong>Lower the TTL</strong> of the records to 5 minutes, one day before the switch, so a mistake can be fixed fast.</li>
-  <li><strong>Request the transfer codes</strong>:
-    <ul>
-      <li>dacu3d.nl: transfer code at Strato. <strong>Do not cancel the Strato package before the domain has moved</strong>: the domain is part of that package and could be deleted with it.</li>
-      <li>cadinvo.nl: transfer code at Hostnet.</li>
-      <li>cadinvo.com: confirm the managing account at Hostnet, remove the transfer lock and request the EPP/auth code; complete the registrar's verification requirements. The original plan allowed 5–7 days and a one-year extension; confirm processing time and expiry when ordering the transfer.</li>
-    </ul>
-  </li>
-  <li><strong>Start the transfers at Hostinger</strong> (.nl transfers are supported; they usually finish within hours). Confirm the approval emails.</li>
-  <li><strong>Switch the name servers to Hostinger</strong>, one domain at a time: dacu3d.nl first (no website, lowest risk), then cadinvo.nl, then cadinvo.com.</li>
-  <li><strong>After each switch</strong>: send and receive a test mail, open the website, check Microsoft 365 admin → Domains shows "healthy".</li>
-  <li><strong>Redirects</strong> that Cloudflare does now (cadinvo.nl and cadinvo.com → www.cadinvo.com) are done by the web server on the VPS, with free SSL certificates.</li>
+  <li><strong>Export and compare DNS:</strong> save the Cloudflare zones for cadinvo.com/cadinvo.nl and all Strato records for dacu3d.nl. Add dacu3d.nl to Cloudflare and copy every required record, including Microsoft 365 mail and verification records.</li>
+  <li><strong>Prepare the transfer:</strong> obtain the dacu3d.nl code from Strato and the cadinvo.nl code from Hostnet. Confirm the managing account for cadinvo.com, unlock transfer and request its EPP/auth code. Allow for registrar processing time and approvals.</li>
+  <li><strong>Transfer registration to Hostinger:</strong> preserve existing Cloudflare nameservers for cadinvo.com and cadinvo.nl. Do not let the transfer replace them with Hostinger defaults. Keep Strato active until dacu3d.nl has moved safely.</li>
+  <li><strong>Move dacu3d.nl DNS to Cloudflare:</strong> compare the full zone first, coordinate DNSSEC/DS settings, then change nameservers. Check mail, website/redirects and Microsoft 365 domain status.</li>
+  <li><strong>Launch websites one domain at a time:</strong> keep the old destination until the replacement is approved, then point the web records at the VPS with Cloudflare Proxy enabled. Use a lower TTL where configurable ahead of the change; proxied records use Cloudflare's automatic TTL.</li>
+  <li><strong>Preserve redirects:</strong> keep cadinvo.nl and cadinvo.com redirecting to www.cadinvo.com through Cloudflare rules or the VPS behind Cloudflare. Validate HTTPS and every required redirect.</li>
+  <li><strong>Keep mail working:</strong> preserve MX, SPF, DKIM, autodiscover and verification records. Mail-related hosts remain DNS-only where required; the web proxy is for website/CRM traffic.</li>
 </ol>
 
 <h3>4.3 Email (recommended: stays on Microsoft 365)</h3>
@@ -217,29 +203,43 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 
 <h3>4.5 CRM (from Base44)</h3>
 <ol class="steps">
-  <li>Follows the separate CRM migration plan. New address, for example <code>crm.cadinvo.com</code>, created in Hostinger DNS. Moving from Base44 includes replacing backend services, not just deploying the React frontend; the migration must be ready for rehearsal before this two-week rollout starts.</li>
+  <li>Follows the separate CRM migration plan. New address, for example <code>crm.cadinvo.com</code>, created in Cloudflare DNS. Moving from Base44 includes replacing backend services, not just deploying the React frontend; the migration must be ready for rehearsal before this two-week rollout starts.</li>
   <li>Use KVM 2 for preparation in an environment isolated from production; promote it only after acceptance checks. If more resources are needed later, upgrade according to the provider's available options.</li>
-  <li>Files (chat attachments, images, documents) on the VPS disk. The original plan estimated 3–6 GB of data and a 100 GB disk; confirm capacity before migration.</li>
+  <li>Files (chat attachments, images, documents) on the VPS disk. Allow an estimated 3–6 GB of data on a 100 GB disk; confirm actual capacity before migration.</li>
   <li>Backups: database and files every night, encrypted, to a dedicated Microsoft 365 SharePoint/OneDrive folder (off-site, no new provider), plus Hostinger daily backups. We test a restore before go-live.</li>
   <li>Schedule cutover near the end of Week 2, after DNS and website checks pass, in a separate change window. If the Christmas–New Year preference is retained, choose Day 1 so the final cutover falls in that window. Keep Base44 available read-only for at least 2 weeks after cutover; agree and rehearse data reconciliation before any rollback.</li>
 </ol>
 
-<h3>4.6 WhatsApp server and n8n</h3>
-<p>If these run on a separate server or a paid cloud plan, plan to move them onto the same VPS after checking resources and integrations; cancel the old service only when the replacement works. Please confirm where they run (D7).</p>
+<h3>4.6 CRM Chat, Evolution API and n8n</h3>
+<ol class="steps">
+  <li><strong>CRM Chat is the intended conversation channel.</strong> WhatsApp chat inside the CRM is being phased out in favour of CRM Chat. Include Chat history, attachments, permissions and notifications in CRM migration checks.</li>
+  <li><strong>Evolution API is proposed for retirement.</strong> Exclude it from the planned VPS workload. Before decommissioning, confirm that no users or automations still depend on it and agree which WhatsApp history/attachments must be retained. Any remaining dependency is reviewed before stopping the service.</li>
+  <li><strong>n8n is a separate decision:</strong> confirm where it runs and which flows are still required. Move only the required automations to the VPS after checking resources and integrations.</li>
+</ol>
+
+<h3>4.7 Cloudflare and VPS protection</h3>
+<ol class="steps">
+  <li>Keep all three domains on Cloudflare DNS. Start by evaluating Cloudflare Free for Proxy, basic WAF rules and DDoS protection; confirm whether paid rules/support are needed.</li>
+  <li>Route website/CRM traffic through Cloudflare Proxy. DNS-only web records do not receive proxy protection. Restrict direct origin web access to Cloudflare; Cloudflare Tunnel is an alternative where suitable. Limit management access to approved administrators.</li>
+  <li>Use Full (strict) TLS with a valid origin certificate for the proxy setup. Keep CRM pages, authenticated responses and APIs out of shared caching. Validate login, CRM Chat/WebSockets, uploads and webhooks through the protection rules.</li>
+  <li>Retain Hostinger's network-level DDoS protection: Cloudflare's web proxy does not cover every VPS port or attacks sent directly to its public IP. Severe attacks may still cause interruption.</li>
+  <li>Enable two-factor access on company accounts, restore domain transfer locks after migration and coordinate DNSSEC settings. Document backup access and recovery ownership.</li>
+</ol>
+<p class="meta">Technical references: <a href="https://developers.cloudflare.com/dns/proxy-status/">Cloudflare Proxy</a> · <a href="https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/">Origin protection</a> · <a href="https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/">TLS</a> · <a href="https://www.hostinger.com/support/what-are-anti-ddos-events-in-hostinger-vps/">Hostinger Anti-DDoS</a></p>
 
 <h2 id="en-timeline">5. Timeline</h2>
 <p><strong>Target: 2 weeks (10 working days).</strong> Day 1 is the agreed start after VPS access, transfer codes, website content/scope and the CRM migration candidate are ready. A one-week delivery is only possible if the codebase websites and CRM are already built and tested; this plan uses two weeks as the working target.</p>
 <div class="callout warn"><strong>Readiness gate:</strong> the existing codebases and agreed website rebuild must fit the scope below. The replacement CRM backend, data mapping and integrations must be ready for migration rehearsal before Day 1. If they are not ready, re-estimate before committing to a start date. Two weeks is a rollout target, not a promise to rebuild all Base44 services from scratch.</div>
 <div class="tbl"><table>
   <tr><th>When</th><th>Work and completion check</th><th>Who</th></tr>
-  <tr><td>Week 1 · Day 1</td><td>Confirm inventory, D1–D7, access and readiness. Save DNS exports, request any missing approvals and start domain transfers immediately.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Week 1 · Day 2</td><td>Secure the VPS; prepare deployment, HTTPS and backups; copy DNS records and compare zones. Prepare isolated environments for validation.</td><td>Ocean</td></tr>
-  <tr><td>Week 1 · Days 3–4</td><td>Rebuild/deploy the agreed codebase websites with approved content, required forms and redirects. Rehearse CRM migration and integration checks in isolation.</td><td>Ocean; Daniel/Joost approve content</td></tr>
-  <tr><td>Week 1 · Day 5</td><td>Approve website previews, validate required features and backup restoration, review the CRM rehearsal and rollback steps. Lower DNS TTL ahead of the switch.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Week 2 · Days 6–7</td><td>Switch DNS one domain at a time: dacu3d.nl → cadinvo.nl → cadinvo.com. Bring approved websites and redirects live; check mail, HTTPS and Microsoft 365 after each step.</td><td>Ocean; Microsoft 365 admin</td></tr>
-  <tr><td>Week 2 · Day 8</td><td>Confirm DNS and websites are stable. Review the final CRM migration checklist, data counts and backup; obtain the go/no-go decision.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Week 2 · Day 9</td><td>CRM cutover in its own agreed window: pause writes, take a final export, import and reconcile data, switch access, then verify the agreed user flows. Stop or roll back if acceptance checks fail.</td><td>Ocean; Daniel/Joost accept</td></tr>
-  <tr><td>Week 2 · Day 10</td><td>Resolve launch issues, verify monitoring/backups, hand over codebase and operating instructions. Confirm the later cancellation dates without deleting fallback data.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 1 · Day 1</td><td>Confirm inventory, D1–D7, access and readiness. Save DNS exports, start domain transfers and identify any remaining Evolution API dependencies.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 1 · Day 2</td><td>Secure the VPS; prepare deployment, HTTPS and backups. Prepare dacu3d.nl in Cloudflare, preserve existing Cadinvo zones and configure Proxy/WAF plus origin access restrictions.</td><td>Ocean</td></tr>
+  <tr><td>Week 1 · Days 3–4</td><td>Build/deploy agreed codebase websites with approved content, forms and redirects. Rehearse CRM migration, including CRM Chat history, attachments and permissions, using isolated data.</td><td>Ocean; Daniel/Joost approve content</td></tr>
+  <tr><td>Week 1 · Day 5</td><td>Approve previews and restore tests. Check Cloudflare rules against login, Chat, APIs, uploads and webhooks; review CRM rehearsal and rollback. Prepare DNS changes.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 2 · Days 6–7</td><td>Move dacu3d.nl DNS to Cloudflare and keep Cadinvo Cloudflare nameservers through domain transfers. Launch approved websites one domain at a time with Proxy active; verify mail, redirects and HTTPS.</td><td>Ocean; Microsoft 365 admin</td></tr>
+  <tr><td>Week 2 · Day 8</td><td>Confirm DNS and websites are stable. Review final CRM data counts, Chat checks, backup and migration checklist; make the go/no-go decision.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 2 · Day 9</td><td>CRM cutover in its agreed window: pause writes, export, import and reconcile data, switch access, then verify agreed user flows including Chat. Stop or roll back if acceptance checks fail.</td><td>Ocean; Daniel/Joost accept</td></tr>
+  <tr><td>Week 2 · Day 10</td><td>Resolve launch issues and verify monitoring/backups. Hand over the codebase and Hostinger/Cloudflare operating instructions; agree old-service retirement dates, including Evolution API if cleared.</td><td>Ocean, Daniel, Joost</td></tr>
 </table></div>
 <p><strong>Keep changes separate:</strong> DNS/website and CRM cutover use different change windows, with validation between them. Registrar approval or DNS propagation can delay completion; keep existing services working and reschedule cutover if checks are incomplete.</p>
 <p><strong>Aftercare, outside the two-week rollout:</strong> keep old DNS exports/configuration for at least 2 weeks and retain Base44 read-only for 2–4 weeks after its cutover. Cancel services only after the checks in section 6. This retention period is not extra development time.</p>
@@ -248,9 +248,9 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <h2 id="en-cancel">6. Cancelling old services</h2>
 <div class="tbl"><table>
   <tr><th>Service</th><th>Before you cancel</th><th>When</th></tr>
-  <tr><td>Strato</td><td>dacu3d.nl transferred and on Hostinger DNS; old mail saved; last invoice downloaded</td><td>After the domain transfer, end of term</td></tr>
+  <tr><td>Strato</td><td>dacu3d.nl transferred and on Cloudflare DNS; old mail saved; last invoice downloaded</td><td>After the domain transfer, end of term</td></tr>
   <tr><td>Hostnet</td><td>Both domains transferred; check no other products left; auto-renewal off; invoices downloaded</td><td>After the transfers (cadinvo.com before 02-02-2027)</td></tr>
-  <tr><td>Cloudflare</td><td>All domains previously managed there stable on Hostinger DNS for 2 weeks; zone exports saved</td><td>At least 2 weeks after the DNS switch</td></tr>
+  <tr><td>Evolution API / WhatsApp service</td><td>CRM Chat accepted; no remaining users/automations depend on WhatsApp integration; required history and attachments retained</td><td>After confirmation and approval; do not migrate by default</td></tr>
   <tr><td>systeme.io</td><td>New website live; contacts and form data exported; redirects working</td><td>After website go-live</td></tr>
   <tr><td>Base44</td><td>CRM stable for 2–4 weeks; full data export archived</td><td>2–4 weeks after CRM cutover, after approval</td></tr>
 </table></div>
@@ -264,18 +264,20 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <tr><td>Website addresses change</td><td>Lower Google ranking</td><td>Permanent redirects from every old address</td></tr>
   <tr><td>Everything on one VPS</td><td>One failure affects website and CRM</td><td>Nightly off-site backups to Microsoft 365, Hostinger backups, tested restore, uptime alerts</td></tr>
   <tr><td>Hostinger account lost or locked</td><td>No access to domains and server</td><td>Company email as owner, two-factor login, second admin, backups outside Hostinger</td></tr>
+  <tr><td>Attack bypasses Cloudflare via the VPS IP</td><td>Web/CRM outage</td><td>Restrict direct origin access, minimise public ports and retain Hostinger network DDoS protection</td></tr>
+  <tr><td>Cloudflare rules block legitimate CRM traffic or cache private data</td><td>Login, Chat, uploads or APIs fail; data exposure</td><td>Bypass shared caching for CRM/authenticated responses; validate WAF, WebSockets and webhooks before launch</td></tr>
 </table></div>
 
 <h2 id="en-decisions">8. Decisions for Daniel and Joost</h2>
 <div class="tbl"><table>
   <tr><th>#</th><th>Question</th><th>Our advice</th></tr>
-  <tr><td>D1</td><td>Email stays on Microsoft 365?</td><td>Yes</td></tr>
+  <tr><td>D1</td><td>Confirmed architecture: Hostinger + Cloudflare + Microsoft 365.</td><td>Keep Cloudflare DNS/security and Microsoft 365 email/files.</td></tr>
   <tr><td>D2</td><td>Codebase approach confirmed for all websites. Which pages/features are in scope, and who supplies and approves content/design?</td><td>Ocean builds and deploys; Daniel/Joost approve scope and content before Day 1</td></tr>
   <tr><td>D3</td><td>What does systeme.io do besides the website (forms, newsletters, funnels, courses, payments)?</td><td>—</td></tr>
   <tr><td>D4</td><td>dacu3d.nl: redirect to cadinvo.com, or its own codebase website/page? Any separate site for cadinvo.nl?</td><td>Keep redirects unless a separate website is agreed</td></tr>
   <tr><td>D5</td><td>Hostinger account: which company email is the owner, who is second admin?</td><td>Daniel owner, Joost admin</td></tr>
   <tr><td>D6</td><td>Are there other domains or products at Hostnet (mail, hosting)?</td><td>—</td></tr>
-  <tr><td>D7</td><td>Where do the WhatsApp server (Evolution API) and n8n run today? Any other paid tools?</td><td>Move to the VPS</td></tr>
+  <tr><td>D7</td><td>Confirm Evolution API dependencies and archives, n8n hosting/required flows, and any other paid tools.</td><td>Propose retiring Evolution API; keep CRM Chat; migrate only required n8n flows.</td></tr>
 </table></div>
 
 <h2 id="en-need">9. What we need from you</h2>
@@ -292,14 +294,14 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <main lang="nl">
 
 <div class="callout">
-  <strong>Doel:</strong> de domeinen, DNS, alle websites en CRM-server van DaCu3D en Cadinvo bij <strong>één provider (Hostinger)</strong> onderbrengen, en stoppen met Hostnet, Strato, Cloudflare, systeme.io en Base44.
-  <br><strong>E-mail:</strong> volgens de oorspronkelijke controle draait de e-mail van alle drie de domeinen al op <strong>Microsoft 365</strong>, niet op Strato of Hostnet. Ons advies is om dat zo te laten (paragraaf 4.3).
+  <strong>Doel:</strong> domeinregistratie, alle websites en het CRM van DaCu3D en Cadinvo bij <strong>Hostinger</strong> onderbrengen, <strong>Cloudflare voor DNS en beveiliging</strong> behouden en <strong>Microsoft 365 voor e-mail en bestanden</strong> behouden. Hostnet, Strato, systeme.io en Base44 na geslaagde migratie uitfaseren.
+  <br><strong>E-mail:</strong> de e-mail van alle drie de domeinen draait al op <strong>Microsoft 365</strong>, niet op Strato of Hostnet. Ons advies is om dat zo te laten (paragraaf 4.3).
   <br><strong>Bevestigde aanpak:</strong> elke website gebruikt een codebase met versiebeheer en wordt op de VPS uitgerold. Geen WordPress of Hostinger Website Builder.
   <br><strong>Doel:</strong> 2 weken (10 werkdagen) vanaf de afgesproken start, onder de voorwaarden in paragraaf 5.
 </div>
 
 <nav class="card toc">
-  <div><a href="#nl-found">1. Bevindingen uit het oorspronkelijke plan</a></div>
+  <div><a href="#nl-found">1. Overzicht van de diensten</a></div>
   <div><a href="#nl-target">2. Voor en na</a></div>
   <div><a href="#nl-inventory">3. Volledig overzicht (graag bevestigen)</a></div>
   <div><a href="#nl-steps">4. Plan per dienst</a></div>
@@ -310,8 +312,8 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <div><a href="#nl-need">9. Wat we van jullie nodig hebben</a></div>
 </nav>
 
-<h2 id="nl-found">1. Bevindingen uit het oorspronkelijke plan</h2>
-<p>De onderstaande DNS- en domeinregistratiegegevens zijn overgenomen uit het oorspronkelijke plan van 10 november 2026; ze zijn voor deze revisie niet opnieuw gecontroleerd. Openbare gegevens tonen alleen wat van buitenaf zichtbaar is. Punten met <span class="pill warn">te bevestigen</span> moeten in de accounts van de providers worden gecontroleerd.</p>
+<h2 id="nl-found">1. Overzicht van de diensten</h2>
+<p>Overzicht van domeinen, hosting en e-maildiensten. Controleer punten met <span class="pill warn">te bevestigen</span> in de provideraccounts en vul ontbrekende abonnementen aan.</p>
 <div class="tbl"><table>
   <tr><th>Domein</th><th>Geregistreerd bij</th><th>DNS beheerd bij</th><th>Website</th><th>E-mail</th></tr>
   <tr><td><strong>dacu3d.nl</strong></td>
@@ -349,15 +351,16 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
     <div class="svc"><span>Microsoft 365</span><span>e-mail, Teams, OneDrive, SharePoint</span></div>
   </div>
   <div class="card box">
-    <h3>Straks: 2 providers</h3>
-    <div class="svc"><span><strong>Hostinger</strong></span><span>alle 3 domeinen + DNS</span></div>
+    <h3>Straks: 3 providers</h3>
+    <div class="svc"><span><strong>Hostinger</strong></span><span>registratie en verlenging van alle 3 domeinen</span></div>
     <div class="svc"><span></span><span>VPS KVM 2: alle codebase-websites + CRM</span></div>
     <div class="svc"><span></span><span>dagelijkse VPS-back-ups</span></div>
+    <div class="svc"><span><strong>Cloudflare</strong></span><span>DNS + Proxy, WAF en DDoS-bescherming</span></div>
     <div class="svc"><span><strong>Microsoft 365</strong></span><span>e-mail, Teams, OneDrive, SharePoint (zoals nu)</span></div>
     <div class="svc"><span></span><span>+ externe kopie van de CRM-back-up</span></div>
   </div>
 </div>
-<p class="meta">Waarom Microsoft 365 blijft: het is jullie kantoorpakket (mail, Teams, bestanden) en het CRM leest en verstuurt Outlook-mail en gebruikt OneDrive/SharePoint. Mail naar Hostinger verhuizen vraagt migratie van elke mailbox en aanpassing van de betrokken integraties, terwijl de overige Microsoft-diensten nodig blijven. Cloudflare R2 uit het eerdere CRM-plan vervalt: CRM-bestanden blijven op de VPS-schijf en de back-upkopie gaat naar Microsoft 365.</p>
+<p class="meta">Waarom Microsoft 365 blijft: het is jullie kantoorpakket (mail, Teams, bestanden) en het CRM leest en verstuurt Outlook-mail en gebruikt OneDrive/SharePoint. Mail naar Hostinger verhuizen vraagt migratie van elke mailbox en aanpassing van de betrokken integraties, terwijl de overige Microsoft-diensten nodig blijven. Cloudflare blijft voor DNS en webbeveiliging; R2-opslag valt buiten dit plan. CRM-bestanden blijven op de VPS-schijf en de back-upkopie gaat naar Microsoft 365.</p>
 
 <h2 id="nl-inventory">3. Volledig overzicht (graag bevestigen)</h2>
 <p>Controleer elke regel in de accounts van de providers en vul aan wat we gemist hebben (andere domeinen, abonnementen die via creditcard lopen, tools die mail uit jullie naam versturen).</p>
@@ -365,11 +368,12 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <tr><th>Dienst</th><th>Wat het nu doet</th><th>Wat er gebeurt</th><th>Status</th></tr>
   <tr><td>Hostnet</td><td>Registrar van cadinvo.nl, waarschijnlijk ook cadinvo.com. Nog een mail- of hostingpakket?</td><td>Domeinen naar Hostinger verhuizen, daarna opzeggen</td><td><span class="pill warn">te bevestigen</span></td></tr>
   <tr><td>Strato</td><td>Domein + DNS dacu3d.nl, Mail Business 1 (ongebruikt), sinds 2019</td><td>Domein naar Hostinger verhuizen, oude mail bewaren, daarna opzeggen</td><td><span class="pill ok">gevonden</span></td></tr>
-  <tr><td>Cloudflare</td><td>DNS + doorverwijzingen voor cadinvo.com en cadinvo.nl</td><td>DNS naar Hostinger, doorverwijzingen naar de VPS, daarna account verwijderen</td><td><span class="pill ok">gevonden</span></td></tr>
+  <tr><td>Cloudflare</td><td>DNS + doorverwijzingen voor cadinvo.com en cadinvo.nl</td><td>Behouden; dacu3d.nl toevoegen en website-/CRM-verkeer via Proxy, WAF en DDoS-bescherming beveiligen</td><td><span class="pill ok">behouden</span></td></tr>
   <tr><td>systeme.io</td><td>Website www.cadinvo.com. Ook formulieren, mailinglijsten, funnels, cursussen of betalingen?</td><td>Opnieuw bouwen als codebase-website op de VPS, daarna opzeggen</td><td><span class="pill warn">te bevestigen</span></td></tr>
   <tr><td>Base44</td><td>CRM</td><td>Naar de VPS (apart CRM-migratieplan)</td><td><span class="pill ok">gevonden</span></td></tr>
-  <tr><td>Microsoft 365</td><td>Mail voor alle 3 domeinen, Teams, OneDrive, SharePoint</td><td>Blijft. Alleen de DNS-records verhuizen mee</td><td><span class="pill ok">gevonden</span></td></tr>
-  <tr><td>WhatsApp-server (Evolution API)</td><td>Gebruikt door het CRM voor WhatsApp. Waar draait die?</td><td>Als het op een andere server staat: naar de VPS</td><td><span class="pill warn">te bevestigen</span></td></tr>
+  <tr><td>Microsoft 365</td><td>Mail voor alle 3 domeinen, Teams, OneDrive, SharePoint</td><td>Behouden. Microsoft-mailrecords in Cloudflare DNS behouden</td><td><span class="pill ok">behouden</span></td></tr>
+  <tr><td>WhatsApp / Evolution API</td><td>WhatsApp in het CRM wordt vervangen door de eigen Chat van het CRM</td><td>Niet opnemen in de VPS-migratie; uitfasering plannen na controle van resterende afhankelijkheden en benodigde archieven</td><td><span class="pill warn">uitfasering voorgesteld</span></td></tr>
+  <tr><td>CRM Chat</td><td>Wordt nu gebruikt voor gesprekken in het CRM</td><td>Behouden; chatgeschiedenis, bijlagen, rechten en meldingen met het CRM migreren</td><td><span class="pill ok">behouden</span></td></tr>
   <tr><td>n8n</td><td>Automatiseringen / back-up van data. Waar draait die?</td><td>Als het op een andere server staat: naar de VPS</td><td><span class="pill warn">te bevestigen</span></td></tr>
   <tr><td>Google Search Console</td><td>Verificatierecord op cadinvo.com</td><td>Record kopiëren, verder niets</td><td><span class="pill ok">gevonden</span></td></tr>
   <tr><td>Overig?</td><td>Andere domeinen, nieuwsbrieftool, betaalprovider, enz.</td><td>—</td><td><span class="pill warn">te bevestigen</span></td></tr>
@@ -381,25 +385,19 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <ol class="steps">
   <li>Eén Hostinger-account op naam van het bedrijf, met een zakelijk e-mailadres (geen privéadres) en inloggen in twee stappen aan.</li>
   <li>Daniel is eigenaar; Joost desgewenst tweede beheerder. Ocean krijgt toegang via de functie "account delen" van Hostinger, zodat er geen wachtwoorden gedeeld worden.</li>
-  <li>Zorg dat <strong>VPS KVM 2</strong> vóór dag 1 beschikbaar is: looptijd van 24 maanden, datacenter in Europa, besturingssysteem "Ubuntu 24.04" (kaal, zonder controlepaneel), zoals voorgesteld in het oorspronkelijke plan. Kopen op Black Friday (27 november 2026) blijft een optie; controleer prijs en beschikbaar pakket bij aankoop. Bevestig de optie "Daily backups" of een gelijkwaardige back-upvoorziening.</li>
+  <li>Zorg dat <strong>VPS KVM 2</strong> vóór dag 1 beschikbaar is: looptijd van 24 maanden, datacenter in Europa, besturingssysteem "Ubuntu 24.04" (kaal, zonder controlepaneel). Kopen op Black Friday (27 november 2026) blijft een optie; controleer prijs en beschikbaar pakket bij aankoop. Bevestig de optie "Daily backups" of een gelijkwaardige back-upvoorziening.</li>
 </ol>
 
-<h3>4.2 Domeinen en DNS</h3>
-<p>De volgorde is belangrijk: eerst alle DNS-records naar Hostinger kopiëren, dan het domein verhuizen, dan de DNS omzetten. Zo blijven mail en website de hele tijd werken.</p>
+<h3>4.2 Domeinen bij Hostinger, DNS bij Cloudflare</h3>
+<p>Domeinregistratie en DNS zijn aparte diensten: verhuis registratie/verlenging naar Hostinger en behoud Cloudflare-nameservers voor de Cadinvo-domeinen. Alleen de DNS van dacu3d.nl verhuist van Strato naar Cloudflare.</p>
 <ol class="steps">
-  <li><strong>Alle DNS-records kopiëren</strong>: het zonebestand exporteren uit Cloudflare (cadinvo.com, cadinvo.nl) en elk record bij Strato noteren (dacu3d.nl). Dezelfde records aanmaken in de DNS van Hostinger. Vóór het omzetten vergelijken we oud en nieuw met een script.</li>
-  <li><strong>De TTL verlagen</strong> naar 5 minuten, een dag vóór het omzetten, zodat een fout snel te herstellen is.</li>
-  <li><strong>De verhuiscodes aanvragen</strong>:
-    <ul>
-      <li>dacu3d.nl: verhuiscode bij Strato. <strong>Zeg het Strato-pakket niet op voordat het domein verhuisd is</strong>: het domein hoort bij dat pakket en kan anders mee verwijderd worden.</li>
-      <li>cadinvo.nl: verhuiscode bij Hostnet.</li>
-      <li>cadinvo.com: bevestig het beheeraccount bij Hostnet, verwijder het verhuisslot en vraag de EPP/autorisatiecode aan; voldoe aan de verificatie-eisen van de registrar. Het oorspronkelijke plan rekende op 5–7 dagen en een jaar verlenging; bevestig verwerkingstijd en vervaldatum bij de aanvraag.</li>
-    </ul>
-  </li>
-  <li><strong>De verhuizingen starten bij Hostinger</strong> (.nl-verhuizingen worden ondersteund en zijn meestal binnen een paar uur klaar). De bevestigingsmails goedkeuren.</li>
-  <li><strong>De naamservers naar Hostinger omzetten</strong>, één domein tegelijk: eerst dacu3d.nl (geen website, laagste risico), dan cadinvo.nl, dan cadinvo.com.</li>
-  <li><strong>Na elke omzetting</strong>: een testmail versturen en ontvangen, de website openen, en in Microsoft 365-beheer → Domeinen controleren dat alles "in orde" is.</li>
-  <li><strong>Doorverwijzingen</strong> die Cloudflare nu doet (cadinvo.nl en cadinvo.com → www.cadinvo.com) doet straks de webserver op de VPS, met gratis SSL-certificaten.</li>
+  <li><strong>Exporteer en vergelijk DNS:</strong> bewaar Cloudflare-zones voor cadinvo.com/cadinvo.nl en alle Strato-records voor dacu3d.nl. Voeg dacu3d.nl toe aan Cloudflare en kopieer alle benodigde records, inclusief Microsoft 365-mail en verificatie.</li>
+  <li><strong>Bereid de verhuizing voor:</strong> haal de code voor dacu3d.nl bij Strato en voor cadinvo.nl bij Hostnet op. Bevestig het beheeraccount van cadinvo.com, verwijder het verhuisslot en vraag de EPP/autorisatiecode aan. Houd rekening met verwerkingstijd en goedkeuringen.</li>
+  <li><strong>Verhuis registratie naar Hostinger:</strong> behoud de bestaande Cloudflare-nameservers voor cadinvo.com en cadinvo.nl; laat ze niet vervangen door Hostinger-standaarden. Houd Strato actief totdat dacu3d.nl veilig verhuisd is.</li>
+  <li><strong>Verhuis dacu3d.nl-DNS naar Cloudflare:</strong> vergelijk eerst de volledige zone, stem DNSSEC/DS af en wijzig dan nameservers. Controleer mail, website/doorverwijzingen en de domeinstatus in Microsoft 365.</li>
+  <li><strong>Zet websites één voor één live:</strong> behoud de oude bestemming tot de vervanger is goedgekeurd; wijs dan webrecords naar de VPS met Cloudflare Proxy aan. Verlaag vooraf de TTL waar instelbaar; proxied records gebruiken Cloudflare's automatische TTL.</li>
+  <li><strong>Behoud doorverwijzingen:</strong> laat cadinvo.nl en cadinvo.com naar www.cadinvo.com verwijzen via Cloudflare-regels of de VPS achter Cloudflare. Controleer HTTPS en alle benodigde doorverwijzingen.</li>
+  <li><strong>Behoud werkende mail:</strong> houd MX, SPF, DKIM, autodiscover en verificatierecords intact. Mailhosts blijven waar nodig DNS-only; de webproxy is voor website-/CRM-verkeer.</li>
 </ol>
 
 <h3>4.3 E-mail (advies: blijft op Microsoft 365)</h3>
@@ -423,29 +421,43 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 
 <h3>4.5 CRM (van Base44)</h3>
 <ol class="steps">
-  <li>Volgt het aparte CRM-migratieplan. Nieuw adres, bijvoorbeeld <code>crm.cadinvo.com</code>, aangemaakt in de DNS van Hostinger. Verhuizen vanaf Base44 vraagt ook vervanging van backenddiensten, niet alleen deployment van de React-frontend; de migratie moet vóór deze uitrol van twee weken klaar zijn voor een proefmigratie.</li>
+  <li>Volgt het aparte CRM-migratieplan. Nieuw adres, bijvoorbeeld <code>crm.cadinvo.com</code>, aangemaakt in de DNS van Cloudflare. Verhuizen vanaf Base44 vraagt ook vervanging van backenddiensten, niet alleen deployment van de React-frontend; de migratie moet vóór deze uitrol van twee weken klaar zijn voor een proefmigratie.</li>
   <li>Gebruik KVM 2 voor voorbereiding in een van productie geïsoleerde omgeving; neem deze pas na acceptatiecontroles in productie. Breid later zo nodig uit volgens de mogelijkheden van de provider.</li>
-  <li>Bestanden (chatbijlagen, afbeeldingen, documenten) op de VPS-schijf. Het oorspronkelijke plan schatte 3–6 GB data en een schijf van 100 GB; bevestig de capaciteit vóór de migratie.</li>
+  <li>Bestanden (chatbijlagen, afbeeldingen, documenten) op de VPS-schijf. Reken voorlopig op 3–6 GB data en een schijf van 100 GB; bevestig de werkelijke capaciteit vóór de migratie.</li>
   <li>Back-ups: database en bestanden elke nacht, versleuteld, naar een aparte SharePoint/OneDrive-map in Microsoft 365 (buiten Hostinger, geen nieuwe provider), plus de dagelijkse back-ups van Hostinger. Vóór de livegang testen we een herstel.</li>
   <li>Plan de CRM-overstap tegen het einde van week 2, na goedgekeurde DNS- en websitecontroles, in een apart wijzigingsvenster. Blijft de voorkeur voor Kerst–Oud en Nieuw gelden, kies dan dag 1 zodat de overstap daarin valt. Houd Base44 minstens 2 weken alleen-lezen beschikbaar; spreek gegevensafstemming af en oefen die vóór een eventuele rollback.</li>
 </ol>
 
-<h3>4.6 WhatsApp-server en n8n</h3>
-<p>Als deze op een aparte server of betaald cloudpakket draaien, plan dan verhuizing naar dezelfde VPS na controle van capaciteit en integraties; zeg de oude dienst pas op als de vervanger werkt. Bevestig waar ze draaien (D7).</p>
+<h3>4.6 CRM Chat, Evolution API en n8n</h3>
+<ol class="steps">
+  <li><strong>CRM Chat wordt het gesprekskanaal.</strong> WhatsApp-chat in het CRM wordt vervangen door CRM Chat. Neem chatgeschiedenis, bijlagen, rechten en meldingen op in de CRM-migratiecontroles.</li>
+  <li><strong>Evolution API wordt naar verwachting uitgefaseerd.</strong> Neem het niet op in de geplande VPS-belasting. Bevestig vóór uitschakeling dat gebruikers of automatiseringen er niet meer van afhankelijk zijn en spreek af welke WhatsApp-geschiedenis/bijlagen bewaard moeten blijven. Beoordeel resterende afhankelijkheden voordat de dienst stopt.</li>
+  <li><strong>n8n is een aparte beslissing:</strong> bevestig waar het draait en welke flows nodig blijven. Verhuis alleen benodigde automatiseringen naar de VPS, na controle van capaciteit en integraties.</li>
+</ol>
+
+<h3>4.7 Cloudflare en VPS-beveiliging</h3>
+<ol class="steps">
+  <li>Behoud alle drie domeinen op Cloudflare DNS. Beoordeel eerst Cloudflare Free voor Proxy, basis-WAF-regels en DDoS-bescherming; bevestig of betaalde regels/support nodig zijn.</li>
+  <li>Leid website-/CRM-verkeer via Cloudflare Proxy. DNS-only-webrecords krijgen geen proxybescherming. Beperk directe webtoegang tot de origin tot Cloudflare; Cloudflare Tunnel is waar passend een alternatief. Beperk beheer tot bevoegde beheerders.</li>
+  <li>Gebruik Full (strict) TLS met een geldig origin-certificaat voor de proxy-opzet. Houd CRM-pagina's, ingelogde antwoorden en API's buiten gedeelde caching. Controleer login, CRM Chat/WebSockets, uploads en webhooks met de beveiligingsregels.</li>
+  <li>Behoud Hostinger-netwerkbescherming tegen DDoS: de Cloudflare-webproxy dekt niet elke VPS-poort of directe aanvallen op het publieke IP. Zware aanvallen kunnen nog steeds onderbrekingen veroorzaken.</li>
+  <li>Gebruik tweefactorauthenticatie op bedrijfsaccounts, herstel domeinverhuissloten na migratie en stem DNSSEC af. Leg reservetoegang en herstelverantwoordelijkheid vast.</li>
+</ol>
+<p class="meta">Technische bronnen: <a href="https://developers.cloudflare.com/dns/proxy-status/">Cloudflare Proxy</a> · <a href="https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/">Origin protection</a> · <a href="https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/">TLS</a> · <a href="https://www.hostinger.com/support/what-are-anti-ddos-events-in-hostinger-vps/">Hostinger Anti-DDoS</a></p>
 
 <h2 id="nl-timeline">5. Planning</h2>
 <p><strong>Doel: 2 weken (10 werkdagen).</strong> Dag 1 is de afgesproken start zodra VPS-toegang, verhuiscodes, website-inhoud/scope en de CRM-migratieversie gereed zijn. Eén week is alleen haalbaar als de codebase-websites en het CRM al gebouwd en getest zijn; dit plan gaat uit van twee weken.</p>
 <div class="callout warn"><strong>Startvoorwaarde:</strong> de bestaande codebases en de afgesproken websitebouw moeten binnen onderstaande scope passen. De vervangende CRM-backend, datamapping en integraties moeten vóór dag 1 klaar zijn voor een proefmigratie. Zo niet, dan volgt een nieuwe inschatting vóór een startdatum wordt toegezegd. Twee weken is een uitroldoel, geen belofte om alle Base44-diensten vanaf nul te bouwen.</div>
 <div class="tbl"><table>
   <tr><th>Wanneer</th><th>Werk en oplevercontrole</th><th>Wie</th></tr>
-  <tr><td>Week 1 · Dag 1</td><td>Bevestig inventaris, D1–D7, toegang en startvoorwaarden. Bewaar DNS-exports, vraag ontbrekende goedkeuringen aan en start meteen de domeinverhuizingen.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Week 1 · Dag 2</td><td>Beveilig de VPS; bereid deployment, HTTPS en back-ups voor; kopieer DNS-records en vergelijk zones. Richt geïsoleerde controleomgevingen in.</td><td>Ocean</td></tr>
-  <tr><td>Week 1 · Dag 3–4</td><td>Bouw/implementeer de afgesproken codebase-websites met goedgekeurde inhoud, formulieren en doorverwijzingen. Oefen CRM-migratie en integratiecontroles in een geïsoleerde omgeving.</td><td>Ocean; Daniel/Joost keuren inhoud goed</td></tr>
-  <tr><td>Week 1 · Dag 5</td><td>Keur websitevoorbeelden goed, controleer functies en herstel van back-ups, beoordeel de CRM-proefmigratie en rollback. Verlaag DNS-TTL vóór de omzetting.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Week 2 · Dag 6–7</td><td>Zet DNS per domein om: dacu3d.nl → cadinvo.nl → cadinvo.com. Zet goedgekeurde websites en doorverwijzingen live; controleer mail, HTTPS en Microsoft 365 na elke stap.</td><td>Ocean; Microsoft 365-beheerder</td></tr>
-  <tr><td>Week 2 · Dag 8</td><td>Bevestig dat DNS en websites stabiel zijn. Controleer de definitieve CRM-migratiechecklist, aantallen records en back-up; neem de go/no-go-beslissing.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Week 2 · Dag 9</td><td>CRM-overstap in een apart afgesproken venster: pauzeer schrijfacties, maak de definitieve export, importeer en vergelijk data, zet toegang om en controleer gebruikersstromen. Stop of draai terug als acceptatiecontroles mislukken.</td><td>Ocean; Daniel/Joost accepteren</td></tr>
-  <tr><td>Week 2 · Dag 10</td><td>Los opstartproblemen op, controleer monitoring/back-ups en draag codebase en beheerinstructies over. Bevestig latere opzegdata zonder terugvaldata te verwijderen.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 1 · Dag 1</td><td>Bevestig inventaris, D1–D7, toegang en startvoorwaarden. Bewaar DNS-exports, start domeinverhuizingen en bepaal resterende Evolution API-afhankelijkheden.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 1 · Dag 2</td><td>Beveilig de VPS; bereid deployment, HTTPS en back-ups voor. Bereid dacu3d.nl in Cloudflare voor, behoud Cadinvo-zones en configureer Proxy/WAF en beperkte origin-toegang.</td><td>Ocean</td></tr>
+  <tr><td>Week 1 · Dag 3–4</td><td>Bouw/implementeer afgesproken codebase-websites met goedgekeurde inhoud, formulieren en doorverwijzingen. Oefen CRM-migratie inclusief Chat-geschiedenis, bijlagen en rechten met geïsoleerde data.</td><td>Ocean; Daniel/Joost keuren inhoud goed</td></tr>
+  <tr><td>Week 1 · Dag 5</td><td>Keur voorbeelden en hersteltests goed. Controleer Cloudflare-regels voor login, Chat, API’s, uploads en webhooks; beoordeel CRM-proefmigratie en rollback. Bereid DNS-wijzigingen voor.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 2 · Dag 6–7</td><td>Verhuis dacu3d.nl-DNS naar Cloudflare; behoud Cadinvo-Cloudflare-nameservers tijdens domeinverhuizingen. Zet goedgekeurde websites één voor één met Proxy live; controleer mail, doorverwijzingen en HTTPS.</td><td>Ocean; Microsoft 365-beheerder</td></tr>
+  <tr><td>Week 2 · Dag 8</td><td>Bevestig stabiele DNS en websites. Controleer definitieve CRM-aantallen, Chat, back-up en migratiechecklist; neem de go/no-go-beslissing.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Week 2 · Dag 9</td><td>CRM-overstap in het afgesproken venster: pauzeer schrijfacties, exporteer, importeer en vergelijk data, zet toegang om en controleer gebruikersstromen inclusief Chat. Stop of draai terug bij mislukte acceptatie.</td><td>Ocean; Daniel/Joost accepteren</td></tr>
+  <tr><td>Week 2 · Dag 10</td><td>Los opstartproblemen op en controleer monitoring/back-ups. Draag codebase en Hostinger-/Cloudflare-beheerinstructies over; spreek uitfasering af, inclusief Evolution API als alle voorwaarden zijn voldaan.</td><td>Ocean, Daniel, Joost</td></tr>
 </table></div>
 <p><strong>Houd wijzigingen apart:</strong> DNS/website en CRM worden in verschillende vensters omgezet, met controles ertussen. Goedkeuring door de registrar of DNS-propagatie kan vertraging geven; houd bestaande diensten actief en verschuif de overstap als controles nog niet afgerond zijn.</p>
 <p><strong>Nazorg buiten de uitrol van twee weken:</strong> bewaar oude DNS-exports/configuratie minstens 2 weken en houd Base44 na de CRM-overstap 2–4 weken alleen-lezen beschikbaar. Zeg diensten pas op na de controles in paragraaf 6. Deze bewaartermijn is geen extra ontwikkeltijd.</p>
@@ -454,9 +466,9 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <h2 id="nl-cancel">6. Oude diensten opzeggen</h2>
 <div class="tbl"><table>
   <tr><th>Dienst</th><th>Vóór het opzeggen</th><th>Wanneer</th></tr>
-  <tr><td>Strato</td><td>dacu3d.nl verhuisd en op Hostinger-DNS; oude mail bewaard; laatste factuur gedownload</td><td>Na de domeinverhuizing, einde termijn</td></tr>
+  <tr><td>Strato</td><td>dacu3d.nl verhuisd en op Cloudflare-DNS; oude mail bewaard; laatste factuur gedownload</td><td>Na de domeinverhuizing, einde termijn</td></tr>
   <tr><td>Hostnet</td><td>Beide domeinen verhuisd; geen andere producten meer; automatische verlenging uit; facturen gedownload</td><td>Na de verhuizingen (cadinvo.com vóór 02-02-2027)</td></tr>
-  <tr><td>Cloudflare</td><td>Alle daar beheerde domeinen 2 weken stabiel op Hostinger-DNS; zone-exports bewaard</td><td>Minstens 2 weken na de DNS-omzetting</td></tr>
+  <tr><td>Evolution API / WhatsApp-dienst</td><td>CRM Chat geaccepteerd; geen gebruikers/automatiseringen meer afhankelijk van WhatsApp-integratie; benodigde geschiedenis en bijlagen bewaard</td><td>Na bevestiging en goedkeuring; niet standaard migreren</td></tr>
   <tr><td>systeme.io</td><td>Nieuwe website live; contacten en formulierdata geëxporteerd; doorverwijzingen werken</td><td>Na livegang website</td></tr>
   <tr><td>Base44</td><td>CRM 2–4 weken stabiel; volledige data-export gearchiveerd</td><td>2–4 weken na CRM-overstap, na goedkeuring</td></tr>
 </table></div>
@@ -470,18 +482,20 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <tr><td>Websiteadressen veranderen</td><td>Lagere positie in Google</td><td>Permanente doorverwijzing vanaf elk oud adres</td></tr>
   <tr><td>Alles op één VPS</td><td>Eén storing raakt website en CRM</td><td>Nachtelijke externe back-ups naar Microsoft 365, Hostinger-back-ups, geteste herstelprocedure, uptime-meldingen</td></tr>
   <tr><td>Hostinger-account kwijt of geblokkeerd</td><td>Geen toegang tot domeinen en server</td><td>Zakelijk e-mailadres als eigenaar, inloggen in twee stappen, tweede beheerder, back-ups buiten Hostinger</td></tr>
+  <tr><td>Aanval omzeilt Cloudflare via het VPS-IP</td><td>Website-/CRM-uitval</td><td>Beperk directe origin-toegang en publieke poorten; behoud Hostinger-netwerkbescherming tegen DDoS</td></tr>
+  <tr><td>Cloudflare-regels blokkeren CRM-verkeer of cachen privédata</td><td>Login, Chat, uploads of API's werken niet; datalek</td><td>Geen gedeelde caching voor CRM/ingelogde antwoorden; controleer WAF, WebSockets en webhooks vóór livegang</td></tr>
 </table></div>
 
 <h2 id="nl-decisions">8. Beslissingen voor Daniel en Joost</h2>
 <div class="tbl"><table>
   <tr><th>#</th><th>Vraag</th><th>Ons advies</th></tr>
-  <tr><td>D1</td><td>Blijft de e-mail op Microsoft 365?</td><td>Ja</td></tr>
+  <tr><td>D1</td><td>Bevestigde architectuur: Hostinger + Cloudflare + Microsoft 365.</td><td>Behoud Cloudflare DNS/beveiliging en Microsoft 365-mail/bestanden.</td></tr>
   <tr><td>D2</td><td>Codebase-aanpak voor alle websites bevestigd. Welke pagina's/functies vallen binnen de scope, en wie levert en keurt inhoud/ontwerp goed?</td><td>Ocean bouwt en implementeert; Daniel/Joost keuren scope en inhoud vóór dag 1 goed</td></tr>
   <tr><td>D3</td><td>Wat doet systeme.io naast de website (formulieren, nieuwsbrieven, funnels, cursussen, betalingen)?</td><td>—</td></tr>
   <tr><td>D4</td><td>dacu3d.nl: doorverwijzen naar cadinvo.com of een eigen codebase-website/pagina? Een aparte site voor cadinvo.nl?</td><td>Behoud doorverwijzingen tenzij een aparte website is afgesproken</td></tr>
   <tr><td>D5</td><td>Hostinger-account: welk zakelijk e-mailadres is eigenaar, wie is tweede beheerder?</td><td>Daniel eigenaar, Joost beheerder</td></tr>
   <tr><td>D6</td><td>Zijn er nog andere domeinen of producten bij Hostnet (mail, hosting)?</td><td>—</td></tr>
-  <tr><td>D7</td><td>Waar draaien de WhatsApp-server (Evolution API) en n8n nu? Nog andere betaalde tools?</td><td>Naar de VPS</td></tr>
+  <tr><td>D7</td><td>Bevestig Evolution API-afhankelijkheden/archieven, n8n-hosting/benodigde flows en overige betaalde tools.</td><td>Stel uitfasering Evolution API voor; behoud CRM Chat; migreer alleen benodigde n8n-flows.</td></tr>
 </table></div>
 
 <h2 id="nl-need">9. Wat we van jullie nodig hebben</h2>
@@ -498,14 +512,14 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <main lang="vi">
 
 <div class="callout">
-  <strong>Mục tiêu:</strong> tập trung tên miền, DNS, toàn bộ website và máy chủ CRM của DaCu3D và Cadinvo tại <strong>một nhà cung cấp (Hostinger)</strong>, sau đó ngừng dùng Hostnet, Strato, Cloudflare, systeme.io và Base44.
-  <br><strong>Email:</strong> theo kết quả kiểm tra trong bản gốc, email của cả ba tên miền đang dùng <strong>Microsoft 365</strong>, không phải Strato hay Hostnet. Đề xuất giữ nguyên (mục 4.3).
+  <strong>Mục tiêu:</strong> tập trung đăng ký tên miền, toàn bộ website và CRM của DaCu3D và Cadinvo tại <strong>Hostinger</strong>; giữ <strong>Cloudflare cho DNS và bảo vệ</strong>, giữ <strong>Microsoft 365 cho email và tài liệu</strong>. Ngừng Hostnet, Strato, systeme.io và Base44 sau khi chuyển thành công.
+  <br><strong>Email:</strong> email của cả ba tên miền đang dùng <strong>Microsoft 365</strong>, không phải Strato hay Hostnet. Đề xuất giữ nguyên (mục 4.3).
   <br><strong>Phương án đã chốt:</strong> mọi website dùng codebase có quản lý phiên bản và triển khai lên VPS. Không dùng WordPress hoặc Hostinger Website Builder.
   <br><strong>Thời gian mục tiêu:</strong> 2 tuần (10 ngày làm việc) từ ngày bắt đầu thống nhất, với điều kiện sẵn sàng tại mục 5.
 </div>
 
 <nav class="card toc">
-  <div><a href="#vi-found">1. Kết quả ghi nhận từ bản plan gốc</a></div>
+  <div><a href="#vi-found">1. Tổng quan các dịch vụ</a></div>
   <div><a href="#vi-target">2. Trước và sau khi hợp nhất</a></div>
   <div><a href="#vi-inventory">3. Danh sách dịch vụ cần xác nhận</a></div>
   <div><a href="#vi-steps">4. Kế hoạch cho từng dịch vụ</a></div>
@@ -516,8 +530,8 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <div><a href="#vi-need">9. Thông tin và quyền truy cập cần cung cấp</a></div>
 </nav>
 
-<h2 id="vi-found">1. Kết quả ghi nhận từ bản plan gốc</h2>
-<p>Các thông tin DNS và đăng ký tên miền dưới đây được giữ từ bản plan ngày 10/11/2026; chưa được kiểm tra lại trong lần chỉnh sửa này. Dữ liệu công khai chỉ phản ánh những gì có thể xem từ bên ngoài. Các mục có nhãn <span class="pill warn">cần xác nhận</span> phải được đối chiếu trong tài khoản nhà cung cấp.</p>
+<h2 id="vi-found">1. Tổng quan các dịch vụ</h2>
+<p>Tổng quan tên miền, hosting và email. Đối chiếu các mục có nhãn <span class="pill warn">cần xác nhận</span> trong tài khoản nhà cung cấp và bổ sung các thuê bao còn thiếu.</p>
 <div class="tbl"><table>
   <tr><th>Tên miền</th><th>Đăng ký tại</th><th>Quản lý DNS</th><th>Website</th><th>Email</th></tr>
   <tr><td><strong>dacu3d.nl</strong></td><td>Strato (đăng ký ngày 15/06/2019, cùng ngày với đơn hàng Strato 6735886 trên hóa đơn)</td><td>Strato</td><td>Chưa có website: trang giữ chỗ tên miền của Strato</td><td>Microsoft 365</td></tr>
@@ -528,7 +542,7 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <li><strong>Email đều đi qua Microsoft 365.</strong> Bản ghi MX của cả ba tên miền trỏ tới Microsoft, cùng tenant <code>dacu3d.onmicrosoft.com</code>. Theo đó, gói Strato "Mail Business" (€4,50/tháng theo hóa đơn cũ) không nhận email qua MX của tên miền; gói mail tại Hostnet, nếu có, cũng tương tự. <span class="pill warn">cần xác nhận</span>: có email cũ trong những hộp thư này cần giữ lại không?</li>
   <li><strong>CRM</strong> chạy trên Base44 tại <code>crm-cadinvo.base44.app</code>, chưa dùng tên miền riêng. CRM sử dụng Microsoft 365 cho Outlook và OneDrive/SharePoint.</li>
   <li><strong>Cloudflare</strong> quản lý DNS của hai tên miền Cadinvo và các chuyển hướng tới www.cadinvo.com.</li>
-  <li><strong>Chưa có bản ghi DMARC</strong> trên cả ba tên miền theo bản gốc, làm tăng nguy cơ giả mạo email. Kế hoạch có bổ sung DMARC khi chuyển.</li>
+  <li><strong>Chưa có bản ghi DMARC</strong> trên cả ba tên miền, làm tăng nguy cơ giả mạo email. Kế hoạch có bổ sung DMARC khi chuyển.</li>
 </ul>
 
 <h2 id="vi-target">2. Trước và sau khi hợp nhất</h2>
@@ -543,15 +557,16 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
     <div class="svc"><span>Microsoft 365</span><span>email, Teams, OneDrive, SharePoint</span></div>
   </div>
   <div class="card box">
-    <h3>Sau khi chuyển: 2 nhà cung cấp</h3>
-    <div class="svc"><span><strong>Hostinger</strong></span><span>cả 3 tên miền + DNS</span></div>
+    <h3>Sau khi chuyển: 3 nhà cung cấp</h3>
+    <div class="svc"><span><strong>Hostinger</strong></span><span>đăng ký và gia hạn cả 3 tên miền</span></div>
     <div class="svc"><span></span><span>VPS KVM 2: mọi website dùng codebase + CRM</span></div>
     <div class="svc"><span></span><span>sao lưu VPS hằng ngày</span></div>
+    <div class="svc"><span><strong>Cloudflare</strong></span><span>DNS + Proxy, WAF và chống DDoS</span></div>
     <div class="svc"><span><strong>Microsoft 365</strong></span><span>email, Teams, OneDrive, SharePoint như hiện tại</span></div>
     <div class="svc"><span></span><span>+ bản sao lưu CRM ngoài Hostinger</span></div>
   </div>
 </div>
-<p class="meta">Lý do giữ Microsoft 365: đây là bộ công cụ văn phòng (email, Teams, tài liệu), đồng thời CRM đang đọc/gửi Outlook và sử dụng OneDrive/SharePoint. Chuyển mail sang Hostinger sẽ phải di chuyển từng hộp thư và điều chỉnh các tích hợp liên quan, trong khi những dịch vụ Microsoft khác vẫn còn cần. Phương án Cloudflare R2 trong plan CRM trước đó được bỏ: tệp CRM lưu trên VPS, bản sao lưu ngoài máy chủ lưu tại Microsoft 365.</p>
+<p class="meta">Lý do giữ Microsoft 365: đây là bộ công cụ văn phòng (email, Teams, tài liệu), đồng thời CRM đang đọc/gửi Outlook và sử dụng OneDrive/SharePoint. Chuyển mail sang Hostinger sẽ phải di chuyển từng hộp thư và điều chỉnh các tích hợp liên quan, trong khi những dịch vụ Microsoft khác vẫn còn cần. Giữ Cloudflare cho DNS và bảo vệ web; không dùng R2 trong phạm vi này. Tệp CRM lưu trên VPS, bản sao lưu ngoài máy chủ lưu tại Microsoft 365.</p>
 
 <h2 id="vi-inventory">3. Danh sách dịch vụ cần xác nhận</h2>
 <p>Kiểm tra từng dòng trong tài khoản nhà cung cấp và bổ sung các mục còn thiếu: tên miền khác, thuê bao thanh toán bằng thẻ, công cụ gửi email dưới tên doanh nghiệp.</p>
@@ -559,11 +574,12 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <tr><th>Dịch vụ</th><th>Đang dùng làm gì</th><th>Hướng xử lý</th><th>Trạng thái</th></tr>
   <tr><td>Hostnet</td><td>Đăng ký cadinvo.nl, có thể cả cadinvo.com. Có gói mail/hosting khác không?</td><td>Chuyển tên miền sang Hostinger, sau đó hủy</td><td><span class="pill warn">cần xác nhận</span></td></tr>
   <tr><td>Strato</td><td>Tên miền + DNS dacu3d.nl, Mail Business 1 chưa sử dụng; đơn hàng từ 2019</td><td>Chuyển tên miền, giữ email cũ cần thiết, sau đó hủy</td><td><span class="pill ok">đã ghi nhận</span></td></tr>
-  <tr><td>Cloudflare</td><td>DNS + chuyển hướng cadinvo.com và cadinvo.nl</td><td>DNS sang Hostinger, chuyển hướng sang VPS; sau đó đóng tài khoản</td><td><span class="pill ok">đã ghi nhận</span></td></tr>
+  <tr><td>Cloudflare</td><td>DNS + chuyển hướng cadinvo.com và cadinvo.nl</td><td>Giữ; thêm dacu3d.nl, bảo vệ lưu lượng website/CRM bằng Proxy, WAF và chống DDoS</td><td><span class="pill ok">giữ lại</span></td></tr>
   <tr><td>systeme.io</td><td>Website www.cadinvo.com. Có dùng form, danh sách mail, funnel, khóa học, thanh toán không?</td><td>Xây lại bằng codebase trên VPS, sau đó hủy</td><td><span class="pill warn">cần xác nhận</span></td></tr>
   <tr><td>Base44</td><td>CRM</td><td>Chuyển lên VPS theo plan migration CRM riêng</td><td><span class="pill ok">đã ghi nhận</span></td></tr>
-  <tr><td>Microsoft 365</td><td>Email của cả 3 tên miền, Teams, OneDrive, SharePoint</td><td>Giữ nguyên, chỉ chuyển nơi quản lý DNS</td><td><span class="pill ok">đã ghi nhận</span></td></tr>
-  <tr><td>Máy chủ WhatsApp (Evolution API)</td><td>Phục vụ WhatsApp trong CRM. Đang được host ở đâu?</td><td>Nếu ở máy chủ khác: chuyển về VPS</td><td><span class="pill warn">cần xác nhận</span></td></tr>
+  <tr><td>Microsoft 365</td><td>Email của cả 3 tên miền, Teams, OneDrive, SharePoint</td><td>Giữ nguyên, duy trì bản ghi email Microsoft trong Cloudflare DNS</td><td><span class="pill ok">giữ lại</span></td></tr>
+  <tr><td>WhatsApp / Evolution API</td><td>Đang chuyển từ WhatsApp trong CRM sang Chat riêng của CRM</td><td>Không đưa vào phạm vi chuyển lên VPS; dự kiến ngừng sau khi xác nhận các phụ thuộc còn lại và dữ liệu cần lưu</td><td><span class="pill warn">dự kiến ngừng</span></td></tr>
+  <tr><td>Chat của CRM</td><td>Đã và đang được dùng cho trao đổi trong CRM</td><td>Giữ; chuyển lịch sử chat, tệp đính kèm, phân quyền và thông báo cùng CRM</td><td><span class="pill ok">giữ lại</span></td></tr>
   <tr><td>n8n</td><td>Automation / luồng sao lưu dữ liệu. Đang được host ở đâu?</td><td>Nếu ở máy chủ khác: chuyển về VPS</td><td><span class="pill warn">cần xác nhận</span></td></tr>
   <tr><td>Google Search Console</td><td>Bản ghi xác minh trên cadinvo.com</td><td>Sao chép bản ghi, không cần chuyển dịch vụ</td><td><span class="pill ok">đã ghi nhận</span></td></tr>
   <tr><td>Dịch vụ khác?</td><td>Tên miền khác, công cụ newsletter, nhà cung cấp thanh toán…</td><td>—</td><td><span class="pill warn">cần xác nhận</span></td></tr>
@@ -575,25 +591,19 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <ol class="steps">
   <li>Một tài khoản Hostinger đứng tên doanh nghiệp, dùng email công ty và bật xác thực hai bước.</li>
   <li>Daniel là chủ tài khoản; Joost có thể là quản trị viên thứ hai. Ocean được cấp quyền qua tính năng chia sẻ tài khoản của Hostinger, không chia sẻ mật khẩu.</li>
-  <li>Chuẩn bị <strong>VPS KVM 2</strong> trước Ngày 1: kỳ hạn 24 tháng, datacenter châu Âu, hệ điều hành "Ubuntu 24.04" bản cơ bản, không control panel, theo đề xuất bản gốc. Có thể mua vào Black Friday (27/11/2026); kiểm tra giá và cấu hình đang bán khi mua. Xác nhận add-on "Daily backups" hoặc phương án sao lưu tương đương.</li>
+  <li>Chuẩn bị <strong>VPS KVM 2</strong> trước Ngày 1: kỳ hạn 24 tháng, datacenter châu Âu, hệ điều hành "Ubuntu 24.04" bản cơ bản, không control panel. Có thể mua vào Black Friday (27/11/2026); kiểm tra giá và cấu hình đang bán khi mua. Xác nhận add-on "Daily backups" hoặc phương án sao lưu tương đương.</li>
 </ol>
 
-<h3>4.2 Tên miền và DNS</h3>
-<p>Thứ tự: sao chép đầy đủ bản ghi DNS sang Hostinger, chuyển tên miền, sau đó đổi DNS. Giữ cấu hình cũ hoạt động cho đến khi cấu hình mới đã được kiểm tra.</p>
+<h3>4.2 Tên miền tại Hostinger, DNS tại Cloudflare</h3>
+<p>Tách đăng ký tên miền và quản lý DNS: chuyển đăng ký/gia hạn về Hostinger, giữ nameserver Cloudflare cho các tên miền Cadinvo. Chỉ chuyển DNS của dacu3d.nl từ Strato sang Cloudflare.</p>
 <ol class="steps">
-  <li><strong>Sao chép mọi bản ghi DNS:</strong> xuất zone từ Cloudflare (cadinvo.com, cadinvo.nl) và ghi lại tất cả bản ghi tại Strato (dacu3d.nl). Tạo cấu hình tương ứng tại Hostinger và dùng script đối chiếu trước khi đổi.</li>
-  <li><strong>Hạ TTL</strong> xuống 5 phút trước thời điểm đổi một ngày, để dễ xử lý khi cần sửa bản ghi.</li>
-  <li><strong>Lấy mã chuyển tên miền:</strong>
-    <ul>
-      <li>dacu3d.nl: lấy mã tại Strato. <strong>Không hủy gói Strato trước khi tên miền chuyển xong</strong>; tên miền nằm trong gói và có thể bị xóa cùng gói.</li>
-      <li>cadinvo.nl: lấy mã tại Hostnet.</li>
-      <li>cadinvo.com: kiểm tra tài khoản quản lý tại Hostnet, gỡ khóa chuyển và lấy mã EPP/auth; thực hiện yêu cầu xác minh của nhà đăng ký. Bản gốc dự trù 5–7 ngày cho chuyển .com và cộng thêm một năm; xác nhận thời gian và ngày hết hạn khi đặt chuyển.</li>
-    </ul>
-  </li>
-  <li><strong>Bắt đầu chuyển tại Hostinger</strong> và duyệt email xác nhận. Theo bản gốc, .nl được hỗ trợ và thường xử lý trong vài giờ; thời gian thực tế phụ thuộc nhà đăng ký.</li>
-  <li><strong>Đổi nameserver từng tên miền:</strong> dacu3d.nl trước, rồi cadinvo.nl, cuối cùng cadinvo.com.</li>
-  <li><strong>Sau mỗi lần đổi:</strong> kiểm tra gửi/nhận email, website và trạng thái tên miền trong Microsoft 365 admin → Domains.</li>
-  <li><strong>Chuyển hướng</strong> từ cadinvo.nl và cadinvo.com tới www.cadinvo.com sẽ do web server trên VPS xử lý, kèm chứng chỉ SSL.</li>
+  <li><strong>Xuất và đối chiếu DNS:</strong> lưu zone Cloudflare của cadinvo.com/cadinvo.nl và mọi bản ghi Strato của dacu3d.nl. Thêm dacu3d.nl vào Cloudflare, sao chép đủ bản ghi cần thiết, gồm email và xác minh Microsoft 365.</li>
+  <li><strong>Chuẩn bị chuyển tên miền:</strong> lấy mã dacu3d.nl tại Strato, cadinvo.nl tại Hostnet. Xác nhận tài khoản quản lý cadinvo.com, gỡ khóa và lấy mã EPP/auth. Dự trù thời gian xử lý và phê duyệt của nhà đăng ký.</li>
+  <li><strong>Chuyển đăng ký về Hostinger:</strong> giữ nguyên nameserver Cloudflare của cadinvo.com và cadinvo.nl, tránh bị đổi sang nameserver mặc định của Hostinger. Giữ Strato hoạt động cho đến khi dacu3d.nl chuyển an toàn.</li>
+  <li><strong>Chuyển DNS dacu3d.nl sang Cloudflare:</strong> đối chiếu toàn bộ zone, phối hợp cấu hình DNSSEC/DS rồi mới đổi nameserver. Kiểm tra email, website/chuyển hướng và trạng thái tên miền trong Microsoft 365.</li>
+  <li><strong>Đưa website lên live từng tên miền:</strong> giữ đích cũ đến khi bản thay thế được duyệt, sau đó trỏ bản ghi web về VPS và bật Cloudflare Proxy. Hạ TTL trước nếu bản ghi cho phép; bản ghi proxied dùng TTL tự động của Cloudflare.</li>
+  <li><strong>Giữ chuyển hướng:</strong> cadinvo.nl và cadinvo.com vẫn tới www.cadinvo.com qua rule Cloudflare hoặc VPS phía sau Cloudflare. Kiểm tra HTTPS và mọi chuyển hướng cần thiết.</li>
+  <li><strong>Giữ email hoạt động:</strong> bảo toàn MX, SPF, DKIM, autodiscover và bản ghi xác minh. Host phục vụ mail giữ DNS-only khi dịch vụ yêu cầu; proxy web dành cho website/CRM.</li>
 </ol>
 
 <h3>4.3 Email — đề xuất giữ Microsoft 365</h3>
@@ -617,29 +627,43 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 
 <h3>4.5 CRM — chuyển từ Base44</h3>
 <ol class="steps">
-  <li>Theo plan migration CRM riêng. Tạo địa chỉ mới, ví dụ <code>crm.cadinvo.com</code>, trong DNS Hostinger. Chuyển khỏi Base44 cần thay thế cả backend, không chỉ deploy React frontend; bản migration phải sẵn sàng để chạy thử trước khi bắt đầu đợt triển khai hai tuần.</li>
+  <li>Theo plan migration CRM riêng. Tạo địa chỉ mới, ví dụ <code>crm.cadinvo.com</code>, trong DNS Cloudflare. Chuyển khỏi Base44 cần thay thế cả backend, không chỉ deploy React frontend; bản migration phải sẵn sàng để chạy thử trước khi bắt đầu đợt triển khai hai tuần.</li>
   <li>Dùng KVM 2 làm môi trường chuẩn bị, tách biệt với production; chuyển sang vận hành chính thức sau khi kiểm tra đạt yêu cầu. Nếu cần thêm tài nguyên sau này thì nâng cấu hình theo khả năng của nhà cung cấp.</li>
-  <li>Tệp đính kèm, ảnh và tài liệu lưu trên đĩa VPS. Bản gốc ước lượng dữ liệu 3–6 GB, đĩa 100 GB; xác nhận lại dung lượng trước khi chuyển.</li>
+  <li>Tệp đính kèm, ảnh và tài liệu lưu trên đĩa VPS. Dự trù dữ liệu 3–6 GB, đĩa 100 GB; xác nhận dung lượng thực tế trước khi chuyển.</li>
   <li>Sao lưu database và tệp mỗi đêm, mã hóa, lưu thêm vào thư mục SharePoint/OneDrive dành riêng trên Microsoft 365, kết hợp sao lưu Hostinger đã thống nhất. Kiểm tra khôi phục trước khi lên live.</li>
   <li>Chuyển CRM gần cuối Tuần 2, sau khi DNS và website ổn định, trong khung thay đổi riêng. Nếu giữ mong muốn chuyển dịp Giáng sinh–Năm mới thì chọn Ngày 1 phù hợp. Giữ Base44 chỉ đọc ít nhất hai tuần; thống nhất và diễn tập đối soát dữ liệu trước khi quay lại hệ thống cũ.</li>
 </ol>
 
-<h3>4.6 Máy chủ WhatsApp và n8n</h3>
-<p>Nếu đang chạy trên máy chủ khác hoặc gói cloud trả phí, dự kiến chuyển về cùng VPS sau khi kiểm tra tài nguyên và tích hợp; chỉ hủy dịch vụ cũ khi bản thay thế hoạt động. Cần xác nhận nơi đang host (D7).</p>
+<h3>4.6 Chat của CRM, Evolution API và n8n</h3>
+<ol class="steps">
+  <li><strong>Chat của CRM là kênh trao đổi dự kiến dùng chính.</strong> Đã và đang chuyển từ WhatsApp trong CRM sang Chat của CRM. Đưa lịch sử chat, tệp đính kèm, phân quyền và thông báo vào danh sách kiểm tra khi chuyển CRM.</li>
+  <li><strong>Dự kiến ngừng Evolution API.</strong> Không tính dịch vụ này vào tải VPS cần chuyển. Trước khi ngừng, xác nhận không còn người dùng hoặc automation phụ thuộc và thống nhất lịch sử WhatsApp/tệp cần lưu. Nếu còn phụ thuộc thì xử lý riêng trước khi dừng dịch vụ.</li>
+  <li><strong>n8n là quyết định riêng:</strong> xác nhận nơi đang host và các luồng còn cần dùng. Chỉ chuyển automation cần thiết về VPS sau khi kiểm tra tài nguyên và tích hợp.</li>
+</ol>
+
+<h3>4.7 Cloudflare và bảo vệ VPS</h3>
+<ol class="steps">
+  <li>Giữ DNS cả ba tên miền tại Cloudflare. Đánh giá Cloudflare Free trước cho Proxy, rule WAF cơ bản và chống DDoS; xác nhận có cần rule/hỗ trợ trả phí không.</li>
+  <li>Đưa lưu lượng website/CRM qua Cloudflare Proxy. Bản ghi web DNS-only không nhận lớp bảo vệ proxy. Giới hạn truy cập web trực tiếp vào máy chủ gốc chỉ từ Cloudflare; có thể dùng Cloudflare Tunnel nếu phù hợp. Quyền quản trị chỉ dành cho quản trị viên được phép.</li>
+  <li>Dùng TLS Full (strict) với chứng chỉ hợp lệ trên máy chủ gốc khi dùng proxy. Loại trang CRM, phản hồi đã đăng nhập và API khỏi cache dùng chung. Kiểm tra login, Chat/WebSocket, upload và webhook qua các rule bảo vệ.</li>
+  <li>Giữ lớp chống DDoS ở mạng Hostinger: proxy web Cloudflare không bao phủ mọi cổng VPS hoặc tấn công thẳng vào IP công khai. Đợt tấn công nặng vẫn có thể gây gián đoạn.</li>
+  <li>Bật xác thực hai bước cho tài khoản doanh nghiệp, khóa chuyển tên miền lại sau migration và phối hợp cấu hình DNSSEC. Bàn giao quyền truy cập dự phòng và người chịu trách nhiệm khôi phục.</li>
+</ol>
+<p class="meta">Tài liệu kỹ thuật: <a href="https://developers.cloudflare.com/dns/proxy-status/">Cloudflare Proxy</a> · <a href="https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/">Origin protection</a> · <a href="https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/full-strict/">TLS</a> · <a href="https://www.hostinger.com/support/what-are-anti-ddos-events-in-hostinger-vps/">Hostinger Anti-DDoS</a></p>
 
 <h2 id="vi-timeline">5. Timeline</h2>
 <p><strong>Mục tiêu: 2 tuần (10 ngày làm việc).</strong> Ngày 1 được thống nhất khi đã có VPS, quyền truy cập, mã chuyển tên miền, nội dung/phạm vi website và bản CRM sẵn sàng migration. Chỉ có thể rút còn một tuần nếu website codebase và CRM đã xây dựng, kiểm tra xong; bản plan này chọn hai tuần.</p>
 <div class="callout warn"><strong>Điều kiện bắt đầu:</strong> codebase hiện có và phần xây lại website phải phù hợp phạm vi dưới đây. Backend CRM thay thế, ánh xạ dữ liệu và tích hợp phải sẵn sàng để diễn tập migration trước Ngày 1. Nếu chưa đạt thì ước lượng lại trước khi cam kết ngày bắt đầu. Hai tuần là mục tiêu triển khai, không phải cam kết xây lại toàn bộ dịch vụ Base44 từ đầu.</div>
 <div class="tbl"><table>
   <tr><th>Thời gian</th><th>Công việc và điều kiện hoàn thành</th><th>Phụ trách</th></tr>
-  <tr><td>Tuần 1 · Ngày 1</td><td>Xác nhận danh sách dịch vụ, D1–D7, quyền truy cập và điều kiện sẵn sàng. Lưu DNS export, lấy phê duyệt còn thiếu và bắt đầu chuyển tên miền ngay.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Tuần 1 · Ngày 2</td><td>Bảo vệ VPS; chuẩn bị deployment, HTTPS, backup; sao chép và đối chiếu DNS. Chuẩn bị môi trường kiểm tra cách ly.</td><td>Ocean</td></tr>
-  <tr><td>Tuần 1 · Ngày 3–4</td><td>Xây/triển khai website codebase theo nội dung, form và chuyển hướng đã duyệt. Diễn tập migration CRM và kiểm tra tích hợp trong môi trường cách ly.</td><td>Ocean; Daniel/Joost duyệt nội dung</td></tr>
-  <tr><td>Tuần 1 · Ngày 5</td><td>Duyệt website preview, kiểm tra tính năng và khôi phục backup; rà kết quả diễn tập CRM, cách quay lại hệ thống cũ. Hạ DNS TTL trước khi đổi.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Tuần 2 · Ngày 6–7</td><td>Đổi DNS lần lượt: dacu3d.nl → cadinvo.nl → cadinvo.com. Đưa website và chuyển hướng đã duyệt lên live; kiểm tra mail, HTTPS, Microsoft 365 sau từng bước.</td><td>Ocean; quản trị Microsoft 365</td></tr>
-  <tr><td>Tuần 2 · Ngày 8</td><td>Xác nhận DNS và website ổn định. Rà checklist migration CRM cuối cùng, số lượng bản ghi và backup; quyết định có thực hiện chuyển hay không.</td><td>Ocean, Daniel, Joost</td></tr>
-  <tr><td>Tuần 2 · Ngày 9</td><td>Chuyển CRM trong khung riêng đã thống nhất: tạm dừng ghi, xuất dữ liệu cuối, import và đối soát, đổi quyền truy cập rồi kiểm tra các luồng đã thống nhất. Dừng hoặc quay lại hệ thống cũ nếu không đạt nghiệm thu.</td><td>Ocean; Daniel/Joost nghiệm thu</td></tr>
-  <tr><td>Tuần 2 · Ngày 10</td><td>Xử lý lỗi sau lên live, xác nhận monitoring/backup; bàn giao codebase và hướng dẫn vận hành. Chốt lịch hủy dịch vụ sau đó, giữ nguyên dữ liệu dự phòng.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Tuần 1 · Ngày 1</td><td>Xác nhận dịch vụ, D1–D7, quyền truy cập và điều kiện sẵn sàng. Lưu DNS export, bắt đầu chuyển tên miền và xác định các phụ thuộc Evolution API còn lại.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Tuần 1 · Ngày 2</td><td>Bảo vệ VPS; chuẩn bị deployment, HTTPS và backup. Chuẩn bị dacu3d.nl trong Cloudflare, giữ zone Cadinvo, cấu hình Proxy/WAF và giới hạn truy cập máy chủ gốc.</td><td>Ocean</td></tr>
+  <tr><td>Tuần 1 · Ngày 3–4</td><td>Xây/triển khai website codebase với nội dung, form và chuyển hướng đã duyệt. Diễn tập migration CRM gồm lịch sử Chat, tệp đính kèm và phân quyền bằng dữ liệu cách ly.</td><td>Ocean; Daniel/Joost duyệt nội dung</td></tr>
+  <tr><td>Tuần 1 · Ngày 5</td><td>Duyệt preview và kiểm tra khôi phục backup. Kiểm tra rule Cloudflare với login, Chat, API, upload, webhook; rà diễn tập CRM và phương án quay lại hệ thống cũ. Chuẩn bị đổi DNS.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Tuần 2 · Ngày 6–7</td><td>Chuyển DNS dacu3d.nl sang Cloudflare; giữ nameserver Cloudflare của Cadinvo khi chuyển đăng ký tên miền. Đưa website đã duyệt lên live lần lượt với Proxy hoạt động; kiểm tra mail, chuyển hướng và HTTPS.</td><td>Ocean; quản trị Microsoft 365</td></tr>
+  <tr><td>Tuần 2 · Ngày 8</td><td>Xác nhận DNS và website ổn định. Rà số lượng bản ghi CRM cuối cùng, Chat, backup và checklist migration; quyết định có thực hiện chuyển hay không.</td><td>Ocean, Daniel, Joost</td></tr>
+  <tr><td>Tuần 2 · Ngày 9</td><td>Chuyển CRM trong khung đã thống nhất: tạm dừng ghi, export, import và đối soát, đổi truy cập; kiểm tra luồng sử dụng gồm Chat. Dừng hoặc quay lại hệ thống cũ nếu không đạt nghiệm thu.</td><td>Ocean; Daniel/Joost nghiệm thu</td></tr>
+  <tr><td>Tuần 2 · Ngày 10</td><td>Xử lý lỗi sau lên live, xác nhận monitoring/backup. Bàn giao codebase và hướng dẫn quản lý Hostinger/Cloudflare; chốt lịch ngừng dịch vụ cũ, gồm Evolution API nếu đã đủ điều kiện.</td><td>Ocean, Daniel, Joost</td></tr>
 </table></div>
 <p><strong>Tách các lần thay đổi:</strong> đổi DNS/website và chuyển CRM diễn ra trong các khung khác nhau, có kiểm tra ở giữa. Phê duyệt của nhà đăng ký hoặc thời gian cập nhật DNS có thể gây chậm; giữ dịch vụ cũ và lùi cutover nếu chưa đủ điều kiện.</p>
 <p><strong>Chăm sóc sau chuyển, ngoài hai tuần triển khai:</strong> giữ DNS export/cấu hình cũ ít nhất hai tuần; giữ Base44 chỉ đọc 2–4 tuần sau khi chuyển CRM. Chỉ hủy khi đạt điều kiện mục 6. Đây là thời gian dự phòng, không phải thời gian phát triển bổ sung.</p>
@@ -648,9 +672,9 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 <h2 id="vi-cancel">6. Hủy các dịch vụ cũ</h2>
 <div class="tbl"><table>
   <tr><th>Dịch vụ</th><th>Điều kiện trước khi hủy</th><th>Thời điểm</th></tr>
-  <tr><td>Strato</td><td>dacu3d.nl đã chuyển, dùng Hostinger DNS; giữ email cũ cần thiết; tải hóa đơn cuối</td><td>Sau khi chuyển tên miền, theo kỳ hạn hợp đồng</td></tr>
-  <tr><td>Hostnet</td><td>Hai tên miền đã chuyển; kiểm tra không còn sản phẩm khác; tắt tự gia hạn; lưu hóa đơn</td><td>Sau khi chuyển (cadinvo.com trước ngày hết hạn được xác nhận; bản gốc ghi 02/02/2027)</td></tr>
-  <tr><td>Cloudflare</td><td>Các tên miền từng quản lý tại đây ổn định trên Hostinger DNS hai tuần; đã lưu zone export</td><td>Ít nhất hai tuần sau đổi DNS</td></tr>
+  <tr><td>Strato</td><td>dacu3d.nl đã chuyển, dùng Cloudflare DNS; giữ email cũ cần thiết; tải hóa đơn cuối</td><td>Sau khi chuyển tên miền, theo kỳ hạn hợp đồng</td></tr>
+  <tr><td>Hostnet</td><td>Hai tên miền đã chuyển; kiểm tra không còn sản phẩm khác; tắt tự gia hạn; lưu hóa đơn</td><td>Sau khi chuyển (cadinvo.com trước ngày hết hạn 02/02/2027)</td></tr>
+  <tr><td>Evolution API / dịch vụ WhatsApp</td><td>Chat CRM đã nghiệm thu; không còn người dùng/automation phụ thuộc tích hợp WhatsApp; đã lưu lịch sử và tệp cần giữ</td><td>Sau xác nhận và phê duyệt; không mặc định chuyển lên VPS</td></tr>
   <tr><td>systeme.io</td><td>Website mới và tính năng cần thiết đã live; xuất dữ liệu liên hệ/form; chuyển hướng hoạt động</td><td>Sau nghiệm thu website</td></tr>
   <tr><td>Base44</td><td>CRM ổn định 2–4 tuần; đã lưu bản xuất toàn bộ dữ liệu</td><td>2–4 tuần sau cutover CRM, sau khi được duyệt</td></tr>
 </table></div>
@@ -664,18 +688,20 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   <tr><td>Đổi địa chỉ trang</td><td>Ảnh hưởng thứ hạng tìm kiếm</td><td>Giữ địa chỉ hoặc chuyển hướng vĩnh viễn từng địa chỉ cũ</td></tr>
   <tr><td>Mọi hệ thống cùng VPS</td><td>Một sự cố ảnh hưởng website và CRM</td><td>Backup ngoài Hostinger tại Microsoft 365, backup VPS, thử khôi phục, cảnh báo uptime</td></tr>
   <tr><td>Mất/khóa tài khoản Hostinger</td><td>Mất quyền quản lý tên miền và máy chủ</td><td>Email công ty, xác thực hai bước, quản trị viên thứ hai, backup ngoài Hostinger</td></tr>
+  <tr><td>Tấn công thẳng IP VPS, bỏ qua Cloudflare</td><td>Gián đoạn website/CRM</td><td>Giới hạn truy cập máy chủ gốc và cổng công khai; giữ chống DDoS phía mạng Hostinger</td></tr>
+  <tr><td>Rule Cloudflare chặn CRM hợp lệ hoặc cache dữ liệu riêng</td><td>Lỗi login, Chat, upload, API; nguy cơ lộ dữ liệu</td><td>Không cache dùng chung cho CRM/phản hồi đã đăng nhập; kiểm tra WAF, WebSocket và webhook trước lên live</td></tr>
 </table></div>
 
 <h2 id="vi-decisions">8. Các quyết định của Daniel và Joost</h2>
 <div class="tbl"><table>
   <tr><th>#</th><th>Nội dung cần xác nhận</th><th>Đề xuất</th></tr>
-  <tr><td>D1</td><td>Giữ email trên Microsoft 365?</td><td>Có</td></tr>
+  <tr><td>D1</td><td>Đã chốt mô hình Hostinger + Cloudflare + Microsoft 365.</td><td>Giữ Cloudflare DNS/bảo vệ và Microsoft 365 email/tài liệu.</td></tr>
   <tr><td>D2</td><td>Đã chốt mọi website dùng codebase. Phạm vi gồm trang/tính năng nào? Ai cung cấp và duyệt nội dung/thiết kế?</td><td>Ocean xây và triển khai; Daniel/Joost duyệt phạm vi, nội dung trước Ngày 1</td></tr>
   <tr><td>D3</td><td>systeme.io đang có gì ngoài website: form, newsletter, funnel, khóa học, thanh toán?</td><td>—</td></tr>
   <tr><td>D4</td><td>dacu3d.nl chuyển hướng hay có website/trang riêng bằng codebase? cadinvo.nl có cần website riêng?</td><td>Giữ chuyển hướng trừ khi thống nhất website riêng</td></tr>
   <tr><td>D5</td><td>Email công ty nào đứng tên Hostinger? Ai là quản trị viên thứ hai?</td><td>Daniel là chủ tài khoản, Joost là quản trị viên</td></tr>
   <tr><td>D6</td><td>Còn tên miền hoặc gói mail/hosting nào khác tại Hostnet?</td><td>—</td></tr>
-  <tr><td>D7</td><td>Evolution API và n8n đang được host ở đâu? Còn công cụ trả phí khác không?</td><td>Chuyển về VPS sau khi kiểm tra</td></tr>
+  <tr><td>D7</td><td>Xác nhận phụ thuộc/dữ liệu cần lưu của Evolution API, nơi host/luồng cần dùng của n8n và công cụ trả phí khác.</td><td>Dự kiến ngừng Evolution API; giữ Chat CRM; chỉ chuyển luồng n8n cần thiết.</td></tr>
 </table></div>
 
 <h2 id="vi-need">9. Thông tin và quyền truy cập cần cung cấp</h2>
@@ -689,18 +715,18 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
 </main>
 
 <footer>
-  <span>Source: supplied hosting plan dated 10 November 2026 and attached Strato invoice DRP120032699 (16 December 2023). DNS/registry findings and provider details are carried over, not rechecked in this revision. Verify current prices, terms and account settings before execution.</span>
+  <span>DaCu3D & Cadinvo · Hostinger for domains/VPS · Cloudflare for DNS/security · Microsoft 365 for email/files. Service-specific references are listed in section 4.7.</span>
 </footer>
 </div>
 <script>
 (function () {
   var texts = {
     en: { title: "Hosting Consolidation Plan — DaCu3D & Cadinvo", byline: "Prepared by Ocean · Updated 12 November 2026 · Draft for Daniel and Joost", language: "Language",
-          footer: "Source: supplied hosting plan dated 10 November 2026 and attached Strato invoice DRP120032699 (16 December 2023). DNS/registry findings and provider details are carried over, not rechecked in this revision. Verify current prices, terms and account settings before execution." },
+          footer: "DaCu3D & Cadinvo · Hostinger for domains/VPS · Cloudflare for DNS/security · Microsoft 365 for email/files. Service-specific references are listed in section 4.7." },
     nl: { title: "Plan hostingconsolidatie — DaCu3D & Cadinvo", byline: "Opgesteld door Ocean · Bijgewerkt 12 november 2026 · Concept voor Daniel en Joost", language: "Taal",
-          footer: "Bron: aangeleverd hostingplan van 10 november 2026 en bijgevoegde Strato-factuur DRP120032699 (16 december 2023). DNS-/registratiegegevens en providerdetails zijn overgenomen, niet opnieuw gecontroleerd in deze revisie. Controleer actuele prijzen, voorwaarden en accountinstellingen vóór uitvoering." },
+          footer: "DaCu3D & Cadinvo · Hostinger voor domeinen/VPS · Cloudflare voor DNS/beveiliging · Microsoft 365 voor e-mail/bestanden. Technische bronnen staan in paragraaf 4.7." },
     vi: { title: "Kế hoạch hợp nhất hosting — DaCu3D & Cadinvo", byline: "Ocean chuẩn bị · Cập nhật 12/11/2026 · Bản nháp cho Daniel và Joost", language: "Ngôn ngữ",
-          footer: "Nguồn: bản hosting plan được cung cấp ngày 10/11/2026 và hóa đơn Strato DRP120032699 đính kèm (16/12/2023). Thông tin DNS/đăng ký tên miền và nhà cung cấp được giữ từ bản gốc, chưa kiểm tra lại trong lần chỉnh sửa này. Xác nhận giá, điều khoản và cấu hình tài khoản hiện tại trước khi triển khai." }
+          footer: "DaCu3D & Cadinvo · Hostinger cho tên miền/VPS · Cloudflare cho DNS/bảo vệ · Microsoft 365 cho email/tài liệu. Tài liệu kỹ thuật nằm tại mục 4.7." }
   };
   function setLang(l, updateHash) {
     if (!Object.prototype.hasOwnProperty.call(texts, l)) l = "en";
