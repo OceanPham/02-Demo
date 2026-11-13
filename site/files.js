@@ -1,0 +1,25 @@
+// Tự động sinh bởi sync.js lúc 2026-11-13T03:21:57.034Z
+window.__INITIAL_SITE_FILES__ = [
+  "00-NguyenNgocDao-guide.html",
+  "workflow-kpi-overview-en-nl.html",
+  "WorkFlow on phones_ install options and costs.html",
+  "Wonderland_OneOffice.html",
+  "Vat-Tu-In-Quang-Cao.html",
+  "tong-hop-bao-cao-gvhd.html",
+  "Thumuanuochoa-public-structure-mockup.html",
+  "task-147-team-review.html",
+  "Sổ Số Đo May.html",
+  "printcart_3d_edge_preview_implementation_plan.html",
+  "preview.html",
+  "plan-website-driklux.html",
+  "mo-ta-website-cardlish.html",
+  "huong-dan-quan-tri-content-cocopot.html",
+  "hosting-consolidation-plan.html",
+  "Hoang Nhat Landing Page (Standalone).html",
+  "Finance-Audit-Daniel-2026-11-10.html",
+  "CRM-Base-Setup-cho-Son.html",
+  "cadinvo-hosting-plan.html",
+  "bao-gia-website-thiet-bi-y-te.html",
+  "bao-gia-website-den-san-vuon.html",
+  "bao-gia-ai-video-factory.html"
+];

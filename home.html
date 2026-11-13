@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>02-Demo — Mục lục trang demo</title>
+    <!-- Script nạp trước danh sách file cục bộ (hỗ trợ mở trực tiếp file:/// không bị lỗi CORS) -->
+    <script src="site/files.js"></script>
     <style>
       :root {
         --bg: #f6f8fa;
@@ -13,7 +15,8 @@
         --accent: #0969da;
         --accent-hover: #0550ae;
         --border: #d8dee4;
-        --shadow: 0 8px 24px -12px rgba(26, 35, 50, 0.18);
+        --shadow: 0 4px 14px -4px rgba(26, 35, 50, 0.1);
+        --shadow-hover: 0 10px 24px -10px rgba(26, 35, 50, 0.2);
       }
 
       * {
@@ -38,13 +41,13 @@
       }
 
       .wrap {
-        max-width: 720px;
+        max-width: 1440px;
         margin: 0 auto;
-        padding: 48px 20px 64px;
+        padding: 40px 24px 64px;
       }
 
       header {
-        margin-bottom: 36px;
+        margin-bottom: 24px;
       }
 
       .eyebrow {
@@ -57,8 +60,8 @@
       }
 
       h1 {
-        margin: 0 0 12px;
-        font-size: clamp(1.75rem, 5vw, 2.25rem);
+        margin: 0 0 10px;
+        font-size: clamp(1.75rem, 4vw, 2.25rem);
         font-weight: 700;
         line-height: 1.2;
       }
@@ -67,29 +70,73 @@
         margin: 0;
         color: var(--muted);
         font-size: 1.05rem;
-        max-width: 52ch;
+        max-width: 65ch;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 28px 0 20px;
+        flex-wrap: wrap;
       }
 
       .count {
-        margin: 28px 0 16px;
-        font-size: 0.9rem;
+        margin: 0;
+        font-size: 0.95rem;
         color: var(--muted);
       }
 
+      .count strong {
+        color: var(--ink);
+      }
+
+      .search-box {
+        position: relative;
+        min-width: 260px;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--ink);
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .search-box input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+      }
+
+      /* Grid 5 cột cho màn hình lớn, giảm dần khi thu nhỏ */
       .demos {
         list-style: none;
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 14px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .demos > li {
+        display: flex;
       }
 
       .demo-card {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 18px 20px;
+        border-radius: 10px;
+        padding: 16px 18px;
         text-decoration: none;
         color: inherit;
         box-shadow: var(--shadow);
@@ -97,12 +144,14 @@
           border-color 0.15s ease,
           transform 0.15s ease,
           box-shadow 0.15s ease;
+        word-break: break-word;
+        overflow-wrap: break-word;
       }
 
       .demo-card:hover {
         border-color: #b6c0cc;
         transform: translateY(-2px);
-        box-shadow: 0 12px 28px -14px rgba(26, 35, 50, 0.22);
+        box-shadow: var(--shadow-hover);
       }
 
       .demo-card:focus-visible {
@@ -111,39 +160,76 @@
       }
 
       .demo-title {
-        margin: 0 0 4px;
-        font-size: 1.05rem;
+        margin: 0;
+        font-size: 0.95rem;
         font-weight: 600;
         color: var(--accent);
+        line-height: 1.45;
+        word-break: break-word;
+        overflow-wrap: break-word;
       }
 
       .demo-card:hover .demo-title {
         color: var(--accent-hover);
       }
 
-      .demo-path {
-        margin: 0;
-        font-size: 0.85rem;
+      .state-loading,
+      .state-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 48px 20px;
         color: var(--muted);
-        font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
-        word-break: break-all;
+        font-size: 0.95rem;
       }
 
       footer {
-        margin-top: 40px;
+        margin-top: 48px;
         padding-top: 20px;
         border-top: 1px solid var(--border);
         font-size: 0.85rem;
         color: var(--muted);
       }
 
-      @media (max-width: 480px) {
+      /* Responsive breakpoints: grid 5 trên màn hình lớn -> 4 -> 3 -> 2 -> 1 */
+      @media (max-width: 1280px) {
+        .demos {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .demos {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .demos {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 12px;
+        }
+
         .wrap {
           padding: 32px 16px 48px;
         }
 
+        .toolbar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .search-box {
+          min-width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .demos {
+          grid-template-columns: 1fr;
+        }
+
         .demo-card {
-          padding: 16px;
+          padding: 14px;
         }
       }
 
@@ -165,158 +251,230 @@
         <p class="eyebrow">GitHub Pages · 02-Demo</p>
         <h1>Mục lục trang demo</h1>
         <p class="lead">
-          Danh sách các trang HTML trong repo. Bấm vào từng mục để mở và xem
-          demo.
+          Danh sách các trang HTML trong thư mục <code>site/</code>. Tự động cập nhật khi thêm file mới.
         </p>
       </header>
 
-      <p class="count">Tổng cộng <strong>3</strong> trang demo</p>
+      <div class="toolbar">
+        <p class="count">Tổng cộng <strong id="demo-count">0</strong> trang demo</p>
+        <div class="search-box">
+          <input
+            type="search"
+            id="search-input"
+            placeholder="Tìm kiếm trang demo..."
+            autocomplete="off"
+          />
+        </div>
+      </div>
 
-      <ul class="demo">
-        <li>
-          <a class="demo-card" href="tong-hop-bao-cao-gvhd.html">
-            <p class="demo-title">tong-hop-bao-cao-gvhd.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="task-147-team-review.html">
-            <p class="demo-title">task-147-team-review.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="hosting-consolidation-plan.html">
-            <p class="demo-title">hosting-consolidation-plan.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="CRM-Base-Setup-cho-Son.html">
-            <p class="demo-title">CRM-Base-Setup-cho-Son.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="workflow-kpi-overview-en-nl.html">
-            <p class="demo-title">workflow-kpi-overview-en-nl.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="bao-gia-website-thiet-bi-y-te.html">
-            <p class="demo-title">Báo giá — Website bán thiết bị y tế</p>
-            <p class="demo-path">bao-gia-website-thiet-bi-y-te.html</p>
-          </a>
-        </li>
-        <li>
-          <a class="demo-card" href="mo-ta-website-cardlish.html">
-            <p class="demo-title">
-              Website Cardlish — Bản mô tả để xem &amp; duyệt
-            </p>
-            <p class="demo-path">mo-ta-website-cardlish.html</p>
-          </a>
-        </li>
-        <li>
-          <a
-            class="demo-card"
-            href="printcart_3d_edge_preview_implementation_plan.html"
-          >
-            <p class="demo-title">
-              Printcart 3D Edge Preview API — Implementation Plan
-            </p>
-            <p class="demo-path">
-              printcart_3d_edge_preview_implementation_plan.html
-            </p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="plan-website-driklux.html">
-            <p class="demo-title">Kế hoạch — Website Driklux</p>
-            <p class="demo-path">plan-website-driklux.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="huong-dan-quan-tri-content-cocopot.html">
-            <p class="demo-title">
-              Hướng dẫn — Quản trị nội dung website Cocopot
-            </p>
-            <p class="demo-path">huong-dan-quan-tri-content-cocopot.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a
-            class="demo-card"
-            href="thumuanuochoa-public-structure-mockup.html"
-          >
-            <p class="demo-title">Cấu trúc trang public và mockup</p>
-            <p class="demo-path">thumuanuochoa-public-structure-mockup.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="bao-gia-website-den-san-vuon.html">
-            <p class="demo-title">Cấu trúc trang San Vuon</p>
-            <p class="demo-path">bao-gia-website-den-san-vuon.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="Hoang Nhat Landing Page (Standalone).html">
-            <p class="demo-title">Landing Page — Hoàng Nhật</p>
-            <p class="demo-path">Hoang Nhat Landing Page (Standalone).html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="Wonderland_OneOffice.html">
-            <p class="demo-title">
-              Wonderland Việt Nam — Kiến tạo không gian làm việc đẳng cấp
-              (OneOffice)
-            </p>
-            <p class="demo-path">Wonderland_OneOffice.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="pq-desk-web/index.html">
-            <p class="demo-title">
-              PQ Desk Việt Nam — Kiến tạo không gian làm việc đẳng cấp
-              (OneOffice)
-            </p>
-            <p class="demo-path">pq-desk-web/index.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="preview.html">
-            <p class="demo-title">Thử nghiệm hướng logo — ECO2GO</p>
-            <p class="demo-path">eco2go-logo-directional-options.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="Vat-Tu-In-Quang-Cao.html">
-            <p class="demo-title">Vật tư in quảng cáo — Vat-Tu-In-Quang-Cao</p>
-            <p class="demo-path">Vat-Tu-In-Quang-Cao.html</p>
-          </a>
-        </li>
-
-        <li>
-          <a class="demo-card" href="Finance-Audit-Daniel-2026-11-10.html">
-            <p class="demo-title">Báo cáo kiểm toán tài chính — Daniel</p>
-            <p class="demo-path">Finance-Audit-Daniel-2026-11-10.html</p>
-          </a>
-        </li>
+      <!-- Danh sách card sinh hoàn toàn tự động bằng JavaScript -->
+      <ul class="demos" id="demo-list">
+        <li class="state-loading">Đang tải danh sách trang demo...</li>
       </ul>
 
       <footer>
-        Repo <strong>02-Demo</strong> · Deploy từ branch <code>main</code>, thư
-        mục gốc.
+        Repo <strong>02-Demo</strong> · Deploy từ branch <code>main</code>, thư mục gốc.
       </footer>
     </div>
+
+    <script>
+      const REPO_OWNER = 'OceanPham';
+      const REPO_NAME = '02-Demo';
+      const TARGET_FOLDERS = ['site', 'sites'];
+
+      // Hàm sắp xếp:
+      // - File có số ở đầu thì mặc định xếp lên trước, từ lớn đến nhỏ (số lớn đứng trước)
+      // - File không có số ở đầu thì xếp xuống dưới, từ lớn đến nhỏ (Z -> A)
+      function sortFiles(list) {
+        return [...list].sort((a, b) => {
+          const numA = a.match(/^(\d+)/);
+          const numB = b.match(/^(\d+)/);
+
+          if (numA && numB) {
+            const valA = parseInt(numA[1], 10);
+            const valB = parseInt(numB[1], 10);
+            if (valB !== valA) return valB - valA;
+            return b.localeCompare(a, 'vi', { numeric: true, sensitivity: 'base' });
+          }
+          if (numA && !numB) return -1;
+          if (!numA && numB) return 1;
+
+          return b.localeCompare(a, 'vi', { numeric: true, sensitivity: 'base' });
+        });
+      }
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      // Hàm sinh HTML card đúng cấu trúc yêu cầu
+      function renderCards(files, folder = 'site') {
+        const listEl = document.getElementById('demo-list');
+        const countEl = document.getElementById('demo-count');
+        if (countEl) countEl.textContent = files.length;
+        if (!listEl) return;
+
+        if (files.length === 0) {
+          listEl.innerHTML = `<li class="state-empty">Không tìm thấy file nào trong thư mục <code>${folder}/</code>.</li>`;
+          return;
+        }
+
+        listEl.innerHTML = files
+          .map(file => {
+            const href = `${folder}/${encodeURI(file)}`;
+            return `        <li>
+          <a class="demo-card" href="${href}">
+            <p class="demo-title">${escapeHtml(file)}</p>
+          </a>
+        </li>`;
+          })
+          .join('\n');
+      }
+
+      // Tự động lấy danh sách file từ các nguồn linh hoạt
+      async function autoDiscoverFiles() {
+        let detected = null;
+
+        // 1. Nếu mở qua web server cục bộ (Live Server, http-server, localhost...)
+        if (
+          window.location.protocol.startsWith('http') &&
+          (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+        ) {
+          for (const folder of TARGET_FOLDERS) {
+            try {
+              const res = await fetch(`./${folder}/`, { cache: 'no-cache' });
+              if (res.ok) {
+                const text = await res.text();
+                const doc = new DOMParser().parseFromString(text, 'text/html');
+                const links = Array.from(doc.querySelectorAll('a'))
+                  .map(a => decodeURIComponent(a.getAttribute('href') || ''))
+                  .map(h => h.replace(/^.*[\\/]/, ''))
+                  .filter(
+                    f =>
+                      f.endsWith('.html') &&
+                      !f.startsWith('index') &&
+                      !f.startsWith('home')
+                  );
+                if (links.length > 0) {
+                  detected = { folder, files: Array.from(new Set(links)) };
+                  break;
+                }
+              }
+            } catch (_) {}
+          }
+        }
+
+        // 2. Thử tải file manifest cục bộ files.json
+        if (!detected && window.location.protocol.startsWith('http')) {
+          for (const folder of TARGET_FOLDERS) {
+            try {
+              const res = await fetch(`./${folder}/files.json`, { cache: 'no-cache' });
+              if (res.ok) {
+                const list = await res.json();
+                if (Array.isArray(list) && list.length > 0) {
+                  detected = { folder, files: list };
+                  break;
+                }
+              }
+            } catch (_) {}
+          }
+        }
+
+        // 3. Gọi GitHub REST API (chạy chuẩn khi host trên GitHub Pages hoặc online)
+        if (!detected) {
+          for (const folder of TARGET_FOLDERS) {
+            try {
+              const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${folder}?ref=main&_t=${Date.now()}`;
+              const res = await fetch(apiUrl);
+              if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                  const files = data
+                    .filter(i => i.type === 'file' && i.name.endsWith('.html'))
+                    .map(i => i.name);
+                  if (files.length > 0) {
+                    detected = { folder, files };
+                    break;
+                  }
+                }
+              }
+            } catch (_) {}
+          }
+        }
+
+        // 4. Nếu chưa tìm thấy và có window.__INITIAL_SITE_FILES__ (nạp từ site/files.js)
+        if (!detected && window.__INITIAL_SITE_FILES__ && Array.isArray(window.__INITIAL_SITE_FILES__)) {
+          detected = { folder: 'site', files: window.__INITIAL_SITE_FILES__ };
+        }
+
+        // 5. Fallback gọi root GitHub repo (nếu commit trên remote chưa chuyển vào folder site)
+        if (!detected) {
+          try {
+            const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents?ref=main&_t=${Date.now()}`;
+            const res = await fetch(apiUrl);
+            if (res.ok) {
+              const data = await res.json();
+              if (Array.isArray(data)) {
+                const files = data
+                  .filter(
+                    i =>
+                      i.type === 'file' &&
+                      i.name.endsWith('.html') &&
+                      !i.name.startsWith('index') &&
+                      !i.name.startsWith('home')
+                  )
+                  .map(i => i.name);
+                if (files.length > 0) {
+                  detected = { folder: 'site', files };
+                }
+              }
+            }
+          } catch (_) {}
+        }
+
+        if (detected && detected.files && detected.files.length > 0) {
+          const sorted = sortFiles(detected.files);
+          renderCards(sorted, detected.folder);
+        } else {
+          const listEl = document.getElementById('demo-list');
+          if (listEl) {
+            listEl.innerHTML = `<li class="state-empty">Không thể lấy danh sách file. Vui lòng mở trang qua Local Server (Live Server) hoặc kiểm tra thư mục <code>site/</code>.</li>`;
+          }
+        }
+      }
+
+      // Khởi chạy ngay với dữ liệu có sẵn nếu có để hiển thị tức thì
+      if (window.__INITIAL_SITE_FILES__ && Array.isArray(window.__INITIAL_SITE_FILES__)) {
+        renderCards(sortFiles(window.__INITIAL_SITE_FILES__), 'site');
+      }
+
+      // Luôn kiểm tra đồng bộ cập nhật mới nhất
+      autoDiscoverFiles();
+
+      // Bộ lọc tìm kiếm nhanh
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const q = e.target.value.trim().toLowerCase();
+          const items = document.querySelectorAll(
+            '#demo-list li:not(.state-loading):not(.state-empty)'
+          );
+          let visibleCount = 0;
+          items.forEach(li => {
+            const title = li.querySelector('.demo-title')?.textContent?.toLowerCase() || '';
+            const match = !q || title.includes(q);
+            li.style.display = match ? '' : 'none';
+            if (match) visibleCount++;
+          });
+          const countEl = document.getElementById('demo-count');
+          if (countEl) countEl.textContent = visibleCount;
+        });
+      }
+    </script>
   </body>
 </html>

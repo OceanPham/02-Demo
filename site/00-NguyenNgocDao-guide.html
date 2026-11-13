@@ -1,0 +1,4040 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="Hướng dẫn trình bày, ôn vấn đáp và tra cứu nguồn cho báo cáo Quản trị tài chính 2 của Nguyễn Ngọc Đào về HHS giai đoạn 2023–2025."
+    />
+    <title>
+      Hướng dẫn báo cáo và ôn vấn đáp Quản trị tài chính 2 · Nguyễn Ngọc Đào
+    </title>
+    <style>
+      :root {
+        --ink: #18324a;
+        --blue: #155e91;
+        --blue-dark: #104669;
+        --paper: #fff;
+        --ground: #f1f5f9;
+        --line: #d6e1eb;
+        --muted: #52677b;
+        --green: #236957;
+        --light: #eaf3fa;
+        --amber: #8b4c14;
+        --amber-light: #fff5e7;
+        --radius: 12px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 26px;
+      }
+      body {
+        margin: 0;
+        background: var(--ground);
+        color: var(--ink);
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      a {
+        color: var(--blue);
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        color: var(--blue-dark);
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      button,
+      a,
+      input,
+      summary {
+        -webkit-tap-highlight-color: transparent;
+      }
+      :focus-visible {
+        outline: 3px solid #d48324;
+        outline-offset: 4px;
+      }
+      button {
+        cursor: pointer;
+      }
+      .skip {
+        position: fixed;
+        top: -100px;
+        left: 20px;
+        background: #fff;
+        padding: 12px;
+        z-index: 10;
+      }
+      .skip:focus {
+        top: 10px;
+      }
+      .shell {
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr);
+        max-width: none;
+        margin: 0;
+        min-height: 100vh;
+      }
+      .sidebar {
+        background: var(--ink);
+        color: #fff;
+        padding: 38px 25px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: auto;
+      }
+      .sidebar a {
+        color: #e4eff8;
+        text-decoration: none;
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+      .book-mark {
+        width: 37px;
+        height: 45px;
+        border: 1px solid #9ec5df;
+        border-left: 5px solid #9ec5df;
+        border-radius: 2px 7px 7px 2px;
+        position: relative;
+      }
+      .book-mark:after {
+        content: "";
+        position: absolute;
+        left: 8px;
+        right: 6px;
+        top: 13px;
+        height: 1px;
+        background: #9ec5df;
+        box-shadow: 0 7px #9ec5df;
+      }
+      .brand strong {
+        display: block;
+        font-size: 18px;
+        line-height: 1.3;
+      }
+      .brand small {
+        color: #b9cfdf;
+        font-size: 12px;
+      }
+      .sidebar nav {
+        display: grid;
+        gap: 4px;
+      }
+      .sidebar nav a {
+        display: block;
+        padding: 10px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        border-left: 3px solid transparent;
+      }
+      .sidebar nav a:hover,
+      .sidebar nav a[aria-current="location"] {
+        background: #264961;
+        border-left-color: #b4d6eb;
+        color: #fff;
+      }
+      .sidebar-note {
+        margin-top: 35px;
+        padding-top: 22px;
+        border-top: 1px solid #426078;
+        font-size: 13px;
+        color: #bfd1de;
+      }
+      .sidebar-note strong {
+        display: block;
+        color: #fff;
+        font-size: 14px;
+      }
+      .sidebar .print-button {
+        margin-top: 22px;
+        width: 100%;
+        border: 1px solid #7da0b8;
+        background: transparent;
+        color: #fff;
+        padding: 9px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .sidebar .print-button:hover {
+        background: #264961;
+      }
+      main {
+        min-width: 0;
+        padding: 52px clamp(24px, 4.8vw, 72px) 35px;
+        background: var(--paper);
+      }
+      .hero {
+        padding-bottom: 28px;
+        border-bottom: 2px solid var(--ink);
+      }
+      .hero .course {
+        color: var(--blue);
+        font-weight: 650;
+        margin: 0 0 10px;
+        font-size: 14px;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+      h1 {
+        text-wrap: balance;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: clamp(33px, 3.7vw, 52px);
+        font-weight: 600;
+        line-height: 1.16;
+        letter-spacing: -0.8px;
+        margin-bottom: 18px;
+        max-width: 740px;
+      }
+      .hero .intro {
+        font-size: 18px;
+        color: var(--muted);
+        max-width: 720px;
+        margin-bottom: 15px;
+      }
+      .identity {
+        font-size: 14px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .identity strong {
+        color: var(--ink);
+      }
+      section {
+        padding-top: 38px;
+        margin-top: 10px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 34px;
+        scroll-margin-top: 24px;
+      }
+      section:last-of-type {
+        border-bottom: 0;
+      }
+      h2 {
+        font-size: 26px;
+        line-height: 1.3;
+        letter-spacing: -0.3px;
+        margin-bottom: 17px;
+      }
+      h3 {
+        font-size: 18px;
+        line-height: 1.45;
+        margin-bottom: 10px;
+      }
+      p {
+        margin-bottom: 16px;
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+      .lede {
+        color: var(--muted);
+        max-width: 76ch;
+      }
+      .file-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin: 22px 0;
+      }
+      .file-option {
+        padding: 22px 22px 20px;
+        background: var(--light);
+        border-radius: var(--radius);
+        border-top: 4px solid var(--blue);
+      }
+      .file-option.pdf {
+        background: #edf5f2;
+        border-top-color: var(--green);
+      }
+      .file-option h3 {
+        font-size: 20px;
+        margin-bottom: 6px;
+      }
+      .file-option .length {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+      .button-link {
+        display: inline-block;
+        background: var(--blue);
+        color: #fff;
+        text-decoration: none;
+        padding: 9px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 8px;
+      }
+      .button-link:hover {
+        background: var(--blue-dark);
+        color: #fff;
+      }
+      .pdf .button-link {
+        background: var(--green);
+      }
+      .quick-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px 22px;
+        font-size: 14px;
+        margin-top: 18px;
+      }
+      .note {
+        border-left: 3px solid var(--blue);
+        padding: 13px 18px;
+        background: #f4f8fc;
+        margin: 23px 0;
+        font-size: 14px;
+      }
+      .note.caution {
+        border-left-color: #b47b32;
+        background: var(--amber-light);
+        color: #71400e;
+      }
+      .note strong {
+        font-weight: 650;
+      }
+      .specs {
+        margin: 23px 0;
+        display: grid;
+        grid-template-columns: minmax(130px, 180px) minmax(0, 1fr);
+        border-top: 1px solid var(--line);
+      }
+      .specs dt,
+      .specs dd {
+        margin: 0;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .specs dt {
+        font-weight: 650;
+        padding-right: 15px;
+      }
+      .specs dd {
+        color: #3c5267;
+      }
+      .paper-sample {
+        background: #fff;
+        border: 1px solid #cdd8e2;
+        box-shadow: 6px 6px 0 #edf2f6;
+        padding: 25px 32px;
+        margin: 25px 0;
+        max-width: 680px;
+      }
+      .paper-sample .sample-label {
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 13px;
+      }
+      .paper-sample .sample-title {
+        font-family: "Times New Roman", serif;
+        font-size: 14pt;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 12px;
+      }
+      .paper-sample .sample-body {
+        font-family: "Times New Roman", serif;
+        font-size: 13pt;
+        line-height: 1.5;
+        text-align: justify;
+        text-indent: 1cm;
+        color: #000;
+        margin: 0;
+      }
+      .steps {
+        padding-left: 23px;
+        margin: 20px 0;
+      }
+      .steps li {
+        padding-left: 7px;
+        margin: 0 0 20px;
+      }
+      .steps li::marker {
+        font-weight: 700;
+        color: var(--blue);
+      }
+      .steps > li > strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .steps p {
+        margin-bottom: 8px;
+      }
+      .inline-code {
+        font-family: inherit;
+        font-weight: 650;
+        background: #eef3f7;
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+      .rules {
+        padding-left: 21px;
+      }
+      .rules li {
+        padding-left: 4px;
+        margin-bottom: 12px;
+      }
+      .topic-note {
+        padding: 18px 0;
+        border-top: 1px solid var(--line);
+      }
+      .topic-note:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .topic-note h3 {
+        font-size: 18px;
+      }
+      .number {
+        font-variant-numeric: tabular-nums;
+        font-weight: 650;
+      }
+      .source-tag {
+        font-size: 13px;
+        margin-top: 8px;
+        display: block;
+      }
+      .formula {
+        background: #f1f5f9;
+        padding: 12px 16px;
+        border-radius: 5px;
+        font-size: 14px;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+      }
+      .faq {
+        margin-top: 20px;
+      }
+      .faq details {
+        border-top: 1px solid var(--line);
+        padding: 13px 0;
+      }
+      .faq details:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+        line-height: 1.5;
+      }
+      summary::marker {
+        color: var(--blue);
+      }
+      details[open] > summary {
+        margin-bottom: 13px;
+      }
+      .faq p {
+        margin: 0 0 0 17px;
+        color: #3d5266;
+      }
+      .check-header {
+        display: flex;
+        gap: 15px;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .check-count {
+        font-size: 14px;
+        font-weight: 650;
+        color: var(--green);
+      }
+      progress {
+        width: 100%;
+        height: 8px;
+        display: block;
+        accent-color: var(--green);
+        margin: 10px 0 20px;
+        border: 0;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      progress::-webkit-progress-bar {
+        background: #e6edf1;
+      }
+      progress::-webkit-progress-value {
+        background: var(--green);
+      }
+      .check-item {
+        display: flex;
+        gap: 13px;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--line);
+        cursor: pointer;
+      }
+      .check-item input {
+        width: 19px;
+        height: 19px;
+        flex: 0 0 19px;
+        margin-top: 6px;
+        accent-color: var(--green);
+      }
+      .check-item strong {
+        display: block;
+        font-size: 15px;
+      }
+      .check-item small {
+        display: block;
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 3px;
+      }
+      .check-item:has(input:checked) strong {
+        color: var(--green);
+      }
+      .check-footer {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .quiet-button {
+        background: transparent;
+        border: 1px solid #a6b9c9;
+        color: var(--ink);
+        padding: 6px 11px;
+        border-radius: 5px;
+        font-size: 13px;
+      }
+      .small {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .search {
+        margin: 22px 0;
+        display: block;
+      }
+      .search span {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .search input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #aabccc;
+        border-radius: 7px;
+        background: #fff;
+        color: var(--ink);
+      }
+      .source-status {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .references {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .reference {
+        padding: 23px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .reference:last-child {
+        border-bottom: 0;
+      }
+      .reference-heading {
+        display: flex;
+        gap: 13px;
+        align-items: flex-start;
+      }
+      .reference-number {
+        font-weight: 700;
+        flex: 0 0 35px;
+        color: var(--blue);
+        font-size: 16px;
+        padding-top: 1px;
+      }
+      .reference h3 {
+        margin-bottom: 4px;
+      }
+      .publisher {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 13px;
+      }
+      .reference > p {
+        margin-left: 48px;
+        font-size: 15px;
+        max-width: 77ch;
+      }
+      .reference-actions {
+        display: flex;
+        gap: 12px 24px;
+        flex-wrap: wrap;
+        margin-left: 48px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .url-detail {
+        margin: 12px 0 0 48px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .url-detail summary {
+        font-weight: 400;
+      }
+      .url-detail a {
+        display: block;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        padding-top: 5px;
+      }
+      .reference[hidden] {
+        display: none;
+      }
+      .empty {
+        padding: 20px;
+        background: #f2f6fa;
+        border-radius: 5px;
+      }
+      .foot {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 2px solid var(--ink);
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .back-top {
+        display: inline-block;
+        margin-top: 12px;
+      }
+      .noscript {
+        background: #fff5e7;
+        padding: 15px;
+      }
+
+      @media (max-width: 900px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          height: auto;
+          position: relative;
+          padding: 20px 24px;
+        }
+        .brand {
+          margin-bottom: 16px;
+        }
+        .sidebar nav {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px;
+        }
+        .sidebar nav a {
+          padding: 5px 9px;
+          border-left: 0;
+          border-bottom: 2px solid transparent;
+          font-size: 13px;
+        }
+        .sidebar nav a[aria-current="location"] {
+          border-bottom-color: #b4d6eb;
+        }
+        .sidebar-note,
+        .sidebar .print-button {
+          display: none;
+        }
+        main {
+          padding: 30px 24px;
+        }
+        .hero .intro {
+          font-size: 16px;
+        }
+        h1 {
+          font-size: 38px;
+        }
+      }
+      @media (max-width: 560px) {
+        body {
+          font-size: 15px;
+        }
+        main {
+          padding: 26px 19px;
+        }
+        .sidebar {
+          padding: 18px 19px;
+        }
+        .file-options {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .file-option {
+          padding: 18px;
+        }
+        h1 {
+          font-size: 32px;
+        }
+        h1 br {
+          display: none;
+        }
+        h2 {
+          font-size: 23px;
+        }
+        .specs {
+          grid-template-columns: 1fr;
+        }
+        .specs dt {
+          border: 0;
+          padding-bottom: 0;
+        }
+        .specs dd {
+          padding-top: 3px;
+        }
+        .paper-sample {
+          padding: 20px;
+        }
+        .paper-sample .sample-body {
+          text-indent: 22px;
+        }
+        .reference > p,
+        .reference-actions,
+        .url-detail {
+          margin-left: 0;
+        }
+        .reference-number {
+          flex-basis: 30px;
+        }
+        .reference-heading {
+          gap: 8px;
+        }
+        .check-footer {
+          align-items: flex-start;
+        }
+        .note {
+          padding: 12px 14px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 18mm;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+        body {
+          background: #fff;
+          font-size: 11pt;
+          color: #000;
+        }
+        .shell {
+          display: block;
+        }
+        .sidebar,
+        .skip,
+        .search,
+        .source-status,
+        .check-footer,
+        .back-top {
+          display: none !important;
+        }
+        main {
+          padding: 0;
+        }
+        .hero {
+          padding-bottom: 12px;
+        }
+        h1 {
+          font-size: 27pt;
+        }
+        .hero .intro {
+          font-size: 12pt;
+        }
+        section {
+          padding-top: 18px;
+          margin-top: 0;
+          padding-bottom: 18px;
+        }
+        h2 {
+          font-size: 17pt;
+        }
+        h2,
+        h3,
+        summary {
+          break-after: avoid;
+        }
+        .file-options {
+          gap: 12px;
+        }
+        .file-option,
+        .note,
+        .paper-sample {
+          box-shadow: none;
+          background: #fff;
+          border: 1px solid #bbb;
+          break-inside: avoid;
+        }
+        .file-option {
+          padding: 14px;
+        }
+        .button-link {
+          color: #000;
+          background: #fff !important;
+          border: 1px solid #888;
+        }
+        .quick-links {
+          display: none;
+        }
+        .reference,
+        .topic-note,
+        .check-item {
+          break-inside: avoid;
+        }
+        .url-detail {
+          display: block;
+        }
+        .url-detail::details-content {
+          content-visibility: visible;
+        }
+        .url-detail a {
+          font-size: 9pt;
+        }
+        .reference-actions {
+          display: none;
+        }
+        .check-count {
+          color: #000;
+        }
+        a {
+          color: #000;
+        }
+        progress {
+          display: none;
+        }
+        .foot {
+          font-size: 9pt;
+        }
+        .reference[hidden] {
+          display: block;
+        }
+        .empty {
+          display: none;
+        }
+      }
+
+      /* Online edition: full viewport shell, readable columns inside each section. */
+      .shell {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        grid-template-columns: 260px minmax(0, 1fr);
+        border: 0 !important;
+      }
+      main {
+        padding: 44px clamp(24px, 3.2vw, 64px) 36px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
+        gap: 34px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 3.2vw, 54px);
+        max-width: 920px;
+      }
+      .hero .intro {
+        max-width: 84ch;
+      }
+      .hero-focus {
+        padding: 22px 24px;
+        background: #edf4f8;
+        border-left: 3px solid var(--blue);
+        font-size: 15px;
+      }
+      .hero-focus h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+      .hero-focus ul {
+        padding-left: 20px;
+        margin: 0;
+      }
+      .hero-focus li + li {
+        margin-top: 9px;
+      }
+      .study-route {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 26px;
+        margin: 25px 0;
+      }
+      .study-route article {
+        border-top: 3px solid #b9cedd;
+        padding-top: 15px;
+      }
+      .study-route span {
+        font-size: 13px;
+        color: var(--blue);
+        font-weight: 650;
+      }
+      .study-route h3 {
+        margin: 5px 0 9px;
+      }
+      .study-route p {
+        font-size: 15px;
+        max-width: 72ch;
+      }
+      .format-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+        gap: 32px;
+        align-items: start;
+      }
+      .format-layout .specs {
+        margin-top: 0;
+      }
+      .format-layout .paper-sample {
+        margin-top: 0;
+        max-width: none;
+      }
+      .format-notes .rules {
+        font-size: 15px;
+      }
+      .steps {
+        columns: 2;
+        column-gap: 40px;
+      }
+      .steps > li {
+        break-inside: avoid;
+      }
+      .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 32px;
+        align-items: start;
+      }
+      .topic-note {
+        min-width: 0;
+      }
+      .concept-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 32px;
+      }
+      .concept {
+        padding: 22px 0;
+        border-top: 1px solid var(--line);
+        min-width: 0;
+      }
+      .concept p {
+        max-width: 83ch;
+      }
+      .concept .application {
+        font-size: 14px;
+        color: #405d73;
+        background: #f1f6fa;
+        padding: 12px 15px;
+        border-radius: 5px;
+      }
+      .memory-sheet {
+        display: grid;
+        grid-template-columns: minmax(230px, 0.7fr) minmax(0, 1.3fr);
+        gap: 30px;
+        margin-top: 28px;
+        padding-top: 26px;
+        border-top: 2px solid #b9cedd;
+      }
+      .memory-sheet > div > p {
+        max-width: 72ch;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        max-width: 100%;
+        min-width: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        font-variant-numeric: tabular-nums;
+      }
+      caption {
+        text-align: left;
+        font-weight: 650;
+        padding-bottom: 12px;
+      }
+      th,
+      td {
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        text-align: right;
+        white-space: nowrap;
+      }
+      thead {
+        background: #eaf2f8;
+      }
+      th:first-child {
+        text-align: left;
+        white-space: normal;
+        min-width: 180px;
+      }
+      tbody th {
+        font-weight: 500;
+      }
+      tbody tr:nth-child(even) {
+        background: #f7fafc;
+      }
+      .section-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
+        gap: 32px;
+        align-items: start;
+      }
+      .answer-method {
+        padding: 18px 21px;
+        background: #f0f6f3;
+        border-left: 3px solid var(--green);
+        font-size: 14px;
+      }
+      .answer-method p {
+        margin-top: 7px;
+      }
+      .opening-example {
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 15px 18px;
+        margin: 15px 0 22px;
+      }
+      .opening-example p {
+        margin: 15px 0 0;
+        max-width: 110ch;
+      }
+      .oral-controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(200px, 0.5fr);
+        gap: 18px;
+      }
+      .oral-controls label > span {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .oral-controls input,
+      .oral-controls select {
+        width: 100%;
+        min-width: 0;
+        padding: 11px 13px;
+        border: 1px solid #aabccc;
+        border-radius: 6px;
+        background: #fff;
+        color: var(--ink);
+      }
+      .oral-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin: 15px 0 18px;
+      }
+      .oral-toolbar > p {
+        margin: 0;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .oral-toolbar > div {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .question-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 20px;
+        align-items: start;
+      }
+      .oral-question {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        min-width: 0;
+        background: #fff;
+      }
+      .oral-question[open] {
+        border-color: #a4c0d4;
+        background: #fcfdff;
+      }
+      .oral-question > summary {
+        list-style: none;
+        display: flex;
+        gap: 13px;
+        padding: 18px 19px;
+        font-size: 16px;
+        font-weight: 650;
+        position: relative;
+        padding-right: 40px;
+      }
+      .oral-question > summary::-webkit-details-marker {
+        display: none;
+      }
+      .oral-question > summary:after {
+        content: "+";
+        position: absolute;
+        right: 17px;
+        top: 25px;
+        font-size: 20px;
+        color: var(--blue);
+        font-weight: 400;
+      }
+      .oral-question[open] > summary:after {
+        content: "−";
+      }
+      .oral-question > summary small {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        margin-bottom: 5px;
+      }
+      .q-number {
+        flex: 0 0 46px;
+        font-size: 12px;
+        white-space: nowrap;
+        font-weight: 650;
+        color: var(--blue);
+        padding-top: 2px;
+      }
+      .oral-question[open] > summary {
+        margin-bottom: 0;
+        border-bottom: 1px solid #e2eaf1;
+      }
+      .answer {
+        padding: 17px 20px 20px;
+        font-size: 15px;
+      }
+      .answer > p {
+        max-width: 83ch;
+      }
+      .answer-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--green);
+        margin-bottom: 7px;
+      }
+      .answer-evidence {
+        background: #edf4fa;
+        padding: 12px 14px;
+        margin: 15px 0;
+        font-size: 14px;
+        border-radius: 5px;
+      }
+      .answer-evidence > strong {
+        font-size: 12px;
+        display: block;
+        margin-bottom: 5px;
+      }
+      .pitfall {
+        font-size: 14px;
+        color: #755022;
+      }
+      .oral-question[hidden] {
+        display: none;
+      }
+      .references {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 34px;
+        align-items: start;
+      }
+      .reference {
+        min-width: 0;
+      }
+      .reference:first-child {
+        border-top: 1px solid var(--line);
+      }
+      .reference p {
+        max-width: 80ch;
+      }
+      .reference-actions a {
+        font-size: 14px;
+      }
+      section > p {
+        max-width: 110ch;
+      }
+      .check-item small {
+        max-width: 115ch;
+      }
+      @media (min-width: 1750px) {
+        .concept-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 1200px) {
+        .hero,
+        .section-intro {
+          grid-template-columns: 1fr;
+        }
+        .hero-focus {
+          display: none;
+        }
+        .format-layout,
+        .memory-sheet {
+          grid-template-columns: 1fr;
+        }
+        .format-notes {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+        .format-notes .paper-sample {
+          margin-bottom: 0;
+        }
+        .steps {
+          columns: 1;
+        }
+        .concept-grid,
+        .question-grid,
+        .topic-grid,
+        .references {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 900px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          display: block;
+        }
+        main {
+          padding: 30px 24px;
+        }
+        .study-route {
+          gap: 20px;
+        }
+        .oral-controls {
+          grid-template-columns: 1fr 1fr;
+        }
+        .sidebar nav a {
+          font-size: 13px;
+        }
+      }
+      @media (max-width: 650px) {
+        .study-route,
+        .format-notes,
+        .oral-controls {
+          grid-template-columns: 1fr;
+        }
+        .study-route {
+          gap: 18px;
+        }
+        .study-route article {
+          padding-top: 11px;
+        }
+        .hero h1 {
+          font-size: 34px;
+        }
+        .oral-question > summary {
+          padding: 15px 34px 15px 14px;
+          gap: 9px;
+          font-size: 15px;
+        }
+        .q-number {
+          flex-basis: 41px;
+        }
+        .answer {
+          padding: 15px;
+        }
+        .table-scroll {
+          font-size: 13px;
+        }
+        .oral-toolbar {
+          align-items: flex-start;
+        }
+      }
+      @media print {
+        .hero,
+        .study-route,
+        .format-layout,
+        .format-notes,
+        .topic-grid,
+        .concept-grid,
+        .memory-sheet,
+        .section-intro,
+        .question-grid,
+        .references {
+          display: block;
+        }
+        .hero-focus,
+        .oral-controls,
+        .oral-toolbar {
+          display: none;
+        }
+        .steps {
+          columns: 1;
+        }
+        .concept,
+        .oral-question {
+          break-inside: avoid;
+          margin-bottom: 14px;
+        }
+        .oral-question > summary:after {
+          display: none;
+        }
+        .answer {
+          padding: 12px;
+        }
+        .table-scroll {
+          overflow: visible;
+        }
+        table {
+          font-size: 9pt;
+        }
+        th,
+        td {
+          padding: 6px;
+          white-space: normal;
+        }
+        .study-route article {
+          margin-bottom: 12px;
+        }
+        .concept .application,
+        .answer-evidence {
+          background: #fff;
+          border: 1px solid #bbb;
+        }
+        .answer-method {
+          margin-bottom: 16px;
+        }
+      }
+
+      @media (min-width: 1201px) {
+        .topic-grid > .topic-note:last-child {
+          grid-column: 1/-1;
+        }
+        .topic-grid > .topic-note:last-child .rules {
+          columns: 2;
+          column-gap: 36px;
+        }
+        .topic-grid > .topic-note:last-child .rules li {
+          break-inside: avoid;
+        }
+      }
+      @media print {
+        main {
+          padding: 0;
+        }
+        .hero h1 {
+          font-size: 27pt;
+        }
+        .topic-grid > .topic-note:last-child .rules {
+          columns: 1;
+        }
+      }
+    </style>
+  </head>
+  <body id="dau-trang">
+    <a class="skip" href="#noi-dung">Chuyển đến nội dung</a>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Điều hướng hướng dẫn">
+        <div class="brand">
+          <span class="book-mark" aria-hidden="true"></span>
+          <div>
+            <strong>Sổ tay báo cáo</strong><small>Quản trị tài chính 2</small>
+          </div>
+        </div>
+        <nav aria-label="Các phần hướng dẫn">
+          <a href="#tong-quan">Phạm vi và lộ trình ôn</a
+          ><a href="#trinh-bay">Quy cách trình bày</a
+          ><a href="#chinh-sua">Chỉnh sửa và xuất bản</a
+          ><a href="#luu-y">Lưu ý về số liệu</a
+          ><a href="#kien-thuc">Kiến thức trọng tâm</a
+          ><a href="#van-dap">32 câu hỏi vấn đáp</a
+          ><a href="#kiem-tra">Kiểm tra trước khi nộp</a
+          ><a href="#nguon">11 nguồn tham khảo</a>
+        </nav>
+        <div class="sidebar-note">
+          <strong>Nguyễn Ngọc Đào</strong>QTTCKT-K25<br />Mã SV 243134101160<br /><br />HHS,
+          giai đoạn 2023–2025<br />Cập nhật 13/11/2026
+        </div>
+        <button class="print-button" type="button" data-print>
+          In hướng dẫn này
+        </button>
+      </aside>
+      <main id="noi-dung">
+        <header class="hero">
+          <div>
+            <p class="course">
+              Trường Đại học Hải Phòng · Học phần Quản trị tài chính 2
+            </p>
+            <h1>Hướng dẫn báo cáo <br />và ôn vấn đáp</h1>
+            <p class="intro">
+              Quy cách trình bày, kiến thức tài chính và các câu hỏi luyện giải
+              thích kết quả phân tích HHS giai đoạn 2023–2025.
+            </p>
+            <p class="identity">
+              <strong>Nguyễn Ngọc Đào</strong> — Lớp QTTCKT-K25 · Giảng viên:
+              Th. Nguyễn Thị Liên
+            </p>
+          </div>
+          <aside class="hero-focus" aria-label="Trọng tâm khi giải thích bài">
+            <h2>Ba ý cần giữ xuyên suốt</h2>
+            <ul>
+              <li>Số liệu đúng cơ sở hợp nhất và đúng kỳ.</li>
+              <li>Thanh khoản phải gắn với khả năng tạo tiền.</li>
+              <li>Lợi nhuận 2025 cần tách ảnh hưởng lãi đánh giá lại.</li>
+            </ul>
+          </aside>
+        </header>
+        <section id="tong-quan" aria-labelledby="heading-overview">
+          <h2 id="heading-overview">Phạm vi báo cáo và lộ trình ôn tập</h2>
+          <p class="lede">
+            Phân tích Công ty Cổ phần Đầu tư Dịch vụ Hoàng Huy (HHS), dùng BCTC
+            hợp nhất kiểm toán ba năm 2023–2025. Tài liệu này hỗ trợ trình bày
+            bài và luyện giải thích các kết quả, dựa trên dữ liệu đã dùng trong
+            báo cáo.
+          </p>
+          <div class="study-route">
+            <article>
+              <span>Lượt 1</span>
+              <h3>Nắm câu chuyện tài chính</h3>
+              <p>
+                Vốn chủ vẫn chiếm ưu thế; thanh khoản phụ thuộc chất lượng tài
+                sản; lợi nhuận 2025 chịu ảnh hưởng lớn của thay đổi hợp nhất.
+              </p>
+            </article>
+            <article>
+              <span>Lượt 2</span>
+              <h3>Hiểu công thức và giới hạn</h3>
+              <p>
+                Nhớ tử số, mẫu số, đơn vị và cơ sở bình quân. Phân biệt tiền với
+                lợi nhuận, nợ phải trả với vay, tổng hợp nhất với phần thuộc mẹ.
+              </p>
+            </article>
+            <article>
+              <span>Lượt 3</span>
+              <h3>Tự trả lời thành tiếng</h3>
+              <p>
+                Chọn câu hỏi theo chủ đề, trả lời trước khi mở gợi ý. Mỗi câu
+                nên có kết luận, một đến hai số minh họa và giới hạn cần lưu ý.
+              </p>
+            </article>
+          </div>
+          <p class="small">
+            Các câu hỏi bên dưới là tình huống luyện tập dự kiến, không phải
+            danh sách câu hỏi do giảng viên cung cấp. Đào nên diễn đạt lại bằng
+            cách hiểu của mình.
+          </p>
+        </section>
+        <section id="trinh-bay" aria-labelledby="heading-style">
+          <h2 id="heading-style">Quy cách trình bày đang dùng</h2>
+          <p>
+            Đây là thông số của bản báo cáo đã soạn, dựa trên phong cách mẫu
+            được cung cấp.
+            <strong
+              >Không coi các thông số này là quy định chính thức của nhà
+              trường.</strong
+            >
+            Nếu cô có hướng dẫn riêng sau này, ưu tiên hướng dẫn của cô.
+          </p>
+          <div class="format-layout">
+            <div>
+              <dl class="specs">
+                <dt>Khổ giấy và lề</dt>
+                <dd>
+                  A4 dọc, 21 × 29,7 cm. Phần chính: trái <strong>3 cm</strong>,
+                  phải <strong>2 cm</strong>, trên và dưới
+                  <strong>2,2 cm</strong>.
+                </dd>
+                <dt>Chữ thân bài</dt>
+                <dd>
+                  <strong>Times New Roman, 13 pt</strong>, màu đen; căn đều hai
+                  bên. Giãn dòng <strong>1,5</strong>; thụt đầu dòng
+                  <strong>1 cm</strong>; cách sau đoạn <strong>6 pt</strong>.
+                </dd>
+                <dt>Tiêu đề</dt>
+                <dd>
+                  Tiêu đề chương: Heading 1, đậm <strong>16 pt</strong>, căn
+                  giữa. Mục cấp 2: Heading 2, đậm <strong>14 pt</strong>. Mục
+                  cấp 3: Heading 3, đậm <strong>13 pt</strong>. Đề mục cấp dưới
+                  căn trái, màu đen.
+                </dd>
+                <dt>Bảng, hình và nguồn</dt>
+                <dd>
+                  Tên bảng/hình <strong>11,5 pt</strong>; chữ trong bảng khoảng
+                  <strong>11,3 pt</strong>; ghi chú/nguồn khoảng
+                  <strong>10,5 pt</strong>. Giữ đủ tên, đơn vị, năm và nguồn.
+                  Bảng có viền xám nhạt, hàng tiêu đề nền xám; số liệu căn theo
+                  cột.
+                </dd>
+                <dt>Số trang</dt>
+                <dd>
+                  Bìa không hiện số. Trang mục lục là số <strong>1</strong>, số
+                  đặt ở chân trang giữa. Phụ lục ảnh giữ số trang in của bản
+                  gốc. Vị trí trang trong tệp PDF có thể khác số in ở chân
+                  trang.
+                </dd>
+                <dt>Phụ lục nguyên trang</dt>
+                <dd>
+                  Bản Word dùng phần riêng có lề nhỏ để giữ ảnh gốc đọc được.
+                  <strong
+                    >Không áp lề và kiểu chữ của thân bài lên toàn bộ phụ
+                    lục.</strong
+                  >
+                  Bản PDF đầy đủ giữ nguyên khổ và hướng xoay của từng trang
+                  nguồn.
+                </dd>
+              </dl>
+            </div>
+            <div class="format-notes">
+              <div class="paper-sample" aria-label="Minh họa chữ và đoạn văn">
+                <p class="sample-label">
+                  Minh họa Times New Roman 13 pt, giãn dòng 1,5
+                </p>
+                <p class="sample-title">2.2.1 Phân tích khả năng thanh toán</p>
+                <p class="sample-body">
+                  Hệ số thanh toán cần được đọc cùng cơ cấu tài sản, thời điểm
+                  thu tiền và nghĩa vụ chi trả. Giá trị tài sản ngắn hạn trên sổ
+                  sách không đồng nhất với số tiền doanh nghiệp có thể sử dụng
+                  ngay.
+                </p>
+              </div>
+              <ul class="rules">
+                <li>
+                  Giữ sườn ba chương. Chương 2 có ba mục phân tích chính:
+                  <strong
+                    >2.2.1 thanh toán; 2.2.2 các hệ số nợ; 2.2.3 sinh
+                    lời</strong
+                  >.
+                </li>
+                <li>
+                  Đặt tên bảng ở phía trên, nguồn và ghi chú ngay dưới bảng; giữ
+                  tên hình cùng biểu đồ. Khi bảng sang trang, lặp lại hàng tiêu
+                  đề và tránh tách riêng một dòng cuối.
+                </li>
+                <li>
+                  Dùng ngắt trang cho đầu chương; hạn chế dùng nhiều phím Enter
+                  hoặc dấu cách để căn vị trí. Giữ tiêu đề cùng ít nhất một phần
+                  nội dung đi sau.
+                </li>
+                <li>
+                  Mẫu môn Kỹ nghệ phần mềm chỉ là tham khảo hình thức. Không đưa
+                  tên khoa, giáo viên, nội dung chuyên môn hoặc watermark của
+                  mẫu sang báo cáo này.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section id="chinh-sua" aria-labelledby="heading-edit">
+          <h2 id="heading-edit">Cách chỉnh sửa và xuất bản cuối</h2>
+          <ol class="steps">
+            <li>
+              <strong>Lưu một bản sao trước khi sửa.</strong>
+              <p>
+                Giữ lại hai tệp đã kiểm tra. Đặt tên bản sửa theo ngày hoặc
+                phiên bản để tránh nhầm bản nộp với bản đang làm. Thông tin bìa
+                cần giữ đúng tên trường, họ tên, lớp, mã sinh viên, giảng viên
+                và học phần.
+              </p>
+            </li>
+            <li>
+              <strong>Sửa nội dung bằng các kiểu chữ sẵn có.</strong>
+              <p>
+                Giữ Heading 1–3 cho các cấp đề mục. Đổi phông, lề hoặc giãn dòng
+                trong phần chính theo từng phần; tránh chọn toàn bộ tài liệu rồi
+                áp định dạng, vì phụ lục có thiết lập riêng.
+              </p>
+            </li>
+            <li>
+              <strong>Kiểm lại số và nguồn khi sửa bảng hoặc lời bình.</strong>
+              <p>
+                Số gốc là đồng Việt Nam. Chia cho
+                <strong>1.000.000.000</strong> để đổi sang tỷ đồng; tính tỷ số
+                từ số chưa làm tròn, sau đó mới làm tròn khi trình bày. Giữ dấu
+                âm của lỗ/dòng tiền âm và dùng thống nhất dấu chấm hàng nghìn,
+                dấu phẩy thập phân.
+              </p>
+              <p>
+                Nếu sửa một chỉ tiêu, rà cả bảng, nhận xét, biểu đồ, kết luận và
+                giải pháp liên quan. Ghi rõ công thức đang dùng, nhất là hệ số
+                nhanh và ROE.
+              </p>
+            </li>
+            <li>
+              <strong>Cập nhật lại mục lục sau khi nội dung đã chốt.</strong>
+              <p>
+                <strong>Mục lục của tệp hiện tại là mục lục tĩnh</strong>, đã
+                khớp bản cuối. Khi thêm/bớt nội dung, cần đối chiếu lại số trang
+                và sửa mục lục, hoặc tạo lại mục lục tự động từ Heading 1–3. Chỉ
+                bấm cập nhật trường sẽ không tự tính lại mục lục tĩnh này.
+              </p>
+              <p>
+                Số trang hướng dẫn mở nhanh và vị trí phụ lục trong file này
+                cũng cần kiểm lại nếu báo cáo thay đổi độ dài.
+              </p>
+            </li>
+            <li>
+              <strong>Xuất PDF và giữ đúng loại phụ lục.</strong>
+              <p>
+                Xuất trực tiếp từ Word sẽ tạo PDF với
+                <strong>phụ lục trích 23 trang</strong>. Để có bản đầy đủ giống
+                bản đã giao, dùng phần chính đã sửa đến hết trang mở phụ lục,
+                rồi nối lần lượt phần tiếng Việt của BCTC 2023 (<strong
+                  >trang nguồn 1–43</strong
+                >), 2024 (<strong>1–42</strong>) và 2025
+                (<strong>1–52</strong>).
+              </p>
+              <p>
+                Phụ lục đầy đủ gồm 137 trang. Chọn đủ thuyết minh và giữ nguyên
+                bố cục trang nguồn. Sau khi ghép, kiểm tra thứ tự năm, không có
+                trang trùng hoặc thiếu và không lẫn phần trích Word vào trước
+                toàn văn một lần nữa.
+              </p>
+            </li>
+            <li>
+              <strong>Mở lại tệp thực sự sẽ nộp.</strong>
+              <p>
+                Xem bìa, mục lục, các công thức, toàn bộ bảng/hình, tài liệu
+                tham khảo và đầu/cuối mỗi bộ BCTC. Kiểm tra chữ Việt, số liệu,
+                ảnh phụ lục và các chỗ ngắt trang. Giữ bản Word để chỉnh tiếp
+                khi cô góp ý.
+              </p>
+            </li>
+          </ol>
+          <div class="note caution">
+            <strong>Lưu ý khi in:</strong> bản PDF đầy đủ có 175 trang vì kèm
+            toàn văn BCTC. Nếu giảng viên chỉ yêu cầu phần chính hoặc bản trích
+            phụ lục, xác định phạm vi in trước. Không tự bỏ thuyết minh khỏi bản
+            được yêu cầu nộp đầy đủ.
+          </div>
+        </section>
+        <section id="luu-y" aria-labelledby="heading-data">
+          <h2 id="heading-data">Những điểm cần hiểu đúng về số liệu</h2>
+          <p class="lede">
+            Giữ các giải thích này khi rút gọn bài, chỉnh kết luận hoặc chuẩn bị
+            thuyết trình. Chúng quyết định cách hiểu các tỷ số năm 2025.
+          </p>
+          <div class="topic-grid">
+            <article class="topic-note">
+              <h3>Đúng doanh nghiệp và đúng kỳ báo cáo</h3>
+              <p>
+                Đối tượng là
+                <strong>Công ty Cổ phần Đầu tư Dịch vụ Hoàng Huy, mã HHS</strong
+                >. Phân biệt với TCH và CRV. Bài dùng
+                <strong>BCTC hợp nhất đã kiểm toán</strong> cho ba năm dương
+                lịch 01/01–31/12/2023, 2024 và 2025. Số dư cuối 2022 chỉ dùng
+                làm đầu kỳ tính bình quân năm 2023.
+              </p>
+              <span class="source-tag"
+                >Đối chiếu <a href="#ref-1">[1]</a>, <a href="#ref-2">[2]</a>,
+                <a href="#ref-3">[3]</a>.</span
+              >
+            </article>
+            <article class="topic-note">
+              <h3>Năm 2025 có thay đổi lớn phạm vi hợp nhất</h3>
+              <p>
+                HHS có quyền kiểm soát CRV từ ngày <strong>12/06/2025</strong>.
+                Thuyết minh 40 nêu việc hợp nhất lần đầu CRV, Nhà Đại Lộc và Đại
+                Thịnh Vượng làm
+                <strong>số liệu không so sánh được trực tiếp</strong>. Các bảng
+                ba năm mô tả số đã công bố; không phải mức tăng trưởng trên cùng
+                phạm vi.
+              </p>
+              <p>
+                ROA, ROE và vòng quay dùng bình quân đầu–cuối kỳ là quy ước
+                tính. Số đầu năm chưa hợp nhất các đơn vị mới, nên không diễn
+                giải tỷ số tăng như toàn bộ hiệu quả kinh doanh đã tăng tương
+                ứng.
+              </p>
+              <span class="source-tag"
+                ><a
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/20260328%20-%20HHS%20-%20Bao%20cao%20tai%20chinh%20nam%202025%20kiem%20toan%20Hop%20nhat.pdf#page=52"
+                  target="_blank"
+                  rel="noopener"
+                  >Đọc thuyết minh 40 trên website HHS</a
+                >
+                — trang nguồn 52 của BCTC 2025.</span
+              >
+            </article>
+            <article class="topic-note">
+              <h3>Lợi nhuận kế toán có khoản lãi đánh giá lại lớn</h3>
+              <p>
+                LNST hợp nhất kiểm toán năm 2025 là
+                <span class="number">3.529.759.552.231 đồng</span>. Lãi đánh giá
+                lại đầu tư CRV là
+                <span class="number">3.488.716.654.786 đồng trước thuế</span>,
+                bằng khoảng <strong>98,20% LNTT</strong>. Khoản này không phải
+                doanh thu bán hàng hoặc khoản tiền thu kinh doanh cùng giá trị.
+              </p>
+              <p>
+                LNTT trừ riêng lãi đánh giá lại còn
+                <span class="number">64.106.484.093 đồng</span>. Đây chỉ là phép
+                minh họa trước thuế; không gọi là LNST điều chỉnh hoặc lợi nhuận
+                cốt lõi. Không trừ một số trước thuế trực tiếp khỏi LNST để suy
+                ra lợi nhuận thường xuyên.
+              </p>
+              <span class="source-tag"
+                >Nguồn <a href="#ref-3">[3]</a>, trang PDF 10, 24 và 45.</span
+              >
+            </article>
+            <article class="topic-note">
+              <h3>Chọn cùng cơ sở khi tính sinh lời</h3>
+              <p>
+                Bài dùng LNST hợp nhất với tổng tài sản và tổng vốn chủ sở hữu
+                hợp nhất bình quân. ROE tổng thể năm 2025 là
+                <strong>33,15%</strong>. Nếu chuyển sang lợi nhuận thuộc công ty
+                mẹ thì mẫu số cũng phải là vốn thuộc công ty mẹ tương ứng.
+              </p>
+              <p class="formula">
+                ROE tổng thể = LNST hợp nhất ÷ Tổng VCSH hợp nhất bình quân ×
+                100%<br />Bình quân = (Số đầu kỳ + Số cuối kỳ) ÷ 2
+              </p>
+              <p>
+                LNST mẹ năm 2025 cao hơn LNST hợp nhất do phần lợi nhuận của cổ
+                đông không kiểm soát là khoản lỗ. Đây là quan hệ phân bổ lợi
+                nhuận, không phải lỗi số học.
+              </p>
+            </article>
+            <article class="topic-note">
+              <h3>Thanh khoản, nợ và dòng tiền cần đọc theo bản chất</h3>
+              <ul class="rules">
+                <li>
+                  Hệ số hiện hành <strong>4,62 lần</strong> đi cùng tồn kho bằng
+                  <strong>68,63% tổng tài sản</strong>; hệ số nhanh rút gọn
+                  <strong>0,96</strong> và bằng tiền <strong>0,18</strong>. Tài
+                  sản ngắn hạn lớn chưa bảo đảm có đủ tiền ngay.
+                </li>
+                <li>
+                  Hệ số nhanh rút gọn = (TSNH − tồn kho) / nợ ngắn hạn. Biến thể
+                  loại thêm TSNH khác vẫn có thể giữ khoản trả trước trong phải
+                  thu. Ghi rõ công thức và hạn chế; không gọi mọi khoản còn lại
+                  là tiền sẵn có.
+                </li>
+                <li>
+                  Tiền gửi 6–12 tháng thuộc đầu tư ngắn hạn không được tự động
+                  gộp vào tiền tương đương. Một số tiền gửi dùng bảo đảm L/C,
+                  bảo lãnh hoặc gắn với kinh phí bảo trì.
+                </li>
+                <li>
+                  Nợ phải trả không đồng nhất với nợ vay. Cuối 2025 có người mua
+                  trả trước và thuế hoãn lại lớn; khoản vay cuối kỳ là
+                  <strong>390 tỷ đồng</strong>. Ứng trước của khách hàng đi kèm
+                  nghĩa vụ hoàn thành, bàn giao sản phẩm.
+                </li>
+                <li>
+                  Dòng tiền kinh doanh 2025 là
+                  <strong>1.988,40 tỷ đồng</strong>, chịu tác động lớn của vốn
+                  lưu động và phải trả/ứng trước. Dòng tiền dương không chứng
+                  minh toàn bộ lợi nhuận kế toán đã thu thành tiền.
+                </li>
+                <li>
+                  Năm 2024, nợ ngắn hạn tăng chủ yếu do phải trả nhà cung cấp;
+                  người mua trả trước giảm. Chi phí lãi vay 2024 bằng 0 nên hệ
+                  số thanh toán lãi vay không xác định, không điền 0.
+                </li>
+              </ul>
+            </article>
+          </div>
+          <p class="note">
+            Xem phần <a href="#van-dap">32 câu hỏi luyện vấn đáp</a> để tập giải
+            thích các tỷ số và các điểm dễ nhầm bằng lời của mình.
+          </p>
+        </section>
+        <section id="kien-thuc" aria-labelledby="heading-knowledge">
+          <h2 id="heading-knowledge">Kiến thức trọng tâm để trả lời vấn đáp</h2>
+          <p class="lede">
+            Học theo mối liên hệ giữa công thức, ý nghĩa và đặc điểm của HHS.
+            Các quy ước tính dưới đây thống nhất với bài báo cáo, không thay thế
+            mọi biến thể trong giáo trình.
+          </p>
+          <div class="concept-grid">
+            <article class="concept" id="concept-1">
+              <h3>Đọc đồng thời báo cáo và thuyết minh</h3>
+              <p>
+                Bảng cân đối phản ánh số dư tại một thời điểm; kết quả kinh
+                doanh và lưu chuyển tiền tệ phản ánh cả kỳ. Thuyết minh giải
+                thích nội dung, chính sách và sự kiện làm thay đổi cách hiểu số
+                liệu.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> Bài dùng báo cáo hợp nhất: tài
+                sản, nợ và kết quả của đơn vị được kiểm soát được hợp nhất, có
+                loại trừ giao dịch nội bộ. Không lấy báo cáo riêng thay thế.
+              </p>
+              <p class="source-tag">
+                Đối chiếu <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                <a href="#ref-3">[3]</a>
+              </p>
+            </article>
+            <article class="concept" id="concept-2">
+              <h3>Khả năng thanh toán hiện hành</h3>
+              <p>
+                Hiện hành = Tài sản ngắn hạn / Nợ ngắn hạn. Đơn vị là lần; chỉ
+                tiêu so sánh giá trị ghi sổ, chưa đo chính xác tiền về đúng hạn.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> HHS 2025: 20.296,78 / 4.394,77 ≈
+                4,62 lần. Cần đọc cùng tồn kho và nghĩa vụ dự án.
+              </p>
+              <p class="source-tag">
+                Đối chiếu <a href="#ref-3">[3]</a> <a href="#ref-9">[9]</a>
+              </p>
+            </article>
+            <article class="concept" id="concept-3">
+              <h3>Nhanh và bằng tiền là hai mức sàng lọc khác nhau</h3>
+              <p>
+                Nhanh rút gọn trong bài = (TSNH − Tồn kho) / Nợ ngắn hạn. Bằng
+                tiền = (Tiền + Tương đương tiền) / Nợ ngắn hạn.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> HHS 2025: nhanh 0,96 lần; bằng
+                tiền 0,18 lần. Công thức nhanh theo tài sản thanh khoản loại cả
+                trả trước; biến thể rút gọn chưa làm được việc này.
+              </p>
+              <p class="source-tag">
+                Đối chiếu <a href="#ref-3">[3]</a> <a href="#ref-9">[9]</a>
+              </p>
+            </article>
+            <article class="concept" id="concept-4">
+              <h3>Vốn lưu động ròng và sự phù hợp kỳ hạn</h3>
+              <p>
+                VLĐ ròng = TSNH − Nợ ngắn hạn = VCSH + Nợ dài hạn − Tài sản dài
+                hạn. Dương thể hiện quan hệ tài trợ dài hạn thuận lợi trên bảng
+                cân đối.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> HHS 2025: 15.902,01 tỷ đồng. Số
+                này có thể nằm trong hàng tồn kho, không phải lượng tiền mặt dư.
+              </p>
+              <p class="source-tag">Đối chiếu <a href="#ref-3">[3]</a></p>
+            </article>
+            <article class="concept" id="concept-5">
+              <h3>Phân biệt cơ cấu nợ với nợ vay</h3>
+              <p>
+                Hệ số nợ = Nợ phải trả / Tổng tài sản × 100%. Tự tài trợ = VCSH
+                / Tổng tài sản × 100%. Nợ/VCSH = Nợ phải trả / VCSH.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> HHS 2025: nợ/tài sản 29,78% nhưng
+                vay/tài sản chỉ 1,66%. Người mua trả trước và thuế hoãn lại có
+                bản chất khác vay ngân hàng.
+              </p>
+              <p class="source-tag">
+                Đối chiếu <a href="#ref-3">[3]</a> <a href="#ref-10">[10]</a>
+              </p>
+            </article>
+            <article class="concept" id="concept-6">
+              <h3>Biên lợi nhuận gộp khác ROS</h3>
+              <p>
+                Biên gộp = Lợi nhuận gộp / Doanh thu thuần × 100%. ROS trong bài
+                = LNST hợp nhất / Doanh thu thuần × 100%. Hai tử số chứa những
+                nguồn lợi nhuận khác nhau.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> HHS 2025: biên gộp 2,59% và ROS
+                395,38%. Chênh lệch lớn cần giải thích bằng thu nhập tài chính
+                và giao dịch hợp nhất.
+              </p>
+              <p class="source-tag">
+                Đối chiếu <a href="#ref-3">[3]</a> <a href="#ref-11">[11]</a>
+              </p>
+            </article>
+            <article class="concept" id="concept-7">
+              <h3>ROA, ROE và số bình quân</h3>
+              <p>
+                Quy ước của bài: ROA = LNST hợp nhất / Tổng tài sản bình quân;
+                ROE = LNST hợp nhất / Tổng VCSH bình quân. Nhân 100% khi trình
+                bày theo phần trăm.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> Bình quân = (Đầu kỳ + Cuối kỳ) /
+                2. Ghép lợi nhuận cả năm với nguồn lực bình quân; riêng 2025 số
+                đầu/cuối khác phạm vi hợp nhất nên phải nêu giới hạn.
+              </p>
+              <p class="source-tag">
+                Đối chiếu <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                <a href="#ref-3">[3]</a> <a href="#ref-11">[11]</a>
+              </p>
+            </article>
+            <article class="concept" id="concept-8">
+              <h3>DuPont giải thích nguồn tạo ROE</h3>
+              <p>
+                ROE = ROS × Vòng quay tài sản × Hệ số nhân VCSH. ROS dùng số
+                thập phân; vòng quay = Doanh thu thuần / Tài sản bình quân; hệ
+                số nhân = Tài sản bình quân / VCSH bình quân.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> HHS 2025: ROE 33,15% bị chi phối
+                bởi lãi đánh giá lại. Vòng quay tài sản chỉ 0,062 lần; không kết
+                luận ROE tăng vì tài sản quay nhanh hơn.
+              </p>
+              <p class="source-tag">
+                Đối chiếu <a href="#ref-3">[3]</a> <a href="#ref-11">[11]</a>
+              </p>
+            </article>
+            <article class="concept" id="concept-9">
+              <h3>Dòng tiền và lợi nhuận được ghi nhận khác lúc</h3>
+              <p>
+                Doanh thu, chi phí theo cơ sở dồn tích không đồng nhất với tiền
+                thu, chi. CFO là dòng tiền kinh doanh; CFI là đầu tư; CFF là tài
+                chính.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> HHS 2025: CFO 1.988,40 tỷ đồng.
+                Tiền ứng trước có thể làm CFO tăng trong khi doanh nghiệp vẫn
+                còn nghĩa vụ xây dựng và bàn giao.
+              </p>
+              <p class="source-tag">Đối chiếu <a href="#ref-3">[3]</a></p>
+            </article>
+            <article class="concept" id="concept-10">
+              <h3>Chất lượng lợi nhuận và lợi ích cổ đông</h3>
+              <p>
+                Xem lợi nhuận đến từ đâu, có tiền tương ứng không và có thể lặp
+                lại không. Khi dùng tổng VCSH gồm lợi ích không kiểm soát, tử số
+                ROE phải cùng phạm vi.
+              </p>
+              <p class="application">
+                <strong>Gắn với HHS:</strong> Không trừ lãi trước thuế khỏi LNST
+                để gọi là lợi nhuận cốt lõi. Không đồng nhất vốn chủ hợp nhất
+                với toàn bộ vốn thuộc riêng cổ đông HHS.
+              </p>
+              <p class="source-tag">Đối chiếu <a href="#ref-3">[3]</a></p>
+            </article>
+          </div>
+          <div class="memory-sheet">
+            <div>
+              <h3>Bảng số liệu cần nhớ</h3>
+              <p>
+                Số gốc tính bằng đồng; các giá trị tiền dưới đây quy đổi tỷ
+                đồng, làm tròn hai chữ số. Tỷ số tính từ số chưa làm tròn.
+              </p>
+              <p class="note caution">
+                Cột 2025 khác phạm vi hợp nhất. ROA/ROE dùng bình quân đầu–cuối
+                kỳ và có giới hạn diễn giải. Không học các số này tách khỏi bối
+                cảnh.
+              </p>
+              <p class="source-tag">
+                Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                <a href="#ref-3">[3]</a>; lý luận <a href="#ref-9">[9]</a>
+                <a href="#ref-10">[10]</a> <a href="#ref-11">[11]</a>.
+              </p>
+            </div>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Bảng số liệu tài chính ba năm, cuộn ngang nếu cần"
+            >
+              <table>
+                <caption>
+                  Các chỉ tiêu của HHS trong bài báo cáo
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Chỉ tiêu</th>
+                    <th scope="col">2023</th>
+                    <th scope="col">2024</th>
+                    <th scope="col">2025*</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Doanh thu thuần (tỷ đồng)</th>
+                    <td>366,58</td>
+                    <td>571,23</td>
+                    <td>892,76</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">LNST hợp nhất (tỷ đồng)</th>
+                    <td>351,85</td>
+                    <td>368,62</td>
+                    <td>3.529,76</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Hiện hành (lần)</th>
+                    <td>6,04</td>
+                    <td>2,47</td>
+                    <td>4,62</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Nhanh rút gọn (lần)</th>
+                    <td>4,52</td>
+                    <td>1,86</td>
+                    <td>0,96</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Bằng tiền (lần)</th>
+                    <td>0,55</td>
+                    <td>0,12</td>
+                    <td>0,18</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Nợ phải trả / tài sản (%)</th>
+                    <td>3,69</td>
+                    <td>11,51</td>
+                    <td>29,78</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Biên lợi nhuận gộp (%)</th>
+                    <td>11,08</td>
+                    <td>11,19</td>
+                    <td>2,59</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">ROA (%)</th>
+                    <td>7,68</td>
+                    <td>7,26</td>
+                    <td>24,42</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">ROE tổng thể (%)</th>
+                    <td>8,12</td>
+                    <td>7,89</td>
+                    <td>33,15</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">CFO (tỷ đồng)</th>
+                    <td>82,90</td>
+                    <td>290,61</td>
+                    <td>1.988,40</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section id="van-dap" aria-labelledby="heading-viva">
+          <div class="section-intro">
+            <div>
+              <h2 id="heading-viva">32 câu hỏi luyện vấn đáp</h2>
+              <p class="lede">
+                Trả lời theo ba bước: nêu kết luận, dẫn số liệu, giải thích ý
+                nghĩa hoặc giới hạn. Các gợi ý giúp kiểm tra cách hiểu; không
+                cần học thuộc từng câu chữ.
+              </p>
+            </div>
+            <div class="answer-method">
+              <strong>Khi chưa chắc một câu trả lời</strong>
+              <p>
+                Nêu phần đã có nguồn, nói rõ điều chưa xác minh và chỉ ra dữ
+                liệu cần bổ sung. Không đoán số hoặc dùng một tỷ số để kết luận
+                toàn bộ tình hình.
+              </p>
+            </div>
+          </div>
+          <details class="opening-example">
+            <summary>Gợi ý đoạn trình bày mở đầu</summary>
+            <p>
+              Báo cáo của em phân tích tình hình tài chính hợp nhất HHS giai
+              đoạn 2023–2025 qua thanh toán, cơ cấu nợ và sinh lời. Công ty duy
+              trì vốn chủ sở hữu chiếm đa số, nhưng thanh khoản năm 2025 phụ
+              thuộc lớn vào tồn kho dự án. Lợi nhuận năm cuối tăng mạnh chủ yếu
+              chịu ảnh hưởng lãi đánh giá lại khi thay đổi hợp nhất, nên em
+              không xem đó là tăng trưởng kinh doanh hoàn toàn cùng phạm vi. Từ
+              đó, em ưu tiên quản trị ngân quỹ theo kỳ hạn, tiến độ hoàn thành
+              dự án và theo dõi lợi nhuận theo từng nguồn.
+            </p>
+          </details>
+          <div class="oral-controls">
+            <label for="question-search"
+              ><span>Tìm câu hỏi hoặc kiến thức</span
+              ><input
+                id="question-search"
+                type="search"
+                placeholder="Ví dụ: ROE, tiền gửi, hợp nhất…"
+                autocomplete="off" /></label
+            ><label for="question-topic"
+              ><span>Chủ đề</span
+              ><select id="question-topic">
+                <option value="all">Tất cả chủ đề</option>
+                <option value="phuong-phap">Doanh nghiệp và phương pháp</option>
+                <option value="thanh-khoan">Khả năng thanh toán</option>
+                <option value="no-von">Nợ và an toàn vốn</option>
+                <option value="sinh-loi">Khả năng sinh lời</option>
+                <option value="dong-tien">Dòng tiền</option>
+                <option value="giai-phap">Giải pháp và giới hạn</option>
+              </select></label
+            >
+          </div>
+          <div class="oral-toolbar">
+            <p id="question-count" aria-live="polite">32/32 câu hỏi</p>
+            <div>
+              <button
+                type="button"
+                id="expand-answers"
+                class="quiet-button"
+                aria-controls="question-list"
+              >
+                Hiện gợi ý</button
+              ><button
+                type="button"
+                id="collapse-answers"
+                class="quiet-button"
+                aria-controls="question-list"
+              >
+                Ẩn gợi ý</button
+              ><button type="button" id="clear-questions" class="quiet-button">
+                Xóa bộ lọc
+              </button>
+            </div>
+          </div>
+          <div class="question-grid" id="question-list">
+            <details
+              class="oral-question"
+              id="q-01"
+              data-question
+              data-topic="phuong-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 01</span
+                ><span
+                  ><small>Doanh nghiệp và phương pháp</small>Em đang phân tích
+                  HHS, TCH hay CRV? Vì sao phải phân biệt?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Đơn vị em nghiên cứu là Công ty Cổ phần Đầu tư Dịch vụ Hoàng
+                  Huy, mã HHS. TCH và CRV là các pháp nhân khác có quan hệ đầu
+                  tư. Em dùng số liệu hợp nhất do HHS công bố để giữ đúng đối
+                  tượng nghiên cứu.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    HHS hoạt động thương mại xe tải, phụ tùng và đầu tư bất động
+                    sản qua các đơn vị trong hệ thống.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không lấy một niên độ hoặc một
+                  báo cáo của TCH/CRV để thay số liệu HHS.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-4">[4]</a>
+                  <a href="#ref-5">[5]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-02"
+              data-question
+              data-topic="phuong-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 02</span
+                ><span
+                  ><small>Doanh nghiệp và phương pháp</small>Vì sao chọn giai
+                  đoạn 2023–2025 và dùng thêm số cuối 2022?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Ba năm đều đủ 12 tháng, từ 01/01 đến 31/12 và có BCTC hợp nhất
+                  kiểm toán. Số cuối 2022 là số đầu 2023, cần để tính tài sản và
+                  VCSH bình quân cho ROA, ROE năm 2023. Em vẫn nêu riêng điểm
+                  gãy hợp nhất năm 2025.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Dữ liệu kết quả kinh doanh là theo kỳ; tài sản và VCSH là số
+                    dư tại thời điểm.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không gọi ba năm là hoàn toàn
+                  cùng phạm vi; không ghép số lũy kế 2026 vào chuỗi năm đủ 12
+                  tháng.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                  <a href="#ref-3">[3]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-03"
+              data-question
+              data-topic="phuong-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 03</span
+                ><span
+                  ><small>Doanh nghiệp và phương pháp</small>Tại sao ưu tiên
+                  BCTC hợp nhất đã kiểm toán?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Báo cáo hợp nhất phù hợp khi đánh giá nguồn lực và kết quả của
+                  HHS cùng các đơn vị được kiểm soát. Em lấy bản kiểm toán làm
+                  dữ liệu chính, thống nhất đơn vị tiền và kỳ báo cáo; thuyết
+                  minh giúp kiểm tra chi tiết và khả năng so sánh.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Ba bộ báo cáo do AASC kiểm toán; các nguồn [1]–[3] có bảng
+                    cân đối, kết quả kinh doanh, lưu chuyển và thuyết minh.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Ý kiến kiểm toán không phải cam
+                  kết doanh nghiệp sẽ luôn có tiền hoặc lợi nhuận trong tương
+                  lai.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                  <a href="#ref-3">[3]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-04"
+              data-question
+              data-topic="phuong-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 04</span
+                ><span
+                  ><small>Doanh nghiệp và phương pháp</small>Năm 2025 không so
+                  sánh được, vì sao bài vẫn đặt bảng ba năm?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Bảng ba năm mô tả sự thay đổi của số đã công bố và giúp nhận
+                  diện thay đổi cấu trúc. Em không xem chênh lệch 2025 là tăng
+                  trưởng trên cùng phạm vi. Muốn đo tăng trưởng hữu cơ cần số
+                  liệu được tái lập cùng phạm vi và thời gian tham gia, hiện bài
+                  chưa có.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Thuyết minh 40, BCTC 2025 trang PDF 52 xác nhận giới hạn so
+                    sánh do hợp nhất lần đầu CRV, Nhà Đại Lộc và Đại Thịnh
+                    Vượng.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không tự dựng số pro forma hoặc
+                  chỉ bỏ lãi đánh giá lại rồi tuyên bố mọi yếu tố đã so sánh
+                  được.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-05"
+              data-question
+              data-topic="phuong-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 05</span
+                ><span
+                  ><small>Doanh nghiệp và phương pháp</small>Ba báo cáo tài
+                  chính và thuyết minh trả lời những câu hỏi gì?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Bảng cân đối cho biết doanh nghiệp có tài sản và nguồn tài trợ
+                  gì tại ngày chốt. Kết quả kinh doanh cho biết thu nhập, chi
+                  phí và lợi nhuận trong kỳ. Lưu chuyển tiền tệ cho biết tiền
+                  vào ra theo hoạt động; thuyết minh giải thích nội dung và
+                  chính sách phía sau các số đó.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Đánh giá HHS cần nối lợi nhuận với CFO, tồn kho, tiền gửi,
+                    người mua trả trước và sự kiện hợp nhất.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không suy ra lượng tiền có thể
+                  dùng ngay chỉ từ tổng tài sản hoặc LNST.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                  <a href="#ref-3">[3]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-06"
+              data-question
+              data-topic="phuong-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 06</span
+                ><span
+                  ><small>Doanh nghiệp và phương pháp</small>Mô hình kinh doanh
+                  HHS ảnh hưởng cách phân tích như thế nào?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Thương mại xe tải cần quản trị nhập hàng, tồn kho, thu nợ và
+                  thanh toán ngoại tệ. Bất động sản sử dụng vốn theo chu kỳ dự
+                  án, thu tiền và ghi doanh thu theo những thời điểm khác nhau.
+                  Vì vậy em đọc tỷ số cùng cơ cấu mảng và tiến độ bàn giao.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Tồn kho cuối 2025 bằng 68,63% tổng tài sản và chủ yếu mang
+                    đặc điểm bất động sản.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không áp máy móc một ngưỡng tỷ
+                  số chung cho cả thương mại và dự án bất động sản.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-4">[4]</a>
+                  <a href="#ref-7">[7]</a> <a href="#ref-8">[8]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-07"
+              data-question
+              data-topic="thanh-khoan"
+            >
+              <summary>
+                <span class="q-number">Câu 07</span
+                ><span
+                  ><small>Khả năng thanh toán</small>Hệ số hiện hành tính thế
+                  nào? Em giải thích mức 4,62 lần ra sao?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Em lấy TSNH chia nợ ngắn hạn. Năm 2025, 20.296,78 tỷ chia
+                  4.394,77 tỷ, được khoảng 4,62 lần. Nghĩa là giá trị TSNH ghi
+                  sổ bằng 4,62 lần nợ ngắn hạn, chưa chứng minh có thể thu đủ
+                  tiền đúng hạn.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Hiện hành 2023–2025 lần lượt 6,04; 2,47; 4,62. Phạm vi hợp
+                    nhất năm cuối thay đổi.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không diễn giải thành “có 4,62
+                  đồng tiền mặt cho mỗi đồng nợ”.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                  <a href="#ref-3">[3]</a> <a href="#ref-9">[9]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-08"
+              data-question
+              data-topic="thanh-khoan"
+            >
+              <summary>
+                <span class="q-number">Câu 08</span
+                ><span
+                  ><small>Khả năng thanh toán</small>Hệ số hiện hành cao có đủ
+                  để kết luận an toàn không?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Chưa đủ. Cần xem tài sản có dễ chuyển thành tiền không và lịch
+                  thu tiền có khớp lịch thực hiện nghĩa vụ không. Ở HHS, tồn kho
+                  bất động sản lớn khiến hệ số hiện hành cao nhưng sức thanh
+                  toán tức thời thấp hơn nhiều.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    2025: hiện hành 4,62; nhanh rút gọn 0,96; bằng tiền 0,18
+                    lần.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Cũng không kết luận mất khả
+                  năng thanh toán chỉ vì hệ số tiền thấp hơn 1; cần lịch tiền cụ
+                  thể.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-9">[9]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-09"
+              data-question
+              data-topic="thanh-khoan"
+            >
+              <summary>
+                <span class="q-number">Câu 09</span
+                ><span
+                  ><small>Khả năng thanh toán</small>Công thức hệ số nhanh trong
+                  bài khác công thức theo tài sản thanh khoản thế nào?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Bài công khai cách rút gọn: (TSNH − tồn kho) chia nợ ngắn hạn.
+                  Công thức theo tài sản thanh khoản chỉ lấy tiền, đầu tư ngắn
+                  hạn và khoản phải thu phù hợp, loại cả trả trước. Biến thể
+                  loại thêm TSNH khác của bài vẫn còn trả trước người bán trong
+                  phải thu, nên chưa phải tiền sẵn dùng.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>2025: nhanh rút gọn 0,96; loại thêm TSNH khác 0,91 lần.</p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không gán số 0,91 lần thành một
+                  hệ số đã loại sạch mọi khoản kém thanh khoản.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-9">[9]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-10"
+              data-question
+              data-topic="thanh-khoan"
+            >
+              <summary>
+                <span class="q-number">Câu 10</span
+                ><span
+                  ><small>Khả năng thanh toán</small>Hệ số bằng tiền 0,18 lần có
+                  nghĩa doanh nghiệp mất khả năng trả nợ?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Nó cho thấy tiền và tương đương tiền tại ngày chốt thấp hơn nợ
+                  ngắn hạn. Đây là dấu hiệu cần theo dõi ngân quỹ, chưa tự xác
+                  định mất khả năng thanh toán. Nghĩa vụ không nhất thiết đến
+                  hạn cùng lúc; doanh nghiệp còn có thu tiền, tiền gửi đến hạn
+                  và nguồn tài trợ hợp lệ.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Tiền và tương đương tiền 791,04 tỷ; nợ ngắn hạn 4.394,77 tỷ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Cần phân biệt khả năng trang
+                  trải bằng số dư tiền tại một thời điểm với khả năng thực hiện
+                  nghĩa vụ theo kỳ hạn.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-9">[9]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-11"
+              data-question
+              data-topic="thanh-khoan"
+            >
+              <summary>
+                <span class="q-number">Câu 11</span
+                ><span
+                  ><small>Khả năng thanh toán</small>Có thể cộng toàn bộ tiền
+                  gửi ngắn hạn vào tiền tương đương không?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Không tự động. Phải xét kỳ hạn và điều kiện sử dụng theo phân
+                  loại trong BCTC. HHS có tiền gửi 6–12 tháng thuộc đầu tư ngắn
+                  hạn và một phần dùng bảo đảm L/C, bảo lãnh. Cộng thêm đầu tư
+                  ngắn hạn chỉ tạo chỉ báo mở rộng có điều kiện, không đổi thành
+                  hệ số tiền.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Đầu tư ngắn hạn 2.398,92 tỷ; tiền gửi bảo đảm khoảng 291,89
+                    tỷ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không gọi toàn bộ phần tiền gửi
+                  còn lại là tiền tự do khi chưa biết ngày đáo hạn và các ràng
+                  buộc khác.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-12"
+              data-question
+              data-topic="thanh-khoan"
+            >
+              <summary>
+                <span class="q-number">Câu 12</span
+                ><span
+                  ><small>Khả năng thanh toán</small>Vốn lưu động ròng dương có
+                  phải là tiền dư không?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Không. VLĐ ròng bằng TSNH trừ nợ ngắn hạn, thể hiện phần nguồn
+                  dài hạn tài trợ TSNH theo bảng cân đối. Phần này có thể đang
+                  nằm trong tồn kho và phải thu; muốn biết tiền dư phải lập ngân
+                  quỹ và xét khả năng chuyển đổi tài sản.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>HHS 2025: VLĐ ròng 15.902,01 tỷ đồng.</p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không lấy VLĐ ròng làm căn cứ
+                  trực tiếp để chia cổ tức hoặc quyết định số tiền có thể đầu tư
+                  thêm.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-13"
+              data-question
+              data-topic="thanh-khoan"
+            >
+              <summary>
+                <span class="q-number">Câu 13</span
+                ><span
+                  ><small>Khả năng thanh toán</small>Tồn kho 68,63% tổng tài sản
+                  đặt ra vấn đề gì?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Vốn tập trung lớn vào tài sản cần tiến độ pháp lý, xây dựng,
+                  tiêu thụ và bàn giao để thu hồi. Em đề xuất theo dõi theo dự
+                  án và nhóm sản phẩm, chi phí hoàn thành, lịch thu tiền, tuổi
+                  tồn kho; không chỉ đặt mục tiêu giảm tổng số tồn kho.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Tồn kho cuối 2025 16.078,61 tỷ đồng; quy mô tăng mạnh còn do
+                    thay đổi hợp nhất.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không quy toàn bộ tăng tồn kho
+                  thành tiền chi trong năm; không gọi tất cả tồn kho bất động
+                  sản là ứ đọng khi chưa xét tiến độ.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-14"
+              data-question
+              data-topic="no-von"
+            >
+              <summary>
+                <span class="q-number">Câu 14</span
+                ><span
+                  ><small>Nợ và an toàn vốn</small>Hệ số nợ 29,78% có nghĩa HHS
+                  vay ngân hàng bằng 29,78% tài sản?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Không. Tử số hệ số nợ là toàn bộ nợ phải trả, gồm nhiều nghĩa
+                  vụ. Vay ngân hàng chỉ là một phần. Em phân tích riêng các
+                  khoản vay, người mua trả trước, phải trả người bán và thuế
+                  hoãn lại để đánh giá áp lực thực hiện nghĩa vụ.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Nợ phải trả 6.975,85 tỷ; vay cuối kỳ 390,00 tỷ, tương đương
+                    1,66% tài sản.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không dùng toàn bộ nợ phải trả
+                  để suy chi phí lãi vay ngân hàng.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-10">[10]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-15"
+              data-question
+              data-topic="no-von"
+            >
+              <summary>
+                <span class="q-number">Câu 15</span
+                ><span
+                  ><small>Nợ và an toàn vốn</small>Hệ số nợ, tự tài trợ và
+                  nợ/VCSH khác nhau ở đâu?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Hệ số nợ so nợ phải trả với tổng tài sản. Tự tài trợ so VCSH
+                  với tài sản; hai tỷ trọng này cộng thành 100% theo đẳng thức
+                  kế toán. Nợ/VCSH so nguồn nợ với vốn chủ và thường trình bày
+                  bằng lần.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    HHS 2025: nợ/tài sản 29,78%; tự tài trợ 70,22%; nợ/VCSH 0,42
+                    lần.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không đọc 0,42 lần thành 0,42%
+                  và không coi tỷ trọng nợ thấp là bảo đảm không có rủi ro.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-10">[10]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-16"
+              data-question
+              data-topic="no-von"
+            >
+              <summary>
+                <span class="q-number">Câu 16</span
+                ><span
+                  ><small>Nợ và an toàn vốn</small>Tiền người mua trả trước có
+                  phải doanh thu hoặc vốn miễn phí?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Không tự động là doanh thu hay lợi nhuận. Tiền đã nhận gắn với
+                  nghĩa vụ thực hiện hợp đồng và bàn giao; công ty còn phải chi
+                  để hoàn thành cam kết. Nó hỗ trợ tài trợ tiến độ nhưng cần
+                  được quản lý cùng dự toán chi phí và lịch bàn giao.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Người mua trả trước ngắn hạn cuối 2025 khoảng 3.530,00 tỷ
+                    đồng.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không loại hết khoản ứng trước
+                  khỏi đánh giá thanh khoản hoặc coi có thể phân phối số tiền
+                  này tùy ý.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-17"
+              data-question
+              data-topic="no-von"
+            >
+              <summary>
+                <span class="q-number">Câu 17</span
+                ><span
+                  ><small>Nợ và an toàn vốn</small>Thuế hoãn lại phải trả có
+                  giống khoản vay đến hạn không?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Không. Đây là nghĩa vụ thuế được ghi nhận theo chênh lệch kế
+                  toán và thuế, có cơ chế phát sinh tiền khác khoản vay. Em vẫn
+                  giữ trong nợ phải trả khi tính hệ số nợ, đồng thời phân tích
+                  bản chất và thời điểm dự kiến thực hiện riêng.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Thuế TNDN hoãn lại phải trả cuối 2025 khoảng 2.166,97 tỷ
+                    đồng.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không gọi là nợ ngân hàng; cũng
+                  không xóa khỏi nghĩa vụ dài hạn chỉ vì chưa chi tiền ngay.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-18"
+              data-question
+              data-topic="no-von"
+            >
+              <summary>
+                <span class="q-number">Câu 18</span
+                ><span
+                  ><small>Nợ và an toàn vốn</small>Nợ ngắn hạn năm 2024 tăng chủ
+                  yếu do đâu?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Theo bảng cân đối, phải trả người bán ngắn hạn tăng mạnh,
+                  trong khi người mua trả trước giảm. Vì vậy em không giải thích
+                  mức tăng nợ 2024 bằng tiền ứng trước khách hàng. Đây là ví dụ
+                  cần đọc thành phần nợ trước khi nhận xét tỷ số tổng.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Phải trả người bán: 49,05 lên 496,72 tỷ; người mua trả
+                    trước: 11,18 xuống 8,05 tỷ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không áp nguyên nhân của năm
+                  2025 vào năm 2024 chỉ vì cùng thấy tổng nợ tăng.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-19"
+              data-question
+              data-topic="no-von"
+            >
+              <summary>
+                <span class="q-number">Câu 19</span
+                ><span
+                  ><small>Nợ và an toàn vốn</small>Vì sao hệ số thanh toán lãi
+                  vay 2024 không xác định, còn 2025 rất cao?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Bài tính (LNTT + chi phí lãi vay ghi nhận) chia chi phí lãi
+                  vay. Năm 2024 mẫu số bằng 0 nên không xác định. Năm 2025 tử số
+                  chứa lãi đánh giá lại lớn, mẫu số lãi nhỏ; hệ số rất cao chưa
+                  chứng minh dòng tiền trả lãi bền vững.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    TIE 2025 khoảng 3.696,75 lần; chi phí lãi vay ghi nhận 0,96
+                    tỷ đồng.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không điền 0 cho phép chia mẫu
+                  0, không lấy TIE cao làm lý do tự động tăng vay.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-2">[2]</a> <a href="#ref-3">[3]</a>
+                  <a href="#ref-10">[10]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-20"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 20</span
+                ><span
+                  ><small>Khả năng sinh lời</small>Lợi nhuận năm 2025 tăng mạnh
+                  chủ yếu do đâu?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Lợi nhuận hợp nhất chịu ảnh hưởng quyết định của lãi đánh giá
+                  lại đầu tư khi thay đổi quyền kiểm soát CRV. Đây là thu nhập
+                  kế toán do giao dịch hợp nhất, không phải toàn bộ là hiệu quả
+                  bán hàng và không phải tiền kinh doanh thu cùng giá trị.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    LNST 3.529,76 tỷ; lãi đánh giá lại trước thuế 3.488,72 tỷ,
+                    bằng 98,20% LNTT.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không dùng số báo cáo quý chưa
+                  kiểm toán thay số kiểm toán hoặc trộn lãi trước thuế với LNST.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-21"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 21</span
+                ><span
+                  ><small>Khả năng sinh lời</small>Nếu bỏ lãi đánh giá lại, lợi
+                  nhuận cốt lõi còn 64,11 tỷ đúng không?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Chỉ có thể nói LNTT công bố trừ riêng khoản lãi đánh giá lại
+                  còn khoảng 64,11 tỷ đồng. Đây là phép minh họa độ phụ thuộc
+                  vào một khoản mục trước thuế; chưa loại các yếu tố khác, chưa
+                  chuẩn hóa thuế nên không được gọi là lợi nhuận cốt lõi hoặc
+                  LNST điều chỉnh.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    3.552,82 − 3.488,72 ≈ 64,11 tỷ đồng, cùng cơ sở trước thuế.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không lấy LNST trừ trực tiếp
+                  lãi đánh giá lại trước thuế rồi gán tên “lợi nhuận thường
+                  xuyên”.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-22"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 22</span
+                ><span
+                  ><small>Khả năng sinh lời</small>Vì sao ROS 395,38% nhưng biên
+                  gộp chỉ 2,59%?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Biên gộp chỉ phản ánh phần doanh thu còn lại sau giá vốn. ROS
+                  dùng LNST hợp nhất, có ảnh hưởng của tài chính và giao dịch
+                  hợp nhất ngoài doanh thu bán hàng. Vì tử và mẫu có phạm vi nội
+                  dung khác, ROS có thể vượt 100% trong trường hợp này.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Doanh thu thuần 892,76 tỷ; lợi nhuận gộp 23,13 tỷ; LNST
+                    3.529,76 tỷ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không diễn giải bán 100 đồng
+                  hàng hóa trực tiếp thu 395 đồng tiền lãi từ bán hàng.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-11">[11]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-23"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 23</span
+                ><span
+                  ><small>Khả năng sinh lời</small>ROA và ROE đo gì? Bài đang
+                  dùng quy ước nào?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  ROA liên hệ LNST hợp nhất với tài sản bình quân; ROE liên hệ
+                  cùng LNST với tổng VCSH bình quân. Em nêu rõ cách tính để
+                  người đọc kiểm tra, thay vì coi mọi biến thể ROA/ROE trong
+                  giáo trình đều đồng nhất.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    2025: ROA 24,42%; ROE tổng thể 33,15%. Mẫu số dùng bình quân
+                    đầu và cuối kỳ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Nếu chuyển sang một định nghĩa
+                  khác theo yêu cầu giảng viên, phải đổi nhất quán cả tử số, mẫu
+                  số và chuỗi so sánh.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-11">[11]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-24"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 24</span
+                ><span
+                  ><small>Khả năng sinh lời</small>LNST mẹ lớn hơn LNST hợp nhất
+                  có phải báo cáo sai?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Không. LNST hợp nhất bằng phần thuộc cổ đông mẹ cộng phần
+                  thuộc cổ đông không kiểm soát. Năm 2025 phần không kiểm soát
+                  là khoản lỗ, nên LNST thuộc mẹ lớn hơn tổng. Khi tính ROE của
+                  mẹ phải dùng VCSH thuộc mẹ tương ứng.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>3.553,22 + (-23,46) ≈ 3.529,76 tỷ đồng.</p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không ghép LNST mẹ với tổng
+                  VCSH có cả lợi ích không kiểm soát rồi gọi là ROE tổng thể.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-25"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 25</span
+                ><span
+                  ><small>Khả năng sinh lời</small>Vì sao dùng tài sản, VCSH
+                  bình quân và hạn chế năm 2025 là gì?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Lợi nhuận phát sinh trong cả năm, còn số dư cuối năm chỉ phản
+                  ánh một thời điểm. Bình quân đầu–cuối là cách xấp xỉ nguồn lực
+                  dùng trong kỳ. Năm 2025 hai số dư khác phạm vi hợp nhất, nên
+                  bình quân hai điểm chưa phản ánh đầy đủ thời điểm nguồn lực
+                  mới tham gia.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Tài sản bình quân theo bài 14.452,50 tỷ; VCSH bình quân
+                    10.649,38 tỷ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không khẳng định tỷ suất 2025
+                  đo hiệu suất tăng trưởng trên cùng một nền tài sản suốt năm.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                  <a href="#ref-3">[3]</a> <a href="#ref-11">[11]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-26"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 26</span
+                ><span
+                  ><small>Khả năng sinh lời</small>DuPont cho thấy động lực ROE
+                  năm 2025 nằm ở đâu?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  DuPont tách ROE thành ROS, vòng quay tài sản và hệ số nhân
+                  VCSH. Ở HHS, ROS tăng mạnh do lãi đánh giá lại, trong khi vòng
+                  quay tài sản giảm theo số công bố. Vì vậy không thể quy ROE
+                  tăng cho việc tài sản tạo doanh thu nhanh hơn.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    2025: ROS 395,38%; vòng quay tài sản 0,06177 lần; hệ số nhân
+                    1,35712 lần. Tích dùng số chưa làm tròn.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Trong phép nhân phải đổi ROS từ
+                  phần trăm sang số thập phân và dùng cùng cơ sở bình quân.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-3">[3]</a> <a href="#ref-11">[11]</a>
+                </p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-27"
+              data-question
+              data-topic="sinh-loi"
+            >
+              <summary>
+                <span class="q-number">Câu 27</span
+                ><span
+                  ><small>Khả năng sinh lời</small>ROE cao hơn có luôn tốt hơn?
+                  Biên gộp giảm có phải riêng xe tải kém đi?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  ROE cần được tách ảnh hưởng lợi nhuận một lần và cơ cấu vốn,
+                  không chỉ so mức cao thấp. Biên gộp hợp nhất giảm cũng cần đọc
+                  theo mảng: bất động sản/dịch vụ và tổn thất bất động sản đầu
+                  tư tác động đến số chung; chưa thể quy riêng mảng xe tải suy
+                  yếu.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    2025: doanh thu ô tô/phụ tùng 699,58 tỷ, giá vốn 591,34 tỷ;
+                    bất động sản/dịch vụ 193,16 và 258,47 tỷ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không kết luận nguyên nhân cho
+                  từng sản phẩm khi thiếu giá bán, sản lượng và giá vốn tương
+                  ứng.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-28"
+              data-question
+              data-topic="dong-tien"
+            >
+              <summary>
+                <span class="q-number">Câu 28</span
+                ><span
+                  ><small>Dòng tiền</small>CFO 1.988,40 tỷ chứng minh lợi nhuận
+                  đã chuyển thành tiền chưa?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Chưa. CFO dương là nguồn tiền quan trọng nhưng phải đọc thành
+                  phần vốn lưu động. Năm 2025 biến động phải trả và tiền ứng
+                  trước hỗ trợ dòng tiền; công ty còn nghĩa vụ dự án. Lãi đánh
+                  giá lại không phải khoản tiền kinh doanh thu cùng giá trị.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    CFO 1.988,40 tỷ; tác động tăng phải trả trong CFO khoảng
+                    3.093,07 tỷ; CFO/LNST 0,56 lần.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không đồng nhất số tăng phải
+                  trả trên lưu chuyển với toàn bộ biến động số dư, nhất là khi
+                  có hợp nhất mới.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-29"
+              data-question
+              data-topic="dong-tien"
+            >
+              <summary>
+                <span class="q-number">Câu 29</span
+                ><span
+                  ><small>Dòng tiền</small>CFI âm hoặc CFF dương có phải dấu
+                  hiệu xấu/tốt cố định?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Không. CFI âm có thể do đầu tư và cần xét tài sản nhận được,
+                  dòng tiền tương lai, giao dịch hợp nhất. CFF dương cho thấy
+                  nhận tài trợ ròng, chưa tự chứng minh kinh doanh tốt. Em đọc
+                  cả ba dòng cùng nhu cầu vốn và nguồn hoàn trả.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    2025: CFO 1.988,40; CFI -1.413,22; CFF 142,88 tỷ đồng. Tổng
+                    lưu chuyển thuần 718,06 tỷ.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không tự đổi dấu một dòng tiền
+                  bất thường trong báo cáo gốc hoặc suy nguyên nhân khi chưa có
+                  đối chiếu chi tiết.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-30"
+              data-question
+              data-topic="giai-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 30</span
+                ><span
+                  ><small>Giải pháp và giới hạn</small>Nếu chỉ được chọn ba giải
+                  pháp ưu tiên, em chọn gì và vì sao?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Em ưu tiên ngân quỹ cuốn chiếu để biết tiền khả dụng và thời
+                  điểm thiếu; quản trị dự án/tồn kho theo chi phí hoàn thành và
+                  lịch bàn giao; báo cáo lợi nhuận theo nguồn và theo mảng để
+                  tách ảnh hưởng đánh giá lại. Cả ba gắn trực tiếp với vấn đề đã
+                  phân tích.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Căn cứ: tồn kho/tài sản 68,63% và hệ số tiền 0,18 lần; lãi
+                    đánh giá lại chiếm 98,20% LNTT.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Nêu đây là đề xuất của người
+                  phân tích, không mô tả như chính sách HHS đã triển khai.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-3">[3]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-31"
+              data-question
+              data-topic="giai-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 31</span
+                ><span
+                  ><small>Giải pháp và giới hạn</small>Kế hoạch 2026 doanh thu
+                  3.000 tỷ, LNTT 750 tỷ có phải kết quả thực hiện?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Đây là kế hoạch được công bố trong BCTN 2025, không phải số
+                  thực hiện hoặc dự báo chắc chắn của bài. LNTT 2025 có lãi đánh
+                  giá lại lớn nên không dùng chênh lệch với kế hoạch 2026 để tự
+                  kết luận hoạt động sẽ suy giảm.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>BCTN 2025, trang in 40–41; nguồn [4].</p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không đưa kế hoạch vào cột số
+                  thực tế và không trộn niên độ của pháp nhân khác.
+                </p>
+                <p class="source-tag">Nguồn <a href="#ref-4">[4]</a></p>
+              </div>
+            </details>
+            <details
+              class="oral-question"
+              id="q-32"
+              data-question
+              data-topic="giai-phap"
+            >
+              <summary>
+                <span class="q-number">Câu 32</span
+                ><span
+                  ><small>Giải pháp và giới hạn</small>Giới hạn lớn nhất của bài
+                  là gì? Nếu chưa có dữ liệu để trả lời thì làm sao?</span
+                >
+              </summary>
+              <div class="answer">
+                <p class="answer-label">Gợi ý trả lời</p>
+                <p>
+                  Giới hạn lớn là điểm gãy hợp nhất năm 2025, ảnh hưởng khoản
+                  lãi một lần, số bình quân hai điểm và thiếu cơ sở ngành cùng
+                  phạm vi. Nếu bị hỏi ngoài dữ liệu, em nêu điều đã kiểm chứng,
+                  chỉ rõ phần chưa có và nguồn cần tra thêm, thay vì đoán số.
+                </p>
+                <div class="answer-evidence">
+                  <strong>Căn cứ nên nêu</strong>
+                  <p>
+                    Có thể cần dữ liệu cùng phạm vi, lịch đáo hạn tiền gửi, dòng
+                    tiền dự án và đối thủ thực sự tương đồng.
+                  </p>
+                </div>
+                <p class="pitfall">
+                  <strong>Điểm dễ nhầm:</strong> Không sáng tác chuẩn ngành, dữ
+                  liệu pro forma hoặc nguyên nhân điều chỉnh kiểm toán chưa xác
+                  minh.
+                </p>
+                <p class="source-tag">
+                  Nguồn <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+                  <a href="#ref-3">[3]</a>
+                </p>
+              </div>
+            </details>
+          </div>
+          <p id="no-questions" class="empty" hidden>
+            Chưa có câu hỏi khớp cả nội dung tìm và chủ đề đã chọn. Chọn “Xóa bộ
+            lọc” để xem đủ 32 câu.
+          </p>
+        </section>
+        <section id="kiem-tra" aria-labelledby="heading-check">
+          <div class="check-header">
+            <h2 id="heading-check">Kiểm tra trước khi nộp</h2>
+            <span class="check-count" id="check-count" aria-live="polite"
+              >0/8 mục đã kiểm tra</span
+            >
+          </div>
+          <progress
+            id="check-progress"
+            max="8"
+            value="0"
+            aria-label="Tiến độ kiểm tra trước khi nộp"
+          ></progress>
+          <div id="checklist">
+            <label class="check-item" for="check-identity"
+              ><input type="checkbox" id="check-identity" data-check /><span
+                ><strong>Đúng thông tin cá nhân</strong
+                ><small
+                  >Nguyễn Ngọc Đào; QTTCKT-K25; 243134101160; cô Th. Nguyễn Thị
+                  Liên; học phần Quản trị tài chính 2.</small
+                ></span
+              ></label
+            >
+            <label class="check-item" for="check-outline"
+              ><input type="checkbox" id="check-outline" data-check /><span
+                ><strong>Đủ đề cương ba chương</strong
+                ><small
+                  >Có mở đầu, ba nhóm phân tích ở Chương 2, đánh giá và giải
+                  pháp ở Chương 3, kết luận và tài liệu tham khảo.</small
+                ></span
+              ></label
+            >
+            <label class="check-item" for="check-data"
+              ><input type="checkbox" id="check-data" data-check /><span
+                ><strong>Đúng nguồn và đơn vị số liệu</strong
+                ><small
+                  >Dùng BCTC hợp nhất kiểm toán 2023–2025; số gốc bằng đồng,
+                  bảng phân tích bằng tỷ đồng; tính trước rồi làm tròn.</small
+                ></span
+              ></label
+            >
+            <label class="check-item" for="check-interpretation"
+              ><input
+                type="checkbox"
+                id="check-interpretation"
+                data-check
+              /><span
+                ><strong>Giữ các lưu ý quan trọng năm 2025</strong
+                ><small
+                  >Có giới hạn so sánh do hợp nhất, lãi đánh giá lại, cơ sở tính
+                  ROE và phân biệt tiền với tài sản ngắn hạn.</small
+                ></span
+              ></label
+            >
+            <label class="check-item" for="check-toc"
+              ><input type="checkbox" id="check-toc" data-check /><span
+                ><strong>Mục lục khớp bản cuối</strong
+                ><small
+                  >Kiểm lại mọi số trang sau khi sửa; bìa không hiện số, mục lục
+                  bắt đầu từ số 1.</small
+                ></span
+              ></label
+            >
+            <label class="check-item" for="check-layout"
+              ><input type="checkbox" id="check-layout" data-check /><span
+                ><strong>Xem lại toàn bộ bản PDF đã xuất</strong
+                ><small
+                  >Không có trang trắng ngoài ý muốn, bảng bị cắt số, tiêu đề
+                  đứng một mình hoặc ảnh phụ lục bị méo.</small
+                ></span
+              ></label
+            >
+            <label class="check-item" for="check-appendix"
+              ><input type="checkbox" id="check-appendix" data-check /><span
+                ><strong>BCTC nằm sau tài liệu tham khảo</strong
+                ><small
+                  >Nếu dùng bản PDF đầy đủ, giữ trọn phần tiếng Việt của cả ba
+                  năm và đủ thuyết minh.</small
+                ></span
+              ></label
+            >
+            <label class="check-item" for="check-delivery"
+              ><input type="checkbox" id="check-delivery" data-check /><span
+                ><strong>Giữ bản Word và chốt đúng bản nộp</strong
+                ><small
+                  >Đặt tên tệp rõ ràng; xác nhận định dạng nộp với giảng viên;
+                  mở thử tệp cuối trên thiết bị sẽ sử dụng.</small
+                ></span
+              ></label
+            >
+          </div>
+          <div class="check-footer">
+            <p class="small" id="save-status">
+              Tiến độ được lưu trong trình duyệt này khi trình duyệt cho phép.
+            </p>
+            <button class="quiet-button" type="button" id="reset-checks">
+              Bỏ tích tất cả
+            </button>
+          </div>
+        </section>
+        <section id="nguon" aria-labelledby="heading-sources">
+          <h2 id="heading-sources">Mở lại 11 nguồn trong tài liệu tham khảo</h2>
+          <p>
+            Các số <strong>[1]–[11]</strong> giữ nguyên như trong báo cáo. Nguồn
+            [1]–[4] là báo cáo chính thức; [5]–[8] là trang doanh nghiệp;
+            [9]–[11] là nguồn lý luận OpenStax. Ngày truy cập ghi trong báo cáo:
+            <strong>12/11/2026</strong>.
+          </p>
+          <p class="small">
+            “Trang PDF” ở các mô tả được đếm từ trang đầu tệp nguồn, bắt đầu
+            bằng 1. “Trang in” là số được in trên tài liệu. Các liên kết trỏ
+            trực tiếp tới website doanh nghiệp và nguồn học thuật. Nếu một địa
+            chỉ thay đổi, có thể tra lại tên báo cáo trên trang quan hệ cổ đông
+            HHS.
+          </p>
+          <label class="search" for="source-search"
+            ><span>Tìm nguồn theo năm, tên hoặc chủ đề</span
+            ><input
+              id="source-search"
+              type="search"
+              placeholder="Ví dụ: 2025, thanh khoản, DuPont…"
+              autocomplete="off"
+          /></label>
+          <p class="source-status" id="source-count" aria-live="polite">
+            Đang hiển thị đủ 11 nguồn
+          </p>
+          <ol class="references" aria-label="Tài liệu tham khảo">
+            <li
+              class="reference"
+              id="ref-1"
+              data-reference
+              data-group="Báo cáo chính thức"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[1]</span>
+                <div>
+                  <h3>BCTC hợp nhất kiểm toán năm 2023</h3>
+                  <p class="publisher">HHS · AASC kiểm toán ngày 19/03/2024</p>
+                </div>
+              </div>
+              <p>
+                Nguồn số liệu năm 2023 và số đầu kỳ để tính bình quân. Bảng cân
+                đối: trang PDF 7–8; kết quả kinh doanh: 9; lưu chuyển tiền tệ:
+                10–11.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/20240319%20-%20HHS%20-%20BCTC%202023%20kiem%20toan%20Hop%20nhat.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/20240319%20-%20HHS%20-%20BCTC%202023%20kiem%20toan%20Hop%20nhat.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/images/uploadfiles/20240319%20-%20HHS%20-%20BCTC%202023%20kiem%20toan%20Hop%20nhat.pdf</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-2"
+              data-reference
+              data-group="Báo cáo chính thức"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[2]</span>
+                <div>
+                  <h3>BCTC hợp nhất kiểm toán năm 2024</h3>
+                  <p class="publisher">HHS · AASC kiểm toán ngày 14/03/2025</p>
+                </div>
+              </div>
+              <p>
+                Bảng cân đối: trang PDF 7–8; kết quả kinh doanh: 9; lưu chuyển
+                tiền tệ: 10–11. Phần tiếng Việt đầy đủ ở trang 1–42; tiếp sau là
+                bản tiếng Anh.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/20250314%20-%20HHS%20-%20BCTC%20kiem%20toan%20Hop%20nhat%202024.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/20250314%20-%20HHS%20-%20BCTC%20kiem%20toan%20Hop%20nhat%202024.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/images/uploadfiles/20250314%20-%20HHS%20-%20BCTC%20kiem%20toan%20Hop%20nhat%202024.pdf</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-3"
+              data-reference
+              data-group="Báo cáo chính thức"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[3]</span>
+                <div>
+                  <h3>BCTC hợp nhất kiểm toán năm 2025</h3>
+                  <p class="publisher">HHS · AASC kiểm toán ngày 27/03/2026</p>
+                </div>
+              </div>
+              <p>
+                Bảng cân đối: 7–9; kết quả kinh doanh: 10; lưu chuyển tiền tệ:
+                11–12. Hợp nhất kinh doanh: 24–25; thu nhập tài chính: 45; giới
+                hạn so sánh: 52. Phần tiếng Việt đầy đủ: 1–52.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/20260328%20-%20HHS%20-%20Bao%20cao%20tai%20chinh%20nam%202025%20kiem%20toan%20Hop%20nhat.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/20260328%20-%20HHS%20-%20Bao%20cao%20tai%20chinh%20nam%202025%20kiem%20toan%20Hop%20nhat.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/images/uploadfiles/20260328%20-%20HHS%20-%20Bao%20cao%20tai%20chinh%20nam%202025%20kiem%20toan%20Hop%20nhat.pdf</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-4"
+              data-reference
+              data-group="Báo cáo chính thức"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[4]</span>
+                <div>
+                  <h3>Báo cáo thường niên năm 2025</h3>
+                  <p class="publisher">HHS · Công bố tháng 04/2026</p>
+                </div>
+              </div>
+              <p>
+                Lịch sử và thông tin doanh nghiệp: trang in 08–11. Hoạt động và
+                kế hoạch: trang in 38–45. Tên tệp có “2026” nhưng nội dung là
+                báo cáo thường niên năm 2025.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/BCTN_HHS2026_V_web.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/images/uploadfiles/BCTN_HHS2026_V_web.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/images/uploadfiles/BCTN_HHS2026_V_web.pdf</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-5"
+              data-reference
+              data-group="Thông tin doanh nghiệp"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[5]</span>
+                <div>
+                  <h3>Giới thiệu doanh nghiệp, tầm nhìn và sứ mệnh</h3>
+                  <p class="publisher">Website chính thức của HHS</p>
+                </div>
+              </div>
+              <p>
+                Dùng cho giới thiệu doanh nghiệp và nội dung tầm nhìn, sứ mệnh
+                trong Chương 1.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/gioi-thieu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/gioi-thieu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/gioi-thieu/</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-6"
+              data-reference
+              data-group="Thông tin doanh nghiệp"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[6]</span>
+                <div>
+                  <h3>Quan hệ cổ đông và thông tin cổ phiếu HHS</h3>
+                  <p class="publisher">Website chính thức của HHS</p>
+                </div>
+              </div>
+              <p>
+                Tra cứu thông tin cổ phiếu, công bố và tài liệu dành cho cổ
+                đông.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/quan-he-co-dong"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/quan-he-co-dong"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/quan-he-co-dong</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-7"
+              data-reference
+              data-group="Thông tin doanh nghiệp"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[7]</span>
+                <div>
+                  <h3>Thương mại dịch vụ</h3>
+                  <p class="publisher">Website chính thức của HHS</p>
+                </div>
+              </div>
+              <p>
+                Thông tin về xe tải, phụ tùng và dịch vụ sau bán của doanh
+                nghiệp.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/thuong-mai-dich-vu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/thuong-mai-dich-vu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/thuong-mai-dich-vu/</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-8"
+              data-reference
+              data-group="Thông tin doanh nghiệp"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[8]</span>
+                <div>
+                  <h3>Bất động sản</h3>
+                  <p class="publisher">Website chính thức của HHS</p>
+                </div>
+              </div>
+              <p>
+                Thông tin về hoạt động bất động sản; chú ý đơn vị đầu tư và pháp
+                nhân thực hiện dự án.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://www.hoanghuyhhs.vn/bat-dong-san/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://www.hoanghuyhhs.vn/bat-dong-san/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://www.hoanghuyhhs.vn/bat-dong-san/</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-9"
+              data-reference
+              data-group="Nguồn lý luận"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[9]</span>
+                <div>
+                  <h3>Liquidity Ratios — Các tỷ số thanh khoản</h3>
+                  <p class="publisher">
+                    Dahlquist, J. và Knight, R. (2022) · OpenStax, mục 6.3
+                  </p>
+                </div>
+              </div>
+              <p>
+                Nguồn lý luận về thanh khoản. Phân biệt công thức nhanh theo các
+                tài sản thanh khoản với công thức nhanh rút gọn được công khai
+                trong bài.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://openstax.org/books/principles-finance/pages/6-3-liquidity-ratios"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://openstax.org/books/principles-finance/pages/6-3-liquidity-ratios"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://openstax.org/books/principles-finance/pages/6-3-liquidity-ratios</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-10"
+              data-reference
+              data-group="Nguồn lý luận"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[10]</span>
+                <div>
+                  <h3>Solvency Ratios — Các tỷ số về khả năng trả nợ</h3>
+                  <p class="publisher">
+                    Dahlquist, J. và Knight, R. (2022) · OpenStax, mục 6.4
+                  </p>
+                </div>
+              </div>
+              <p>
+                Nguồn lý luận về cơ cấu tài trợ, mức nợ và khả năng đáp ứng
+                nghĩa vụ.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://openstax.org/books/principles-finance/pages/6-4-solvency-ratios"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://openstax.org/books/principles-finance/pages/6-4-solvency-ratios"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://openstax.org/books/principles-finance/pages/6-4-solvency-ratios</a
+                >
+              </details>
+            </li>
+            <li
+              class="reference"
+              id="ref-11"
+              data-reference
+              data-group="Nguồn lý luận"
+            >
+              <div class="reference-heading">
+                <span class="reference-number">[11]</span>
+                <div>
+                  <h3>Profitability Ratios and the DuPont Method</h3>
+                  <p class="publisher">
+                    Dahlquist, J. và Knight, R. (2022) · OpenStax, mục 6.6
+                  </p>
+                </div>
+              </div>
+              <p>
+                Nguồn lý luận về sinh lời, số bình quân và phân rã ROE theo
+                DuPont.
+              </p>
+              <div class="reference-actions">
+                <a
+                  data-bibliography-url
+                  href="https://openstax.org/books/principles-finance/pages/6-6-profitability-ratios-and-the-dupont-method"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mở nguồn trên web <span aria-hidden="true">↗</span></a
+                >
+              </div>
+              <details class="url-detail">
+                <summary>Xem địa chỉ liên kết</summary>
+                <a
+                  href="https://openstax.org/books/principles-finance/pages/6-6-profitability-ratios-and-the-dupont-method"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >https://openstax.org/books/principles-finance/pages/6-6-profitability-ratios-and-the-dupont-method</a
+                >
+              </details>
+            </li>
+          </ol>
+          <p class="empty" id="no-sources" hidden>
+            Không tìm thấy nguồn phù hợp. Thử tên khác hoặc xóa nội dung tìm
+            kiếm để xem đủ 11 nguồn.
+          </p>
+        </section>
+        <footer class="foot">
+          <p>
+            Hướng dẫn dành cho báo cáo Quản trị tài chính 2 của Nguyễn Ngọc Đào.
+            Số liệu dựa trên báo cáo hoàn thiện ngày 12/11/2026; hướng dẫn và
+            phần ôn vấn đáp cập nhật ngày 13/11/2026. Khi sửa bài, đối chiếu lại
+            bản nộp thực tế và yêu cầu của giảng viên.
+          </p>
+          <a class="back-top" href="#dau-trang">Về đầu hướng dẫn</a>
+        </footer>
+        <noscript
+          ><p class="noscript">
+            Bạn vẫn đọc và mở được các liên kết khi JavaScript bị tắt. Để in
+            hướng dẫn, dùng chức năng in của trình duyệt. Tìm kiếm, lọc câu hỏi
+            và lưu tiến độ cần JavaScript.
+          </p></noscript
+        >
+      </main>
+    </div>
+    <script>
+      (() => {
+        "use strict";
+        const checks = [...document.querySelectorAll("[data-check]")];
+        const key = "hhs-qttc2-guide-checklist-v1";
+        let storageAllowed = true;
+        let stored = {};
+        try {
+          stored = JSON.parse(localStorage.getItem(key) || "{}");
+        } catch (_) {
+          storageAllowed = false;
+        }
+        if (!stored || typeof stored !== "object" || Array.isArray(stored))
+          stored = {};
+        checks.forEach((input) => {
+          input.checked = stored[input.id] === true;
+        });
+        function updateChecks(save) {
+          const completed = checks.filter((input) => input.checked).length;
+          document.getElementById("check-count").textContent =
+            completed + "/8 mục đã kiểm tra";
+          document.getElementById("check-progress").value = completed;
+          if (save && storageAllowed) {
+            try {
+              localStorage.setItem(
+                key,
+                JSON.stringify(
+                  Object.fromEntries(
+                    checks.map((input) => [input.id, input.checked]),
+                  ),
+                ),
+              );
+            } catch (_) {
+              storageAllowed = false;
+            }
+          }
+          document.getElementById("save-status").textContent = storageAllowed
+            ? "Tiến độ được lưu riêng trong trình duyệt này. Chỉ tích sau khi bạn đã kiểm tra."
+            : "Trình duyệt không cho lưu tiến độ. Các dấu tích vẫn dùng được trong lần mở này.";
+        }
+        checks.forEach((input) =>
+          input.addEventListener("change", () => updateChecks(true)),
+        );
+        document
+          .getElementById("reset-checks")
+          .addEventListener("click", () => {
+            checks.forEach((input) => {
+              input.checked = false;
+            });
+            updateChecks(true);
+          });
+        updateChecks(false);
+        const search = document.getElementById("source-search");
+        const refs = [...document.querySelectorAll("[data-reference]")];
+        const normalize = (value) =>
+          value
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/đ/g, "d")
+            .replace(/Đ/g, "D")
+            .toLowerCase();
+        const refText = refs.map((ref) => normalize(ref.textContent));
+        search.addEventListener("input", () => {
+          const words = normalize(search.value.trim())
+            .split(/\s+/)
+            .filter(Boolean);
+          let count = 0;
+          refs.forEach((ref, index) => {
+            ref.hidden = !words.every((word) => refText[index].includes(word));
+            if (!ref.hidden) count++;
+          });
+          document.getElementById("source-count").textContent =
+            count === 11
+              ? "Đang hiển thị đủ 11 nguồn"
+              : "Đang hiển thị " + count + "/11 nguồn";
+          document.getElementById("no-sources").hidden = count !== 0;
+        });
+
+        const questions = [...document.querySelectorAll("[data-question]")];
+        const questionSearch = document.getElementById("question-search");
+        const questionTopic = document.getElementById("question-topic");
+        const questionText = questions.map((item) =>
+          normalize(item.textContent),
+        );
+        function filterQuestions() {
+          const words = normalize(questionSearch.value.trim())
+            .split(/\s+/)
+            .filter(Boolean);
+          let count = 0;
+          questions.forEach((item, index) => {
+            item.hidden = !(
+              (questionTopic.value === "all" ||
+                item.dataset.topic === questionTopic.value) &&
+              words.every((word) => questionText[index].includes(word))
+            );
+            if (!item.hidden) count++;
+          });
+          document.getElementById("question-count").textContent =
+            count + "/" + questions.length + " câu hỏi";
+          document.getElementById("no-questions").hidden = count !== 0;
+        }
+        questionSearch.addEventListener("input", filterQuestions);
+        questionTopic.addEventListener("change", filterQuestions);
+        document
+          .getElementById("expand-answers")
+          .addEventListener("click", () =>
+            questions
+              .filter((item) => !item.hidden)
+              .forEach((item) => {
+                item.open = true;
+              }),
+          );
+        document
+          .getElementById("collapse-answers")
+          .addEventListener("click", () =>
+            questions.forEach((item) => {
+              item.open = false;
+            }),
+          );
+        document
+          .getElementById("clear-questions")
+          .addEventListener("click", () => {
+            questionSearch.value = "";
+            questionTopic.value = "all";
+            filterQuestions();
+          });
+        document.querySelectorAll('a[href^="#ref-"]').forEach((link) =>
+          link.addEventListener("click", () => {
+            search.value = "";
+            search.dispatchEvent(new Event("input"));
+          }),
+        );
+
+        document
+          .querySelectorAll("[data-print]")
+          .forEach((button) =>
+            button.addEventListener("click", () => window.print()),
+          );
+        let printState = [];
+        let printHidden = [];
+        window.addEventListener("beforeprint", () => {
+          printState = [...document.querySelectorAll("details")].map((item) => [
+            item,
+            item.open,
+          ]);
+          printState.forEach(([item]) => {
+            item.open = true;
+          });
+          printHidden = [...refs, ...questions].map((item) => [
+            item,
+            item.hidden,
+          ]);
+          printHidden.forEach(([item]) => {
+            item.hidden = false;
+          });
+        });
+        window.addEventListener("afterprint", () => {
+          printState.forEach(([item, open]) => {
+            item.open = open;
+          });
+          printHidden.forEach(([item, hidden]) => {
+            item.hidden = hidden;
+          });
+        });
+        const nav = [...document.querySelectorAll(".sidebar nav a")];
+        const sections = [...document.querySelectorAll("main section")];
+        let framePending = false;
+        function updateNav() {
+          const marker = scrollY + Math.min(innerHeight * 0.22, 160);
+          let active = sections[0].id;
+          sections.forEach((section) => {
+            if (section.offsetTop <= marker) active = section.id;
+          });
+          nav.forEach((link) => {
+            if (link.getAttribute("href") === "#" + active)
+              link.setAttribute("aria-current", "location");
+            else link.removeAttribute("aria-current");
+          });
+          framePending = false;
+        }
+        addEventListener(
+          "scroll",
+          () => {
+            if (!framePending) {
+              framePending = true;
+              requestAnimationFrame(updateNav);
+            }
+          },
+          { passive: true },
+        );
+        addEventListener("resize", updateNav);
+        updateNav();
+      })();
+    </script>
+  </body>
+</html>
