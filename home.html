@@ -400,19 +400,15 @@
           }
         }
 
-        // 3. Thử tải file manifest cục bộ files.json (dùng cho localhost hoặc gộp bổ sung/fallback khi GitHub API bị giới hạn rate-limit)
-        if (window.location.protocol.startsWith('http')) {
+        // 3. Fallback tải file manifest cục bộ files.json (chỉ dùng khi chưa lấy được từ Local Server hoặc GitHub API)
+        if (!detected && window.location.protocol.startsWith('http')) {
           for (const folder of TARGET_FOLDERS) {
             try {
               const res = await fetch(`./${folder}/files.json?_t=${Date.now()}`, { cache: 'no-store' });
               if (res.ok) {
                 const list = await res.json();
                 if (Array.isArray(list) && list.length > 0) {
-                  if (!detected) {
-                    detected = { folder, files: list };
-                  } else if (detected.folder === folder) {
-                    detected.files = Array.from(new Set([...detected.files, ...list]));
-                  }
+                  detected = { folder, files: list };
                   break;
                 }
               }
