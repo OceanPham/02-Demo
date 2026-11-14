@@ -369,15 +369,50 @@
           }
         }
 
-        // 2. Thử tải file manifest cục bộ files.json
-        if (!detected && window.location.protocol.startsWith('http')) {
+        // 2. Gọi GitHub REST API trước khi ở trên web online (GitHub Pages) để luôn lấy danh sách file mới nhất trên nhánh main kể cả khi quên chạy sync.js
+        const isLocalhost =
+          location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+        if (!detected && window.location.protocol.startsWith('http') && !isLocalhost) {
           for (const folder of TARGET_FOLDERS) {
             try {
-              const res = await fetch(`./${folder}/files.json`, { cache: 'no-cache' });
+              const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${folder}?ref=main&_t=${Date.now()}`;
+              const res = await fetch(apiUrl, { cache: 'no-store' });
+              if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                  const files = data
+                    .filter(
+                      i =>
+                        i.type === 'file' &&
+                        i.name.endsWith('.html') &&
+                        !i.name.startsWith('index') &&
+                        !i.name.startsWith('home')
+                    )
+                    .map(i => i.name);
+                  if (files.length > 0) {
+                    detected = { folder, files };
+                    break;
+                  }
+                }
+              }
+            } catch (_) {}
+          }
+        }
+
+        // 3. Thử tải file manifest cục bộ files.json (dùng cho localhost hoặc gộp bổ sung/fallback khi GitHub API bị giới hạn rate-limit)
+        if (window.location.protocol.startsWith('http')) {
+          for (const folder of TARGET_FOLDERS) {
+            try {
+              const res = await fetch(`./${folder}/files.json?_t=${Date.now()}`, { cache: 'no-store' });
               if (res.ok) {
                 const list = await res.json();
                 if (Array.isArray(list) && list.length > 0) {
-                  detected = { folder, files: list };
+                  if (!detected) {
+                    detected = { folder, files: list };
+                  } else if (detected.folder === folder) {
+                    detected.files = Array.from(new Set([...detected.files, ...list]));
+                  }
                   break;
                 }
               }
@@ -385,17 +420,23 @@
           }
         }
 
-        // 3. Gọi GitHub REST API (chạy chuẩn khi host trên GitHub Pages hoặc online)
+        // 4. Fallback gọi GitHub REST API nếu trên localhost mà chưa tìm thấy file cục bộ
         if (!detected) {
           for (const folder of TARGET_FOLDERS) {
             try {
               const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${folder}?ref=main&_t=${Date.now()}`;
-              const res = await fetch(apiUrl);
+              const res = await fetch(apiUrl, { cache: 'no-store' });
               if (res.ok) {
                 const data = await res.json();
                 if (Array.isArray(data)) {
                   const files = data
-                    .filter(i => i.type === 'file' && i.name.endsWith('.html'))
+                    .filter(
+                      i =>
+                        i.type === 'file' &&
+                        i.name.endsWith('.html') &&
+                        !i.name.startsWith('index') &&
+                        !i.name.startsWith('home')
+                    )
                     .map(i => i.name);
                   if (files.length > 0) {
                     detected = { folder, files };
