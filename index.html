@@ -1,210 +1,2269 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chào mừng</title>
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="Pham Ngoc Huy (OceanPham) — Full-Stack Engineer building Web Applications, Mobile Apps, Desktop Software, and n8n AI Workflow Automations." />
+  <title>Pham Ngoc Huy — Full-Stack Web, Mobile, Desktop &amp; n8n Automation Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #e8edf1;
-      --ink: #15202b;
-      --muted: #4d5c6b;
-      --accent: #0f6e56;
-      --line: rgba(21, 32, 43, 0.14);
-      --glow: rgba(15, 110, 86, 0.22);
-      --panel: rgba(255, 255, 255, 0.55);
+      /* Raw Light & Dark Palette Tokens */
+      --bg-light: #f6f8fc;
+      --bg-dark: #070b14;
+      --bg-elev-light: #ffffff;
+      --bg-elev-dark: #0e1526;
+      --bg-glass-light: rgba(255, 255, 255, 0.82);
+      --bg-glass-dark: rgba(14, 21, 38, 0.78);
+      --bg-subtle-light: #eef2f9;
+      --bg-subtle-dark: #131c31;
+
+      --ink-light: #0b1324;
+      --ink-dark: #f1f5f9;
+      --ink-2-light: #334155;
+      --ink-2-dark: #cbd5e1;
+      --muted-light: #475569;
+      --muted-dark: #94a3b8;
+
+      --primary-light: #1d4ed8;
+      --primary-dark: #60a5fa;
+      --primary-strong-light: #1e40af;
+      --primary-strong-dark: #3b82f6;
+      --accent-cyan-light: #0369a1;
+      --accent-cyan-dark: #38bdf8;
+      --accent-emerald-light: #047857;
+      --accent-emerald-dark: #34d399;
+      --accent-amber-light: #b45309;
+      --accent-amber-dark: #fbbf24;
+      --accent-rose-light: #be123c;
+      --accent-rose-dark: #fb7185;
+      --accent-violet-light: #6d28d9;
+      --accent-violet-dark: #a78bfa;
+
+      --border-light: #cbd5e1;
+      --border-dark: #263554;
+      --border-strong-light: #64748b;
+      --border-strong-dark: #475569;
+
+      --shadow-light: 0 18px 40px -15px rgba(15, 23, 42, 0.1);
+      --shadow-dark: 0 22px 48px -16px rgba(0, 0, 0, 0.65);
+
+      --scroll-thumb-light: #64748b;
+      --scroll-thumb-dark: #64748b;
+      --scroll-track-light: #e2e8f0;
+      --scroll-track-dark: #0f172a;
+
+      /* Default fallback assignments (Light) */
+      --bg: var(--bg-light);
+      --bg-elev: var(--bg-elev-light);
+      --bg-glass: var(--bg-glass-light);
+      --bg-subtle: var(--bg-subtle-light);
+      --ink: var(--ink-light);
+      --ink-2: var(--ink-2-light);
+      --muted: var(--muted-light);
+      --primary: var(--primary-light);
+      --primary-strong: var(--primary-strong-light);
+      --accent-cyan: var(--accent-cyan-light);
+      --accent-emerald: var(--accent-emerald-light);
+      --accent-amber: var(--accent-amber-light);
+      --accent-rose: var(--accent-rose-light);
+      --accent-violet: var(--accent-violet-light);
+      --border: var(--border-light);
+      --border-strong: var(--border-strong-light);
+      --shadow: var(--shadow-light);
+      --scrollbar-thumb: var(--scroll-thumb-light);
+      --scrollbar-track: var(--scroll-track-light);
+
+      @media (prefers-color-scheme: dark) {
+        --bg: var(--bg-dark);
+        --bg-elev: var(--bg-elev-dark);
+        --bg-glass: var(--bg-glass-dark);
+        --bg-subtle: var(--bg-subtle-dark);
+        --ink: var(--ink-dark);
+        --ink-2: var(--ink-2-dark);
+        --muted: var(--muted-dark);
+        --primary: var(--primary-dark);
+        --primary-strong: var(--primary-strong-dark);
+        --accent-cyan: var(--accent-cyan-dark);
+        --accent-emerald: var(--accent-emerald-dark);
+        --accent-amber: var(--accent-amber-dark);
+        --accent-rose: var(--accent-rose-dark);
+        --accent-violet: var(--accent-violet-dark);
+        --border: var(--border-dark);
+        --border-strong: var(--border-strong-dark);
+        --shadow: var(--shadow-dark);
+        --scrollbar-thumb: var(--scroll-thumb-dark);
+        --scrollbar-track: var(--scroll-track-dark);
+      }
+
+      @supports (color: light-dark(white, black)) {
+        --bg: light-dark(var(--bg-light), var(--bg-dark));
+        --bg-elev: light-dark(var(--bg-elev-light), var(--bg-elev-dark));
+        --bg-glass: light-dark(var(--bg-glass-light), var(--bg-glass-dark));
+        --bg-subtle: light-dark(var(--bg-subtle-light), var(--bg-subtle-dark));
+        --ink: light-dark(var(--ink-light), var(--ink-dark));
+        --ink-2: light-dark(var(--ink-2-light), var(--ink-2-dark));
+        --muted: light-dark(var(--muted-light), var(--muted-dark));
+        --primary: light-dark(var(--primary-light), var(--primary-dark));
+        --primary-strong: light-dark(var(--primary-strong-light), var(--primary-strong-dark));
+        --accent-cyan: light-dark(var(--accent-cyan-light), var(--accent-cyan-dark));
+        --accent-emerald: light-dark(var(--accent-emerald-light), var(--accent-emerald-dark));
+        --accent-amber: light-dark(var(--accent-amber-light), var(--accent-amber-dark));
+        --accent-rose: light-dark(var(--accent-rose-light), var(--accent-rose-dark));
+        --accent-violet: light-dark(var(--accent-violet-light), var(--accent-violet-dark));
+        --border: light-dark(var(--border-light), var(--border-dark));
+        --border-strong: light-dark(var(--border-strong-light), var(--border-strong-dark));
+        --shadow: light-dark(var(--shadow-light), var(--shadow-dark));
+        --scrollbar-thumb: light-dark(var(--scroll-thumb-light), var(--scroll-thumb-dark));
+        --scrollbar-track: light-dark(var(--scroll-track-light), var(--scroll-track-dark));
+      }
+
+      color-scheme: light dark;
+      accent-color: var(--primary);
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #12181e;
-        --ink: #e7eef4;
-        --muted: #9aabba;
-        --accent: #3dbe9a;
-        --line: rgba(231, 238, 244, 0.16);
-        --glow: rgba(61, 190, 154, 0.2);
-        --panel: rgba(18, 24, 30, 0.55);
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: var(--bg-light);
+      --bg-elev: var(--bg-elev-light);
+      --bg-glass: var(--bg-glass-light);
+      --bg-subtle: var(--bg-subtle-light);
+      --ink: var(--ink-light);
+      --ink-2: var(--ink-2-light);
+      --muted: var(--muted-light);
+      --primary: var(--primary-light);
+      --primary-strong: var(--primary-strong-light);
+      --accent-cyan: var(--accent-cyan-light);
+      --accent-emerald: var(--accent-emerald-light);
+      --accent-amber: var(--accent-amber-light);
+      --accent-rose: var(--accent-rose-light);
+      --accent-violet: var(--accent-violet-light);
+      --border: var(--border-light);
+      --border-strong: var(--border-strong-light);
+      --shadow: var(--shadow-light);
+      --scrollbar-thumb: var(--scroll-thumb-light);
+      --scrollbar-track: var(--scroll-track-light);
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: var(--bg-dark);
+      --bg-elev: var(--bg-elev-dark);
+      --bg-glass: var(--bg-glass-dark);
+      --bg-subtle: var(--bg-subtle-dark);
+      --ink: var(--ink-dark);
+      --ink-2: var(--ink-2-dark);
+      --muted: var(--muted-dark);
+      --primary: var(--primary-dark);
+      --primary-strong: var(--primary-strong-dark);
+      --accent-cyan: var(--accent-cyan-dark);
+      --accent-emerald: var(--accent-emerald-dark);
+      --accent-amber: var(--accent-amber-dark);
+      --accent-rose: var(--accent-rose-dark);
+      --accent-violet: var(--accent-violet-dark);
+      --border: var(--border-dark);
+      --border-strong: var(--border-strong-dark);
+      --shadow: var(--shadow-dark);
+      --scrollbar-thumb: var(--scroll-thumb-dark);
+      --scrollbar-track: var(--scroll-track-dark);
+    }
+
+    @supports not (scrollbar-color: auto) {
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
       }
     }
 
-    * { box-sizing: border-box; }
+    @media (forced-colors: active) {
+      :root {
+        --border: CanvasText;
+        --border-strong: CanvasText;
+        --primary: Highlight;
+      }
+    }
 
-    html, body {
-      margin: 0;
-      min-height: 100%;
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      @media (prefers-reduced-motion: reduce) {
+        scroll-behavior: auto;
+      }
     }
 
     body {
-      min-height: 100dvh;
-      color: var(--ink);
-      background:
-        radial-gradient(900px 520px at 12% -10%, var(--glow), transparent 60%),
-        radial-gradient(700px 480px at 110% 110%, var(--glow), transparent 55%),
-        var(--bg);
-      font-family: Bahnschrift, "Segoe UI", "Avenir Next", system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .stage {
-      min-height: 100dvh;
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
-      align-items: center;
-      gap: 32px;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 48px 40px 56px;
-    }
-
-    .copy { max-width: 640px; }
-
-    .mark {
-      margin: 0 0 18px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: var(--accent);
-    }
-
-    h1 {
       margin: 0;
-      font-size: clamp(2.7rem, 5vw, 4.5rem);
-      font-weight: 650;
-      line-height: 1.2;
-      letter-spacing: -0.04em;
-      white-space: nowrap;
+      min-block-size: 100dvh;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(900px 500px at 10% 0%, color-mix(in oklab, var(--primary) 16%, transparent), transparent 65%),
+        radial-gradient(800px 480px at 90% 12%, color-mix(in oklab, var(--accent-violet) 14%, transparent), transparent 60%),
+        radial-gradient(750px 500px at 50% 95%, color-mix(in oklab, var(--accent-emerald) 10%, transparent), transparent 65%);
+      background-attachment: fixed;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
     }
 
-    .sub {
-      margin: 22px 0 0;
-      max-width: 28ch;
-      color: var(--muted);
-      font-size: 1.125rem;
-      line-height: 1.45;
+    img, svg {
+      display: block;
+      max-inline-size: 100%;
     }
 
-    .ornament {
-      position: relative;
-      height: min(68dvh, 560px);
-      min-height: 320px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .ring,
-    .disc,
-    .bar,
-    .tile {
-      position: absolute;
-    }
-
-    .ring {
-      width: min(78%, 420px);
-      aspect-ratio: 1;
-      right: 4%;
-      top: 8%;
-      border-radius: 50%;
-      border: 1.5px solid var(--line);
-    }
-
-    .ring-inner {
-      inset: 14%;
-      border-style: dashed;
-    }
-
-    .disc {
-      width: 42%;
-      aspect-ratio: 1;
-      left: 6%;
-      bottom: 10%;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .tile {
-      width: 30%;
-      aspect-ratio: 1;
-      right: 2%;
-      bottom: 12%;
-      border-radius: 28px;
-      background: color-mix(in srgb, var(--accent) 32%, var(--bg));
-      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
-    }
-
-    @media (prefers-reduced-transparency: reduce) {
-      .tile {
-        background: var(--bg);
-        backdrop-filter: none;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .stage {
-        grid-template-columns: 1fr;
-        align-content: center;
-        padding: 36px 22px 40px;
-        gap: 28px;
-      }
-
-      .copy { max-width: none; }
-
-      h1 {
-        font-size: clamp(2.15rem, 9.5vw, 3.1rem);
-        white-space: normal;
-        max-width: 12ch;
-      }
-
-      .ornament {
-        height: 220px;
-        min-height: 0;
-        order: -1;
-      }
+    /* Scroll Progress Bar */
+    .scroll-progress {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline: 0;
+      block-size: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-cyan), var(--accent-emerald));
+      transform-origin: 0% 50%;
+      scale: 0 1;
+      z-index: 100;
+      pointer-events: none;
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      .copy {
-        animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-
-      .ring {
-        animation: drift 14s ease-in-out infinite alternate;
-      }
-
-      .disc {
-        animation: drift 11s ease-in-out infinite alternate-reverse;
+      @supports (animation-timeline: scroll()) {
+        .scroll-progress {
+          animation: progress-grow auto linear;
+          animation-timeline: scroll(root);
+        }
+        @keyframes progress-grow {
+          from { scale: 0 1; }
+          to { scale: 1 1; }
+        }
       }
     }
 
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: none; }
+    /* Ambient Background Grid */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-size: 44px 44px;
+      background-image:
+        linear-gradient(to right, color-mix(in oklab, var(--border) 35%, transparent) 1px, transparent 1px),
+        linear-gradient(to bottom, color-mix(in oklab, var(--border) 35%, transparent) 1px, transparent 1px);
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 25%, #000 35%, transparent 100%);
     }
 
-    @keyframes drift {
-      from { transform: translateY(0); }
-      to { transform: translateY(-14px); }
+    .container {
+      inline-size: min(1220px, 100% - 2.5rem);
+      margin-inline: auto;
+    }
+
+    /* Sticky Glass Navbar */
+    .site-header {
+      position: sticky;
+      inset-block-start: 0.75rem;
+      z-index: 50;
+      margin-block-start: 0.75rem;
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: safe center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 0.65rem;
+      padding-inline: 1.15rem;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-weight: 800;
+      font-size: 1.02rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      inline-size: 2rem;
+      block-size: 2rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-strong), var(--accent-cyan));
+      color: #fff;
+      display: grid;
+      place-content: center;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      flex-wrap: balance;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      padding-block: 0.4rem;
+      padding-inline: 0.85rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--ink-2);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background: var(--bg-subtle);
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding-block: 0.42rem;
+      padding-inline: 0.78rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elev);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .icon-btn:hover,
+    .icon-btn:focus-visible {
+      border-color: var(--primary);
+      background: var(--bg-subtle);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-block: 0.55rem;
+      padding-inline: 1.1rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: var(--primary-strong);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      background: color-mix(in oklab, var(--primary-strong) 85%, white);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-block: 0.55rem;
+      padding-inline: 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elev);
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      border-color: var(--primary);
+      background: var(--bg-subtle);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-block: 4rem 3.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      gap: 2.75rem;
+      align-items: center;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding-block: 0.38rem;
+      padding-inline: 0.9rem;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--accent-emerald) 14%, var(--bg-elev));
+      border: 1px solid color-mix(in oklab, var(--accent-emerald) 55%, var(--border));
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-block-end: 1.25rem;
+    }
+
+    .status-dot {
+      inline-size: 0.55rem;
+      block-size: 0.55rem;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent-emerald) 28%, transparent);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      body:not([data-motion="paused"]) .status-dot {
+        animation: pulse-dot 2.2s ease-in-out infinite;
+      }
+      @keyframes pulse-dot {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.28); opacity: 0.75; }
+      }
+    }
+
+    .hero-identity {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-block-end: 1.1rem;
+    }
+
+    .avatar-ring {
+      position: relative;
+      inline-size: 4.5rem;
+      block-size: 4.5rem;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-cyan), var(--accent-emerald));
+      flex: none;
+    }
+
+    .avatar-ring img {
+      inline-size: 100%;
+      block-size: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--bg-elev);
+    }
+
+    .hero-greeting {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .hero-name {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 0.1rem 0 0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: clamp(2.25rem, 4.2vw, 3.65rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      margin: 0 0 1.2rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(125deg, var(--primary), var(--accent-cyan), var(--accent-emerald));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 1.06rem;
+      color: var(--ink-2);
+      margin: 0 0 1.65rem;
+      max-inline-size: 62ch;
+    }
+
+    .hero-lead strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-block-end: 1.85rem;
+    }
+
+    .pillar-badges {
+      display: flex;
+      flex-wrap: wrap;
+      flex-wrap: balance;
+      gap: 0.55rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .pillar-badges li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding-block: 0.4rem;
+      padding-inline: 0.8rem;
+      border-radius: 0.6rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-2);
+    }
+
+    .pillar-badges svg {
+      inline-size: 1rem;
+      block-size: 1rem;
+      color: var(--primary);
+      flex: none;
+    }
+
+    /* Interactive n8n + Full-Stack Orchestration Hub */
+    .workflow-stage {
+      background: var(--bg-elev);
+      border: 1px solid var(--border-strong);
+      border-radius: 1.25rem;
+      box-shadow: var(--shadow);
+      overflow: clip;
+    }
+
+    .stage-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-block: 0.75rem;
+      padding-inline: 1.1rem;
+      background: var(--bg-subtle);
+      border-block-end: 1px solid var(--border);
+    }
+
+    .window-dots {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .window-dots span {
+      inline-size: 0.68rem;
+      block-size: 0.68rem;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .window-dots span:nth-child(1) { background: #fb7185; }
+    .window-dots span:nth-child(2) { background: #fbbf24; }
+    .window-dots span:nth-child(3) { background: #34d399; }
+
+    .stage-label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .stage-run-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding-block: 0.32rem;
+      padding-inline: 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--primary);
+      background: color-mix(in oklab, var(--primary) 15%, var(--bg-elev));
+      color: var(--ink);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .stage-run-btn:hover,
+    .stage-run-btn:focus-visible {
+      background: var(--primary-strong);
+      color: #fff;
+    }
+
+    .workflow-canvas {
+      padding: 1.25rem;
+      position: relative;
+      background-image: radial-gradient(color-mix(in oklab, var(--muted) 32%, transparent) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+
+    .wf-diagram {
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 520 / 300;
+    }
+
+    .wf-edge {
+      fill: none;
+      stroke: var(--border-strong);
+      stroke-width: 2;
+      stroke-dasharray: 5 5;
+    }
+
+    .wf-packet {
+      fill: var(--accent-emerald);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      body:not([data-motion="paused"]) .wf-edge-anim {
+        animation: dash-flow 1.6s linear infinite;
+      }
+      @keyframes dash-flow {
+        to { stroke-dashoffset: -20; }
+      }
+    }
+
+    .wf-node-box {
+      fill: var(--bg-elev);
+      stroke: var(--border-strong);
+      stroke-width: 1.6;
+      rx: 12;
+      transition: stroke 0.25s ease, transform 0.25s ease;
+    }
+
+    .wf-node.is-active .wf-node-box {
+      stroke: var(--accent-emerald);
+      stroke-width: 2.5;
+    }
+
+    .wf-node-title {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .wf-node-sub {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 9.5px;
+      fill: var(--muted);
+    }
+
+    .stage-console {
+      padding-block: 0.75rem;
+      padding-inline: 1.1rem;
+      background: var(--bg-subtle);
+      border-block-start: 1px solid var(--border);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.76rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--ink-2);
+    }
+
+    .console-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding-block: 0.15rem;
+      padding-inline: 0.55rem;
+      border-radius: 0.35rem;
+      background: color-mix(in oklab, var(--accent-emerald) 18%, var(--bg-elev));
+      border: 1px solid color-mix(in oklab, var(--accent-emerald) 55%, var(--border));
+      color: var(--ink);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* KPI Metrics Bar */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-block: 1rem 4.5rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-inline-start: 4px solid var(--primary);
+      border-radius: 1rem;
+      padding: 1.25rem 1.35rem;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-card:nth-child(2) { border-inline-start-color: var(--accent-cyan); }
+    .kpi-card:nth-child(3) { border-inline-start-color: var(--accent-emerald); }
+    .kpi-card:nth-child(4) { border-inline-start-color: var(--accent-violet); }
+
+    .kpi-value {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--ink);
+      display: block;
+    }
+
+    .kpi-label {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-block-start: 0.35rem;
+      display: block;
+    }
+
+    /* Section Headings */
+    .section {
+      padding-block: 3.75rem;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-block-end: 2.25rem;
+    }
+
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin: 0 0 0.45rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .eyebrow::before {
+      content: "";
+      inline-size: 0.55rem;
+      block-size: 0.55rem;
+      border-radius: 2px;
+      background: var(--primary);
+    }
+
+    .section-title {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    .section-desc {
+      color: var(--ink-2);
+      max-inline-size: 54ch;
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    /* 4 Core Capabilities Grid (Card + Container Queries + Subgrid) */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      grid-template-rows: auto auto 1fr auto;
+      gap: 1.35rem;
+    }
+
+    article.card {
+      container: card / inline-size;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: border-color 0.25s ease, transform 0.25s ease;
+      position: relative;
+    }
+
+    .capabilities-grid > article.card,
+    .projects-grid > article.card {
+      grid-row: span 4;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-rows: subgrid;
+      row-gap: 1rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      article.card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      article.card:hover {
+        border-color: var(--primary);
+      }
+    }
+
+    /* Card Region 1: Media / Icon Preview */
+    .card > .media {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.9rem 1rem;
+      border-radius: 0.85rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+    }
+
+    .cap-icon {
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      border-radius: 0.75rem;
+      display: grid;
+      place-content: center;
+      color: #fff;
+      flex: none;
+    }
+
+    .cap-web .cap-icon { background: linear-gradient(135deg, #2563eb, #06b6d4); }
+    .cap-app .cap-icon { background: linear-gradient(135deg, #059669, #10b981); }
+    .cap-desktop .cap-icon { background: linear-gradient(135deg, #7c3aed, #ec4899); }
+    .cap-n8n .cap-icon { background: linear-gradient(135deg, #ea580c, #f59e0b); }
+
+    .cap-number {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      color: var(--ink-2);
+      background: var(--bg-elev);
+    }
+
+    /* Card Region 2: Header */
+    .card > header h3,
+    .card > h3 {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .card > header p {
+      margin: 0.25rem 0 0;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Card Region 3: Content */
+    .card-content p {
+      margin: 0 0 0.9rem;
+      font-size: 0.92rem;
+      color: var(--ink-2);
+    }
+
+    .feature-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      color: var(--ink-2);
+    }
+
+    .feature-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .feature-checklist svg {
+      inline-size: 1rem;
+      block-size: 1rem;
+      color: var(--accent-emerald);
+      flex: none;
+      margin-block-start: 0.18rem;
+    }
+
+    /* Card Region 4: Footer */
+    .card > footer {
+      padding-block-start: 0.85rem;
+      border-block-start: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      flex-wrap: balance;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .tag {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.73rem;
+      font-weight: 500;
+      padding: 0.22rem 0.58rem;
+      border-radius: 0.45rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      color: var(--ink-2);
+    }
+
+    @container card (inline-size > 380px) {
+      .feature-checklist {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Interactive Architecture Blueprint Switcher */
+    .blueprint-box {
+      margin-block-start: 2rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--border-strong);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .blueprint-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-block-end: 1.25rem;
+      border-block-end: 1px solid var(--border);
+      padding-block-end: 1rem;
+    }
+
+    .bp-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding-block: 0.5rem;
+      padding-inline: 1rem;
+      border-radius: 0.65rem;
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--ink-2);
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .bp-tab[aria-selected="true"] {
+      background: var(--primary-strong);
+      border-color: var(--primary-strong);
+      color: #ffffff;
+    }
+
+    .bp-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .bp-panel[hidden] {
+      display: none;
+    }
+
+    .bp-code {
+      margin: 0;
+      padding: 1.1rem 1.25rem;
+      border-radius: 0.85rem;
+      background: #090d16;
+      color: #e2e8f0;
+      border: 1px solid #263554;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      overflow-x: auto;
+      color-scheme: dark;
+    }
+
+    .bp-pipeline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-block-top: 1rem;
+    }
+
+    .bp-step {
+      padding: 0.4rem 0.75rem;
+      border-radius: 0.5rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-strong);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-rows: auto auto 1fr auto;
+      gap: 1.35rem;
+    }
+
+    .project-badge {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--primary) 15%, var(--bg-elev));
+      border: 1px solid color-mix(in oklab, var(--primary) 45%, var(--border));
+      color: var(--ink);
+    }
+
+    /* Experience & Education Split Layout */
+    .exp-edu-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .timeline-item {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 1.1rem;
+      padding: 1.35rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-block-end: 0.25rem;
+    }
+
+    .timeline-role {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .timeline-date {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .timeline-company {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 0 0 0.85rem;
+    }
+
+    .timeline-list {
+      margin: 0;
+      padding-inline-start: 1.1rem;
+      color: var(--ink-2);
+      font-size: 0.9rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .timeline-list strong {
+      color: var(--ink);
+    }
+
+    /* Skills Matrix Panel */
+    .stack-panel {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 1.1rem;
+      padding: 1.4rem 1.5rem;
+      box-shadow: var(--shadow);
+      margin-block-end: 1.25rem;
+    }
+
+    .stack-panel h3 {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0 0 1rem;
+    }
+
+    .stack-group {
+      margin-block-end: 1rem;
+    }
+
+    .stack-group:last-child {
+      margin-block-end: 0;
+    }
+
+    .stack-group-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 0.45rem;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      flex-wrap: balance;
+      gap: 0.4rem;
+    }
+
+    /* Scroll-Driven Reveal Animations + Fallback */
+    @media (prefers-reduced-motion: no-preference) {
+      @supports ((animation-timeline: view()) and (animation-range: entry)) {
+        @keyframes scroll-reveal-up {
+          from {
+            opacity: 0;
+            transform: translateY(28px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .reveal-on-scroll {
+          animation: scroll-reveal-up auto cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          animation-timeline: view();
+          animation-range: entry 0% cover 26%;
+        }
+      }
+    }
+
+    /* Contact / CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, color-mix(in oklab, var(--primary) 16%, var(--bg-elev)), color-mix(in oklab, var(--accent-emerald) 12%, var(--bg-elev)));
+      border: 1px solid var(--border-strong);
+      border-radius: 1.5rem;
+      padding: clamp(1.75rem, 4vw, 3rem);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: 2rem;
+      align-items: center;
+      margin-block: 2rem 4rem;
+    }
+
+    .contact-cards {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      border-radius: 0.85rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .contact-row:hover {
+      border-color: var(--primary);
+    }
+
+    .contact-meta b {
+      display: block;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .contact-meta span {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .site-footer {
+      border-block-start: 1px solid var(--border);
+      padding-block: 2rem;
+      color: var(--muted);
+      font-size: 0.86rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .bp-panel,
+      .exp-edu-grid,
+      .cta-banner {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="stage">
-    <div class="copy">
-      <p class="mark">02-Demo</p>
-      <h1 id="greet">Chào mừng</h1>
-      <p class="sub">Bạn vừa mở trang này. Ở lại một lát cũng được.</p>
-    </div>
-    <div class="ornament" aria-hidden="true">
-      <span class="ring"></span>
-      <span class="ring ring-inner"></span>
-      <span class="disc"></span>
-      <span class="tile"></span>
-    </div>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header container">
+    <nav class="nav-bar" aria-label="Primary Navigation">
+      <a href="#top" class="brand">
+        <span class="brand-mark" aria-hidden="true">PH</span>
+        <span>Pham Ngoc Huy <small style="font-weight: 500; color: var(--muted);">· OceanLabs</small></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button type="button" class="icon-btn" id="motionToggleBtn" title="Pause or resume background animations">
+          <span aria-hidden="true" id="motionToggleIcon">⏸</span>
+          <span id="motionToggleText">Pause motion</span>
+        </button>
+        <button type="button" class="icon-btn" id="themeToggleBtn" title="Switch color theme">
+          <span aria-hidden="true" id="themeToggleIcon">◐</span>
+          <span id="themeToggleText">Theme</span>
+        </button>
+        <a href="CV_PhamNgocHuy_EN.html" class="btn-primary">View CV</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="container">
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Available for Full-Time Remote · Hanoi, Vietnam (GMT+7)</span>
+        </div>
+
+        <div class="hero-identity">
+          <div class="avatar-ring">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAGQAZADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6PzSg0mDS4xWhlccBmkxSU4HApAmJgilBzS9aTFA7i0UD0petAJCUUYoxTGFFJTqCRKKWkoJ3G0U7FIaYxKOtFFBLEPWmk806jbmixLuNpPwp2O+RSEA9CaegMbn16UgwOe9OOaYW57cYzQgQucnpRjmkJBOAee9GOKoYYFIRS03nJ5pibEIFJTqbTFcQ5ob7nHrS5IFKeUP1oKRLYj/SH4/gFXs4qlZD/SG/3B/OrprCe5tDYQ0lLRUFh2pOlLSGgBKKWjFACUlKaKAG0Yp1JQA2ilpKAA0lLRQAlJilooASkxQKdVmY3FFKRRimIO9OAptOBpAGKTFOBooASilIxR25pjYgXvRinA0ZoJG49aSndaMZoEhD1pvWnmkpjEpMcU7pSHpTENHBoPToaZNMluhkldUQdWbgAe5rz3xp8bdB8NpJBZyC/vl42L9xT7nv9BSYrX0PQ8jHJA+tUdT13S9GgafUNQtbaNf78gyfYDqTXyz4i+NvinV7qSODUrmPK7jHFtEcY7fKB/U1x2pape30wmvLxpHbo8x3MeOQoH6mp5ilT7n0j4m/aC8OaPDImmxy6hdL1V/3aAc5PGT26YrhT+0pe3M8if2fbhBglEzjd2yTzg14xLAA6yTTxsZPkCBcfUURxWojeMuyELx5Zxg/Sk5MtQR7jaftG3FndoNUtoDbAMztEu1lP4nBFdzZfHbwlcBPNmuULgEYhJwD3ODx9a+VGgt7iaOCK5ZR1c4BOPT8cGo0nkspRGzrKkgLKw48sDgjH1oUmgcEz6+g+MPhWaQBp79EzjzWtTs+pwSQPwrr7O+ttQt0uLSZJopBlXU8Yr4etta2Wsk/msFiOG69R/Q12Xhj4ka14WiD6bqbJblubedFkRQfYjOc+hqlU7kun2PrVqaK8l8F/HzTdSgij1+NbV5DtW6gUmHPoy8le/PI+lerwTw3USTQSJLE43K6HIYeorVNMycWtx55pVGQ2aXGaVR1psES2Q/fMf8AZFXTVKwzvPH8P9avYrCpubQ2EpMU7FJioLEpMUuKKBjcUUuM0YoASkpaDQAlJTqSgBMUlOpDQAhFJS0hoADSUtIaAE70tFFWZC4pMUtLQA0CjFOxikNFwAcU6m4p4oAKTFLQaAExRS0lMTEpaKAaCQNIadSUANNUtU1GHSbGa8uJI0jhUuzSOEVR6ljwBRres2Hh7S7nVNTuFt7S2TfI5/kB3J6Ad6+T/iT8V9T8eX0ySM9rpCSBre0JwoQHAL+rHr7dBQ5WGo3L3xF+Lur+LL97exvnh01MiNVBUSju+OuPrz9K82klS43xPJsZlDbuhOeRg96bLNE1yx+Y8BVAPGz2rImleaczXCZEb/IhOQSc/kBwPwrNs3SsXJHi07508x352knk8E8/571jf2pLNPzuYL8zkcjtgD2zUCXFxdXILkooGRt4yB/k0XEJgshdMWEtwTJwMBVHA/MmkMa2qSyTyS+YcRoQnPBJPWoIr+W3V5jITJI3I9vX86hiiX7OrnO5n2+oxS3sPlvuAwrZ2DvjpTEWrXVZRc+cAN2MAegxzz9Ksw6lOsgDEPhdp54fDcnNYisADkc4wKmt5GZznkKp6+mKALo1HyxcRpkLLGQDn7x55/z6Vppqpg+zzEgF1G4Z64PauYLEHrV9riA2iA48yMfLu/iz1oA6rRtQLwX0AbfGRwynkk89fXNeyfCT4xXWi6TbWuoj7VpudrDkvbnvt9s5+X8vSvnnTL4wRhExh3O8fhXWaBeLDZhFfc2SM9QT3NO9tgaT3PuTTdRtdWsYr2xniuLeUbkkicMp/H19qtqK+W/hh49k8Ka3GzXJi027kEdyrfdjOR8+O+O/fH05+pFO5QwIIOCCDkEe1bRlzI55Q5WTWPD4/wBn+tXcVStCBOB/sf1q9Wc9zSGwhpKWioLEopcUlACUUtJigBMCkIp1FADMUYpaSgYhFFFFADcUUtJQAlIaWgg0wEpaTFFUZC0UUoNFhXDOaBRxSigLiUoFLSGgLjhRTaUHFMXMFGO9LnimigdxcUDmiigkDSEUtVtT1CDStOutQuWCQWsTTSMeyqCT+goA+d/2ivGb6hr8PhuCR1tNNxJOoz88zAY+u1SMe5NeGzz/AGp5E2ggMOQcg9x/StvxTrd14h1rUNWui3nXU7SnH8OegGfQYGKzZZLext7mf5MgYUAdycD+WKyctTpjGyM0XsRikldJEwxRe6seOVHX1/WqolW8ljR0aIHegKgjKjnn3p7Qm6S3Xz5NhHVRgBgvzN+eal8uC2eBUJkMsgyw6hRyx/KpuVYq2dr/AKS21DtS2c4wRgk8fzpjxT3GnLCqq83ysyjoq5IAx+FdZpmg3N6zx2kXNwfvFc4HH6V12m+CYLR2DIDJv3SMOrHtzWUqyibQoSkeXR+GLpdMjLBUZX3HHJAz3rJ1KBpIZ5yoKxMqI3c9c/WvbfFulrpOjIWH7xsDg9D7CvH/ABCjNiCM8F8EH27/AK06VTn1FWpcmhzcg+bA9M0sLMrfKcHB/H2qSW1lt2KyoVbB6inW9lNKTsRs4JxW9znsQHLnJPalZyVUE5C8Cr11pM1pvWRSpQKWJ6AnoKpsAFCnG5SQfei4WHW87Ryo5wQhzg9DW7Y6iLaCRU5KIPl6gZ7D35rnFYrzV22uigO4Ab3BJ6YxQB39tKEt2UsxdQZHHU5xwP0/Wvpb4EeKrjXfCcVndymU2uEicnnaAPkP0BGD6fSvkye/YW7DfhxFvHPU9B/Ovb/2etbXTNYh0yYqFuVyrZ+7J0H4EEr+VVF2ZM1dH03ajE/HdT/Or2KpWvM+f9mrtOpuTDYMUlLRUFiUYozRQAlFL1pDxQAmKQ0uaSgLCGkp3SkoGJSUtIaAEpDS9aMUwGmilIooASkpaTFWYXFoxRS0CuFOHSkFFIEFLRS4pgJSEU7FJQJq4maBS4pMYoK8hR1oyPrSUYzTsDF61yfxUaIfD/Wlml8pHt2Bb+Q/E4/DNdXjFeW/tDXF1H4IZbdMxLKkk5HOEDDjHu238qT2Gtz5R8S3W6+hgIYL52AyHBLDr/TmqOnaTc6oIoJJcQx58zjhiDnPNXvs/mzPcF9pRipJHVi2T/PFdPoNkAo3p9zII655rmlKy0OuEeZkUPhoNaNKsRXp5WRjauBk/wCfWrfhn4dvq2tLI/zBcqqY+VQAATj8q7/R9CfVmSKL77YDEjhRgV6Ho3hq00eI+XGpkP3mx1rz6mJsmkepRwak7vYxNA8IWuk2zIkY3FgCxHUZz+A7Vbm0O0sYDGkRlLZZmbGWOc5P+FbsrEcKBn1FUbgkjqSa4udtnpezjFWR5n4msLzWLvzJiRDbqXjhVenqWPQf0xXmlz4eaFo7ua3YJHucbhywPIJz0H169a+ijpqzbv3I+YYOR1FYOueC7fVWCzuUgXrGn8foCfT2rqpV+XQ4K2HvqfNL6ZJr2pyTIWFuh2FscA/3R610ei+F3QhUCyc8bwQT+PcV6rL4CgtIylpFGi5yFQYB9aZBoQtGkZY8N/ex7Vu8TdWRzRwtndnC6j4SR4na7ZGkXEm1R8oI4H14FeV+I7EWGqSRhdqthwMdM19FXlupLu+MEDj6V438Q9Ld9Re4CHykjCjH96rw9VuVmZ4mklG6OHOOwqzaxNM6RqhPzAccg96ghheaVYkGWY4ArsNB8PyWzyGeHLRHjvyenP4ZrtbscUYtsyrcsZZZJYWKsyqFJ5OD0/nT8q9L8AXslv4isnXA2MgA7k5zgflXOw6AIbKOfySVJBG45PzN19qv6BqH2LxTY28TjzhMsjbeo+YYGPpSUrjcWtz7g05stGcltybs47960cVnaU6yxwSKMBowQM9OOlaVaz3MYbCYpKdSVKKEpDS0GgBKSloosAlFLSGgBKSlzQTSGNNJS4zRTEJSd6U0GgBDSUUUAJRR0oqzABS0lLQAd6dSUvSgBc0UlGaAYtBooxQAlHWlI4o7UBzCY5pMUtGKYdA6VxXxh0qTV/h5rFvBA08xiVlRF3M21w2AO/Su1zVbUkll0+5jhkEcjxMquRnbkYzikJOzufDUdo1zqKpsJCNzkcZHeur0ywaGdEYALjcfc45qGOxFp4pvdMjBY2jPhW6lVPU4/X8qu3GpRW64ZW3rnp2P+TXDUUnokenScUrs9Y8FwJBpxkXBZnPJ61vPPI/Via8f0n4xWem20NgNIupmyF3iVVBJOM9M969Bk8WRWNrDObOSeSaaCGNN4X5pZFQfkW/SvIq05RmlLqe9QrQdPmWyOmhsp5sEDAPBrO1Wc6cSEhDSY43dvwFZviz4mjwvYfaY9OaYf2le2CbZAu5bbG6TJHcnAH6145rv7SdrfSSJb6Re7AcK5uFGffG2uiOEmuhzSx9N9T0TX/GLWEeZ3299oPB+g/xrm/8AhbVmgxK8e/3bH51xrah4k8Vx+fB4Q1IpIP8AWy3KxBh/wIDisO/8Daw0jST+HWDNwB/aEblPpXVCjFaSOKdebd4nq9j8TtI1GQRC5hD+5wa2f7QtrmMSRSK6t0I5rwiC0Ok7Bc6Pf2zR8GYRiVfxKkmuk0fxPC6oltdwzlf4FbDL9V61NSgt4lU8Q9pHpM8UU/AAIPXIrNuvCtjertmiRhknke1Q22sJLGCWOfSrjaokcRYuOnesEmtjobi1qYenfDPQ7CV2igX5mB+bk9sfyq7qHhqKNMWseFI5+tZWt/ECz0s7WOTn+HmsW0+MNrLKsTIwVzgbh1/z6V0xjNq7OSc6adkdPpei+dcRxyoAkTABewC4/WuG1KFtI+JKxrGqvPPHIzbSSqbv5V6V4Z1u31aQhcLI2Mdv0pp8Nx638WNGg8oMBCk0xxnaoZuT+X54ralfnszKrZwuj6U0eJoYbZGYuVjxuPU8VrEVQskCSIgGAFwKvniu2a1PPhsJRSmkqCxKSnUhoASjFFFACEUYopDQAhGKSlpKAACil9qSgBDSZpTzSUAIaSlIppp2AKKKKowClopMZoKshRSg0neloCwCl70lLQDYUtApelBNwoopRzQIbijmlIzSHgUCAjiquo3tvp9nJPcsFiUc5q1ivOPipezXU9po8L4Dgu/v7Vz4qt7Km5Lc7MBhvb1lB7dTi73wN4f8Ta7eajpurXkMd/MGu0tyqFlGT5YOMqpOCSOTtFYvi/4TaXakXMLXCrjZxIeD2r0uPw1H4dWCQAReUmJHJAUk9snqc1ZubdNS0+WNhuz/ADFeM69Xm95n0f1Wi4+4jzHSvgzp91YQzCeRXYBg/frkGta8+Hmq21vHcQ67cStbypNGsg5V0YMh79CAa9Eto4rOCKEYCooUcelPuESYFEIOecCpc5S1bGqUEuVLQ8A8U2+pSWsdlqs0xihkuJozgDa8zbpTkDnJ556dq8j0PS4tB8YK6QjU47eM3EKsMZbouR6g/wAq+tvEGhQ3ts0U0SuDnjFeM6x4ONt40njjgPljTUdfb982fx6V10MS3dSOLE4RJpxOc1T4geL7W1huY7OxjW5kMaIWLSBgM85PHSsnTPG3ijXL25tBZ2zzwKZJEIZDwcHnPBrtZ/DUF7bNBeQySRnkqwyM9veqen6DB4e886YGg8//AFhKZZvbJOcVvGdO2xyyp1L6Mw7bxPLcTNBLFJbXSrnypOcj1U9xWlJoFj4qsw9zbESjIWeP5ZE989/oarz+F21K9WZjL5kbB1ZQByOw9Ae9drpunf2Po8UUoH2iXgL7/wCAqJSSfumkYN35jxOTxJ4h8LajPprXQuhauUxKu8HHQ569Md6sjx7rmsMtrb2kBlYHITdjHryeK6PSPDT61cahralttzcO0ZYdYwSAT9cE/lWJb2hsPEeuqFCskoxtH8JyeP0rpTi29NUcvLOKWujLVv4W1rUgDcXFhEDzgRs/9atH4WT3DBhd2jsB0MTru/EMcVkXXiDVLdrd40EcEwbgjDqR2YnAB9qv+F/Feu3nnTJpf2mKEAyG2ZkkwRwQCSG6dKPf6C9zZnS6JDqXhSRUn0Z72Jcc2cwdx9FbBP4V6x8JPF/hLVvF2o6hLrVna3/kRWVva3zeROcDLna+OdxIxntXAabrEWs2cN3byiUHo4GDx2YdiKyvjjq/hTxTpFpNpOn+Tquljyrq9OFNwcgMhXuAxOGJz26U6T9673FVT5bLY+zLcHzkPYjj3q5Xz/8Asgxa1/wiOpXGpvfG0e7RbJLkttCiP5mj3fwkkdOMivoCumTvqckVbQKQ0tIeaksKSlpDQAdqSikNABRRRQAhpDS0lABmkNLTTTEB560lBooGNPNFFFMBD7UUUdKZiL2pKM0ooGgpaBRQAtLSUuKCZBS0YooJsFAo4ozmgQUUUlAC9a8/8XWbR+KrC6lUlHlVAw6YJGP1BFegCsfxRZLd6ejbctDKkgx14YH+lcuMp89O/bU9HLK/s6yXfQ8p8Wwy+JNQithNLiOfftB6bTnP6V1mgtLNYSvOu1jcSqF9FGMfqTVTT9L8zWLme2liaGYluTgqeuMVZ0aG4sxLBcb8F2ddw9TzXhJ9WfUzs1aPQkuZCDg9BTre4ZRnPJqLUOOQCaqpPghexrK7TLsmi9cSiTnqa4rxRBFDqFveEbS8bW5b8Qw/rXUNJtxhse3rWdfwx3cLxSKHDdQwzmtYuzuZzimrHIXKH7oX8aqPpxl5ZOvrV+5065spT5JcJnKqw3p/iKqTahdxnEtqp/3Sw/TFbJ9jlcO4+1tYYCuFGQfSsTxmLuYpZ2u5r7UD9mgI/g3ffb/gK/qV9atf2zcvcJBb2JadjgJuJJ/ACul8M+F72K9bVdWDS3jDbEpGEgT0UevrVqXLqxeyc/dWw/SvCdvo2h29ike4qgVwB7YwPoK8lutIS18f31lMi4ubYMp9Sjdf++WFfQUkI2fewR615j4/0CS31Wx8QRws5t3KSFe6sMH+f6Cqo1NXfqRiaCUVboc3NoTAtE8ayRHswyD7Gm2mgxWkRhtkNqjMWKwjbk+vFddZNDeW6SRsrrjsOn1FS/ZlBGFzitudo5fZJnPaJ4Wi05wLBPLibBZD6+v1616J4w+Hnh29Hg/wxYaNZQHVtSS81CSOMeZJBDGZJSzdfmJA+prP02BWbBA4r0bwra/2vrr+IXGbe0sl0yyJ/iOQ0zj8VVfwNdeGlzPU4cXHlSaO1twFkjVVCKowqgYCjHAA7Crh61ThP75Kuda657nFT2ExSYp2KQioNBKSlooASkxS0lACUUuKSgBDSUpooAQ80hozSUwCkpT7UhFMBDSUtBoAT3pKKKZikwpaKUUDFoFFAoE2AFLQKWgm4UfjRjik96BMWikoNBIAUuKBRmgANMmiSeJopBlWGDg0+jFDV9xptO6OUvNEispDLOOC3Eq8B/TcOx/nVK51C3tvKilZA8koiQj3ziu1liSaNopEV0YYZWGQRXF+LfCdhZWKajZQsksEysQZGYAZ7AnjnFeXiMFZOUNj3sJmSlaFXcr3a7geazHj2SZyeRWnK6uqlehANVZotxB79K8d7nvLVGc7NnA/OmEE/WrbwbW45PtTDC208VSYtSnIQVIdc1j6lIEQkJk9gK31tDKSMYHeqd3ZpHg8E1aZEkc9pkqaRdNeT4DuOHI4BrI1T4w61HrL248L6lcachx9rtvnLe+3HT8c110sKSIQUBUf3hxVCRUtID5EaoG4IQcfWtqbV/eVzGo5WtF2K0vjn7RAjo0gBGdrDaR9QeRWbF8QNPnu102a8tp2lyjW+4OSO4OKzp9EivfPAeUEtjAPAGOTVHTvBCWF0ZLRYYR1bEYBP41tCMbHPOpO6NddFhjuJjYTuiI5UDPbtz1q/bQ3IOHmm9AVYf1FFjYSWIIOeeatCYiQjaRjB6UubUTSLFrp8UkiiWa5kVuMeZgfpivcrG1isdPtrWFFjjhiWNUUYCgDpXlPhSxOr61awhcqp82Q+iL1/PgfjXr/AFB7V6eCjo5Hj5jNNqKHQ/6xKu1Si5lQ1dNdU9zjpbCYpKXpR1rM1EpDjtS4pCKACkNLSGgBDSUveg0AJimmnZpDTAaaPelNIaYCUhpaQ0AJR2paTrQA2jFJ0pc07GCuLS0gooKFpc0gNLQJ9haXtTaBTsTyjs0maOpopEsM0Ud+aKAsL1o/CgcUUCEFLRmigBDVbUrUX2n3Fsw4kjIH16j9QKtdaTOKGrqxUZOLTR52zeUFQ+gIzTfNxzmpfEEX2W7mUZxHIy/geR/Osr7SrKDmvlqsOWTR9pRq80Uy7JIrdMfWmZDYGetVBcZFPVuhzWdjdMsiPajHOAOSa4fxr4lm0e0aSwtJrqQEZSMZPJrrbi5LDywCPWqa2MMj72QMa0g7asznrojh4/GupTwIlnpUvmMPmaRM4P06VVvL3WWQyXFtflu21CB+AFegyWsFqp2QLu68da57VtUmshj52Vhng5xW8Zq+iHBRS95nJSa7JbsqtI0cnfzIyP1Iq7pfi22mkFvdtEwY7VlXs3uP605vGcYYLIoYf7SiqGqWVh4mtJGt4o7O7AJSeFApz2z/AHhXTFJ7mNdR5bxdzq4L6OaRoicgd/SmMp83aMkk4rkvCelX2jR+XfXb3U0r7mkPT6Adh7V3Wn2rXt7DCgO6Rgo+pOKXKr2RxOXu3Z6P8PtKXT9JN26/vrs5z6Rg8D+Z/Kur38VTt41toY4UACRqEUewGBUwbjivdpw5YpHzlWXPJsswOPNTnvWhuFZVu376Pp1rTzmlNalUthxNJmkorOxqLmg0lJRYBc0hpKKLAB4pDS0hpgJRRRQAlJS0lACUGg0lABSd6WkJoAZ1paQUGqRzpi0daM0UDQtLmm0tADqXNNpaBO7Fo5pKUUhNBRQKWgVgopO9Lj3pgHWij6UUhAaQ0tB4oA43xjAGunAH+tiV8+4JH9BXnk949lIVccZr03xaB9ptD6xsP1H+NcNrekpcBjjryDXz+MajWkj6rBJzw8Wijb34kIYMCPUVpwSLLyGrhLn7ZpErfeZM/pVuw8Sx52u+D6GueUb6o6oVLaM7Voz1GD9KRIznOBj2rIttaVnwWGD71qwahGV4PAqEbcyJprXKb9vNc5qumiUnKDJ4yO1dC2rRKNp4JrKvNQhZt3p3q47kSscrL4eWTrFz9Kks9IjgOCmCO1bJ1KPHaonuklGRjj0610xk2cs4oxp4ys4+vau/+HulGa5bU5R8kOVj92P+A/nXN6Xo0ut36QQjBY/OxHCL3Jr1ixs4NOtYrW2QJFEuFHf6n3Nejg6N3zM8rG17LkRb3U4HPAqIN/8Arpcgd69U8mxYtW/eRn/aFawNYlu372PnjcK2Qe3as5I0gx2aXNMzS5qLGg7tSUmaXNFhhnFGc0h9aKQhSaSjNJxQAdaTNFFABSE0UlABSUGiiwXENJTqSgLkf6UZpBzS5HpVGAtFJ1paaGKKXNIKAaAHA0fWkoFACilpKM8UxXFo6UgoosFxetAGaKDQIWikFGaLCY6kIooHNQI5XxjMPtdqgPKxsT+J4/lXPzKJAF9fWrer3f2/WJ5AcoG2L/urx/iarlQzd6+Yxs1Kq2j7PAU+SjGLMLV9NjnTDKDkVwer+H5IXLRDH0r1G4jDjpntWPe2iSZG3OKxhOxrUgmeVte3di2H3jHr/SrUHi6RD8zkZHeuqvtHgmysiZU1yeseEwm57Vm+ma6IyjLc5ZQlHYsP4zTJ3PkkcY7VVk8Xq4AJBGOea5K+s7q1LK6Fh64xWSzuuR5bMegANdEYJnPKozuJPFSgnedoPStzwze3WvXcVpaAZkYLufIVcnGTXB6RpsuoSoDGQDznFeveENPj0u7s441xiRCT75FbRhFMxlKTR6loOiW+g2YgiO+U48yXHLn/AA9q0c+9JwOnrRn8K9yMVFWR4EpOTux2fSlDH1pgPpxRnHXFNjJYT+9i/wB4Vsg81hRH94mOu4Vsg88UmaQJg1ODc1Dvpd9TYolzRmovMo8z6UrBcl3UZqLfRupWC5LuozUWaUGhoXMSZFBxTM0ZpWHcWikzRQMWko5pMigApKUUnekBHnAxQMUh60dqsxHZ9KXqKQdaWgBaKTNKOaBsOKWkpc0CCiijGBTAKWiimIKKM0A5/DmgVxc0mfzrjtc+L3gXw9M9ve+I7N7iPhobXNw6n0OwEA/U188eOv2ndb1TUZv7C1C402ziYiOG0RCSv96R2By3svy/XrUuSRag2fRvxE+IumfD/wAPLqlwBcy3DeXaQK2POfGSc9lA5J+g6muM8J/HM+L7SaJbe1truKLzJVQuSI9212TJ5xuQ98DcTjFfKnif4o674zMMmu6hcX8sCmOLzNqhE9goAHbPHOPpWPoXjHUvDmow31jL5ckJJX0wRgg+oIJBHcE1hU5pKyN6UYxaclc+1kx5oPPPvVlVU85rzL4ZfFLTPGNlBambydUhQLLbynBkwPvJ6j26j9a9KR8rkHrXzFanKMrSPraNWM43ixJQBzgVSuYw2eMGrM7evaqkku3Jxms0jSTMm8jHOR19KxL2PaCRzW9dtnJxWPdIT0PHtVoxkcxqNvHJ95RxXPy6XbvJuVMNzg4rsbm13npVM6f8xJHfrXVCdjlnEq6DZmOZBjFdtat5U6uP4SD+Rrn7GARSDOMitm2lLkbhgGt4y6mLj0PXd2RuHQ80ZFVdNm8/TrWXn5oVP6Yqz9K+hi7pM+amrSaAmgEe+aTNNLGmJaDo2/epj+8K2RJnHSsKOTEqZx94VrbvekzSDLG+kL1CJPel3ZpF3Jg2adkVCDTwaBNkgNOBqME4pwoFcfRSD6UZpCFzQDzTaM0tBpj80A+9NzQKTRVx+fekpDxRSHcUmkoooAjpR70lFVuYjutGaTNAPFOwxe9KDSUdqLALmjNHejpQgHUjOsaM7sqqoyWY4AHua474j/E/SPhzYh7pWu9QlQvBZRnDMM43Mf4Uz36noAa+W/G3xV1DxvcsNb1GRoSS0dhjy7eP02x5w3+8xJ+lTKViowbPp7V/jb8O9EleG58VWMsqEho7TdcMCO37sEfrXN337Tfg2FW+w2GvX7D7uLQQq34uwOPwr5Ul1aay+6E8rPylBj8CBVT/AISOUlgQAeeQR261HOy1TR754i/an11Yy2m6Hp2nxt0a4Z7iQfUDaAfwNeX+I/jt4u8TQy297rly1tKpBhD+VGw90QDI9jXGHxO2MnPXoB+lV7rUbO6z51soY9yvP50m2ylFIS7v5roFf9HVGOS0J6jHTHYVnvdl5SzKrDp0xzTbmFI2LREp0wN2eo7GoDMX+/z6nuaRRO5ikI2Iw45Geh9arMhU8ilPY9qGcHtzigBbe5ltJkmgleKVDuR0JBU+oI6GvaPh/wDtFX2miPT/ABRG99b4Ci8jA85f94dH/Q/WvFsKRkcH0phypIPBFZ1KUKitJGtKtOm7wZ9u6X4o0nxHYJfaVfw3cD/xIeVPow6qfY0rSgnJ6k+tfGWh+ItU8N3ovdLvZbWYcEoeHHowPDD2NeweFPjxbXQSDxDCbSYcfaYFLRt7svVfwyPpXk1svlHWGqPVo5jGWk9Gey3GXHHSsm4baSM/hVnTdVt9Ws47uzliubeQcSxMGU/iKqXrbGbrxxzXDZp2Z3cyauilLJz6ioXmQDOOtNllUtjODVWeVQPx7HpW0YmEpFmCTe4OCa1IpNo681kWWMZPftV8sUK9OfetUzMxPGHi/wAWeFJJtV8Pa08dtbGBLqyuI/Mi2yA7JAGyNuUKHZtIJXOd2aueE/2l5J5IIPEuk24R+t1p7sMe/ltnP0DfhUPinS/+EkgXQfLijfVI/s8V25AFtMGDozZP3DtwxGSOODXg09pNp5Ekc4dV+ZlVwQSDggEdfr3r2MPVbgrHj4mklNn3VpmsadrNulzpt9b3cUih1aGQMcHuR1H4gVYJAPNfEmiaxcLKpt7y5tbiP5opoJSj8+pB68Y+tbk3xT8Y6QqTxeJNVYbtrq9yWA/76z/KutVO5xulrofXaEGZOf4hWqjHGMjH1r4tn+NPioyKX8Wasrr08qRFU+/yqM1s6N8f/GCRmceIriUREI8d3BFKD6dVB5+tHtEONNo+vFPPNPUgV4F4W/aUmkkWLxBpttOjHAm0/Mci/WN2IP4MK9Z8M/EDwz4ubytI1eCW6Ay1pJmOdfrG2CfwzTU0waaOnXinhs96hUg+tSKaZJJT1qMGnA47UASAUYpobmlzUtdQFpKKTNFgCnA+9NzxR1pgPzRTe1LmlYpCg0tNzS5pFEY+tHakHNOHSmYi5opKKOYLi0UUZqgFzXi/xw+Ml94Tum8P+HZEivEhEl3dABnh3fdRM8BscknOARjmvVfEmv2nhbw/qGt3pH2exgadx/ex0Ue5OB+NfC2qa9da/qOo6lczNLdXTtPK2cguWyefTkD6Com+hcFfco+Ktcvr1DdahdT3d5eOZJZZpCztjgZJ6/SuefVpXCrLGjRgYwBWlqcy3Fum/qh5yOnHpWLcFAuEz054rNm5YjvxzEGaRGwNr9/aqkrFScBgP4cnpUFPLZFIBAx/KkJJpKWgBKKKKAFBxSUUUALxt75pwbOASAPpTKKAHMpBpKM5pKANHR/EGq6BcC40q/ubOUfxQuVz9R0P413em/HbX4kEeq2tnqKjHz7fKkP4rx+leZ0tROlCfxI0hVnD4WexwfGDRbs5ngvbMntgSKPxHP6VpRePPD91gpq0Azz+9JU/jkV4TS5NYPCU+hqsXPqfR1j4t8OBTJN4h0yNR2MwJ/IUl58WfBem8NqMt+VHCWsLNn8WwK+csmgnNJYOC6lfXJ9EemeMvi9B4hkjWx0YWscB3RySy73z64AwD+f1rgn1FpAQRlckgc5H41n1JCPmzzx1xXRCEYK0TnnOU3eRf026a3Pm9BuAGTxxzWrfyidZYnA2SKJI8Hkf5NYkzxLEuwMrgY2jov8AjmriSJJDbbwB8u1SRyCDxVmbMhuDU9nKF81GJAkQjj16j9aS7TErbVYckEH1qKNjHIrDqDmgZai1KeAELIQf5/Wuksdcku7CNmkcXMP3ZFOGBHQg9q5Fxtchu1WtNm2yPCThZlKfj2oA+ivh3+0lqNhp0EPiK2fVrdWEZnRwtxEBx34kHTqQfc19HaJrNl4g0m11XTphPZ3cYkifGMj0I7EEEEeor889GvGSd7VydsgIGf4Tivq39ljxKdU8I6jo8rkyabcrIgPURygn/wDRvzrSEuhnOPU9uBp4NRZqRQTWhmPzS5pvNKDigB2aSg0UAITxRk5opCKAHZ4pQabSikwHClBptLmkWhgpRTQc0ZoSZiPzR9abRk0JAOozSZzSgZIA6ngVQM8J/as8YjTPDlj4ZhkxLfsbq4UHnyozhR+L8/8Ar5f0yUjzcEfNGxIJ9Oldf8AHnxcviz4g6pcw3Blhim+y22zkCOP5R+Z3N+NcZoShrsKnGVII7E9Oaxk7s6YqyKWoXOSUUsARkCs8kFcAc+tWrmPFxIrfIwOSOeKqORn5RxUlDKWkooAKXNJRQAUUUUAFLjNJRQAUUUtACUUUUAFFKBmkoAKKKKACiiigApQSKMcUlADtxGOenSrEcjuIhkfKTjJxVYmlBxjk+9AF2acTMzFlU56GqJxmpiQ4ZupHUHqaiYc0AOmbewbjkDOPWmoxRgw6g5pSQUAx0pooAnSXyboSDLENu+te/fss6ybP4hanpTviPUNOMiL0BZGDjH4M9fPjHJBPpXWeC/Elz4d8RaXrlmcXNivmDA+8EbJX8VyD9aadmJ7H6BCpBkVUsruG+toru3cPBPGssTA5BRgCDn6EVaWtznuPBp2760wciigLjs5oznim0uaBi5yaKQ0maAHZpabTgaTAXpSikBpaTKRHn2paSin0Mhc0UmaXNMBa534ieIz4V8D6zq6ELNDbMsBz/y1f5E/Vgfwroc14X+1f4jNl4a0vQo3KveytcyY/uxjav8A485/75pSdkVFXZ8mahK/2liSOOODn8adpcjpciQLnHOM45HSqEjfOSD3qe3dgynqRWB0lnUSFnkCnLHnP9M1mVoakFWRH6h0Bx6c1n0AJRRRQAUUUtABg0lSSSiREURouwYyowW9zUdABRRRQAUUUUAFFFFABRRSigBKKKKACiiigAooooAKKKKAHof8mlbc2SeopqnBp6hiTt5LUANUZVqZT1GCRntTT1oAcWGwDHOc1PZ3RtZEkHbI6+tV16EYpOgoA+u/2aPiL/bWlzeFLyTdNZqZ7Jj/ABQ5w6D/AHSQwHox9K91U8V8F/C7xKPC3ivRNUjkYG3u0EoHdGOxx9NrGvvQgKSo7EitYPQwmrMeCaXOaYKXOKskdRTd1GaAFyMUA0hOaSgB+aeD7VGDjtTgeaTAeKUU3NKKSKQylzTc0uaSZmLRSfjS54qrgLXxz+0/4lXVPiFe2isxj0+GOyXB4yBvc/8AfTkfhX15qeow6Ppt3qVx/qbOF7iT/dRSx/lX55+MdUn1fV7i/uHLT3U0lxL/ALzHP6Zx+FRN6GtJa3OfPNWdPO2cZBxjHHWqverFu+xWYNhuAOKzNgvJ3nKlwAVyOP61Wp7kH3NMoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiloA9K+HHwD8W/E7TG1TRG0yOzScwNJc3O0q4AJBUAnow7V6DH+xr4wjAZtd8PsQPub5sfnsqp+yR8RLXw14k1PQNUvYbSw1KDz43uJQiLPH7nAGUJ/75FfSNz8Yvh7HKY38Z6AGyQQL1Tj8RxSbGkfLurfsn/EXTY3mgt9J1HbzstbwB2+gcL/ADrx/XtD1Lw5qc2natY3FjeRH54Z0KMueRx/Wv0PsvHXhfVh/wAS7xDpV1kcCC9jY/lur5t/bA06J77w5q0f+saKa1kJGCQpDL/6E1FwaPnRDtYEdqV1APFMqR8lFYsD2x6UxFzTGPmAbtm35gw65r9GLC6ivLO3uoZFkjmiSRHB4YMoIP61+cml4+1KWAIX5vyr7m+DXiGHXPh3o7Ryb5bOEWU4J5V4+Bn6rtI+taQZlUXU74HPWlqBXJ708NWhmSUmabnijNADqKbS0AOpV4pnXtSr1oYE2acDUY5pwqEMZmgGj60ZoIFFLu9qbnHalzTsBxHxs1P+y/hhrrhtr3MS2ie5kcKf/Hd1fC2sSlrtycdTx2FfWf7U+rG18K6RpwZgLq8eVgvpHHgfq9fIVzl5Gd9wOcE1nPc3prQq96UMy9KDzzQevB/OpNBKO9B44pKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaC2QBgcUlFACg47U4PjtTKKAH7l6gYrQufEWp3ekxaTcX09xZQyebFFKxYRNjB256AjqBxwKzKKAClzxikooAlhlMW4g4JGPwr6B/Zj8VPaeJ5dEklLQ6lbk4J482MblI99u8H8K+eh1rsvhp4kPhnxdpeqSE7bW5SRsdSnRh7/KTTTsxSV0feKvUobPeqcM8c8SSxOrxuodHU5DKRkEH3FWFNbnOThqWowacpNAD6AaSl60AL0py0wU9c5zQA8Y707PpTcc06oQDM0ZpufSjPanYkeTSCko7VQHzb+1XeLceItGsSwYW1i0xXPRnkOP0jFfNl7LvlJwMqcV7Z+0dem5+JGpq5JS3ihgAPQBY1J/VzXiN2RuwMbR6DFYS3OmOxVzzk0UrGm0ihc+1BOaKDjjFACUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFKBmgByuRxgH6irtlO8DLJsJQenc1Po/hjXNcdV0vSr68ycZggZh+eMV3enfA7xw8SyHw7cox5KyyIv55NTKcVuyowlLZHtX7PXjttY0dvDd4dtzYJ5ttn+OAnlf+Ak/kR6V7KjZHFfLnhjwB8RPBuq2+sWegzNLasHCrMjlx0KkZGQRkf8A6q+i/Dev2viTSLfVLQSxxzblaKZSrwupKvGwPRlYEH6VrTqKWzMatKUHdo3QeKepqBTUimtTImFA68UwN+NOH86AHCpFqMVItJgPUnNO+tItKKlDIe1GQKQYoqyB1KBk49eKbTlIV1Y9AcmgD4m+NOsi88d+IboAsrX8sa/RCEH/AKDXljnexxnjpXWeMpDf6vc3WTJJcXE0oI5BJYmuYnLA7iNjccDvWDOpbFY8nmkp2MnB700jBpDAAZ60EYpQuRmlYEHB5xQAyinnGBtBB7803FACUU7bxmkCk9AaAEopdpoIIoASiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigCW2ha5njhXhpGCjPqTX1R8MPgp4U021gvb+zGqXp+bfc8qp9k6fnmvl3SWKanaFTgiZOfxFfbvg+fGlW+f7ma4sZUlFJJndgqcZydzq7W3t7GFYreCOFFGAsahQPwFS5GKhRty0pbivNcrnqqFhxfHFQ26RQSzbBtMz+YwHQtjk/U4GajkcA1C03vitKFd05XMsRh1Vhymwj5xUqNzVG1uPOQHPzDhqtqea+hhNTipI+anBwk4yLAOKcD6VEpzTwQO1USTKcU9TUKmpVbnAFDAlA4p2aYDmnVAyDIz1pc00AY4FBOasgdmsrxXftpnhXWr1eGt7C4kU9ORG2P1xWoK4X456qmjfCrXrhw5WVI7c7OTh5FB/TI/Gk9hrc+Ob2AmQBTtdRznrnHrWHfxyIV3gcnjHU0+88Q3FxKWiVIF5wFGT+dUXvbiQANM5A96wOoa4xgbcGmseMYoMjMclifrSiVs84P1FACxoScc+pq2ljJLljhBnA38V6T4H+G0OvQW06xOfNRXZyxwCR2Fe+eC/gr4a0pEnl06C4lXnfKgbn2zXNPFRi+VbnVDCykr9D5R0rwTrOtqV03Tby9ZmHMEDMAPXOMfrXaaX+zp4+1IIW0kWin+K5mVcfUDJr7JtLG2s4ljgiSNV4AUYFWMj2qPbyZosPBHytZfskeIJFVrvXbC3HUokbSf1FaC/slSRDMniPd7JbAYPtzX0wz471BKeCaznVn3NIUIPofOdv+ytp0bYudZvHHoqqtaA/Zj8KQoPNudTlPcmUDP5Cvbp36nuKrNJkY46VySxNRP4jsjhKTWx8zeNPgJpmk20k2mXl2HUHCykMD+grw6aJoZXjcYZCVI9xX3F4ns1ubWRCucg18e+PtNbTPE13GRhXbeK7MHXlO6kzz8Zh1Td4nOUUUV3nCFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBPYttvID6SL/Ovs7wXc50q175QV8a2NjdTxzXcELvFZhZJnUcRqWCgn23ED8a+r/h9qAn0ezYtyYxXBj1omehl7tJnqFtJlASeaeXzWdaTZCnPFTyT+/WvKueylcdK2DkGqjyZJ6etNmmwMZyT2qq0me9LmK5S/Z3flTKxxsPyt9K3kauPL9cE10Ok3X2m1G45ZPlP9K9fLq29NniZpQ2qI1VbB9akBqurY61KpFeseMSA45qZDnvVfNSIcnrQBZU0+oVNSA0tgIc+lHHpSA0Zz70xDqr6lp9nrFhPp+oW0V1Z3CGOaCVcq6nqCKnyaKAPn7xb+yHpF9LJceFtdm00sSRa3qGaMewcfMB9Qa8o8Qfs0fEbQQXj0mLVohn59OmEhx/unDfpX2xmjNS4ItVGfnPqnhbXdDYrqmjajYkdftFs8f8xWYBzX6WmRmXaxLL3U8j8qwNW8A+EdfydU8MaLdservZoG/76AB/Wp5C1UPLPgvYR/8ACHaLKFH722Qnj8D/ACr2S2AjRVAwAMVzNnoth4evhpmmWyWtnbgCGFSSqKRnAySepNdHE3yg14b0qyue/DWlGxbycdqBx1qLcfY0FzmtLmfKOkcj8KrSybh6U6RiRmq8kmOaynI3pwIbhuDzVKSbYMVLO59ao3EgzwcnGa4ZS1O+EbIr3uJlZe5r5k+PejrZ6xbXiLhZQVP1r6XklGOSNxrxr49ab9r8NtchctbSK+R6E4/rXTgp8tRHFjqfNTbPnaiiivePnwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKUUAe8/s6+FbXVPDfiafUIfMtdQ26aw7lNpZ8e4LIQfUCtzwTHdeG559Av2zcWErQ7u0idVcZ7MpBrC8H+Pp/DXg/TdB8H6K2sXar515eShkt0lc5KjGCxHC54HHeq2o+LvF0ms2up+INAgt0jHlST2sbK3l5yAwJO4KcnI55Nc2J5Zx5b6nTheaM+a2h75ptxviVs5qzLNzxwa5rwxq8N9ZxTQyK6OAQVOcite4lwGOa8Cd0z6OGqCS5y+Ac+tNaQsPSs+2k8yZyTkLxVrzBnHeouaco8MSBmtDRb3ybwIT8svy/j2/wA+9ZLuwPFIspUhgcMDx7GuqhU5JKSOTEUlODizv1fNSIR1rP0+6F3axzD+IfMPQ96uqwr6iMlJXR8lKLi2mTBuKepqINxS596Yi0re9Sq3NVUOalVqAEzS59KTOeox7ijHuaBC5pe1NzSg0ALRSZ5ozQA6jNNJooAxNUiC6wH/AL0an+YqYOwTGafq6AXEEv8Assv8jUSnco+leDiVatI+kwb5qESdJuOacsmR9aq4IHWlWX1yKyU+5vyLdE7MMVUnbPTrUzv8vvVOaQAe/rWdWRpSjqQySdQaoStkH16VYmkzyRVGRwpPtXFfU7LaFCeQoxGcGuH+Itr/AGh4e1CAjcWt3I+oGf6V2F8/VuB7+lclq8wubeRGP3lZD+RFb0XaSZzV1eLR8rGkqSZPLldP7rEfrUdfSny4UUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUU5VLsFAJJ4AHeu48J/Brxb4rdHSwNhaHrc3gMa49Qv3m/AVMpxirydi4QlN2irnDqpYgAEk9MV6r4C+Aus+I1ivtY3aZYthhGR++kH0/hH159q9c8C/BLw54NaO8nP9p6gvK3E64WM/7CdB9Tk16A88cC7VYfhXmV8w6UvvPWw2Wfaq/cZPh7wRpPh22hhgh+SIAKrHIz61p61a2mo25ilgRxjGcVGt75rfe4p095H5e1M56ZrzXJvVnrKEUrJHny2J8GaijQ5GnXD4K9oXPf6H9D9a6v7X5sW4dNvWquqxR3dhPDcLvV1Kn3rmdA1aZ7K5spnL3FuTCx7sezfiMGhrm1IVoux0GnT7bRrhjgOxYfTNWYpTKgcZwelZd2diQWEOMYG7HZR/jWxaxrtGR0qHE1TJSOOtJ0p7Coi3Jq4ESsbvhy72SPak8MN6j+ddErd8Vw9tM1tNHOv3o2zj1rs4pRIqurZVhkH2r6DL6vNDlfQ+ZzKly1OddS0rZGaeD61AretSKwNd55xOpHrUiNyetVgTUqGgCXNBPvSZo60AOzS54ptFADs0ZpM5NJQA6ikoyKAKmrLutlYdUcfrxVOFgRyea0L5d9lMAOduR+HNZNu+4BsYJHSvGx6tVT7nu5a+ai12ZYZcn2ppTHOaf1GTTJXCrk8VxtLc70RytheDWdfO4j4JHfNWWkMr7U6+9Me2dx8zKAfWueactjpglHczPNZ1PzdO1VpeSTWmNIXO43BI9FWmm0SHA2KMHlpOePpWfs5LVmyaexzl4CcgHrXB6tM1tdNH/CxP4V63caXbXY+VQD/ej4rk/EHw9n1EbrS6jWReQJVOPzGcflV09HqY1oNrQ+QdRG2/uR6SuP8Ax41Wr1PXf2e/HltPLNb2NpqKu5bFpcqWGT/dbaa4jVvA/ifQi39p6BqdoF6tJbsF/PGK+jhUjJaM+XnSnF+8jDopSCDg0lWZhRRRQAUUUUAFFWbPTb3UJBHZ2k9y5OAsUZc/pXZaR8E/HWr4K6HLaof47t1iH5E5/SplOMfidi405S+FXOEpcGvadN/Zi1ubB1HW9Oth1IhV5T+uBXZaH+zf4W051k1K8vdUYdUY+VGfwXn9a5p42jHrc6oZfXl9mx846Romo67eJZaZZXF5cN0jhQsfx9B9a9f8Jfs2ajd7LjxJfLZRnk21th5CPQt90fhmvetI0DSfD9sttpOnWtjCo+7CgXP1PU/jV3zQB61wVsyk9KaselQyqMdajucx4W+GXhbwltbTdKi+0L/y8zfvJT/wI9PwxXSyzLEOSM+1RT3OxSayLm6aQkZIrzpTlN3k7npRpwgrRVie51YRnAyfYVlz6jcyMVQAntSBCxyeeanjtXPMcTMT6CpQNXJbMzbN0rYz2qaS6CAjHSmJpmpzDAi8texZqsxeHHk/4+LgkHqEFaJgY13qEMiFSQo9+9c1a6HqH/CSrc2drK9rNHiR+iBlOQcn64/CvS7fw/Y25DCBWYfxP8x/WrywxquAoAHTiqTsQ4pnK2egziV7i5KF2PCrzgDoK0xbeWuD27VpuAOBioJWU5FL1KKTIV7VWkAzkj8KtSSAcVWkI3cmrREmLgY4H0roNCud9uYGPzR9Poa57PSrdhdfZrtJCcKflb6GuvCVPZ1E+h5+No+0ptdTrVPvUqnkiqqOMY/lUqt719Ej5mxYBp6E1ADmpFNAH//Z" alt="Pham Ngoc Huy portrait" />
+          </div>
+          <div>
+            <p class="hero-greeting" id="greet">// Hello, World — I'm</p>
+            <p class="hero-name">Pham Ngoc Huy</p>
+          </div>
+        </div>
+
+        <h1 class="hero-title">
+          Engineering <span class="gradient-text">Full-Stack Web, Mobile, Desktop</span> &amp; <span class="gradient-text">n8n Workflows</span>.
+        </h1>
+
+        <p class="hero-lead">
+          Full-stack developer with <strong>2+ years of hands-on production experience</strong> building end-to-end applications across <strong>Web (React / Next.js / Node.js)</strong>, <strong>Mobile Apps</strong>, and <strong>Desktop Software</strong> — paired with intelligent <strong>n8n workflow automations, AI bots, and zero-downtime DevOps</strong>.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#capabilities" class="btn-primary">
+            <span>Explore My 4 Core Pillars</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="#contact" class="btn-secondary">
+            <span>Start a Conversation</span>
+          </a>
+          <a href="https://github.com/OceanPham" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            <span>GitHub (@OceanPham)</span>
+          </a>
+        </div>
+
+        <ul class="pillar-badges" aria-label="Core Specialties">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            <span>Full-Stack Web</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            <span>Mobile Apps</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16v10H4zM2 18h20"/></svg>
+            <span>Desktop Apps</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><path d="M8.5 7.5 11 15M15.5 7.5 13 15"/></svg>
+            <span>n8n Workflows &amp; AI</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- INTERACTIVE LIVE N8N + FULLSTACK VISUALIZER -->
+      <div class="workflow-stage" aria-label="Interactive Full-Stack and n8n Pipeline Visualizer">
+        <div class="stage-topbar">
+          <div class="window-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="stage-label">oceanlabs://n8n-fullstack-orchestrator.flow</span>
+          <button type="button" class="stage-run-btn" id="runWorkflowBtn">
+            <span aria-hidden="true">▶</span>
+            <span>Simulate Flow</span>
+          </button>
+        </div>
+
+        <div class="workflow-canvas">
+          <svg class="wf-diagram" viewBox="0 0 520 300" role="img" aria-label="Architecture diagram connecting Webhook Trigger, n8n AI Agent, Node.js API, and Web, Mobile, and Desktop clients">
+            <!-- Connecting Edges -->
+            <path id="edge1" class="wf-edge wf-edge-anim" d="M 130 150 L 205 150" />
+            <path id="edge2" class="wf-edge wf-edge-anim" d="M 315 150 L 375 65" />
+            <path id="edge3" class="wf-edge wf-edge-anim" d="M 315 150 L 375 150" />
+            <path id="edge4" class="wf-edge wf-edge-anim" d="M 315 150 L 375 235" />
+
+            <!-- Node 1: Trigger / n8n -->
+            <g class="wf-node is-active" id="wfNode1" transform="translate(16, 116)">
+              <rect class="wf-node-box" width="114" height="68" />
+              <circle cx="22" cy="24" r="8" fill="#f59e0b" />
+              <text x="36" y="28" class="wf-node-title">n8n Trigger</text>
+              <text x="16" y="48" class="wf-node-sub">Webhook + Cron</text>
+              <text x="16" y="60" class="wf-node-sub">OpenAI Filter</text>
+            </g>
+
+            <!-- Node 2: Core Full-Stack API -->
+            <g class="wf-node" id="wfNode2" transform="translate(200, 108)">
+              <rect class="wf-node-box" width="118" height="84" />
+              <circle cx="22" cy="24" r="8" fill="#3b82f6" />
+              <text x="36" y="28" class="wf-node-title">Core API Hub</text>
+              <text x="16" y="48" class="wf-node-sub">Node.js · NestJS</text>
+              <text x="16" y="61" class="wf-node-sub">Postgres · Redis</text>
+              <text x="16" y="74" class="wf-node-sub">Socket.IO Live</text>
+            </g>
+
+            <!-- Node 3: Web App -->
+            <g class="wf-node" id="wfNode3" transform="translate(375, 32)">
+              <rect class="wf-node-box" width="128" height="64" />
+              <circle cx="20" cy="22" r="7" fill="#06b6d4" />
+              <text x="33" y="26" class="wf-node-title">Web Platform</text>
+              <text x="15" y="45" class="wf-node-sub">React · Next.js</text>
+              <text x="15" y="57" class="wf-node-sub">PageSpeed 95+</text>
+            </g>
+
+            <!-- Node 4: Mobile App -->
+            <g class="wf-node" id="wfNode4" transform="translate(375, 118)">
+              <rect class="wf-node-box" width="128" height="64" />
+              <circle cx="20" cy="22" r="7" fill="#10b981" />
+              <text x="33" y="26" class="wf-node-title">Mobile App</text>
+              <text x="15" y="45" class="wf-node-sub">iOS &amp; Android</text>
+              <text x="15" y="57" class="wf-node-sub">Push &amp; Offline Sync</text>
+            </g>
+
+            <!-- Node 5: Desktop App & Bots -->
+            <g class="wf-node" id="wfNode5" transform="translate(375, 204)">
+              <rect class="wf-node-box" width="128" height="64" />
+              <circle cx="20" cy="22" r="7" fill="#a78bfa" />
+              <text x="33" y="26" class="wf-node-title">Desktop &amp; Bots</text>
+              <text x="15" y="45" class="wf-node-sub">Electron · Tauri</text>
+              <text x="15" y="57" class="wf-node-sub">Telegram · MV3 Ext</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="stage-console" aria-live="polite">
+          <span id="consoleStatusText">[READY] End-to-end pipeline active across 15+ production services.</span>
+          <span class="console-badge">
+            <span aria-hidden="true">✔</span>
+            <span id="consoleLatency">99.9% Uptime</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY METRICS STRIP -->
+    <section class="kpi-strip reveal-on-scroll" aria-label="Career Highlights">
+      <div class="kpi-card">
+        <strong class="kpi-value">2+ Years</strong>
+        <span class="kpi-label">Hands-on full-stack development &amp; production ownership</span>
+      </div>
+      <div class="kpi-card">
+        <strong class="kpi-value">15+ Live</strong>
+        <span class="kpi-label">Websites &amp; 9+ backend services deployed &amp; monitored on Linux VPS</span>
+      </div>
+      <div class="kpi-card">
+        <strong class="kpi-value">13 DBs + 9</strong>
+        <span class="kpi-label">Production databases &amp; apps migrated with zero downtime</span>
+      </div>
+      <div class="kpi-card">
+        <strong class="kpi-value">95+ Score</strong>
+        <span class="kpi-label">Google PageSpeed performance after CDN, caching &amp; media tuning</span>
+      </div>
+    </section>
+
+    <!-- 4 CORE CAPABILITY PILLARS -->
+    <section id="capabilities" class="section">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">What I Build</p>
+          <h2 class="section-title">Four Core Engineering Pillars</h2>
+        </div>
+        <p class="section-desc">
+          From customer-facing web &amp; mobile experiences to native desktop software and autonomous n8n workflows — I architect, ship, and operate the complete system.
+        </p>
+      </div>
+
+      <div class="capabilities-grid">
+        <!-- Pillar 1: Full-Stack Web -->
+        <article class="card cap-web reveal-on-scroll">
+          <div class="media">
+            <div class="cap-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <span class="cap-number">PILLAR 01</span>
+          </div>
+
+          <header>
+            <h3>Full-Stack Web Engineering</h3>
+            <p>SaaS Platforms · Custom CRMs · High-Speed Portals</p>
+          </header>
+
+          <div class="card-content">
+            <p>
+              End-to-end web products engineered for speed, scalability, and maintainability — from responsive React/Next.js frontends to hardened Node.js APIs and Dockerized Linux VPS deployments.
+            </p>
+            <ul class="feature-checklist">
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>React, Next.js &amp; TypeScript UI</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Node.js, Express &amp; NestJS APIs</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Real-time Socket.IO chat &amp; alerts</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Docker, Caddy/Nginx &amp; CI/CD</span>
+              </li>
+            </ul>
+          </div>
+
+          <footer>
+            <span class="tag">React / Next.js</span>
+            <span class="tag">NestJS / Express</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Docker</span>
+          </footer>
+        </article>
+
+        <!-- Pillar 2: Mobile Apps -->
+        <article class="card cap-app reveal-on-scroll">
+          <div class="media">
+            <div class="cap-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </div>
+            <span class="cap-number">PILLAR 02</span>
+          </div>
+
+          <header>
+            <h3>Mobile Application Development</h3>
+            <p>iOS &amp; Android · Cross-Platform &amp; PWA</p>
+          </header>
+
+          <div class="card-content">
+            <p>
+              Fluid, mobile-first applications that put booking flows, real-time messaging, and field operations in users' pockets with shared TypeScript business logic and resilient API sync.
+            </p>
+            <ul class="feature-checklist">
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Cross-platform iOS &amp; Android UI</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Push notifications &amp; live sockets</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>OAuth2, JWT &amp; secure sessions</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Offline caching &amp; media uploads</span>
+              </li>
+            </ul>
+          </div>
+
+          <footer>
+            <span class="tag">React Native</span>
+            <span class="tag">Expo / PWA</span>
+            <span class="tag">REST &amp; WebSockets</span>
+            <span class="tag">OAuth 2.0</span>
+          </footer>
+        </article>
+
+        <!-- Pillar 3: Desktop Apps -->
+        <article class="card cap-desktop reveal-on-scroll">
+          <div class="media">
+            <div class="cap-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M2 19h20"/></svg>
+            </div>
+            <span class="cap-number">PILLAR 03</span>
+          </div>
+
+          <header>
+            <h3>Desktop Application Engineering</h3>
+            <p>Windows, macOS &amp; Linux · Native OS Integration</p>
+          </header>
+
+          <div class="card-content">
+            <p>
+              Dedicated desktop workstations, admin consoles, and browser-integrated tools that combine modern reactive interfaces with local filesystem access, background workers, and hardware performance.
+            </p>
+            <ul class="feature-checklist">
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Electron &amp; Tauri desktop builds</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Local SQLite / file I/O &amp; IPC</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>System tray &amp; background daemons</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Chrome Extensions (Manifest V3)</span>
+              </li>
+            </ul>
+          </div>
+
+          <footer>
+            <span class="tag">Electron / Tauri</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Chrome MV3</span>
+            <span class="tag">Native IPC</span>
+          </footer>
+        </article>
+
+        <!-- Pillar 4: n8n Workflow Automation -->
+        <article class="card cap-n8n reveal-on-scroll">
+          <div class="media">
+            <div class="cap-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><path d="M8.5 7.5 11 15M15.5 7.5 13 15"/></svg>
+            </div>
+            <span class="cap-number">PILLAR 04</span>
+          </div>
+
+          <header>
+            <h3>n8n Workflow &amp; AI Automation</h3>
+            <p>Self-Hosted n8n · OpenAI Agents · Multi-Channel Bots</p>
+          </header>
+
+          <div class="card-content">
+            <p>
+              Production-grade n8n pipelines that connect CRMs, databases, LLMs, and messaging channels — eliminating hours of repetitive manual operations with auditable, fault-tolerant workflows.
+            </p>
+            <ul class="feature-checklist">
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Custom multi-node n8n pipelines</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>OpenAI content filtering &amp; routing</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Telegram &amp; WhatsApp AI bots</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+                <span>Social &amp; CRM webhook sync</span>
+              </li>
+            </ul>
+          </div>
+
+          <footer>
+            <span class="tag">n8n Workflows</span>
+            <span class="tag">OpenAI API</span>
+            <span class="tag">Telegram / WhatsApp</span>
+            <span class="tag">Webhooks</span>
+          </footer>
+        </article>
+      </div>
+
+      <!-- INTERACTIVE ARCHITECTURE BLUEPRINT SWITCHER -->
+      <div id="architecture" class="blueprint-box reveal-on-scroll">
+        <div class="blueprint-tabs" role="tablist" aria-label="Architecture Blueprints">
+          <button type="button" class="bp-tab" role="tab" aria-selected="true" aria-controls="panel-web" id="tab-web" data-bp="web">
+            <span>01 · Full-Stack Web &amp; VPS</span>
+          </button>
+          <button type="button" class="bp-tab" role="tab" aria-selected="false" aria-controls="panel-mobile" id="tab-mobile" data-bp="mobile">
+            <span>02 · Mobile App Stack</span>
+          </button>
+          <button type="button" class="bp-tab" role="tab" aria-selected="false" aria-controls="panel-desktop" id="tab-desktop" data-bp="desktop">
+            <span>03 · Desktop &amp; Extension</span>
+          </button>
+          <button type="button" class="bp-tab" role="tab" aria-selected="false" aria-controls="panel-n8n" id="tab-n8n" data-bp="n8n">
+            <span>04 · n8n AI Automation</span>
+          </button>
+        </div>
+
+        <div class="bp-panel" id="panel-web" role="tabpanel" aria-labelledby="tab-web">
+          <div>
+            <h3 style="margin-top:0; font-family:'Plus Jakarta Sans',sans-serif;">Production-First Full-Stack Web Architecture</h3>
+            <p style="color:var(--ink-2); font-size:0.94rem;">
+              Every web application is built for real-world traffic: strict TypeScript contracts, Prisma/Sequelize connection pooling, real-time Socket.IO channels, and automated GitHub Actions deployment onto hardened Docker + Caddy Linux servers.
+            </p>
+            <div class="bp-pipeline">
+              <span class="bp-step">Cloudflare CDN</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">Caddy 80/443</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">Next.js + NestJS</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">PostgreSQL + Redis</span>
+            </div>
+          </div>
+          <pre class="bp-code"><code>// Production Docker + Caddy + Prisma Stack
+services:
+  caddy:
+    image: caddy:2-alpine
+    ports: ["80:80", "443:443"] # Only exposed ingress
+  api:
+    build: ./apps/api # Node.js / NestJS + Socket.IO
+    deploy:
+      resources: { limits: { memory: 512M } }
+    environment:
+      DATABASE_URL: "postgresql://pool:5432/prod?connection_limit=10"
+  backup:
+    image: restic/restic # Automated encrypted snapshots</code></pre>
+        </div>
+
+        <div class="bp-panel" id="panel-mobile" role="tabpanel" aria-labelledby="tab-mobile" hidden>
+          <div>
+            <h3 style="margin-top:0; font-family:'Plus Jakarta Sans',sans-serif;">Cross-Platform Mobile &amp; Real-Time Sync</h3>
+            <p style="color:var(--ink-2); font-size:0.94rem;">
+              Shared TypeScript schemas between backend and mobile client ensure zero drift. Optimistic UI updates, seat-hold timers, OAuth login, and WebSocket event streams keep mobile users in sync on any network.
+            </p>
+            <div class="bp-pipeline">
+              <span class="bp-step">Mobile Client</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">OAuth2 / JWT</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">Socket.IO Room</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">Push Notification</span>
+            </div>
+          </div>
+          <pre class="bp-code"><code>// Real-time Booking &amp; Department Sync Hook
+export function useRealtimeReservation(slotId: string) {
+  useEffect(() =&gt; {
+    socket.emit("slot:Hold", { slotId, ttlSeconds: 300 });
+    socket.on("slot:StatusChanged", (payload) =&gt; {
+      queryClient.setQueryData(["slot", slotId], payload);
+    });
+    return () =&gt; socket.off("slot:StatusChanged");
+  }, [slotId]);
+}</code></pre>
+        </div>
+
+        <div class="bp-panel" id="panel-desktop" role="tabpanel" aria-labelledby="tab-desktop" hidden>
+          <div>
+            <h3 style="margin-top:0; font-family:'Plus Jakarta Sans',sans-serif;">Desktop Software &amp; Browser Automation</h3>
+            <p style="color:var(--ink-2); font-size:0.94rem;">
+              When teams need deeper OS or browser capabilities — such as local database caching, background tray utilities, or DOM scanning via Chrome Extension Manifest V3 — I bridge native APIs with clean React interfaces.
+            </p>
+            <div class="bp-pipeline">
+              <span class="bp-step">Desktop / MV3 UI</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">Typed IPC Bridge</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">Background Worker</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">n8n Webhook</span>
+            </div>
+          </div>
+          <pre class="bp-code"><code>// Isolated IPC / Background Service Worker Bridge
+contextBridge.exposeInMainWorld("oceanDesktop", {
+  scanFeedBatch: (rules: FilterRule[]) =&gt;
+    ipcRenderer.invoke("worker:scan-and-sync", rules),
+  onSyncProgress: (cb: (pct: number) =&gt; void) =&gt;
+    ipcRenderer.on("worker:progress", (_e, pct) =&gt; cb(pct)),
+});</code></pre>
+        </div>
+
+        <div class="bp-panel" id="panel-n8n" role="tabpanel" aria-labelledby="tab-n8n" hidden>
+          <div>
+            <h3 style="margin-top:0; font-family:'Plus Jakarta Sans',sans-serif;">Autonomous n8n Workflows &amp; AI Bots</h3>
+            <p style="color:var(--ink-2); font-size:0.94rem;">
+              Self-hosted n8n orchestrates multi-step business logic: ingesting events from webhooks or extensions, classifying intent with OpenAI, updating CRM/Google Sheets records, and routing human-in-the-loop approvals via Telegram &amp; WhatsApp.
+            </p>
+            <div class="bp-pipeline">
+              <span class="bp-step">n8n Webhook</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">OpenAI Classifier</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">Telegram Approval</span>
+              <span aria-hidden="true">→</span>
+              <span class="bp-step">CRM + Sheets Report</span>
+            </div>
+          </div>
+          <pre class="bp-code"><code>// n8n AI Classification &amp; Routing Node Output
+{
+  "workflow": "lead-triage-and-auto-dispatch",
+  "aiClassification": { "intent": "high_value_lead", "score": 0.94 },
+  "actionsExecuted": [
+    "crm.createTask(assignee='sales-team')",
+    "telegram.sendApprovalCard(chatId='-10029481')",
+    "sheets.appendAuditRow(status='DISPATCHED')"
+  ]
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELECTED PROJECTS SECTION -->
+    <section id="projects" class="section">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Selected Work</p>
+          <h2 class="section-title">Production Systems &amp; Shipped Products</h2>
+        </div>
+        <p class="section-desc">
+          Real platforms built from first commit to live production traffic, combining full-stack applications, automation pipelines, and resilient cloud infrastructure.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <article class="card reveal-on-scroll">
+          <div class="media">
+            <span class="project-badge">Full-Stack Web &amp; Real-Time</span>
+            <span class="cap-number">CRM Platform</span>
+          </div>
+          <header>
+            <h3>Employee, Task &amp; Workflow CRM</h3>
+            <p>Cadinvo · End-to-End Internal Operations Platform</p>
+          </header>
+          <div class="card-content">
+            <p>
+              Architected and delivered a full-featured company CRM managing staff, multi-stage task approvals, and department workflows — featuring real-time chat and instant notifications powered by Socket.IO.
+            </p>
+          </div>
+          <footer>
+            <span class="tag">React</span>
+            <span class="tag">Ant Design</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">Sequelize</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Socket.IO</span>
+          </footer>
+        </article>
+
+        <article class="card reveal-on-scroll">
+          <div class="media">
+            <span class="project-badge">n8n · AI · Extension</span>
+            <span class="cap-number">Automation Suite</span>
+          </div>
+          <header>
+            <h3>n8n Automation Pipelines &amp; AI Operations Bots</h3>
+            <p>Autonomous Content Filtering, MV3 Scanner &amp; ChatOps</p>
+          </header>
+          <div class="card-content">
+            <p>
+              Built automated publishing &amp; engagement workflows in n8n, a custom Chrome Extension (Manifest V3) scanner, and Telegram/WhatsApp bots that filter leads with OpenAI, route approvals, and generate executive reports.
+            </p>
+          </div>
+          <footer>
+            <span class="tag">n8n</span>
+            <span class="tag">OpenAI API</span>
+            <span class="tag">Chrome MV3</span>
+            <span class="tag">Telegram Bot</span>
+            <span class="tag">WhatsApp</span>
+            <span class="tag">Google Sheets</span>
+          </footer>
+        </article>
+
+        <article class="card reveal-on-scroll">
+          <div class="media">
+            <span class="project-badge">Web &amp; Mobile-Ready</span>
+            <span class="cap-number">Booking System</span>
+          </div>
+          <header>
+            <h3>Interactive Salon Booking Platform</h3>
+            <p>Real-Time Seat Selection &amp; OAuth Customer Flow</p>
+          </header>
+          <div class="card-content">
+            <p>
+              Responsive online booking experience across mobile and desktop with interactive seat selection, temporary reservation holds, Google OAuth sign-in, Cloudinary media optimization, and custom SSL subdomain deployment.
+            </p>
+          </div>
+          <footer>
+            <span class="tag">Full-Stack</span>
+            <span class="tag">Google OAuth</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">Cloudinary</span>
+          </footer>
+        </article>
+
+        <article class="card reveal-on-scroll">
+          <div class="media">
+            <span class="project-badge">DevOps &amp; Cloud Infrastructure</span>
+            <span class="cap-number">15+ Live Sites</span>
+          </div>
+          <header>
+            <h3>Multi-Client Production VPS &amp; Hosting Platform</h3>
+            <p>Zero-Downtime Migrations · Hardened Container Stack</p>
+          </header>
+          <div class="card-content">
+            <p>
+              Engineered a multi-tenant production VPS hosting 15+ websites and 9+ backend services: Docker Compose with Caddy exposing only 80/443, per-app Prisma connection limits, container memory caps, restic backups, and Uptime Kuma.
+            </p>
+          </div>
+          <footer>
+            <span class="tag">Docker Compose</span>
+            <span class="tag">Caddy / Nginx</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Cloudflare</span>
+            <span class="tag">restic</span>
+            <span class="tag">Uptime Kuma</span>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE, SKILLS & EDUCATION -->
+    <section id="experience" class="section">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Track Record</p>
+          <h2 class="section-title">Experience, Stack &amp; Education</h2>
+        </div>
+        <p class="section-desc">
+          An independent builder who scopes, codes, deploys, and maintains products end-to-end with clear async communication.
+        </p>
+      </div>
+
+      <div class="exp-edu-grid">
+        <!-- Left Column: Work Experience Timeline -->
+        <div class="timeline">
+          <article class="timeline-item reveal-on-scroll">
+            <div class="timeline-top">
+              <h3 class="timeline-role">Full-Stack Developer &amp; n8n Automation Engineer</h3>
+              <span class="timeline-date">06/2025 – Present</span>
+            </div>
+            <p class="timeline-company">Cadinvo · Remote · Part-time</p>
+            <ul class="timeline-list">
+              <li>Built a company <strong>CRM end-to-end</strong> (React, Ant Design, Node.js, Sequelize, MySQL) covering staff, tasks, and workflows with <strong>real-time chat &amp; notifications</strong> via Socket.IO.</li>
+              <li>Designed and shipped <strong>n8n workflows</strong> that automate internal processes and eliminate repetitive manual work.</li>
+              <li>Collaborated with UI/UX designers and QA to deliver stable, maintainable releases on schedule.</li>
+            </ul>
+          </article>
+
+          <article class="timeline-item reveal-on-scroll">
+            <div class="timeline-top">
+              <h3 class="timeline-role">Freelance Full-Stack Developer &amp; DevOps</h3>
+              <span class="timeline-date">2024 – Present</span>
+            </div>
+            <p class="timeline-company">OceanLabs · Independent Studio · Hanoi, Vietnam (Remote Clients)</p>
+            <ul class="timeline-list">
+              <li>Deliver websites, booking applications, desktop/browser tools, and automations for businesses — <strong>from initial architecture to live production</strong>.</li>
+              <li>Operate <strong>15+ live websites</strong> and 9+ backend services with Docker Compose, Caddy/Nginx, Cloudflare, shared PostgreSQL, GitHub Actions CI/CD, restic backups, and uptime monitoring.</li>
+              <li><strong>Migrated 13 databases and 9 projects</strong> to a new VPS with <strong>zero downtime</strong>; rapidly isolate root causes across Nginx, PM2, and Docker logs.</li>
+              <li>Elevated client platforms to <strong>PageSpeed ≥ 95</strong> through strategic caching, CDN delivery, and image optimization.</li>
+            </ul>
+          </article>
+
+          <article class="timeline-item reveal-on-scroll">
+            <div class="timeline-top">
+              <h3 class="timeline-role">Full-Stack Developer &amp; n8n Automation Engineer</h3>
+              <span class="timeline-date">06/2024 – 10/2026</span>
+            </div>
+            <p class="timeline-company">Netbase Outsourcing Corp · Vietnam</p>
+            <ul class="timeline-list">
+              <li>Built responsive <strong>React + Tailwind CSS</strong> interfaces and <strong>Node.js / Express REST APIs</strong> backed by MySQL for client products.</li>
+              <li>Deployed applications to Linux VPS environments with Nginx, SSL, and <strong>automated CI/CD (GitHub Actions, Docker)</strong>.</li>
+              <li>Automated social-media marketing operations with <strong>n8n workflows</strong>; reviewed code and mentored teammates.</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Right Column: Skills & Education -->
+        <div>
+          <div class="stack-panel reveal-on-scroll">
+            <h3>Technical Arsenal</h3>
+
+            <div class="stack-group">
+              <p class="stack-group-title">Frontend, Mobile &amp; Desktop UI</p>
+              <div class="chip-list">
+                <span class="tag">React</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">JavaScript (ES6+)</span>
+                <span class="tag">Tailwind CSS</span>
+                <span class="tag">Ant Design</span>
+                <span class="tag">React Native / PWA</span>
+                <span class="tag">Electron / Tauri</span>
+                <span class="tag">HTML5 / CSS3</span>
+              </div>
+            </div>
+
+            <div class="stack-group">
+              <p class="stack-group-title">Backend, APIs &amp; Databases</p>
+              <div class="chip-list">
+                <span class="tag">Node.js</span>
+                <span class="tag">NestJS</span>
+                <span class="tag">Express</span>
+                <span class="tag">REST API Design</span>
+                <span class="tag">Socket.IO</span>
+                <span class="tag">Prisma</span>
+                <span class="tag">Sequelize</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">MySQL</span>
+                <span class="tag">Redis</span>
+                <span class="tag">PHP</span>
+              </div>
+            </div>
+
+            <div class="stack-group">
+              <p class="stack-group-title">n8n Automation, Bots &amp; AI</p>
+              <div class="chip-list">
+                <span class="tag">n8n Workflows</span>
+                <span class="tag">OpenAI API</span>
+                <span class="tag">Telegram Bots</span>
+                <span class="tag">WhatsApp Bots</span>
+                <span class="tag">Chrome Extension (MV3)</span>
+                <span class="tag">Webhook Orchestration</span>
+              </div>
+            </div>
+
+            <div class="stack-group">
+              <p class="stack-group-title">DevOps, Cloud &amp; Production</p>
+              <div class="chip-list">
+                <span class="tag">Docker &amp; Compose</span>
+                <span class="tag">Linux · SSH</span>
+                <span class="tag">Caddy</span>
+                <span class="tag">Nginx</span>
+                <span class="tag">GitHub Actions CI/CD</span>
+                <span class="tag">Cloudflare</span>
+                <span class="tag">PM2</span>
+                <span class="tag">UFW · Fail2ban</span>
+                <span class="tag">restic Backups</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack-panel reveal-on-scroll">
+            <h3>Education &amp; Credentials</h3>
+            <div class="stack-group">
+              <span class="timeline-date">2025 – 2027 (Expected)</span>
+              <p style="margin:0.15rem 0 0; font-weight:700;">M.Sc. in Information Technology</p>
+              <p style="margin:0; font-size:0.86rem; color:var(--muted);">Thuy Loi University, Hanoi</p>
+            </div>
+            <div class="stack-group">
+              <span class="timeline-date">2021 – 2025</span>
+              <p style="margin:0.15rem 0 0; font-weight:700;">B.Eng. in Software Engineering</p>
+              <p style="margin:0; font-size:0.86rem; color:var(--muted);">Thuy Loi University · GPA 3.58 / 4.0 · Top Entrance Score of the Major (27.25)</p>
+            </div>
+            <div class="stack-group">
+              <span class="timeline-date">Languages &amp; Availability</span>
+              <p style="margin:0.15rem 0 0; font-weight:700;">English (TOEIC 600 · Professional Working) &amp; Vietnamese (Native)</p>
+              <p style="margin:0; font-size:0.86rem; color:var(--muted);">Full-time remote availability · GMT+7</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / CTA SECTION -->
+    <section id="contact" class="cta-banner reveal-on-scroll" aria-label="Contact Pham Ngoc Huy">
+      <div>
+        <p class="eyebrow">Let's Build Together</p>
+        <h2 class="section-title" style="margin-block-end: 0.85rem;">Ready to Ship Your Next Web, Mobile, Desktop or n8n System?</h2>
+        <p style="color: var(--ink-2); margin: 0 0 1.5rem; max-inline-size: 52ch;">
+          Whether you need a full-time remote engineer for your product team or an end-to-end builder for a custom platform and automation pipeline, I own delivery from first commit to live traffic.
+        </p>
+        <div class="hero-cta" style="margin-block-end: 0;">
+          <a href="mailto:phamngochuy0102@gmail.com" class="btn-primary">
+            <span>Email Me Directly</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <button type="button" class="btn-secondary" id="copyEmailBtn" data-email="phamngochuy0102@gmail.com">
+            <span id="copyEmailText">Copy Email Address</span>
+          </button>
+          <a href="CV_PhamNgocHuy_EN.html" class="btn-secondary">
+            <span>Open Printable CV</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-cards">
+        <a href="mailto:phamngochuy0102@gmail.com" class="contact-row">
+          <div class="contact-meta">
+            <b>Email</b>
+            <span>phamngochuy0102@gmail.com</span>
+          </div>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="tel:+84379003225" class="contact-row">
+          <div class="contact-meta">
+            <b>Phone / WhatsApp / Zalo</b>
+            <span>+84 379 003 225</span>
+          </div>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="https://github.com/OceanPham" target="_blank" rel="noopener noreferrer" class="contact-row">
+          <div class="contact-meta">
+            <b>GitHub</b>
+            <span>github.com/OceanPham</span>
+          </div>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a href="https://oceanlabs.pro.vn/en" target="_blank" rel="noopener noreferrer" class="contact-row">
+          <div class="contact-meta">
+            <b>Studio Portfolio</b>
+            <span>oceanlabs.pro.vn/en</span>
+          </div>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer container">
+    <span>© <span id="year">2026</span> Pham Ngoc Huy (OceanPham). Built with semantic HTML, modern CSS &amp; zero dependencies.</span>
+    <span>Hanoi, Vietnam (GMT+7) · Full-Stack Web · Mobile · Desktop · n8n Automation</span>
+  </footer>
+
   <script>
     (function () {
-      var hour = new Date().getHours();
-      var text = "Chào buổi tối";
-      if (hour < 12) text = "Chào buổi sáng";
-      else if (hour < 18) text = "Chào buổi chiều";
-      document.getElementById("greet").textContent = text;
+      // Dynamic time-of-day English greeting
+      const hour = new Date().getHours();
+      const greetEl = document.getElementById("greet");
+      if (greetEl) {
+        let period = "Good evening";
+        if (hour < 12) period = "Good morning";
+        else if (hour < 18) period = "Good afternoon";
+        greetEl.textContent = `// ${period} — I'm`;
+      }
+
+      // Theme Switcher (Light / Dark)
+      const root = document.documentElement;
+      const themeBtn = document.getElementById("themeToggleBtn");
+      const themeText = document.getElementById("themeToggleText");
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+      function getEffectiveTheme() {
+        const manual = root.getAttribute("data-theme");
+        if (manual) return manual;
+        return systemDark.matches ? "dark" : "light";
+      }
+
+      function updateThemeLabel() {
+        const current = getEffectiveTheme();
+        if (themeText) {
+          themeText.textContent = current === "dark" ? "Dark" : "Light";
+        }
+      }
+
+      updateThemeLabel();
+      systemDark.addEventListener("change", updateThemeLabel);
+
+      if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
+          const next = getEffectiveTheme() === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", next);
+          updateThemeLabel();
+        });
+      }
+
+      // WCAG 2.2.2 Pause / Play control for continuous animations
+      // Note: Do not set aria-pressed when button label changes between Pause and Play
+      const motionBtn = document.getElementById("motionToggleBtn");
+      const motionIcon = document.getElementById("motionToggleIcon");
+      const motionText = document.getElementById("motionToggleText");
+
+      if (motionBtn) {
+        motionBtn.addEventListener("click", () => {
+          const paused = document.body.getAttribute("data-motion") === "paused";
+          if (paused) {
+            document.body.removeAttribute("data-motion");
+            if (motionIcon) motionIcon.textContent = "⏸";
+            if (motionText) motionText.textContent = "Pause motion";
+          } else {
+            document.body.setAttribute("data-motion", "paused");
+            if (motionIcon) motionIcon.textContent = "▶";
+            if (motionText) motionText.textContent = "Play motion";
+          }
+        });
+      }
+
+      // Interactive n8n + Full-Stack Workflow Simulation
+      const runBtn = document.getElementById("runWorkflowBtn");
+      const statusText = document.getElementById("consoleStatusText");
+      const latencyText = document.getElementById("consoleLatency");
+      const wfNodes = [
+        document.getElementById("wfNode1"),
+        document.getElementById("wfNode2"),
+        document.getElementById("wfNode3"),
+        document.getElementById("wfNode4"),
+        document.getElementById("wfNode5"),
+      ];
+
+      const steps = [
+        { nodes: [0], msg: "[STEP 1/4] n8n Webhook triggered → OpenAI filtering incoming payload...", badge: "18ms" },
+        { nodes: [1], msg: "[STEP 2/4] Node.js / NestJS Core API validating & persisting to PostgreSQL...", badge: "42ms" },
+        { nodes: [2, 3, 4], msg: "[STEP 3/4] Broadcasting via Socket.IO to Web, Mobile App, Desktop & Telegram...", badge: "64ms" },
+        { nodes: [0, 1, 2, 3, 4], msg: "[DONE] Workflow completed: Web, Mobile, Desktop & n8n nodes synchronized.", badge: "99.9% Uptime" },
+      ];
+
+      let simRunning = false;
+      if (runBtn) {
+        runBtn.addEventListener("click", () => {
+          if (simRunning) return;
+          simRunning = true;
+          steps.forEach((step, idx) => {
+            setTimeout(() => {
+              wfNodes.forEach((n, i) => {
+                if (!n) return;
+                n.classList.toggle("is-active", step.nodes.includes(i));
+              });
+              if (statusText) statusText.textContent = step.msg;
+              if (latencyText) latencyText.textContent = step.badge;
+              if (idx === steps.length - 1) {
+                simRunning = false;
+              }
+            }, idx * 650);
+          });
+        });
+      }
+
+      // Architecture Blueprint Tabs
+      const tabs = document.querySelectorAll(".bp-tab");
+      const panels = document.querySelectorAll(".bp-panel");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const targetId = tab.getAttribute("aria-controls");
+          tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+          panels.forEach((p) => {
+            if (p.id === targetId) p.removeAttribute("hidden");
+            else p.setAttribute("hidden", "");
+          });
+        });
+      });
+
+      // Copy Email Button
+      const copyBtn = document.getElementById("copyEmailBtn");
+      const copyText = document.getElementById("copyEmailText");
+      if (copyBtn && copyText) {
+        copyBtn.addEventListener("click", async () => {
+          const email = copyBtn.getAttribute("data-email") || "phamngochuy0102@gmail.com";
+          try {
+            await navigator.clipboard.writeText(email);
+            copyText.textContent = "Copied: " + email;
+            setTimeout(() => {
+              copyText.textContent = "Copy Email Address";
+            }, 2200);
+          } catch {
+            window.location.href = "mailto:" + email;
+          }
+        });
+      }
+
+      // Fallback for browsers without CSS Scroll-Driven Animations support
+      if (
+        !CSS.supports("(animation-timeline: view()) and (animation-range: entry)") &&
+        window.matchMedia("(prefers-reduced-motion: no-preference)").matches
+      ) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              const ratio = Math.min(1, entry.intersectionRatio * 2.5);
+              entry.target.style.opacity = String(0.2 + ratio * 0.8);
+              entry.target.style.transform = `translateY(${(1 - ratio) * 20}px)`;
+            }
+          },
+          { threshold: Array.from({ length: 21 }, (_, i) => i / 20) }
+        );
+
+        document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+          observer.observe(el);
+        });
+      }
     })();
   </script>
 </body>
