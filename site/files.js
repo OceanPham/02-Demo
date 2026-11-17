@@ -1,6 +1,7 @@
-// Tự động sinh bởi sync.js lúc 2026-11-17T09:49:31.419Z
+// Tự động sinh bởi sync.js lúc 2026-11-17T10:26:18.706Z
 window.__INITIAL_SITE_FILES__ = [
   "02-huong-dan-kickcooking.html",
+  "01-n8n-server-cleanup-report.html",
   "00-NguyenNgocDao-guide.html",
   "workflow-kpi-overview-en-nl.html",
   "WorkFlow on phones_ install options and costs.html",
