@@ -1,4 +1,4 @@
-// Tự động sinh bởi sync.js lúc 2026-11-17T10:31:27.311Z
+// Tự động sinh bởi sync.js lúc 2026-11-17T10:43:10.922Z
 window.__INITIAL_SITE_FILES__ = [
   "02-huong-dan-kickcooking.html",
   "01-n8n-server-cleanup-report.html",

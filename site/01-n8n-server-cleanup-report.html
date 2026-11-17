@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nl">
+<html lang="nl" data-lang="nl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -336,12 +336,14 @@
         color: var(--muted);
         font-style: italic;
       }
-      [data-lang] {
-        display: none;
+      /* Language switch: hide opposite language, keep active language intact */
+      html[data-lang="vi"] [data-lang="nl"],
+      html[lang="vi"] [data-lang="nl"] {
+        display: none !important;
       }
-      html[lang="nl"] [data-lang="nl"],
-      html[lang="vi"] [data-lang="vi"] {
-        display: revert;
+      html[data-lang="nl"] [data-lang="vi"],
+      html:not([data-lang="vi"]):not([lang="vi"]) [data-lang="vi"] {
+        display: none !important;
       }
       ul {
         padding-left: 20px;
@@ -447,7 +449,7 @@
               ><span data-lang="vi">Dọn dẹp máy chủ n8n</span>
             </h1>
           </div>
-          <div class="switch" role="group" aria-label="Language">
+          <div class="switch notranslate" translate="no" role="group" aria-label="Language">
             <button type="button" data-set-lang="nl" aria-pressed="true">
               Nederlands
             </button>
@@ -1019,11 +1021,11 @@ backup_n8n/                            156M</pre
           </table>
         </div>
 
-        <!-- <h2 class="anchor" id="other">
+        <h2 class="anchor" id="other">
           <span data-lang="nl"
             >4. Overige bevindingen (los van deze opschoning)</span
           ><span data-lang="vi">4. Phát hiện khác (ngoài việc dọn dẹp)</span>
-        </h2> -->
+        </h2>
         <div class="card note">
           <ul>
             <li data-lang="nl">
@@ -1104,8 +1106,15 @@ backup_n8n/                            156M</pre
     </div>
     <script>
       const KEY = "report-lang";
+      const titles = {
+        nl: "Opschonen n8n-server",
+        vi: "Dọn dẹp máy chủ n8n",
+      };
       function setLang(lang) {
+        if (lang !== "vi" && lang !== "nl") lang = "nl";
         document.documentElement.lang = lang;
+        document.documentElement.setAttribute("data-lang", lang);
+        if (titles[lang]) document.title = titles[lang];
         document
           .querySelectorAll("[data-set-lang]")
           .forEach((b) =>
