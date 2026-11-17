@@ -472,18 +472,16 @@
         <div class="card alert anchor" id="summary">
           <p data-lang="nl">
             <strong>Waarom dit rapport:</strong> de schijf is voor 91% vol (43
-            van 48 GB, nog 4,6 GB vrij). Bij een volle schijf stoppen n8n, de
-            WhatsApp-koppeling (Evolution API), de licentieserver en
-            smart-scheduling, of raken hun databases beschadigd. Een leesquery
+            van 48 GB, nog 4,6 GB vrij). Bij een volle schijf stoppen n8n en
+            de licentieserver, of raken hun databases beschadigd. Een leesquery
             liep vandaag al vast met <code>database or disk is full</code>. We
             vragen je goedkeuring voor de stappen hieronder; we voeren pas iets
             uit nadat jij akkoord bent.
           </p>
           <p data-lang="vi">
             <strong>Lý do có báo cáo này:</strong> ổ đĩa đã đầy 91% (43/48 GB,
-            chỉ còn 4,6 GB trống). Khi ổ đầy hẳn, n8n, kết nối WhatsApp
-            (Evolution API), máy chủ license và smart-scheduling sẽ ngừng chạy
-            hoặc hỏng database. Hôm nay một lệnh chỉ đọc đã bị lỗi
+            chỉ còn 4,6 GB trống). Khi ổ đầy hẳn, n8n và máy chủ license sẽ
+            ngừng chạy hoặc hỏng database. Hôm nay một lệnh chỉ đọc đã bị lỗi
             <code>database or disk is full</code>. Chúng tôi xin Joost duyệt các
             bước bên dưới; chỉ thực hiện sau khi được đồng ý.
           </p>
@@ -500,7 +498,7 @@
             ><span data-lang="vi">do n8n (database + bản sao lưu cũ)</span>
           </div>
           <div class="kpi">
-            <b>~23 GB</b><span data-lang="nl">veilig terug te winnen</span
+            <b>~21 GB</b><span data-lang="nl">veilig terug te winnen</span
             ><span data-lang="vi">thu hồi được an toàn</span>
           </div>
           <div class="kpi">
@@ -588,26 +586,6 @@
               </tr>
               <tr>
                 <td>D</td>
-                <td>
-                  <span data-lang="nl"
-                    >Log van container <code>evolution_api</code></span
-                  ><span data-lang="vi"
-                    >Log của container <code>evolution_api</code></span
-                  >
-                </td>
-                <td class="num">2,5 GB</td>
-                <td>
-                  <span data-lang="nl"
-                    >De container is gemaakt vóór de loglimiet van 10 MB werd
-                    ingesteld, dus de log groeit onbeperkt.</span
-                  ><span data-lang="vi"
-                    >Container được tạo trước khi đặt giới hạn log 10 MB, nên
-                    log phình không giới hạn.</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>E</td>
                 <td>
                   <span data-lang="nl">apt-cache</span
                   ><span data-lang="vi">Cache apt</span>
@@ -762,15 +740,12 @@
         <div class="card good">
           <ul>
             <li data-lang="nl">
-              Alle Docker-images (allemaal in gebruik), de Evolution-database
-              (519 MB, echte berichten), de MySQL van smart-scheduling, de
-              licentieserver, de swapfile (4 GB), kernel 6.8.0-149 (wacht op een
-              herstart).
+              Alle Docker-images (allemaal in gebruik), de licentieserver, de
+              swapfile (4 GB), kernel 6.8.0-149 (wacht op een herstart).
             </li>
             <li data-lang="vi">
-              Mọi image Docker (đều đang dùng), database Evolution (519 MB, tin
-              nhắn thật), MySQL của smart-scheduling, máy chủ license, file swap
-              (4 GB), kernel 6.8.0-149 (đang chờ khởi động lại).
+              Mọi image Docker (đều đang dùng), máy chủ license, file swap (4
+              GB), kernel 6.8.0-149 (đang chờ khởi động lại).
             </li>
             <li data-lang="nl">
               <code>/root/docker-compose.yml</code> en de andere configuratie in
@@ -796,20 +771,9 @@
             <h3>
               <span data-lang="nl">Stap 1 — Zonder onderbreking</span
               ><span data-lang="vi">Bước 1 — Không gián đoạn dịch vụ</span>
-              <span class="tag ok">+5,1 GB</span>
+              <span class="tag ok">+2,6 GB</span>
             </h3>
             <ul>
-              <li data-lang="nl">
-                Log van <code>evolution_api</code> leegmaken
-                (<code>truncate</code>): alleen oude logregels verdwijnen;
-                WhatsApp blijft draaien, geen berichten of instellingen gaan
-                verloren.
-              </li>
-              <li data-lang="vi">
-                Làm rỗng log của
-                <code>evolution_api</code> (<code>truncate</code>): chỉ mất dòng
-                log cũ; WhatsApp vẫn chạy, không mất tin nhắn hay cấu hình.
-              </li>
               <li data-lang="nl">
                 De twee oude bestanden <code>database.sqlite.bak</code> en
                 <code>.restore_fail</code> verwijderen (C). Een kopie van
@@ -838,12 +802,12 @@
             </h3>
             <ul>
               <li data-lang="nl">
-                n8n kort stoppen (WhatsApp, licentie en smart-scheduling blijven
-                draaien). Tijdstip in overleg, buiten kantoortijd.
+                n8n kort stoppen (de licentieserver blijft gewoon draaien).
+                Tijdstip in overleg, buiten kantoortijd.
               </li>
               <li data-lang="vi">
-                Tạm dừng n8n (WhatsApp, license và smart-scheduling vẫn chạy).
-                Thời điểm thống nhất trước, ngoài giờ làm việc.
+                Tạm dừng n8n (máy chủ license vẫn chạy bình thường). Thời điểm
+                thống nhất trước, ngoài giờ làm việc.
               </li>
               <li data-lang="nl">
                 Met <code>VACUUM INTO</code> een compacte kopie maken (alleen de
@@ -956,17 +920,7 @@ backup_n8n/                            156M</pre
                 workflow của Joost nên chỉ làm khi Joost đồng ý từng cái. Riêng
                 việc này có thể giữ database dưới 1 GB.
               </li>
-              <li data-lang="nl">
-                Optioneel: de container <code>evolution_api</code> opnieuw
-                aanmaken zodat de loglimiet van 10 MB ook voor hem geldt
-                (WhatsApp ~1 min offline). Zonder deze stap groeit de log weer;
-                dan periodiek leegmaken.
-              </li>
-              <li data-lang="vi">
-                Tuỳ chọn: tạo lại container <code>evolution_api</code> để giới
-                hạn log 10 MB áp dụng cho nó (WhatsApp gián đoạn ~1 phút). Không
-                làm thì log sẽ phình lại và phải làm rỗng định kỳ.
-              </li>
+
             </ul>
           </div>
         </div>
@@ -1004,17 +958,17 @@ backup_n8n/                            156M</pre
               </tr>
               <tr>
                 <td>1</td>
-                <td class="num">~38 GB</td>
-                <td class="num">~9,7 GB</td>
+                <td class="num">~40 GB</td>
+                <td class="num">~7,2 GB</td>
               </tr>
               <tr>
                 <td>2</td>
-                <td class="num">~32 GB</td>
-                <td class="num">~16 GB</td>
+                <td class="num">~34 GB</td>
+                <td class="num">~13,5 GB</td>
               </tr>
               <tr>
                 <td>3</td>
-                <td class="num">~20–22 GB (~45%)</td>
+                <td class="num">~22 GB (~46%)</td>
                 <td class="num">~26 GB</td>
               </tr>
             </tbody>
@@ -1036,19 +990,7 @@ backup_n8n/                            156M</pre
               Có 100 bản cập nhật đang chờ (1 bản bảo mật); một lần tự cập nhật
               bị lỗi và máy đang chờ khởi động lại.
             </li>
-            <li data-lang="nl">
-              De workflow
-              <strong>Raved Fabrics - Bol review emails</strong> mislukte 125
-              van de 168 keer in de laatste 30 dagen;
-              <strong>Bol review emails</strong> 7 van de 164 keer. Misschien de
-              moeite waard om te bekijken.
-            </li>
-            <li data-lang="vi">
-              Workflow <strong>Raved Fabrics - Bol review emails</strong> lỗi
-              125/168 lần trong 30 ngày qua;
-              <strong>Bol review emails</strong> lỗi 7/164 lần. Có thể nên xem
-              lại.
-            </li>
+
             <li data-lang="nl">
               Deze punten pakken we alleen aan als je dat wilt, in een apart
               moment.
