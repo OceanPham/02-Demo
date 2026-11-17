@@ -1,338 +1,1162 @@
 <!doctype html>
 <html lang="nl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Opschonen n8n-server</title>
-<style>
-  :root {
-    --bg: #f6f7f9; --card: #ffffff; --text: #1d2330; --muted: #5b6475; --border: #dfe3ea;
-    --accent: #2f5bd3; --ok: #1f8a4c; --warn: #b7791f; --bad: #c0392b; --chip: #eef2fb;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #12151b; --card: #1a1f27; --text: #e6e9ef; --muted: #9aa3b2; --border: #2c3340;
-      --accent: #7aa2ff; --ok: #4cc38a; --warn: #e0a84a; --bad: #ff7a6b; --chip: #232a36;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #12151b; --card: #1a1f27; --text: #e6e9ef; --muted: #9aa3b2; --border: #2c3340;
-    --accent: #7aa2ff; --ok: #4cc38a; --warn: #e0a84a; --bad: #ff7a6b; --chip: #232a36;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 32px; max-width: 1240px; margin: 0 auto; padding: 24px 16px 64px; }
-  main { min-width: 0; max-width: 960px; }
-  .toc { position: sticky; top: 16px; align-self: start; max-height: calc(100vh - 32px); overflow-y: auto;
-    background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 10px; }
-  .toc-title { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); padding: 0 8px 8px; }
-  .toc ol { list-style: none; margin: 0; padding: 0; }
-  .toc a { display: block; padding: 6px 8px; border-radius: 6px; color: var(--text); text-decoration: none; font-size: 14px; border-left: 3px solid transparent; }
-  .toc a:hover { background: var(--chip); }
-  .toc a.active { background: var(--chip); border-left-color: var(--accent); color: var(--accent); font-weight: 600; }
-  .toc .sub a { padding-left: 22px; font-size: 13px; color: var(--muted); }
-  .toc .sub a.active { color: var(--accent); }
-  .toc .num { display: inline-block; min-width: 18px; color: var(--muted); }
-  section, .anchor { scroll-margin-top: 16px; }
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-    .toc { position: sticky; top: 0; z-index: 5; max-height: none; border-radius: 0 0 10px 10px; padding: 8px; overflow-x: auto; overflow-y: hidden; }
-    .toc-title { display: none; }
-    .toc ol { display: flex; gap: 4px; white-space: nowrap; }
-    .toc .sub { display: none; }
-    .toc a { border-left: 0; border-bottom: 3px solid transparent; }
-    .toc a.active { border-bottom-color: var(--accent); }
-    section, .anchor { scroll-margin-top: 64px; }
-  }
-  @media print { .toc, .switch { display: none; } .layout { display: block; } }
-  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-  h1 { font-size: 24px; margin: 0; }
-  h2 { font-size: 18px; margin: 32px 0 10px; }
-  h3 { font-size: 15px; margin: 18px 0 6px; }
-  .meta { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
-  .switch { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .switch button { border: 0; background: var(--card); color: var(--text); padding: 6px 14px; font: inherit; cursor: pointer; }
-  .switch button[aria-pressed="true"] { background: var(--accent); color: #fff; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin: 12px 0; }
-  .alert { border-left: 4px solid var(--bad); }
-  .note { border-left: 4px solid var(--warn); }
-  .good { border-left: 4px solid var(--ok); }
-  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
-  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
-  .kpi b { display: block; font-size: 22px; }
-  .kpi span { color: var(--muted); font-size: 13px; }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--border); }
-  th { color: var(--muted); font-weight: 600; font-size: 13px; }
-  td.num { white-space: nowrap; text-align: right; }
-  code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; }
-  code { background: var(--chip); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
-  td, li, p { overflow-wrap: anywhere; }
-  .table-wrap table { min-width: 560px; }
-  pre { background: var(--chip); padding: 10px 12px; border-radius: 8px; overflow-x: auto; white-space: pre; }
-  .tag { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-  .tag.ok { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
-  .tag.warn { background: color-mix(in srgb, var(--warn) 20%, transparent); color: var(--warn); }
-  .tag.bad { background: color-mix(in srgb, var(--bad) 18%, transparent); color: var(--bad); }
-  .step { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
-  .step input { width: 18px; height: 18px; margin-top: 3px; }
-  .pending { color: var(--muted); font-style: italic; }
-  [data-lang] { display: none; }
-  html[lang="nl"] [data-lang="nl"], html[lang="vi"] [data-lang="vi"] { display: revert; }
-  ul { padding-left: 20px; margin: 6px 0; }
-  footer { color: var(--muted); font-size: 13px; margin-top: 36px; }
-</style>
-</head>
-<body>
-<div class="layout">
-<nav class="toc" aria-label="Inhoud">
-  <div class="toc-title"><span data-lang="nl">Inhoud</span><span data-lang="vi">Mục lục</span></div>
-  <ol>
-    <li><a href="#summary"><span data-lang="nl">Samenvatting</span><span data-lang="vi">Tóm tắt</span></a></li>
-    <li><a href="#space"><span class="num">1</span><span data-lang="nl">Wat neemt ruimte in</span><span data-lang="vi">Cái gì chiếm chỗ</span></a></li>
-    <li class="sub"><a href="#n8n-db"><span data-lang="nl">n8n-database</span><span data-lang="vi">Database n8n</span></a></li>
-    <li class="sub"><a href="#untouched"><span data-lang="nl">Niet aanraken</span><span data-lang="vi">Không đụng tới</span></a></li>
-    <li><a href="#steps"><span class="num">2</span><span data-lang="nl">Voorgestelde stappen</span><span data-lang="vi">Các bước đề xuất</span></a></li>
-    <li class="sub"><a href="#step1"><span data-lang="nl">Stap 1 · zonder onderbreking</span><span data-lang="vi">Bước 1 · không gián đoạn</span></a></li>
-    <li class="sub"><a href="#step2"><span data-lang="nl">Stap 2 · database verkleinen</span><span data-lang="vi">Bước 2 · thu nhỏ database</span></a></li>
-    <li class="sub"><a href="#step3"><span data-lang="nl">Stap 3 · back-ups</span><span data-lang="vi">Bước 3 · sao lưu</span></a></li>
-    <li class="sub"><a href="#step4"><span data-lang="nl">Stap 4 · voorkomen</span><span data-lang="vi">Bước 4 · phòng ngừa</span></a></li>
-    <li><a href="#result"><span class="num">3</span><span data-lang="nl">Verwacht resultaat</span><span data-lang="vi">Kết quả dự kiến</span></a></li>
-    <li><a href="#other"><span class="num">4</span><span data-lang="nl">Overige bevindingen</span><span data-lang="vi">Phát hiện khác</span></a></li>
-    <li><a href="#approach"><span class="num">5</span><span data-lang="nl">Werkwijze</span><span data-lang="vi">Cách làm</span></a></li>
-  </ol>
-</nav>
-<main>
-  <header>
-    <div>
-      <h1><span data-lang="nl">Opschonen van de n8n-server</span><span data-lang="vi">Dọn dẹp máy chủ n8n</span></h1>
-    </div>
-    <div class="switch" role="group" aria-label="Language">
-      <button type="button" data-set-lang="nl" aria-pressed="true">Nederlands</button>
-      <button type="button" data-set-lang="vi" aria-pressed="false">Tiếng Việt</button>
-    </div>
-  </header>
-  <div class="meta">
-    <span data-lang="nl">Server <code>srv860252</code> (69.62.121.71) · onderzocht op 17-11-2026 · alleen lezen, er is nog niets gewijzigd</span>
-    <span data-lang="vi">Máy chủ <code>srv860252</code> (69.62.121.71) · điều tra ngày 17/11/2026 · chỉ đọc, chưa thay đổi gì</span>
-  </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Opschonen n8n-server</title>
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --card: #ffffff;
+        --text: #1d2330;
+        --muted: #5b6475;
+        --border: #dfe3ea;
+        --accent: #2f5bd3;
+        --ok: #1f8a4c;
+        --warn: #b7791f;
+        --bad: #c0392b;
+        --chip: #eef2fb;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #12151b;
+          --card: #1a1f27;
+          --text: #e6e9ef;
+          --muted: #9aa3b2;
+          --border: #2c3340;
+          --accent: #7aa2ff;
+          --ok: #4cc38a;
+          --warn: #e0a84a;
+          --bad: #ff7a6b;
+          --chip: #232a36;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #12151b;
+        --card: #1a1f27;
+        --text: #e6e9ef;
+        --muted: #9aa3b2;
+        --border: #2c3340;
+        --accent: #7aa2ff;
+        --ok: #4cc38a;
+        --warn: #e0a84a;
+        --bad: #ff7a6b;
+        --chip: #232a36;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.55 system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: 32px;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 24px 16px 64px;
+      }
+      main {
+        min-width: 0;
+        max-width: 960px;
+      }
+      .toc {
+        position: sticky;
+        top: 16px;
+        align-self: start;
+        max-height: calc(100vh - 32px);
+        overflow-y: auto;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 10px;
+      }
+      .toc-title {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 0 8px 8px;
+      }
+      .toc ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .toc a {
+        display: block;
+        padding: 6px 8px;
+        border-radius: 6px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 14px;
+        border-left: 3px solid transparent;
+      }
+      .toc a:hover {
+        background: var(--chip);
+      }
+      .toc a.active {
+        background: var(--chip);
+        border-left-color: var(--accent);
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .toc .sub a {
+        padding-left: 22px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .toc .sub a.active {
+        color: var(--accent);
+      }
+      .toc .num {
+        display: inline-block;
+        min-width: 18px;
+        color: var(--muted);
+      }
+      section,
+      .anchor {
+        scroll-margin-top: 16px;
+      }
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+        }
+        .toc {
+          position: sticky;
+          top: 0;
+          z-index: 5;
+          max-height: none;
+          border-radius: 0 0 10px 10px;
+          padding: 8px;
+          overflow-x: auto;
+          overflow-y: hidden;
+        }
+        .toc-title {
+          display: none;
+        }
+        .toc ol {
+          display: flex;
+          gap: 4px;
+          white-space: nowrap;
+        }
+        .toc .sub {
+          display: none;
+        }
+        .toc a {
+          border-left: 0;
+          border-bottom: 3px solid transparent;
+        }
+        .toc a.active {
+          border-bottom-color: var(--accent);
+        }
+        section,
+        .anchor {
+          scroll-margin-top: 64px;
+        }
+      }
+      @media print {
+        .toc,
+        .switch {
+          display: none;
+        }
+        .layout {
+          display: block;
+        }
+      }
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      h1 {
+        font-size: 24px;
+        margin: 0;
+      }
+      h2 {
+        font-size: 18px;
+        margin: 32px 0 10px;
+      }
+      h3 {
+        font-size: 15px;
+        margin: 18px 0 6px;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 20px;
+      }
+      .switch {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .switch button {
+        border: 0;
+        background: var(--card);
+        color: var(--text);
+        padding: 6px 14px;
+        font: inherit;
+        cursor: pointer;
+      }
+      .switch button[aria-pressed="true"] {
+        background: var(--accent);
+        color: #fff;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin: 12px 0;
+      }
+      .alert {
+        border-left: 4px solid var(--bad);
+      }
+      .note {
+        border-left: 4px solid var(--warn);
+      }
+      .good {
+        border-left: 4px solid var(--ok);
+      }
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 10px;
+      }
+      .kpi {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
+      }
+      .kpi b {
+        display: block;
+        font-size: 22px;
+      }
+      .kpi span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--border);
+      }
+      th {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 13px;
+      }
+      td.num {
+        white-space: nowrap;
+        text-align: right;
+      }
+      code,
+      pre {
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 13px;
+      }
+      code {
+        background: var(--chip);
+        padding: 1px 5px;
+        border-radius: 4px;
+        overflow-wrap: anywhere;
+      }
+      td,
+      li,
+      p {
+        overflow-wrap: anywhere;
+      }
+      .table-wrap table {
+        min-width: 560px;
+      }
+      pre {
+        background: var(--chip);
+        padding: 10px 12px;
+        border-radius: 8px;
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .tag {
+        display: inline-block;
+        padding: 1px 8px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .tag.ok {
+        background: color-mix(in srgb, var(--ok) 18%, transparent);
+        color: var(--ok);
+      }
+      .tag.warn {
+        background: color-mix(in srgb, var(--warn) 20%, transparent);
+        color: var(--warn);
+      }
+      .tag.bad {
+        background: color-mix(in srgb, var(--bad) 18%, transparent);
+        color: var(--bad);
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 10px;
+      }
+      .step input {
+        width: 18px;
+        height: 18px;
+        margin-top: 3px;
+      }
+      .pending {
+        color: var(--muted);
+        font-style: italic;
+      }
+      [data-lang] {
+        display: none;
+      }
+      html[lang="nl"] [data-lang="nl"],
+      html[lang="vi"] [data-lang="vi"] {
+        display: revert;
+      }
+      ul {
+        padding-left: 20px;
+        margin: 6px 0;
+      }
+      footer {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 36px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="toc" aria-label="Inhoud">
+        <div class="toc-title">
+          <span data-lang="nl">Inhoud</span><span data-lang="vi">Mục lục</span>
+        </div>
+        <ol>
+          <li>
+            <a href="#summary"
+              ><span data-lang="nl">Samenvatting</span
+              ><span data-lang="vi">Tóm tắt</span></a
+            >
+          </li>
+          <li>
+            <a href="#space"
+              ><span class="num">1</span
+              ><span data-lang="nl">Wat neemt ruimte in</span
+              ><span data-lang="vi">Cái gì chiếm chỗ</span></a
+            >
+          </li>
+          <li class="sub">
+            <a href="#n8n-db"
+              ><span data-lang="nl">n8n-database</span
+              ><span data-lang="vi">Database n8n</span></a
+            >
+          </li>
+          <li class="sub">
+            <a href="#untouched"
+              ><span data-lang="nl">Niet aanraken</span
+              ><span data-lang="vi">Không đụng tới</span></a
+            >
+          </li>
+          <li>
+            <a href="#steps"
+              ><span class="num">2</span
+              ><span data-lang="nl">Voorgestelde stappen</span
+              ><span data-lang="vi">Các bước đề xuất</span></a
+            >
+          </li>
+          <li class="sub">
+            <a href="#step1"
+              ><span data-lang="nl">Stap 1 · zonder onderbreking</span
+              ><span data-lang="vi">Bước 1 · không gián đoạn</span></a
+            >
+          </li>
+          <li class="sub">
+            <a href="#step2"
+              ><span data-lang="nl">Stap 2 · database verkleinen</span
+              ><span data-lang="vi">Bước 2 · thu nhỏ database</span></a
+            >
+          </li>
+          <li class="sub">
+            <a href="#step3"
+              ><span data-lang="nl">Stap 3 · back-ups</span
+              ><span data-lang="vi">Bước 3 · sao lưu</span></a
+            >
+          </li>
+          <li class="sub">
+            <a href="#step4"
+              ><span data-lang="nl">Stap 4 · voorkomen</span
+              ><span data-lang="vi">Bước 4 · phòng ngừa</span></a
+            >
+          </li>
+          <li>
+            <a href="#result"
+              ><span class="num">3</span
+              ><span data-lang="nl">Verwacht resultaat</span
+              ><span data-lang="vi">Kết quả dự kiến</span></a
+            >
+          </li>
+          <li>
+            <a href="#other"
+              ><span class="num">4</span
+              ><span data-lang="nl">Overige bevindingen</span
+              ><span data-lang="vi">Phát hiện khác</span></a
+            >
+          </li>
+          <li>
+            <a href="#approach"
+              ><span class="num">5</span><span data-lang="nl">Werkwijze</span
+              ><span data-lang="vi">Cách làm</span></a
+            >
+          </li>
+        </ol>
+      </nav>
+      <main>
+        <header>
+          <div>
+            <h1>
+              <span data-lang="nl">Opschonen van de n8n-server</span
+              ><span data-lang="vi">Dọn dẹp máy chủ n8n</span>
+            </h1>
+          </div>
+          <div class="switch" role="group" aria-label="Language">
+            <button type="button" data-set-lang="nl" aria-pressed="true">
+              Nederlands
+            </button>
+            <button type="button" data-set-lang="vi" aria-pressed="false">
+              Tiếng Việt
+            </button>
+          </div>
+        </header>
+        <div class="meta">
+          <span data-lang="nl"
+            >Server <code>srv860252</code> (69.62.121.71) · onderzocht op
+            17-11-2026 · alleen lezen, er is nog niets gewijzigd</span
+          >
+          <span data-lang="vi"
+            >Máy chủ <code>srv860252</code> (69.62.121.71) · điều tra ngày
+            17/11/2026 · chỉ đọc, chưa thay đổi gì</span
+          >
+        </div>
 
-  <div class="card alert anchor" id="summary">
-    <p data-lang="nl"><strong>Waarom dit rapport:</strong> de schijf is voor 91% vol (43 van 48 GB, nog 4,6 GB vrij). Bij een volle schijf stoppen n8n, de WhatsApp-koppeling (Evolution API), de licentieserver en smart-scheduling, of raken hun databases beschadigd. Een leesquery liep vandaag al vast met <code>database or disk is full</code>. We vragen je goedkeuring voor de stappen hieronder; we voeren pas iets uit nadat jij akkoord bent.</p>
-    <p data-lang="vi"><strong>Lý do có báo cáo này:</strong> ổ đĩa đã đầy 91% (43/48 GB, chỉ còn 4,6 GB trống). Khi ổ đầy hẳn, n8n, kết nối WhatsApp (Evolution API), máy chủ license và smart-scheduling sẽ ngừng chạy hoặc hỏng database. Hôm nay một lệnh chỉ đọc đã bị lỗi <code>database or disk is full</code>. Chúng tôi xin Joost duyệt các bước bên dưới; chỉ thực hiện sau khi được đồng ý.</p>
-  </div>
+        <div class="card alert anchor" id="summary">
+          <p data-lang="nl">
+            <strong>Waarom dit rapport:</strong> de schijf is voor 91% vol (43
+            van 48 GB, nog 4,6 GB vrij). Bij een volle schijf stoppen n8n, de
+            WhatsApp-koppeling (Evolution API), de licentieserver en
+            smart-scheduling, of raken hun databases beschadigd. Een leesquery
+            liep vandaag al vast met <code>database or disk is full</code>. We
+            vragen je goedkeuring voor de stappen hieronder; we voeren pas iets
+            uit nadat jij akkoord bent.
+          </p>
+          <p data-lang="vi">
+            <strong>Lý do có báo cáo này:</strong> ổ đĩa đã đầy 91% (43/48 GB,
+            chỉ còn 4,6 GB trống). Khi ổ đầy hẳn, n8n, kết nối WhatsApp
+            (Evolution API), máy chủ license và smart-scheduling sẽ ngừng chạy
+            hoặc hỏng database. Hôm nay một lệnh chỉ đọc đã bị lỗi
+            <code>database or disk is full</code>. Chúng tôi xin Joost duyệt các
+            bước bên dưới; chỉ thực hiện sau khi được đồng ý.
+          </p>
+        </div>
 
-  <div class="kpis">
-    <div class="kpi"><b>91%</b><span data-lang="nl">schijf in gebruik (43 / 48 GB)</span><span data-lang="vi">ổ đĩa đã dùng (43 / 48 GB)</span></div>
-    <div class="kpi"><b>~30 GB</b><span data-lang="nl">door n8n (database + oude back-ups)</span><span data-lang="vi">do n8n (database + bản sao lưu cũ)</span></div>
-    <div class="kpi"><b>~23 GB</b><span data-lang="nl">veilig terug te winnen</span><span data-lang="vi">thu hồi được an toàn</span></div>
-    <div class="kpi"><b>~45%</b><span data-lang="nl">verwacht gebruik na opschonen</span><span data-lang="vi">dự kiến sau khi dọn</span></div>
-  </div>
+        <div class="kpis">
+          <div class="kpi">
+            <b>91%</b><span data-lang="nl">schijf in gebruik (43 / 48 GB)</span
+            ><span data-lang="vi">ổ đĩa đã dùng (43 / 48 GB)</span>
+          </div>
+          <div class="kpi">
+            <b>~30 GB</b
+            ><span data-lang="nl">door n8n (database + oude back-ups)</span
+            ><span data-lang="vi">do n8n (database + bản sao lưu cũ)</span>
+          </div>
+          <div class="kpi">
+            <b>~23 GB</b><span data-lang="nl">veilig terug te winnen</span
+            ><span data-lang="vi">thu hồi được an toàn</span>
+          </div>
+          <div class="kpi">
+            <b>~45%</b><span data-lang="nl">verwacht gebruik na opschonen</span
+            ><span data-lang="vi">dự kiến sau khi dọn</span>
+          </div>
+        </div>
 
-  <h2 class="anchor" id="space"><span data-lang="nl">1. Wat neemt de ruimte in?</span><span data-lang="vi">1. Cái gì đang chiếm ổ đĩa?</span></h2>
-  <div class="table-wrap"><table>
-    <thead><tr>
-      <th>#</th>
-      <th><span data-lang="nl">Onderdeel</span><span data-lang="vi">Thành phần</span></th>
-      <th class="num"><span data-lang="nl">Grootte</span><span data-lang="vi">Dung lượng</span></th>
-      <th><span data-lang="nl">Wat is het</span><span data-lang="vi">Là gì</span></th>
-    </tr></thead>
-    <tbody>
-      <tr><td>A</td><td><code>n8n_data/database.sqlite</code></td><td class="num">12,2 GB</td>
-        <td><span data-lang="nl">De <strong>actieve</strong> n8n-database, vooral de uitvoeringsgeschiedenis. De helft (6,2 GB) is lege ruimte van al verwijderde gegevens: SQLite geeft die ruimte niet vanzelf terug.</span><span data-lang="vi">Database <strong>đang dùng</strong> của n8n, chủ yếu là lịch sử chạy. Một nửa (6,2 GB) là chỗ trống của dữ liệu đã xoá: SQLite không tự trả lại chỗ này.</span></td></tr>
-      <tr><td>B</td><td><code>/root</code> — <span data-lang="nl">9 oude n8n-back-ups</span><span data-lang="vi">9 bản sao lưu n8n cũ</span></td><td class="num">~12 GB</td>
-        <td><span data-lang="nl">Handmatige kopieën van okt. 2025 – feb. 2026, deels dubbel (back-ups ín back-ups). Zie de lijst in stap 3.</span><span data-lang="vi">Bản chép tay từ 10/2025 – 02/2026, nhiều bản trùng (sao lưu nằm trong sao lưu). Danh sách ở bước 3.</span></td></tr>
-      <tr><td>C</td><td><code>database.sqlite.bak</code>, <code>database.sqlite.restore_fail</code></td><td class="num">2,5 GB</td>
-        <td><span data-lang="nl">Twee oude bestanden (29-11-2025) naast de actieve database, waarschijnlijk van een mislukte restore. n8n gebruikt ze niet.</span><span data-lang="vi">Hai file cũ (29/11/2025) nằm cạnh database đang dùng, có vẻ từ một lần khôi phục lỗi. n8n không dùng chúng.</span></td></tr>
-      <tr><td>D</td><td><span data-lang="nl">Log van container <code>evolution_api</code></span><span data-lang="vi">Log của container <code>evolution_api</code></span></td><td class="num">2,5 GB</td>
-        <td><span data-lang="nl">De container is gemaakt vóór de loglimiet van 10 MB werd ingesteld, dus de log groeit onbeperkt.</span><span data-lang="vi">Container được tạo trước khi đặt giới hạn log 10 MB, nên log phình không giới hạn.</span></td></tr>
-      <tr><td>E</td><td><span data-lang="nl">apt-cache</span><span data-lang="vi">Cache apt</span></td><td class="num">0,1 GB</td>
-        <td><span data-lang="nl">Gedownloade installatiepakketten.</span><span data-lang="vi">Các gói cài đặt đã tải về.</span></td></tr>
-    </tbody>
-  </table></div>
+        <h2 class="anchor" id="space">
+          <span data-lang="nl">1. Wat neemt de ruimte in?</span
+          ><span data-lang="vi">1. Cái gì đang chiếm ổ đĩa?</span>
+        </h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>
+                  <span data-lang="nl">Onderdeel</span
+                  ><span data-lang="vi">Thành phần</span>
+                </th>
+                <th class="num">
+                  <span data-lang="nl">Grootte</span
+                  ><span data-lang="vi">Dung lượng</span>
+                </th>
+                <th>
+                  <span data-lang="nl">Wat is het</span
+                  ><span data-lang="vi">Là gì</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>A</td>
+                <td><code>n8n_data/database.sqlite</code></td>
+                <td class="num">12,2 GB</td>
+                <td>
+                  <span data-lang="nl"
+                    >De <strong>actieve</strong> n8n-database, vooral de
+                    uitvoeringsgeschiedenis. De helft (6,2 GB) is lege ruimte
+                    van al verwijderde gegevens: SQLite geeft die ruimte niet
+                    vanzelf terug.</span
+                  ><span data-lang="vi"
+                    >Database <strong>đang dùng</strong> của n8n, chủ yếu là
+                    lịch sử chạy. Một nửa (6,2 GB) là chỗ trống của dữ liệu đã
+                    xoá: SQLite không tự trả lại chỗ này.</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>B</td>
+                <td>
+                  <code>/root</code> —
+                  <span data-lang="nl">9 oude n8n-back-ups</span
+                  ><span data-lang="vi">9 bản sao lưu n8n cũ</span>
+                </td>
+                <td class="num">~12 GB</td>
+                <td>
+                  <span data-lang="nl"
+                    >Handmatige kopieën van okt. 2025 – feb. 2026, deels dubbel
+                    (back-ups ín back-ups). Zie de lijst in stap 3.</span
+                  ><span data-lang="vi"
+                    >Bản chép tay từ 10/2025 – 02/2026, nhiều bản trùng (sao lưu
+                    nằm trong sao lưu). Danh sách ở bước 3.</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>C</td>
+                <td>
+                  <code>database.sqlite.bak</code>,
+                  <code>database.sqlite.restore_fail</code>
+                </td>
+                <td class="num">2,5 GB</td>
+                <td>
+                  <span data-lang="nl"
+                    >Twee oude bestanden (29-11-2025) naast de actieve database,
+                    waarschijnlijk van een mislukte restore. n8n gebruikt ze
+                    niet.</span
+                  ><span data-lang="vi"
+                    >Hai file cũ (29/11/2025) nằm cạnh database đang dùng, có vẻ
+                    từ một lần khôi phục lỗi. n8n không dùng chúng.</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>D</td>
+                <td>
+                  <span data-lang="nl"
+                    >Log van container <code>evolution_api</code></span
+                  ><span data-lang="vi"
+                    >Log của container <code>evolution_api</code></span
+                  >
+                </td>
+                <td class="num">2,5 GB</td>
+                <td>
+                  <span data-lang="nl"
+                    >De container is gemaakt vóór de loglimiet van 10 MB werd
+                    ingesteld, dus de log groeit onbeperkt.</span
+                  ><span data-lang="vi"
+                    >Container được tạo trước khi đặt giới hạn log 10 MB, nên
+                    log phình không giới hạn.</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>E</td>
+                <td>
+                  <span data-lang="nl">apt-cache</span
+                  ><span data-lang="vi">Cache apt</span>
+                </td>
+                <td class="num">0,1 GB</td>
+                <td>
+                  <span data-lang="nl">Gedownloade installatiepakketten.</span
+                  ><span data-lang="vi">Các gói cài đặt đã tải về.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-  <h3 class="anchor" id="n8n-db"><span data-lang="nl">De n8n-database in detail</span><span data-lang="vi">Chi tiết database n8n</span></h3>
-  <div class="card">
-    <ul>
-      <li data-lang="nl">4.048 opgeslagen uitvoeringen, waarvan 4.036 uit de laatste 30 dagen: het automatisch opruimen van n8n (standaardinstelling) werkt.</li>
-      <li data-lang="vi">Đang lưu 4.048 lần chạy, 4.036 lần trong 30 ngày gần nhất: n8n đang tự xoá lịch sử theo cấu hình mặc định.</li>
-      <li data-lang="nl">Gemiddeld <strong>~1,5 MB per uitvoering</strong>; normaal is dat enkele KB. Eén of enkele workflows bewaren bij elke run zeer veel gegevens (vermoedelijk de workflow die alle CRM-gegevens exporteert).</li>
-      <li data-lang="vi">Trung bình <strong>~1,5 MB mỗi lần chạy</strong>, trong khi bình thường chỉ vài KB. Một hoặc vài workflow lưu rất nhiều dữ liệu mỗi lần chạy (nhiều khả năng là workflow xuất toàn bộ dữ liệu CRM).</li>
-    </ul>
-    <p data-lang="nl">Opgeslagen uitvoeringsgegevens per workflow (laatste ~30 dagen):</p>
-    <p data-lang="vi">Dữ liệu lần chạy đang lưu theo từng workflow (khoảng 30 ngày gần nhất):</p>
-    <div class="table-wrap"><table>
-      <thead><tr>
-        <th>Workflow</th>
-        <th class="num"><span data-lang="nl">Runs</span><span data-lang="vi">Lần chạy</span></th>
-        <th class="num"><span data-lang="nl">Totaal</span><span data-lang="vi">Tổng</span></th>
-        <th class="num"><span data-lang="nl">Per run</span><span data-lang="vi">Mỗi lần</span></th>
-        <th class="num"><span data-lang="nl">Fouten</span><span data-lang="vi">Lỗi</span></th>
-      </tr></thead>
-      <tbody>
-        <tr><td>Bol.com Dynamic Pricing</td><td class="num">672</td><td class="num">1.359 MB</td><td class="num">2,0 MB</td><td class="num">11</td></tr>
-        <tr><td>Daily Workflow Backups to GitHub</td><td class="num">336</td><td class="num">1.178 MB</td><td class="num">3,5 MB</td><td class="num">0</td></tr>
-        <tr><td>DB to Bol.com - ReCaculate Stock Sync (1H)</td><td class="num">336</td><td class="num">969 MB</td><td class="num">2,9 MB</td><td class="num">0</td></tr>
-        <tr><td>Backup Data <span data-lang="nl">(CRM-export)</span><span data-lang="vi">(xuất dữ liệu CRM)</span></td><td class="num">32</td><td class="num">882 MB</td><td class="num">27,6 MB</td><td class="num">1</td></tr>
-        <tr><td>Match Data Between Fillour And LH <span data-lang="nl">(2 workflows)</span><span data-lang="vi">(2 workflow)</span></td><td class="num">112</td><td class="num">334 MB</td><td class="num">3,0 MB</td><td class="num">1</td></tr>
-        <tr><td>SYNC Price for Repricer (00H)</td><td class="num">15</td><td class="num">136 MB</td><td class="num">9,1 MB</td><td class="num">0</td></tr>
-        <tr><td><span data-lang="nl">Alle overige workflows</span><span data-lang="vi">Các workflow còn lại</span></td><td class="num">—</td><td class="num">&lt; 100 MB</td><td class="num">&lt; 0,1 MB</td><td class="num">—</td></tr>
-      </tbody>
-    </table></div>
-    <p data-lang="nl">De zes bovenste workflows zijn samen <strong>~4,9 GB</strong> van de ~6 GB echte gegevens. Ze slaan bij elke succesvolle run alle tussenresultaten op (productlijsten, prijzen, back-upbestanden). Dat is alleen nuttig bij het zoeken naar fouten.</p>
-    <p data-lang="vi">Sáu workflow đầu chiếm <strong>~4,9 GB</strong> trên ~6 GB dữ liệu thật. Mỗi lần chạy thành công, chúng lưu toàn bộ dữ liệu trung gian (danh sách sản phẩm, giá, file sao lưu), vốn chỉ cần khi dò lỗi.</p>
-  </div>
+        <h3 class="anchor" id="n8n-db">
+          <span data-lang="nl">De n8n-database in detail</span
+          ><span data-lang="vi">Chi tiết database n8n</span>
+        </h3>
+        <div class="card">
+          <ul>
+            <li data-lang="nl">
+              4.048 opgeslagen uitvoeringen, waarvan 4.036 uit de laatste 30
+              dagen: het automatisch opruimen van n8n (standaardinstelling)
+              werkt.
+            </li>
+            <li data-lang="vi">
+              Đang lưu 4.048 lần chạy, 4.036 lần trong 30 ngày gần nhất: n8n
+              đang tự xoá lịch sử theo cấu hình mặc định.
+            </li>
+            <li data-lang="nl">
+              Gemiddeld <strong>~1,5 MB per uitvoering</strong>; normaal is dat
+              enkele KB. Eén of enkele workflows bewaren bij elke run zeer veel
+              gegevens (vermoedelijk de workflow die alle CRM-gegevens
+              exporteert).
+            </li>
+            <li data-lang="vi">
+              Trung bình <strong>~1,5 MB mỗi lần chạy</strong>, trong khi bình
+              thường chỉ vài KB. Một hoặc vài workflow lưu rất nhiều dữ liệu mỗi
+              lần chạy (nhiều khả năng là workflow xuất toàn bộ dữ liệu CRM).
+            </li>
+          </ul>
+          <p data-lang="nl">
+            Opgeslagen uitvoeringsgegevens per workflow (laatste ~30 dagen):
+          </p>
+          <p data-lang="vi">
+            Dữ liệu lần chạy đang lưu theo từng workflow (khoảng 30 ngày gần
+            nhất):
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Workflow</th>
+                  <th class="num">
+                    <span data-lang="nl">Runs</span
+                    ><span data-lang="vi">Lần chạy</span>
+                  </th>
+                  <th class="num">
+                    <span data-lang="nl">Totaal</span
+                    ><span data-lang="vi">Tổng</span>
+                  </th>
+                  <th class="num">
+                    <span data-lang="nl">Per run</span
+                    ><span data-lang="vi">Mỗi lần</span>
+                  </th>
+                  <th class="num">
+                    <span data-lang="nl">Fouten</span
+                    ><span data-lang="vi">Lỗi</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Bol.com Dynamic Pricing</td>
+                  <td class="num">672</td>
+                  <td class="num">1.359 MB</td>
+                  <td class="num">2,0 MB</td>
+                  <td class="num">11</td>
+                </tr>
+                <tr>
+                  <td>Daily Workflow Backups to GitHub</td>
+                  <td class="num">336</td>
+                  <td class="num">1.178 MB</td>
+                  <td class="num">3,5 MB</td>
+                  <td class="num">0</td>
+                </tr>
+                <tr>
+                  <td>DB to Bol.com - ReCaculate Stock Sync (1H)</td>
+                  <td class="num">336</td>
+                  <td class="num">969 MB</td>
+                  <td class="num">2,9 MB</td>
+                  <td class="num">0</td>
+                </tr>
+                <tr>
+                  <td>
+                    Backup Data <span data-lang="nl">(CRM-export)</span
+                    ><span data-lang="vi">(xuất dữ liệu CRM)</span>
+                  </td>
+                  <td class="num">32</td>
+                  <td class="num">882 MB</td>
+                  <td class="num">27,6 MB</td>
+                  <td class="num">1</td>
+                </tr>
+                <tr>
+                  <td>
+                    Match Data Between Fillour And LH
+                    <span data-lang="nl">(2 workflows)</span
+                    ><span data-lang="vi">(2 workflow)</span>
+                  </td>
+                  <td class="num">112</td>
+                  <td class="num">334 MB</td>
+                  <td class="num">3,0 MB</td>
+                  <td class="num">1</td>
+                </tr>
+                <tr>
+                  <td>SYNC Price for Repricer (00H)</td>
+                  <td class="num">15</td>
+                  <td class="num">136 MB</td>
+                  <td class="num">9,1 MB</td>
+                  <td class="num">0</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span data-lang="nl">Alle overige workflows</span
+                    ><span data-lang="vi">Các workflow còn lại</span>
+                  </td>
+                  <td class="num">—</td>
+                  <td class="num">&lt; 100 MB</td>
+                  <td class="num">&lt; 0,1 MB</td>
+                  <td class="num">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p data-lang="nl">
+            De zes bovenste workflows zijn samen <strong>~4,9 GB</strong> van de
+            ~6 GB echte gegevens. Ze slaan bij elke succesvolle run alle
+            tussenresultaten op (productlijsten, prijzen, back-upbestanden). Dat
+            is alleen nuttig bij het zoeken naar fouten.
+          </p>
+          <p data-lang="vi">
+            Sáu workflow đầu chiếm <strong>~4,9 GB</strong> trên ~6 GB dữ liệu
+            thật. Mỗi lần chạy thành công, chúng lưu toàn bộ dữ liệu trung gian
+            (danh sách sản phẩm, giá, file sao lưu), vốn chỉ cần khi dò lỗi.
+          </p>
+        </div>
 
-  <h3 class="anchor" id="untouched"><span data-lang="nl">Wat we niet aanraken</span><span data-lang="vi">Những gì không đụng tới</span></h3>
-  <div class="card good">
-    <ul>
-      <li data-lang="nl">Alle Docker-images (allemaal in gebruik), de Evolution-database (519 MB, echte berichten), de MySQL van smart-scheduling, de licentieserver, de swapfile (4 GB), kernel 6.8.0-149 (wacht op een herstart).</li>
-      <li data-lang="vi">Mọi image Docker (đều đang dùng), database Evolution (519 MB, tin nhắn thật), MySQL của smart-scheduling, máy chủ license, file swap (4 GB), kernel 6.8.0-149 (đang chờ khởi động lại).</li>
-      <li data-lang="nl"><code>/root/docker-compose.yml</code> en de andere configuratie in <code>/root</code> (de n8n-stack wordt vanuit <code>/root</code> gestart).</li>
-      <li data-lang="vi"><code>/root/docker-compose.yml</code> và các cấu hình khác trong <code>/root</code> (bộ n8n được khởi chạy từ <code>/root</code>).</li>
-    </ul>
-  </div>
+        <h3 class="anchor" id="untouched">
+          <span data-lang="nl">Wat we niet aanraken</span
+          ><span data-lang="vi">Những gì không đụng tới</span>
+        </h3>
+        <div class="card good">
+          <ul>
+            <li data-lang="nl">
+              Alle Docker-images (allemaal in gebruik), de Evolution-database
+              (519 MB, echte berichten), de MySQL van smart-scheduling, de
+              licentieserver, de swapfile (4 GB), kernel 6.8.0-149 (wacht op een
+              herstart).
+            </li>
+            <li data-lang="vi">
+              Mọi image Docker (đều đang dùng), database Evolution (519 MB, tin
+              nhắn thật), MySQL của smart-scheduling, máy chủ license, file swap
+              (4 GB), kernel 6.8.0-149 (đang chờ khởi động lại).
+            </li>
+            <li data-lang="nl">
+              <code>/root/docker-compose.yml</code> en de andere configuratie in
+              <code>/root</code> (de n8n-stack wordt vanuit
+              <code>/root</code> gestart).
+            </li>
+            <li data-lang="vi">
+              <code>/root/docker-compose.yml</code> và các cấu hình khác trong
+              <code>/root</code> (bộ n8n được khởi chạy từ <code>/root</code>).
+            </li>
+          </ul>
+        </div>
 
-  <h2 class="anchor" id="steps"><span data-lang="nl">2. Voorgestelde stappen (graag per stap akkoord)</span><span data-lang="vi">2. Các bước đề xuất (xin duyệt từng bước)</span></h2>
+        <h2 class="anchor" id="steps">
+          <span data-lang="nl"
+            >2. Voorgestelde stappen (graag per stap akkoord)</span
+          ><span data-lang="vi">2. Các bước đề xuất (xin duyệt từng bước)</span>
+        </h2>
 
-  <div class="card step anchor" id="step1">
-    <input type="checkbox" aria-label="Stap 1">
-    <div>
-      <h3><span data-lang="nl">Stap 1 — Zonder onderbreking</span><span data-lang="vi">Bước 1 — Không gián đoạn dịch vụ</span> <span class="tag ok">+5,1 GB</span></h3>
-      <ul>
-        <li data-lang="nl">Log van <code>evolution_api</code> leegmaken (<code>truncate</code>): alleen oude logregels verdwijnen; WhatsApp blijft draaien, geen berichten of instellingen gaan verloren.</li>
-        <li data-lang="vi">Làm rỗng log của <code>evolution_api</code> (<code>truncate</code>): chỉ mất dòng log cũ; WhatsApp vẫn chạy, không mất tin nhắn hay cấu hình.</li>
-        <li data-lang="nl">De twee oude bestanden <code>database.sqlite.bak</code> en <code>.restore_fail</code> verwijderen (C). Een kopie van dezelfde datum staat nog in <code>/root/n8n_backup_2025-11-29</code>.</li>
-        <li data-lang="vi">Xoá hai file cũ <code>database.sqlite.bak</code> và <code>.restore_fail</code> (C). Bản cùng ngày vẫn còn trong <code>/root/n8n_backup_2025-11-29</code>.</li>
-        <li data-lang="nl"><code>apt-get clean</code>.</li>
-        <li data-lang="vi"><code>apt-get clean</code>.</li>
-      </ul>
-    </div>
-  </div>
+        <div class="card step anchor" id="step1">
+          <input type="checkbox" aria-label="Stap 1" />
+          <div>
+            <h3>
+              <span data-lang="nl">Stap 1 — Zonder onderbreking</span
+              ><span data-lang="vi">Bước 1 — Không gián đoạn dịch vụ</span>
+              <span class="tag ok">+5,1 GB</span>
+            </h3>
+            <ul>
+              <li data-lang="nl">
+                Log van <code>evolution_api</code> leegmaken
+                (<code>truncate</code>): alleen oude logregels verdwijnen;
+                WhatsApp blijft draaien, geen berichten of instellingen gaan
+                verloren.
+              </li>
+              <li data-lang="vi">
+                Làm rỗng log của
+                <code>evolution_api</code> (<code>truncate</code>): chỉ mất dòng
+                log cũ; WhatsApp vẫn chạy, không mất tin nhắn hay cấu hình.
+              </li>
+              <li data-lang="nl">
+                De twee oude bestanden <code>database.sqlite.bak</code> en
+                <code>.restore_fail</code> verwijderen (C). Een kopie van
+                dezelfde datum staat nog in
+                <code>/root/n8n_backup_2025-11-29</code>.
+              </li>
+              <li data-lang="vi">
+                Xoá hai file cũ <code>database.sqlite.bak</code> và
+                <code>.restore_fail</code> (C). Bản cùng ngày vẫn còn trong
+                <code>/root/n8n_backup_2025-11-29</code>.
+              </li>
+              <li data-lang="nl"><code>apt-get clean</code>.</li>
+              <li data-lang="vi"><code>apt-get clean</code>.</li>
+            </ul>
+          </div>
+        </div>
 
-  <div class="card step anchor" id="step2">
-    <input type="checkbox" aria-label="Stap 2">
-    <div>
-      <h3><span data-lang="nl">Stap 2 — n8n-database verkleinen</span><span data-lang="vi">Bước 2 — Thu nhỏ database n8n</span> <span class="tag warn">n8n ~5–15 min offline</span> <span class="tag ok">+~6 GB</span></h3>
-      <ul>
-        <li data-lang="nl">n8n kort stoppen (WhatsApp, licentie en smart-scheduling blijven draaien). Tijdstip in overleg, buiten kantoortijd.</li>
-        <li data-lang="vi">Tạm dừng n8n (WhatsApp, license và smart-scheduling vẫn chạy). Thời điểm thống nhất trước, ngoài giờ làm việc.</li>
-        <li data-lang="nl">Met <code>VACUUM INTO</code> een compacte kopie maken (alleen de echte gegevens, ~6 GB of minder), controleren met <code>PRAGMA integrity_check</code>, dan pas omwisselen. Het oude bestand blijft bewaard tot n8n weer goed draait.</li>
-        <li data-lang="vi">Dùng <code>VACUUM INTO</code> tạo một bản gọn (chỉ dữ liệu thật, khoảng 6 GB hoặc ít hơn), kiểm tra bằng <code>PRAGMA integrity_check</code>, đạt rồi mới thay. File cũ được giữ lại tới khi n8n chạy ổn.</li>
-        <li data-lang="nl">Terugdraaien: het oude bestand terugzetten en n8n starten.</li>
-        <li data-lang="vi">Quay lui: đặt lại file cũ và khởi động n8n.</li>
-      </ul>
-    </div>
-  </div>
+        <div class="card step anchor" id="step2">
+          <input type="checkbox" aria-label="Stap 2" />
+          <div>
+            <h3>
+              <span data-lang="nl">Stap 2 — n8n-database verkleinen</span
+              ><span data-lang="vi">Bước 2 — Thu nhỏ database n8n</span>
+              <span class="tag warn">n8n ~5–15 min offline</span>
+              <span class="tag ok">+~6 GB</span>
+            </h3>
+            <ul>
+              <li data-lang="nl">
+                n8n kort stoppen (WhatsApp, licentie en smart-scheduling blijven
+                draaien). Tijdstip in overleg, buiten kantoortijd.
+              </li>
+              <li data-lang="vi">
+                Tạm dừng n8n (WhatsApp, license và smart-scheduling vẫn chạy).
+                Thời điểm thống nhất trước, ngoài giờ làm việc.
+              </li>
+              <li data-lang="nl">
+                Met <code>VACUUM INTO</code> een compacte kopie maken (alleen de
+                echte gegevens, ~6 GB of minder), controleren met
+                <code>PRAGMA integrity_check</code>, dan pas omwisselen. Het
+                oude bestand blijft bewaard tot n8n weer goed draait.
+              </li>
+              <li data-lang="vi">
+                Dùng <code>VACUUM INTO</code> tạo một bản gọn (chỉ dữ liệu thật,
+                khoảng 6 GB hoặc ít hơn), kiểm tra bằng
+                <code>PRAGMA integrity_check</code>, đạt rồi mới thay. File cũ
+                được giữ lại tới khi n8n chạy ổn.
+              </li>
+              <li data-lang="nl">
+                Terugdraaien: het oude bestand terugzetten en n8n starten.
+              </li>
+              <li data-lang="vi">
+                Quay lui: đặt lại file cũ và khởi động n8n.
+              </li>
+            </ul>
+          </div>
+        </div>
 
-  <div class="card step anchor" id="step3">
-    <input type="checkbox" aria-label="Stap 3">
-    <div>
-      <h3><span data-lang="nl">Stap 3 — Nieuwe back-up, daarna oude back-ups weg</span><span data-lang="vi">Bước 3 — Tạo bản sao lưu mới, rồi xoá bản cũ</span> <span class="tag ok">+~12 GB</span></h3>
-      <ul>
-        <li data-lang="nl">Eerst een nieuwe, gecomprimeerde back-up van de verkleinde database en de n8n-map, en controleren dat die te openen is.</li>
-        <li data-lang="vi">Trước hết tạo một bản sao lưu mới (nén) của database đã thu nhỏ và thư mục n8n, rồi kiểm tra mở được.</li>
-        <li data-lang="nl">Pas daarna deze oude back-ups in <code>/root</code> verwijderen:</li>
-        <li data-lang="vi">Sau đó mới xoá các bản sao lưu cũ trong <code>/root</code>:</li>
-      </ul>
-      <pre>n8n_data_backup_2026-02-09_01-41-43/   2.4G
+        <div class="card step anchor" id="step3">
+          <input type="checkbox" aria-label="Stap 3" />
+          <div>
+            <h3>
+              <span data-lang="nl"
+                >Stap 3 — Nieuwe back-up, daarna oude back-ups weg</span
+              ><span data-lang="vi"
+                >Bước 3 — Tạo bản sao lưu mới, rồi xoá bản cũ</span
+              >
+              <span class="tag ok">+~12 GB</span>
+            </h3>
+            <ul>
+              <li data-lang="nl">
+                Eerst een nieuwe, gecomprimeerde back-up van de verkleinde
+                database en de n8n-map, en controleren dat die te openen is.
+              </li>
+              <li data-lang="vi">
+                Trước hết tạo một bản sao lưu mới (nén) của database đã thu nhỏ
+                và thư mục n8n, rồi kiểm tra mở được.
+              </li>
+              <li data-lang="nl">
+                Pas daarna deze oude back-ups in <code>/root</code> verwijderen:
+              </li>
+              <li data-lang="vi">
+                Sau đó mới xoá các bản sao lưu cũ trong <code>/root</code>:
+              </li>
+            </ul>
+            <pre>
+n8n_data_backup_2026-02-09_01-41-43/   2.4G
 n8n_data/                              2.4G
 n8n_backup_2025-11-29/                 2.4G
 n8n-backup/                            1.2G
 n8n/                                   1.2G
 database_n8n_data_backup.sqlite        1.2G
 n8n-backup-2025-10-11.tgz              779M
-backup_n8n/                            156M</pre>
-      <p data-lang="nl">Joost: als een van deze mappen iets anders bevat dan n8n-gegevens, of als je er een wilt houden, laat het weten. We controleren vóór het verwijderen nog eens de inhoud van elke map.</p>
-      <p data-lang="vi">Joost: nếu thư mục nào chứa thứ khác ngoài dữ liệu n8n, hoặc bạn muốn giữ lại bản nào, hãy báo. Trước khi xoá, chúng tôi sẽ kiểm tra lại nội dung từng thư mục.</p>
+backup_n8n/                            156M</pre
+            >
+            <p data-lang="nl">
+              Joost: als een van deze mappen iets anders bevat dan n8n-gegevens,
+              of als je er een wilt houden, laat het weten. We controleren vóór
+              het verwijderen nog eens de inhoud van elke map.
+            </p>
+            <p data-lang="vi">
+              Joost: nếu thư mục nào chứa thứ khác ngoài dữ liệu n8n, hoặc bạn
+              muốn giữ lại bản nào, hãy báo. Trước khi xoá, chúng tôi sẽ kiểm
+              tra lại nội dung từng thư mục.
+            </p>
+          </div>
+        </div>
+
+        <div class="card step anchor" id="step4">
+          <input type="checkbox" aria-label="Stap 4" />
+          <div>
+            <h3>
+              <span data-lang="nl"
+                >Stap 4 — Voorkomen dat het opnieuw volloopt</span
+              ><span data-lang="vi">Bước 4 — Ngăn ổ đĩa đầy lại</span>
+              <span class="tag warn">n8n ~1 min offline</span>
+            </h3>
+            <ul>
+              <li data-lang="nl">
+                In <code>/root/docker-compose.yml</code> expliciet instellen:
+                <code>EXECUTIONS_DATA_PRUNE=true</code>,
+                <code>EXECUTIONS_DATA_MAX_AGE=168</code> (7 dagen),
+                <code>EXECUTIONS_DATA_PRUNE_MAX_COUNT=5000</code>,
+                <code>DB_SQLITE_VACUUM_ON_STARTUP=true</code>.
+              </li>
+              <li data-lang="vi">
+                Đặt rõ trong <code>/root/docker-compose.yml</code>:
+                <code>EXECUTIONS_DATA_PRUNE=true</code>,
+                <code>EXECUTIONS_DATA_MAX_AGE=168</code> (7 ngày),
+                <code>EXECUTIONS_DATA_PRUNE_MAX_COUNT=5000</code>,
+                <code>DB_SQLITE_VACUUM_ON_STARTUP=true</code>.
+              </li>
+              <li data-lang="nl">
+                Voor de zes zware workflows uit de tabel: in de
+                workflow-instellingen “Save successful production executions” op
+                <em>Do not save</em> zetten; mislukte runs blijven bewaard voor
+                foutzoeken. Dit zijn jouw workflows, dus alleen met jouw akkoord
+                per workflow. Alleen dit al houdt de database waarschijnlijk
+                onder 1 GB.
+              </li>
+              <li data-lang="vi">
+                Với sáu workflow nặng trong bảng: đặt “Save successful
+                production executions” thành <em>Do not save</em> trong cài đặt
+                workflow; các lần chạy lỗi vẫn được lưu để dò lỗi. Đây là
+                workflow của Joost nên chỉ làm khi Joost đồng ý từng cái. Riêng
+                việc này có thể giữ database dưới 1 GB.
+              </li>
+              <li data-lang="nl">
+                Optioneel: de container <code>evolution_api</code> opnieuw
+                aanmaken zodat de loglimiet van 10 MB ook voor hem geldt
+                (WhatsApp ~1 min offline). Zonder deze stap groeit de log weer;
+                dan periodiek leegmaken.
+              </li>
+              <li data-lang="vi">
+                Tuỳ chọn: tạo lại container <code>evolution_api</code> để giới
+                hạn log 10 MB áp dụng cho nó (WhatsApp gián đoạn ~1 phút). Không
+                làm thì log sẽ phình lại và phải làm rỗng định kỳ.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 class="anchor" id="result">
+          <span data-lang="nl">3. Verwacht resultaat</span
+          ><span data-lang="vi">3. Kết quả dự kiến</span>
+        </h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <span data-lang="nl">Na stap</span
+                  ><span data-lang="vi">Sau bước</span>
+                </th>
+                <th class="num">
+                  <span data-lang="nl">In gebruik</span
+                  ><span data-lang="vi">Đã dùng</span>
+                </th>
+                <th class="num">
+                  <span data-lang="nl">Vrij</span
+                  ><span data-lang="vi">Trống</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span data-lang="nl">Nu</span
+                  ><span data-lang="vi">Hiện tại</span>
+                </td>
+                <td class="num">43 GB (91%)</td>
+                <td class="num">4,6 GB</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td class="num">~38 GB</td>
+                <td class="num">~9,7 GB</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td class="num">~32 GB</td>
+                <td class="num">~16 GB</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td class="num">~20–22 GB (~45%)</td>
+                <td class="num">~26 GB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <h2 class="anchor" id="other">
+          <span data-lang="nl"
+            >4. Overige bevindingen (los van deze opschoning)</span
+          ><span data-lang="vi">4. Phát hiện khác (ngoài việc dọn dẹp)</span>
+        </h2> -->
+        <div class="card note">
+          <ul>
+            <li data-lang="nl">
+              100 pakketupdates staan klaar (1 beveiligingsupdate); één
+              automatische update is mislukt en de server wacht op een herstart.
+            </li>
+            <li data-lang="vi">
+              Có 100 bản cập nhật đang chờ (1 bản bảo mật); một lần tự cập nhật
+              bị lỗi và máy đang chờ khởi động lại.
+            </li>
+            <li data-lang="nl">
+              De workflow
+              <strong>Raved Fabrics - Bol review emails</strong> mislukte 125
+              van de 168 keer in de laatste 30 dagen;
+              <strong>Bol review emails</strong> 7 van de 164 keer. Misschien de
+              moeite waard om te bekijken.
+            </li>
+            <li data-lang="vi">
+              Workflow <strong>Raved Fabrics - Bol review emails</strong> lỗi
+              125/168 lần trong 30 ngày qua;
+              <strong>Bol review emails</strong> lỗi 7/164 lần. Có thể nên xem
+              lại.
+            </li>
+            <li data-lang="nl">
+              Deze punten pakken we alleen aan als je dat wilt, in een apart
+              moment.
+            </li>
+            <li data-lang="vi">
+              Các điểm này chỉ xử lý khi Joost muốn, vào một dịp riêng.
+            </li>
+          </ul>
+        </div>
+
+        <h2 class="anchor" id="approach">
+          <span data-lang="nl">5. Werkwijze en veiligheid</span
+          ><span data-lang="vi">5. Cách làm và an toàn</span>
+        </h2>
+        <div class="card">
+          <ul>
+            <li data-lang="nl">
+              Elke stap pas na jouw akkoord, op een afgesproken moment, één stap
+              tegelijk; na elke stap controleren we dat alle containers weer
+              draaien.
+            </li>
+            <li data-lang="vi">
+              Mỗi bước chỉ làm sau khi Joost đồng ý, vào thời điểm đã hẹn, từng
+              bước một; sau mỗi bước kiểm tra mọi container vẫn chạy.
+            </li>
+            <li data-lang="nl">
+              Niets wordt verwijderd voordat er een gecontroleerde nieuwe
+              back-up is (stap 3 volgt pas na stap 2).
+            </li>
+            <li data-lang="vi">
+              Không xoá gì trước khi có bản sao lưu mới đã kiểm tra (bước 3 chỉ
+              làm sau bước 2).
+            </li>
+            <li data-lang="nl">
+              De exacte commando’s sturen we vooraf mee, zodat je ze kunt
+              nalezen.
+            </li>
+            <li data-lang="vi">
+              Các lệnh cụ thể được gửi trước để Joost xem lại.
+            </li>
+          </ul>
+        </div>
+
+        <footer>
+          <span data-lang="nl"
+            >Opgesteld door het CADINVO CRM-team. Vragen of aanpassingen: laat
+            het ons weten.</span
+          >
+          <span data-lang="vi"
+            >Do nhóm CRM CADINVO soạn. Có câu hỏi hay muốn điều chỉnh, xin báo
+            lại.</span
+          >
+        </footer>
+      </main>
     </div>
-  </div>
+    <script>
+      const KEY = "report-lang";
+      function setLang(lang) {
+        document.documentElement.lang = lang;
+        document
+          .querySelectorAll("[data-set-lang]")
+          .forEach((b) =>
+            b.setAttribute("aria-pressed", String(b.dataset.setLang === lang)),
+          );
+        try {
+          localStorage.setItem(KEY, lang);
+        } catch (e) {
+          /* storage blocked */
+        }
+      }
+      document
+        .querySelectorAll("[data-set-lang]")
+        .forEach((b) =>
+          b.addEventListener("click", () => setLang(b.dataset.setLang)),
+        );
+      let saved = "nl";
+      try {
+        saved = localStorage.getItem(KEY) || "nl";
+      } catch (e) {
+        /* storage blocked */
+      }
+      setLang(saved === "vi" ? "vi" : "nl");
 
-  <div class="card step anchor" id="step4">
-    <input type="checkbox" aria-label="Stap 4">
-    <div>
-      <h3><span data-lang="nl">Stap 4 — Voorkomen dat het opnieuw volloopt</span><span data-lang="vi">Bước 4 — Ngăn ổ đĩa đầy lại</span> <span class="tag warn">n8n ~1 min offline</span></h3>
-      <ul>
-        <li data-lang="nl">In <code>/root/docker-compose.yml</code> expliciet instellen: <code>EXECUTIONS_DATA_PRUNE=true</code>, <code>EXECUTIONS_DATA_MAX_AGE=168</code> (7 dagen), <code>EXECUTIONS_DATA_PRUNE_MAX_COUNT=5000</code>, <code>DB_SQLITE_VACUUM_ON_STARTUP=true</code>.</li>
-        <li data-lang="vi">Đặt rõ trong <code>/root/docker-compose.yml</code>: <code>EXECUTIONS_DATA_PRUNE=true</code>, <code>EXECUTIONS_DATA_MAX_AGE=168</code> (7 ngày), <code>EXECUTIONS_DATA_PRUNE_MAX_COUNT=5000</code>, <code>DB_SQLITE_VACUUM_ON_STARTUP=true</code>.</li>
-        <li data-lang="nl">Voor de zes zware workflows uit de tabel: in de workflow-instellingen “Save successful production executions” op <em>Do not save</em> zetten; mislukte runs blijven bewaard voor foutzoeken. Dit zijn jouw workflows, dus alleen met jouw akkoord per workflow. Alleen dit al houdt de database waarschijnlijk onder 1 GB.</li>
-        <li data-lang="vi">Với sáu workflow nặng trong bảng: đặt “Save successful production executions” thành <em>Do not save</em> trong cài đặt workflow; các lần chạy lỗi vẫn được lưu để dò lỗi. Đây là workflow của Joost nên chỉ làm khi Joost đồng ý từng cái. Riêng việc này có thể giữ database dưới 1 GB.</li>
-        <li data-lang="nl">Optioneel: de container <code>evolution_api</code> opnieuw aanmaken zodat de loglimiet van 10 MB ook voor hem geldt (WhatsApp ~1 min offline). Zonder deze stap groeit de log weer; dan periodiek leegmaken.</li>
-        <li data-lang="vi">Tuỳ chọn: tạo lại container <code>evolution_api</code> để giới hạn log 10 MB áp dụng cho nó (WhatsApp gián đoạn ~1 phút). Không làm thì log sẽ phình lại và phải làm rỗng định kỳ.</li>
-      </ul>
-    </div>
-  </div>
-
-  <h2 class="anchor" id="result"><span data-lang="nl">3. Verwacht resultaat</span><span data-lang="vi">3. Kết quả dự kiến</span></h2>
-  <div class="table-wrap"><table>
-    <thead><tr><th><span data-lang="nl">Na stap</span><span data-lang="vi">Sau bước</span></th><th class="num"><span data-lang="nl">In gebruik</span><span data-lang="vi">Đã dùng</span></th><th class="num"><span data-lang="nl">Vrij</span><span data-lang="vi">Trống</span></th></tr></thead>
-    <tbody>
-      <tr><td><span data-lang="nl">Nu</span><span data-lang="vi">Hiện tại</span></td><td class="num">43 GB (91%)</td><td class="num">4,6 GB</td></tr>
-      <tr><td>1</td><td class="num">~38 GB</td><td class="num">~9,7 GB</td></tr>
-      <tr><td>2</td><td class="num">~32 GB</td><td class="num">~16 GB</td></tr>
-      <tr><td>3</td><td class="num">~20–22 GB (~45%)</td><td class="num">~26 GB</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 class="anchor" id="other"><span data-lang="nl">4. Overige bevindingen (los van deze opschoning)</span><span data-lang="vi">4. Phát hiện khác (ngoài việc dọn dẹp)</span></h2>
-  <div class="card note">
-    <ul>
-      <li data-lang="nl">100 pakketupdates staan klaar (1 beveiligingsupdate); één automatische update is mislukt en de server wacht op een herstart.</li>
-      <li data-lang="vi">Có 100 bản cập nhật đang chờ (1 bản bảo mật); một lần tự cập nhật bị lỗi và máy đang chờ khởi động lại.</li>
-      <li data-lang="nl">De poorten 5678 (n8n) en 8080 (Evolution API) zijn rechtstreeks via HTTP vanaf internet bereikbaar. Docker omzeilt de firewall; beter is alleen via Caddy (HTTPS) of binden aan 127.0.0.1.</li>
-      <li data-lang="vi">Cổng 5678 (n8n) và 8080 (Evolution API) đang mở thẳng ra Internet qua HTTP. Docker bỏ qua tường lửa; nên chỉ cho đi qua Caddy (HTTPS) hoặc chỉ nghe trên 127.0.0.1.</li>
-      <li data-lang="nl">De workflow <strong>Raved Fabrics - Bol review emails</strong> mislukte 125 van de 168 keer in de laatste 30 dagen; <strong>Bol review emails</strong> 7 van de 164 keer. Misschien de moeite waard om te bekijken.</li>
-      <li data-lang="vi">Workflow <strong>Raved Fabrics - Bol review emails</strong> lỗi 125/168 lần trong 30 ngày qua; <strong>Bol review emails</strong> lỗi 7/164 lần. Có thể nên xem lại.</li>
-      <li data-lang="nl">Deze punten pakken we alleen aan als je dat wilt, in een apart moment.</li>
-      <li data-lang="vi">Các điểm này chỉ xử lý khi Joost muốn, vào một dịp riêng.</li>
-    </ul>
-  </div>
-
-  <h2 class="anchor" id="approach"><span data-lang="nl">5. Werkwijze en veiligheid</span><span data-lang="vi">5. Cách làm và an toàn</span></h2>
-  <div class="card">
-    <ul>
-      <li data-lang="nl">Elke stap pas na jouw akkoord, op een afgesproken moment, één stap tegelijk; na elke stap controleren we dat alle containers weer draaien.</li>
-      <li data-lang="vi">Mỗi bước chỉ làm sau khi Joost đồng ý, vào thời điểm đã hẹn, từng bước một; sau mỗi bước kiểm tra mọi container vẫn chạy.</li>
-      <li data-lang="nl">Niets wordt verwijderd voordat er een gecontroleerde nieuwe back-up is (stap 3 volgt pas na stap 2).</li>
-      <li data-lang="vi">Không xoá gì trước khi có bản sao lưu mới đã kiểm tra (bước 3 chỉ làm sau bước 2).</li>
-      <li data-lang="nl">De exacte commando’s sturen we vooraf mee, zodat je ze kunt nalezen.</li>
-      <li data-lang="vi">Các lệnh cụ thể được gửi trước để Joost xem lại.</li>
-    </ul>
-  </div>
-
-  <footer>
-    <span data-lang="nl">Opgesteld door het CADINVO CRM-team. Vragen of aanpassingen: laat het ons weten.</span>
-    <span data-lang="vi">Do nhóm CRM CADINVO soạn. Có câu hỏi hay muốn điều chỉnh, xin báo lại.</span>
-  </footer>
-</main>
-</div>
-<script>
-  const KEY = 'report-lang';
-  function setLang(lang) {
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-set-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === lang)));
-    try { localStorage.setItem(KEY, lang); } catch (e) { /* storage blocked */ }
-  }
-  document.querySelectorAll('[data-set-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.setLang)));
-  let saved = 'nl';
-  try { saved = localStorage.getItem(KEY) || 'nl'; } catch (e) { /* storage blocked */ }
-  setLang(saved === 'vi' ? 'vi' : 'nl');
-
-  // Highlight the section in view in the sidebar.
-  const links = [...document.querySelectorAll('.toc a')];
-  const targets = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-  function markActive() {
-    let current = targets[0];
-    for (const el of targets) if (el.getBoundingClientRect().top <= 120) current = el;
-    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = targets[targets.length - 1];
-    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
-    const active = links.find(a => a.classList.contains('active'));
-    if (active && window.matchMedia('(max-width: 900px)').matches) active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-  }
-  window.addEventListener('scroll', markActive, { passive: true });
-  window.addEventListener('resize', markActive);
-  markActive();
-</script>
-</body>
+      // Highlight the section in view in the sidebar.
+      const links = [...document.querySelectorAll(".toc a")];
+      const targets = links
+        .map((a) => document.querySelector(a.getAttribute("href")))
+        .filter(Boolean);
+      function markActive() {
+        let current = targets[0];
+        for (const el of targets)
+          if (el.getBoundingClientRect().top <= 120) current = el;
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.scrollHeight - 4
+        )
+          current = targets[targets.length - 1];
+        links.forEach((a) =>
+          a.classList.toggle(
+            "active",
+            a.getAttribute("href") === "#" + current.id,
+          ),
+        );
+        const active = links.find((a) => a.classList.contains("active"));
+        if (active && window.matchMedia("(max-width: 900px)").matches)
+          active.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+      window.addEventListener("scroll", markActive, { passive: true });
+      window.addEventListener("resize", markActive);
+      markActive();
+    </script>
+  </body>
 </html>
