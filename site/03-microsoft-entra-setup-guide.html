@@ -1,0 +1,587 @@
+<title>Microsoft Entra cho WorkFlow CRM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed full-height sidebar (contents + progress) beside a single reading column; on phones the sidebar becomes a sticky top bar with a drop-down menu. */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --sunken: #eef1f5;
+  --fg: #1b2430;
+  --muted: #5b6676;
+  --line: #dde2e9;
+  --accent: #0b6aa8;
+  --accent-soft: #e3f0f9;
+  --ok: #1f7a4d;
+  --ok-soft: #e4f4ea;
+  --warn: #9a5b00;
+  --warn-soft: #fdf1dc;
+  --bad: #b3261e;
+  --bad-soft: #fbe7e5;
+  --font-body: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --sidebar: 288px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161c; --surface: #1a2029; --sunken: #232b36; --fg: #e6eaf0; --muted: #9aa5b4; --line: #2e3744;
+    --accent: #5fb2ea; --accent-soft: #16324a; --ok: #6fd19d; --ok-soft: #173326; --warn: #f0b660; --warn-soft: #3a2a12;
+    --bad: #f08a82; --bad-soft: #3d1c1a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161c; --surface: #1a2029; --sunken: #232b36; --fg: #e6eaf0; --muted: #9aa5b4; --line: #2e3744;
+  --accent: #5fb2ea; --accent-soft: #16324a; --ok: #6fd19d; --ok-soft: #173326; --warn: #f0b660; --warn-soft: #3a2a12;
+  --bad: #f08a82; --bad-soft: #3d1c1a; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 15.5px/1.7 var(--font-body); }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+code { background: var(--sunken); padding: 1px 6px; border-radius: 4px; overflow-wrap: anywhere; }
+
+/* ---------- sidebar ---------- */
+.sidebar {
+  position: fixed; inset: 0 auto 0 0; width: var(--sidebar);
+  background: var(--surface); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  padding: calc(24px + env(safe-area-inset-top, 0px)) 0 calc(16px + env(safe-area-inset-bottom, 0px)) max(0px, env(safe-area-inset-left, 0px));
+  z-index: 20;
+}
+.brand { padding: 0 22px 18px; border-bottom: 1px solid var(--line); }
+.brand .eyebrow { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.brand .name { font-weight: 700; font-size: 17px; line-height: 1.35; margin-top: 4px; text-wrap: balance; }
+.progress { padding: 14px 22px; border-bottom: 1px solid var(--line); }
+.progress .row { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--muted); }
+.progress .bar { height: 6px; background: var(--sunken); border-radius: 99px; margin-top: 8px; overflow: hidden; }
+.progress .bar span { display: block; height: 100%; width: 0; background: var(--ok); border-radius: 99px; transition: width .25s; }
+nav.toc { overflow-y: auto; padding: 12px 10px; flex: 1; }
+nav.toc .group { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 14px 12px 6px; }
+nav.toc a {
+  display: grid; grid-template-columns: 26px 1fr; gap: 6px; align-items: start;
+  padding: 7px 12px; border-radius: 8px; text-decoration: none; color: var(--fg); font-size: 14px; line-height: 1.45;
+}
+nav.toc a .n { font-family: var(--font-mono); font-size: 12px; color: var(--muted); padding-top: 2px; }
+nav.toc a:hover { background: var(--sunken); }
+nav.toc a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+nav.toc a.active .n { color: var(--accent); }
+nav.toc a.done .n::after { content: " ✓"; color: var(--ok); }
+.sidebar .foot { padding: 12px 22px 0; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+
+/* ---------- mobile top bar ---------- */
+.topbar { display: none; }
+
+/* ---------- main ---------- */
+main { margin-left: var(--sidebar); padding-block: 40px 96px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.col { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+header.hero { display: flex; flex-direction: column; gap: 12px; padding-bottom: 8px; }
+header.hero .eyebrow { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; margin: 0; text-wrap: balance; font-weight: 700; letter-spacing: -0.01em; }
+.lead { font-size: 17px; color: var(--muted); margin: 0; max-width: 66ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; padding: 4px 10px; border-radius: 99px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
+.chip b { color: var(--fg); font-weight: 600; }
+
+section.block { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px clamp(18px, 3vw, 34px); display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+section.block > h2 { display: flex; align-items: baseline; gap: 12px; margin: 0; font-size: 22px; line-height: 1.3; text-wrap: balance; }
+section.block > h2 .n { font-family: var(--font-mono); font-size: 14px; color: var(--accent); background: var(--accent-soft); padding: 2px 9px; border-radius: 6px; font-weight: 500; flex: none; }
+h3 { margin: 6px 0 0; font-size: 16.5px; }
+p { margin: 0; max-width: 70ch; }
+ul, ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
+.steps { list-style: none; padding: 0; counter-reset: s; gap: 14px; }
+.steps > li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; }
+.steps > li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; background: var(--sunken); color: var(--fg); display: grid; place-items: center; font-weight: 600; font-size: 13.5px; margin-top: 1px; }
+.steps > li > div { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.ui { font-weight: 600; background: var(--sunken); border: 1px solid var(--line); border-radius: 5px; padding: 0 6px; white-space: nowrap; font-size: 0.93em; }
+.path { color: var(--muted); font-size: 14px; }
+.path .ui { color: var(--fg); }
+
+.note { border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 14.5px; }
+.note .i { font-weight: 700; text-align: center; }
+.note > div { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.note.info { background: var(--accent-soft); } .note.info .i { color: var(--accent); }
+.note.warn { background: var(--warn-soft); } .note.warn .i { color: var(--warn); }
+.note.bad { background: var(--bad-soft); } .note.bad .i { color: var(--bad); }
+.note.ok { background: var(--ok-soft); } .note.ok .i { color: var(--ok); }
+
+.copy { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: 8px; background: var(--sunken); overflow: hidden; min-width: 0; }
+.copy code { background: none; padding: 9px 12px; flex: 1; min-width: 0; font-size: 13.5px; overflow-wrap: anywhere; }
+.copy button, .btn {
+  font: 600 13px var(--font-body); border: 0; border-left: 1px solid var(--line); background: var(--surface); color: var(--accent);
+  padding: 0 14px; cursor: pointer; flex: none;
+}
+.copy button:hover { background: var(--accent-soft); }
+.btn { border: 1px solid var(--accent); border-radius: 8px; padding: 9px 16px; background: var(--accent); color: var(--surface); }
+.btn.ghost { background: var(--surface); color: var(--accent); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--sunken); font-weight: 600; font-size: 12.5px; letter-spacing: 0.03em; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+td code { white-space: nowrap; }
+.tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 99px; white-space: nowrap; }
+.tag.ok { background: var(--ok-soft); color: var(--ok); }
+.tag.warn { background: var(--warn-soft); color: var(--warn); }
+.tag.bad { background: var(--bad-soft); color: var(--bad); }
+.tag.info { background: var(--accent-soft); color: var(--accent); }
+
+.summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.summary-grid .item { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; background: var(--bg); }
+.summary-grid .k { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+.summary-grid .v { font-weight: 600; }
+.summary-grid .d { font-size: 13.5px; color: var(--muted); }
+
+/* mock of a portal screen (drawn, not a screenshot) */
+.mock { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 13.5px; background: var(--bg); }
+.mock .bar { background: var(--sunken); padding: 7px 12px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.mock .body { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.mock .field { display: grid; grid-template-columns: 190px 1fr; gap: 12px; align-items: start; }
+.mock .field .l { color: var(--muted); }
+.mock .field .val { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.mock .hl { outline: 2px solid var(--warn); outline-offset: 2px; border-radius: 4px; }
+.mock .radio { display: flex; gap: 8px; align-items: baseline; }
+.mock .radio .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--muted); flex: none; transform: translateY(1px); }
+.mock .radio.on .dot { border-color: var(--accent); background: radial-gradient(var(--accent) 45%, transparent 50%); }
+.mock .radio.off { color: var(--muted); }
+
+.check { list-style: none; padding: 0; gap: 8px; }
+.check li label { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; cursor: pointer; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); }
+.check li input { width: 17px; height: 17px; margin: 3px 0 0; accent-color: var(--ok); }
+.check li input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+
+form.handover { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+form.handover label { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 600; min-width: 0; }
+form.handover label.full { grid-column: 1 / -1; }
+form.handover input { font: 400 14px var(--font-mono); padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); min-width: 0; width: 100%; }
+form.handover .hint { font-weight: 400; color: var(--muted); font-size: 12.5px; }
+.out { background: var(--sunken); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font: 400 13px/1.65 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.status { font-size: 13px; color: var(--ok); }
+
+details { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+details summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none; display: flex; gap: 10px; align-items: baseline; }
+details summary::-webkit-details-marker { display: none; }
+details summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent); width: 12px; flex: none; }
+details[open] summary::before { content: "–"; }
+details .inner { padding: 0 16px 14px 38px; display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; }
+
+footer.end { color: var(--muted); font-size: 13px; text-align: center; }
+
+@media (max-width: 960px) {
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); }
+  html { scroll-padding-top: 72px; }
+  .sidebar { display: none; }
+  .sidebar.open { display: flex; top: calc(56px + env(safe-area-inset-top, 0px)); width: 100%; border-right: 0; border-bottom: 1px solid var(--line); padding-top: 8px; }
+  .sidebar.open .brand { display: none; }
+  .topbar {
+    display: flex; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 25; height: 56px; align-items: center; justify-content: space-between; gap: 12px;
+    background: var(--surface); border-bottom: 1px solid var(--line);
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .topbar .t { font-weight: 700; font-size: 15px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar button { font: 600 13.5px var(--font-body); border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 8px; padding: 7px 12px; cursor: pointer; flex: none; }
+  main { margin-left: 0; padding-block: 24px 72px; }
+}
+@media (max-width: 620px) {
+  .summary-grid, form.handover { grid-template-columns: 1fr; }
+  .mock .field { grid-template-columns: 1fr; gap: 2px; }
+  section.block > h2 { font-size: 19px; }
+}
+</style>
+
+<div class="topbar">
+  <span class="t">Microsoft Entra cho WorkFlow CRM</span>
+  <button type="button" id="menuBtn" aria-expanded="false" aria-controls="sidebar">Mục lục</button>
+</div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="eyebrow">Hướng dẫn cài đặt</div>
+    <div class="name">Microsoft Entra cho WorkFlow CRM</div>
+  </div>
+  <div class="progress">
+    <div class="row"><span>Tiến độ kiểm tra</span><span id="progTxt">0/10</span></div>
+    <div class="bar"><span id="progBar"></span></div>
+  </div>
+  <nav class="toc" id="toc" aria-label="Mục lục">
+    <div class="group">Tổng quan</div>
+    <a href="#tom-tat"><span class="n">·</span><span>Tóm tắt và các giá trị cần gửi</span></a>
+    <a href="#chuan-bi"><span class="n">·</span><span>Trước khi bắt đầu</span></a>
+    <div class="group">Các bước trên Entra</div>
+    <a href="#buoc-1" data-step="1"><span class="n">1</span><span>Tạo App registration</span></a>
+    <a href="#buoc-2" data-step="2"><span class="n">2</span><span>Thêm redirect URI thứ hai</span></a>
+    <a href="#buoc-3" data-step="3"><span class="n">3</span><span>Cấp quyền Microsoft Graph</span></a>
+    <a href="#buoc-4" data-step="4"><span class="n">4</span><span>Tạo client secret</span></a>
+    <a href="#buoc-5" data-step="5"><span class="n">5</span><span>Lấy Tenant ID và Client ID</span></a>
+    <a href="#buoc-6" data-step="6"><span class="n">6</span><span>Gửi lại cho đội CRM</span></a>
+    <div class="group">Kiểm tra và tham khảo</div>
+    <a href="#kiem-tra"><span class="n">·</span><span>Danh sách kiểm tra</span></a>
+    <a href="#bao-mat"><span class="n">·</span><span>CRM truy cập được gì</span></a>
+    <a href="#loi"><span class="n">·</span><span>Lỗi thường gặp</span></a>
+    <a href="#sau-nay"><span class="n">·</span><span>Việc về sau</span></a>
+  </nav>
+  <div class="foot">Thời gian: khoảng 10–15 phút</div>
+</aside>
+
+<main>
+<div class="col">
+
+<header class="hero">
+  <span class="eyebrow">Gửi người quản trị Microsoft 365 của Cadinvo</span>
+  <h1>Tạo kết nối Microsoft (OneDrive, SharePoint, Outlook) cho WorkFlow CRM</h1>
+  <p class="lead">CRM mới của Cadinvo chạy tại <b>work.cadinvo.com</b>. Để CRM đọc và lưu tài liệu dự án trên OneDrive/SharePoint và đồng bộ email Outlook như CRM cũ (Base44), cần một App registration riêng trong Microsoft Entra ID của Cadinvo. Tài liệu này hướng dẫn tạo app đó và lấy các giá trị cần gửi lại.</p>
+  <div class="meta">
+    <span class="chip">Cần vai trò <b>Application Administrator</b> trở lên</span>
+    <span class="chip">Khoảng <b>10–15 phút</b></span>
+    <span class="chip">Không ảnh hưởng <b>CRM cũ đang chạy</b></span>
+  </div>
+</header>
+
+<section class="block" id="tom-tat">
+  <h2>Tóm tắt và các giá trị cần gửi</h2>
+  <p>Vì sao cần app mới: CRM cũ kết nối Microsoft qua app của nhà cung cấp Base44. Khoá và token của app đó do Base44 giữ, không xuất ra được và chỉ trả về địa chỉ của Base44. CRM mới cần app của chính Cadinvo. Bộ quyền giữ nguyên như CRM cũ đang dùng, không xin thêm.</p>
+  <p>Kết quả cần gửi lại cho đội CRM sau khi làm xong:</p>
+  <div class="summary-grid">
+    <div class="item"><span class="k">1 · Directory (tenant) ID</span><span class="v">Mã định danh tenant Cadinvo</span><span class="d">Không bí mật, gửi bình thường được.</span></div>
+    <div class="item"><span class="k">2 · Application (client) ID</span><span class="v">Mã của app vừa tạo</span><span class="d">Không bí mật, gửi bình thường được.</span></div>
+    <div class="item"><span class="k">3 · Client secret (Value)</span><span class="v">Mật khẩu của app</span><span class="d"><span class="tag bad">Bí mật</span> Gửi riêng qua link dùng một lần (bước 6).</span></div>
+    <div class="item"><span class="k">4 · Tài khoản kết nối</span><span class="v">Email Microsoft sẽ dùng để kết nối</span><span class="d">Thường là tài khoản đang kết nối trong CRM cũ, kèm ngày hết hạn của secret.</span></div>
+  </div>
+  <h3>Các giá trị dùng trong hướng dẫn</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mục</th><th>Giá trị cần nhập</th></tr></thead>
+      <tbody>
+        <tr><td>Tên app</td><td><code>WorkFlow CRM (work.cadinvo.com)</code></td></tr>
+        <tr><td>Loại tài khoản</td><td>Chỉ tài khoản trong tổ chức Cadinvo (Single tenant)</td></tr>
+        <tr><td>Redirect URI 1 (Web)</td><td><code>https://work.cadinvo.com/api/connectors/one_drive/callback</code></td></tr>
+        <tr><td>Redirect URI 2 (Web)</td><td><code>https://work.cadinvo.com/api/connectors/outlook/callback</code></td></tr>
+        <tr><td>Quyền Microsoft Graph (Delegated)</td><td><code>Files.ReadWrite</code> <code>Mail.Read</code> <code>Mail.ReadWrite</code> <code>User.Read</code> <code>openid</code> <code>profile</code> <code>email</code> <code>offline_access</code></td></tr>
+        <tr><td>Client secret</td><td>Mô tả <code>work.cadinvo.com VPS</code>, hạn <b>730 ngày (24 tháng)</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="chuan-bi">
+  <h2>Trước khi bắt đầu</h2>
+  <ul>
+    <li><b>Quyền:</b> tài khoản cần một trong các vai trò <span class="ui">Application Administrator</span>, <span class="ui">Cloud Application Administrator</span> hoặc <span class="ui">Global Administrator</span>. Riêng thao tác <i>Grant admin consent</i> ở bước 3 cần <span class="ui">Global Administrator</span> hoặc <span class="ui">Privileged Role Administrator</span>; nếu không có, làm các bước còn lại rồi nhờ người có quyền bấm nút đó.</li>
+    <li><b>Đăng nhập:</b> mở <a href="https://entra.microsoft.com" target="_blank" rel="noopener">entra.microsoft.com</a> bằng tài khoản quản trị của Cadinvo. Cũng làm được qua <a href="https://portal.azure.com" target="_blank" rel="noopener">portal.azure.com</a> → <span class="ui">Microsoft Entra ID</span>; tên các mục giống nhau.</li>
+    <li><b>Đúng tenant:</b> góc trên bên phải phải hiện tên tổ chức Cadinvo. Nếu tài khoản thuộc nhiều tổ chức, bấm biểu tượng bánh răng <span class="ui">Settings</span> → <span class="ui">Directories + subscriptions</span> để chuyển.</li>
+    <li><b>Chuẩn bị:</b> một chỗ ghi tạm an toàn (trình quản lý mật khẩu), vì client secret chỉ hiện <b>một lần</b>.</li>
+  </ul>
+  <div class="note info"><span class="i">i</span><div><p>Giao diện Entra có thể hiển thị tiếng Việt hoặc tiếng Anh tuỳ cài đặt. Hướng dẫn dùng tên tiếng Anh, vì đó là tên ổn định nhất; vị trí các mục không đổi.</p></div></div>
+</section>
+
+<section class="block" id="buoc-1">
+  <h2><span class="n">Bước 1</span>Tạo App registration</h2>
+  <p class="path">Đường dẫn: <span class="ui">Entra ID</span> → <span class="ui">App registrations</span> → <span class="ui">+ New registration</span></p>
+  <ol class="steps">
+    <li><div><p>Trong menu bên trái của Entra, mở <span class="ui">Entra ID</span> (bản cũ: <span class="ui">Identity</span> → <span class="ui">Applications</span>) rồi chọn <span class="ui">App registrations</span>.</p></div></li>
+    <li><div><p>Bấm <span class="ui">+ New registration</span> và điền như sau:</p>
+      <div class="mock" aria-label="Minh hoạ màn hình Register an application">
+        <div class="bar">Minh hoạ · Register an application</div>
+        <div class="body">
+          <div class="field"><span class="l">Name</span><span class="val hl">WorkFlow CRM (work.cadinvo.com)</span></div>
+          <div class="field"><span class="l">Supported account types</span>
+            <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+              <span class="radio on hl"><span class="dot"></span><span><b>Accounts in this organizational directory only</b> (Cadinvo only – Single tenant)</span></span>
+              <span class="radio off"><span class="dot"></span><span>Accounts in any organizational directory (Multitenant)</span></span>
+              <span class="radio off"><span class="dot"></span><span>… and personal Microsoft accounts</span></span>
+            </div>
+          </div>
+          <div class="field"><span class="l">Redirect URI</span><span class="val"><span class="hl">Web</span> · <span class="hl">https://work.cadinvo.com/api/connectors/one_drive/callback</span></span></div>
+        </div>
+      </div>
+    </div></li>
+    <li><div><p><b>Name</b> (tên app, ai cũng thấy khi đăng nhập):</p>
+      <div class="copy"><code>WorkFlow CRM (work.cadinvo.com)</code><button type="button" data-copy>Sao chép</button></div></div></li>
+    <li><div><p><b>Supported account types</b>: chọn <span class="ui">Accounts in this organizational directory only</span> (Single tenant). Chỉ người trong Cadinvo đăng nhập được vào app này.</p></div></li>
+    <li><div><p><b>Redirect URI</b>: ô chọn nền tảng để <span class="ui">Web</span> (không chọn <i>Single-page application</i> hay <i>Public client</i>), ô địa chỉ dán:</p>
+      <div class="copy"><code>https://work.cadinvo.com/api/connectors/one_drive/callback</code><button type="button" data-copy>Sao chép</button></div></div></li>
+    <li><div><p>Bấm <span class="ui">Register</span>. Entra mở trang <span class="ui">Overview</span> của app mới.</p></div></li>
+  </ol>
+  <div class="note warn"><span class="i">!</span><div><p>Địa chỉ phải đúng từng ký tự: <code>https</code>, không có dấu <code>/</code> ở cuối, chữ thường, có dấu gạch dưới trong <code>one_drive</code>. Sai một ký tự là lúc kết nối báo lỗi <code>AADSTS50011</code>.</p></div></div>
+</section>
+
+<section class="block" id="buoc-2">
+  <h2><span class="n">Bước 2</span>Thêm redirect URI thứ hai (Outlook)</h2>
+  <p class="path">Đường dẫn: app vừa tạo → <span class="ui">Authentication</span></p>
+  <ol class="steps">
+    <li><div><p>Trong menu của app, mở <span class="ui">Authentication</span>. Một số tenant hiện <span class="ui">Authentication (Preview)</span> với tab <span class="ui">Redirect URI configuration</span>; cách làm như nhau.</p></div></li>
+    <li><div><p>Ở mục nền tảng <span class="ui">Web</span> đã có URI của bước 1, bấm <span class="ui">Add URI</span> và dán:</p>
+      <div class="copy"><code>https://work.cadinvo.com/api/connectors/outlook/callback</code><button type="button" data-copy>Sao chép</button></div></div></li>
+    <li><div><p>Các mục còn lại trên trang <b>giữ nguyên mặc định</b>:</p>
+      <ul>
+        <li><span class="ui">Front-channel logout URL</span>: để trống.</li>
+        <li><span class="ui">Implicit grant and hybrid flows</span>: <b>không</b> tích <i>Access tokens</i>, <b>không</b> tích <i>ID tokens</i>.</li>
+        <li><span class="ui">Allow public client flows</span>: để <b>No</b>.</li>
+      </ul></div></li>
+    <li><div><p>Bấm <span class="ui">Save</span>. Mục Web lúc này có đúng 2 địa chỉ.</p></div></li>
+  </ol>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Redirect URI (Web)</th><th>Dùng cho</th></tr></thead>
+      <tbody>
+        <tr><td><code>https://work.cadinvo.com/api/connectors/one_drive/callback</code></td><td>Tài liệu dự án trên OneDrive/SharePoint</td></tr>
+        <tr><td><code>https://work.cadinvo.com/api/connectors/outlook/callback</code></td><td>Đồng bộ và xử lý email Outlook</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="buoc-3">
+  <h2><span class="n">Bước 3</span>Cấp quyền Microsoft Graph</h2>
+  <p class="path">Đường dẫn: app → <span class="ui">API permissions</span> → <span class="ui">+ Add a permission</span> → <span class="ui">Microsoft Graph</span> → <span class="ui">Delegated permissions</span></p>
+  <ol class="steps">
+    <li><div><p>Mở <span class="ui">API permissions</span>. Mặc định đã có sẵn <code>User.Read</code>; giữ nguyên.</p></div></li>
+    <li><div><p>Bấm <span class="ui">+ Add a permission</span> → chọn ô <span class="ui">Microsoft Graph</span> → chọn <span class="ui">Delegated permissions</span>. Không chọn <i>Application permissions</i>.</p></div></li>
+    <li><div><p>Gõ tên từng quyền vào ô tìm kiếm rồi tích chọn. Cần đủ 8 quyền:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Quyền (Delegated)</th><th>Nhóm trong danh sách</th><th>CRM dùng để</th></tr></thead>
+          <tbody>
+            <tr><td><code>Files.ReadWrite</code></td><td>Files</td><td>Xem, tải lên tài liệu dự án, tạo thư mục dự án mới, lưu email dạng PDF vào thư mục dự án</td></tr>
+            <tr><td><code>Mail.Read</code></td><td>Mail</td><td>Đọc email để đồng bộ thư từ với khách hàng</td></tr>
+            <tr><td><code>Mail.ReadWrite</code></td><td>Mail</td><td>Gắn cờ / category cho email đã xử lý. CRM không xoá, không chuyển, không trả lời email</td></tr>
+            <tr><td><code>User.Read</code></td><td>User (có sẵn)</td><td>Biết tài khoản nào đang kết nối</td></tr>
+            <tr><td><code>openid</code></td><td>OpenId permissions</td><td>Đăng nhập Microsoft</td></tr>
+            <tr><td><code>profile</code></td><td>OpenId permissions</td><td>Tên hiển thị của tài khoản</td></tr>
+            <tr><td><code>email</code></td><td>OpenId permissions</td><td>Email của tài khoản đang kết nối</td></tr>
+            <tr><td><code>offline_access</code></td><td>OpenId permissions</td><td>Giữ kết nối, không phải đăng nhập lại mỗi giờ</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="copy"><code>Files.ReadWrite Mail.Read Mail.ReadWrite User.Read openid profile email offline_access</code><button type="button" data-copy>Sao chép</button></div>
+    </div></li>
+    <li><div><p>Bấm <span class="ui">Add permissions</span>. Danh sách trên trang lúc này có 8 dòng, tất cả ghi Type = <b>Delegated</b>.</p></div></li>
+    <li><div><p>Bấm <span class="ui">Grant admin consent for Cadinvo</span> → <span class="ui">Yes</span>. Cột <b>Status</b> của cả 8 dòng chuyển sang dấu tích xanh <span class="tag ok">Granted for Cadinvo</span>.</p></div></li>
+  </ol>
+  <div class="note info"><span class="i">i</span><div><p>Đây đúng là bộ quyền CRM cũ trên Base44 đang dùng: <code>Files.ReadWrite</code> cho OneDrive và <code>Mail.Read</code>, <code>Mail.ReadWrite</code> cho Outlook. CRM mới không xin thêm quyền nào.</p><p>Bước admin consent giúp người kết nối không gặp màn hình "Need admin approval", nhất là khi tenant chặn người dùng tự đồng ý cấp quyền cho app.</p></div></div>
+  <div class="note warn"><span class="i">!</span><div><p>Quyền <b>Delegated</b> nghĩa là CRM chỉ thấy những gì <b>tài khoản đã kết nối</b> thấy được, không vượt quá. Không cần và không nên cấp quyền <i>Application</i> như <code>Files.ReadWrite.All</code>, <code>Sites.ReadWrite.All</code> hay <code>Mail.ReadWrite</code> loại Application: các quyền đó cho phép truy cập toàn bộ tổ chức.</p></div></div>
+</section>
+
+<section class="block" id="buoc-4">
+  <h2><span class="n">Bước 4</span>Tạo client secret</h2>
+  <p class="path">Đường dẫn: app → <span class="ui">Certificates &amp; secrets</span> → tab <span class="ui">Client secrets</span> → <span class="ui">+ New client secret</span></p>
+  <ol class="steps">
+    <li><div><p>Mở <span class="ui">Certificates &amp; secrets</span>, chọn tab <span class="ui">Client secrets</span>, bấm <span class="ui">+ New client secret</span>.</p></div></li>
+    <li><div><p><b>Description</b>:</p>
+      <div class="copy"><code>work.cadinvo.com VPS</code><button type="button" data-copy>Sao chép</button></div></div></li>
+    <li><div><p><b>Expires</b>: chọn <span class="ui">730 days (24 months)</span>. Nếu chính sách của tổ chức giới hạn ngắn hơn, chọn mức dài nhất được phép.</p></div></li>
+    <li><div><p>Bấm <span class="ui">Add</span>. Bảng hiện một dòng mới với các cột <i>Description</i>, <i>Expires</i>, <b>Value</b>, <i>Secret ID</i>.</p>
+      <div class="mock" aria-label="Minh hoạ bảng Client secrets">
+        <div class="bar">Minh hoạ · Client secrets</div>
+        <div class="body">
+          <div class="field"><span class="l">Description</span><span class="val">work.cadinvo.com VPS</span></div>
+          <div class="field"><span class="l">Expires</span><span class="val">ngày hết hạn (sau 24 tháng)</span></div>
+          <div class="field"><span class="l">Value</span><span class="val hl mono">Abc8Q~xxxxxxxxxxxxxxxxxxxxxxxxxxxx  ⧉</span></div>
+          <div class="field"><span class="l">Secret ID</span><span class="val mono" style="color:var(--muted)">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (không cần)</span></div>
+        </div>
+      </div></div></li>
+    <li><div><p>Bấm biểu tượng sao chép cạnh cột <b>Value</b> và lưu ngay vào trình quản lý mật khẩu. Ghi lại cả ngày ở cột <b>Expires</b>.</p></div></li>
+  </ol>
+  <div class="note bad"><span class="i">!</span><div>
+    <p><b>Value chỉ hiện một lần.</b> Rời trang là không xem lại được; khi đó chỉ cần xoá secret đó và tạo secret mới.</p>
+    <p><b>Lấy cột Value, không phải Secret ID.</b> Secret ID trông giống một mã GUID và không dùng để đăng nhập; gửi nhầm sẽ gây lỗi <code>AADSTS7000215</code>.</p>
+  </div></div>
+</section>
+
+<section class="block" id="buoc-5">
+  <h2><span class="n">Bước 5</span>Lấy Tenant ID và Client ID</h2>
+  <p class="path">Đường dẫn: app → <span class="ui">Overview</span></p>
+  <ol class="steps">
+    <li><div><p>Mở <span class="ui">Overview</span> của app. Phần <span class="ui">Essentials</span> ở đầu trang có hai dòng cần lấy:</p>
+      <div class="mock" aria-label="Minh hoạ phần Essentials">
+        <div class="bar">Minh hoạ · Overview → Essentials</div>
+        <div class="body">
+          <div class="field"><span class="l">Display name</span><span class="val">WorkFlow CRM (work.cadinvo.com)</span></div>
+          <div class="field"><span class="l">Application (client) ID</span><span class="val hl mono">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  ⧉</span></div>
+          <div class="field"><span class="l">Object ID</span><span class="val mono" style="color:var(--muted)">(không cần)</span></div>
+          <div class="field"><span class="l">Directory (tenant) ID</span><span class="val hl mono">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  ⧉</span></div>
+          <div class="field"><span class="l">Redirect URIs</span><span class="val">2 web, 0 spa, 0 public client</span></div>
+        </div>
+      </div></div></li>
+    <li><div><p>Sao chép <b>Application (client) ID</b> và <b>Directory (tenant) ID</b>. Không dùng <i>Object ID</i>.</p></div></li>
+    <li><div><p>Kiểm tra dòng <span class="ui">Redirect URIs</span> ghi <b>2 web</b>.</p></div></li>
+  </ol>
+</section>
+
+<section class="block" id="buoc-6">
+  <h2><span class="n">Bước 6</span>Gửi lại cho đội CRM</h2>
+  <p>Gửi tách làm hai phần: thông tin thường và client secret.</p>
+  <h3>Phần 1 · Thông tin thường (soạn bằng form này)</h3>
+  <p>Điền các ô, bấm <b>Tạo nội dung</b> rồi sao chép và gửi qua email hoặc chat như bình thường. Form <b>không có ô cho client secret</b>, và không gửi dữ liệu đi đâu: mọi thứ chỉ nằm trong trình duyệt của bạn.</p>
+  <form class="handover" id="handover" autocomplete="off">
+    <label for="f-tenant">Directory (tenant) ID<input id="f-tenant" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" spellcheck="false"></label>
+    <label for="f-client">Application (client) ID<input id="f-client" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" spellcheck="false"></label>
+    <label for="f-expiry">Ngày hết hạn của secret<input id="f-expiry" placeholder="ví dụ 19/11/2028"></label>
+    <label for="f-account">Tài khoản Microsoft sẽ dùng để kết nối<input id="f-account" placeholder="ten@cadinvo.com" spellcheck="false"><span class="hint">Tài khoản này phải mở được thư mục dự án trên SharePoint và hộp thư cần đồng bộ.</span></label>
+    <label for="f-consent" class="full">Đã bấm "Grant admin consent"?<input id="f-consent" placeholder="Có / Chưa (ghi tên người sẽ bấm)"></label>
+    <div class="actions full" style="grid-column:1/-1">
+      <button type="submit" class="btn">Tạo nội dung</button>
+      <span class="status" id="formStatus" role="status"></span>
+    </div>
+  </form>
+  <pre class="out" id="out" hidden></pre>
+  <div class="actions"><button type="button" class="btn ghost" id="copyOut" hidden>Sao chép nội dung</button></div>
+
+  <h3>Phần 2 · Client secret (gửi riêng)</h3>
+  <ul>
+    <li><b>Nên:</b> gửi qua link bí mật dùng một lần của trình quản lý mật khẩu, ví dụ <i>Bitwarden Send</i> hoặc <i>1Password</i> (Share item), đặt hết hạn sau 1 ngày và chỉ xem được 1 lần. Gửi link đó qua kênh khác với phần 1.</li>
+    <li><b>Hoặc:</b> gọi điện / chia sẻ màn hình với đội CRM và dán thẳng vào script cài đặt trên máy chủ. Đội CRM sẽ chuẩn bị sẵn script; secret không phải gửi qua tin nhắn nào.</li>
+    <li><b>Không nên:</b> dán secret vào email, Teams, WhatsApp, Zalo hay tài liệu chia sẻ, vì các nơi đó lưu lại lâu dài.</li>
+  </ul>
+  <div class="note ok"><span class="i">✓</span><div><p>Đội CRM lưu secret trong file cấu hình trên máy chủ (chỉ quản trị máy chủ đọc được), không lưu trong mã nguồn. Sau khi nhận, đội CRM sẽ báo lại để bạn xoá bản tạm.</p></div></div>
+</section>
+
+<section class="block" id="kiem-tra">
+  <h2>Danh sách kiểm tra</h2>
+  <p>Tích từng mục khi xong. Thanh tiến độ ở cột trái cập nhật theo; trạng thái chỉ lưu trong trình duyệt của bạn.</p>
+  <ul class="check" id="checklist">
+    <li><label><input type="checkbox" id="c1"><span>App tên <b>WorkFlow CRM (work.cadinvo.com)</b>, loại <b>Single tenant</b>.</span></label></li>
+    <li><label><input type="checkbox" id="c2"><span>Authentication → Web có đúng 2 redirect URI: <code>…/one_drive/callback</code> và <code>…/outlook/callback</code>.</span></label></li>
+    <li><label><input type="checkbox" id="c3"><span>Implicit grant: không tích Access tokens, không tích ID tokens.</span></label></li>
+    <li><label><input type="checkbox" id="c4"><span>API permissions có đủ 8 quyền Microsoft Graph, tất cả loại <b>Delegated</b>.</span></label></li>
+    <li><label><input type="checkbox" id="c5"><span>Cột Status: cả 8 quyền <b>Granted for Cadinvo</b>.</span></label></li>
+    <li><label><input type="checkbox" id="c6"><span>Không có quyền loại <b>Application</b> nào.</span></label></li>
+    <li><label><input type="checkbox" id="c7"><span>Đã tạo client secret 24 tháng và lưu <b>Value</b> (không phải Secret ID) vào trình quản lý mật khẩu.</span></label></li>
+    <li><label><input type="checkbox" id="c8"><span>Đã ghi Tenant ID, Client ID và ngày hết hạn secret.</span></label></li>
+    <li><label><input type="checkbox" id="c9"><span>Đã xác định tài khoản Microsoft dùng để kết nối, và tài khoản đó mở được thư mục dự án và hộp thư.</span></label></li>
+    <li><label><input type="checkbox" id="c10"><span>Đã gửi phần 1 cho đội CRM; secret gửi riêng theo cách an toàn.</span></label></li>
+  </ul>
+</section>
+
+<section class="block" id="bao-mat">
+  <h2>CRM truy cập được gì</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Câu hỏi</th><th>Trả lời</th></tr></thead>
+      <tbody>
+        <tr><td>CRM thấy được những file nào?</td><td>Chỉ những gì tài khoản đã kết nối mở được (quyền Delegated). Trong thực tế CRM chỉ làm việc với các thư mục dự án đã gắn vào từng Project.</td></tr>
+        <tr><td>CRM có xoá hoặc ghi đè file không?</td><td>Không. Quy tắc trong mã: chỉ tạo thư mục / file mới; trùng tên thì thêm <code>_2</code>, <code>_3</code>. Không đổi tên, không chuyển, không xoá.</td></tr>
+        <tr><td>CRM làm gì với email?</td><td>Đọc để đồng bộ thư từ với khách hàng; khi người dùng bấm "Process" thì lưu email dạng PDF vào thư mục dự án và gắn cờ / category. Không xoá, không chuyển, không trả lời, không gửi email.</td></tr>
+        <tr><td>Ai bấm kết nối được?</td><td>Chỉ người có vai trò admin trong CRM, tại Settings → API integrations.</td></tr>
+        <tr><td>Token được lưu thế nào?</td><td>Mã hoá AES-256 trong cơ sở dữ liệu CRM trên máy chủ của Cadinvo, tự làm mới.</td></tr>
+        <tr><td>CRM cũ có bị ảnh hưởng không?</td><td>Không. App này độc lập với kết nối của Base44; hai hệ thống chạy song song tới ngày chuyển hẳn.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Cách thu hồi khi cần</h3>
+  <ul>
+    <li><b>Tạm dừng nhanh:</b> app → <span class="ui">Certificates &amp; secrets</span> → xoá secret. CRM mất kết nối ngay khi token hiện tại hết hạn (tối đa khoảng 1 giờ).</li>
+    <li><b>Thu hồi ngay lập tức:</b> <span class="ui">Entra ID</span> → <span class="ui">Enterprise applications</span> → mở <i>WorkFlow CRM (work.cadinvo.com)</i> → <span class="ui">Properties</span> → <span class="ui">Enabled for users to sign-in?</span> = <b>No</b>; hoặc thu hồi phiên của tài khoản đã kết nối.</li>
+    <li><b>Gỡ hẳn:</b> xoá App registration.</li>
+  </ul>
+</section>
+
+<section class="block" id="loi">
+  <h2>Lỗi thường gặp</h2>
+  <p>Các lỗi dưới đây thường hiện ra khi đội CRM bấm kết nối lần đầu. Đội CRM sẽ báo mã lỗi, bạn đối chiếu ở đây.</p>
+  <details><summary><code>AADSTS50011</code> · redirect URI không khớp</summary><div class="inner"><p>Địa chỉ trong Authentication không giống từng ký tự với địa chỉ ở bước 1–2 (thừa <code>/</code> cuối, sai <code>http</code>/<code>https</code>, sai chữ hoa, hoặc đặt nhầm vào nền tảng <i>Single-page application</i>). Sửa lại địa chỉ trong mục <b>Web</b> rồi Save.</p></div></details>
+  <details><summary><code>AADSTS65001</code> hoặc màn hình "Need admin approval"</summary><div class="inner"><p>Chưa bấm <span class="ui">Grant admin consent for Cadinvo</span> ở bước 3, hoặc mới thêm quyền sau khi đã consent. Vào API permissions bấm lại nút đó.</p></div></details>
+  <details><summary><code>AADSTS7000215</code> · client secret không hợp lệ</summary><div class="inner"><p>Gửi nhầm <i>Secret ID</i> thay vì <i>Value</i>, hoặc secret bị cắt thiếu ký tự khi sao chép. Tạo secret mới (bước 4) và gửi lại cột Value.</p></div></details>
+  <details><summary><code>AADSTS7000222</code> · client secret đã hết hạn</summary><div class="inner"><p>Secret quá ngày hết hạn. Tạo secret mới, gửi cho đội CRM, rồi xoá secret cũ.</p></div></details>
+  <details><summary><code>AADSTS50020</code> / <code>AADSTS700016</code> · tài khoản hoặc app không thuộc tenant</summary><div class="inner"><p>App được tạo ở tenant khác, hoặc người kết nối đăng nhập bằng tài khoản ngoài Cadinvo (ví dụ tài khoản Microsoft cá nhân). Kiểm tra Tenant ID đã gửi và dùng tài khoản <code>@cadinvo…</code>.</p></div></details>
+  <details><summary>Kết nối được nhưng không thấy thư mục dự án (lỗi 403 / 404)</summary><div class="inner"><p>Tài khoản đã kết nối không có quyền vào site SharePoint chứa thư mục dự án. Cấp quyền truy cập site cho tài khoản đó, hoặc kết nối bằng tài khoản đang dùng trong CRM cũ. Nếu đội CRM báo thiếu quyền <code>Sites.Read.All</code>, sẽ có hướng dẫn bổ sung riêng; không tự thêm trước.</p></div></details>
+</section>
+
+<section class="block" id="sau-nay">
+  <h2>Việc về sau (chưa cần làm bây giờ)</h2>
+  <ul>
+    <li><b>Gia hạn secret:</b> khoảng 1 tháng trước ngày hết hạn, tạo secret mới theo bước 4, gửi cho đội CRM, đợi đội CRM xác nhận đã thay rồi mới xoá secret cũ. Nên đặt nhắc lịch ngay hôm nay.</li>
+    <li><b>Email hệ thống</b> (thông báo, đặt lại mật khẩu gửi từ một hộp thư chung): sẽ dùng chính app này, thêm quyền <i>Application</i> <code>Mail.Send</code> và giới hạn chỉ hộp thư đó. Đội CRM sẽ gửi hướng dẫn riêng khi bật tính năng này.</li>
+    <li><b>Chủ sở hữu app (tuỳ chọn):</b> thêm một người của đội CRM vào <span class="ui">Owners</span> của app để tự gia hạn secret mà không cần quyền quản trị toàn tenant.</li>
+  </ul>
+</section>
+
+<footer class="end">WorkFlow CRM · work.cadinvo.com · Hướng dẫn soạn ngày 19/11/2026</footer>
+
+</div>
+</main>
+
+<script>
+(function () {
+  // copy buttons
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () { copyText(b.parentElement.querySelector('code').innerText, b); });
+  });
+  function copyText(text, btn) {
+    var label = btn.textContent;
+    var done = function () { btn.textContent = 'Đã chép'; setTimeout(function () { btn.textContent = label; }, 1500); };
+    try {
+      navigator.clipboard.writeText(text).then(done, function () { selectFallback(btn); });
+    } catch (e) { selectFallback(btn); }
+  }
+  function selectFallback(btn) {
+    var el = btn.parentElement.querySelector('code') || document.getElementById('out');
+    var r = document.createRange(); r.selectNodeContents(el);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    btn.textContent = 'Nhấn Ctrl+C';
+  }
+
+  // handover form
+  var form = document.getElementById('handover');
+  var out = document.getElementById('out');
+  var copyOut = document.getElementById('copyOut');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = function (id) { return document.getElementById(id).value.trim() || '(chưa điền)'; };
+    out.textContent =
+      'Thông tin Microsoft Entra cho WorkFlow CRM (work.cadinvo.com)\n' +
+      '- App: WorkFlow CRM (work.cadinvo.com), Single tenant\n' +
+      '- Directory (tenant) ID: ' + v('f-tenant') + '\n' +
+      '- Application (client) ID: ' + v('f-client') + '\n' +
+      '- Client secret hết hạn: ' + v('f-expiry') + '\n' +
+      '- Tài khoản kết nối: ' + v('f-account') + '\n' +
+      '- Admin consent: ' + v('f-consent') + '\n' +
+      '- Client secret: gửi riêng qua link dùng một lần.';
+    out.hidden = false; copyOut.hidden = false;
+    document.getElementById('formStatus').textContent = 'Đã tạo nội dung bên dưới';
+  });
+  copyOut.addEventListener('click', function () {
+    var t = out.textContent;
+    try { navigator.clipboard.writeText(t).then(function () { copyOut.textContent = 'Đã chép'; setTimeout(function () { copyOut.textContent = 'Sao chép nội dung'; }, 1500); }, function () { selectOut(); }); } catch (e) { selectOut(); }
+  });
+  function selectOut() { var r = document.createRange(); r.selectNodeContents(out); var s = getSelection(); s.removeAllRanges(); s.addRange(r); copyOut.textContent = 'Nhấn Ctrl+C'; }
+
+  // checklist + progress (per-viewer convenience)
+  var KEY = 'entra-guide-checks';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist input'));
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { saved = {}; }
+  boxes.forEach(function (b) { b.checked = !!saved[b.id]; b.addEventListener('change', update); });
+  function update() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    document.getElementById('progTxt').textContent = n + '/' + boxes.length;
+    document.getElementById('progBar').style.width = (n / boxes.length * 100) + '%';
+    var s = {}; boxes.forEach(function (b) { if (b.checked) s[b.id] = 1; });
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  update();
+
+  // scrollspy
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function spy() {
+    var y = window.scrollY + 120, idx = 0;
+    sections.forEach(function (s, i) { if (s && s.offsetTop <= y) idx = i; });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) idx = sections.length - 1;
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); a.classList.toggle('done', !!a.dataset.step && i < idx); });
+  }
+  window.addEventListener('scroll', spy, { passive: true }); spy();
+
+  // mobile menu
+  var sb = document.getElementById('sidebar'), mb = document.getElementById('menuBtn');
+  mb.addEventListener('click', function () { var o = sb.classList.toggle('open'); mb.setAttribute('aria-expanded', o); mb.textContent = o ? 'Đóng' : 'Mục lục'; });
+  links.forEach(function (a) { a.addEventListener('click', function () { if (sb.classList.contains('open')) mb.click(); }); });
+})();
+</script>

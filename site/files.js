@@ -1,5 +1,6 @@
-// Tự động sinh bởi sync.js lúc 2026-11-17T11:06:38.345Z
+// Tự động sinh bởi sync.js lúc 2026-11-20T01:55:34.842Z
 window.__INITIAL_SITE_FILES__ = [
+  "03-microsoft-entra-setup-guide.html",
   "02-huong-dan-kickcooking.html",
   "01-n8n-server-cleanup-report.html",
   "00-NguyenNgocDao-guide.html",
